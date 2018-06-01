@@ -1,0 +1,819 @@
+<template>
+	<div class="datepicker">
+		<div
+			class="input-wrapper"
+		>
+			<input type="text"
+				ref="input"
+				:name="name"
+				:value="value"
+				:placeholder="value"
+				:disabled="disabled"
+				v-on="listeners"
+			/>
+			<div class="display">{{displayValue}}</div>
+			<div class="helper"><i class="mdi mdi-calendar"></i></div>
+			<transition name="dropfade">
+				<div class="calendar-wrapper" v-if="is_open" v-on-clickaway="closeCalendar">
+					<div class="calendar start">
+						<div class="calendar-header">
+							<div class="month">
+								<div class="btn prev-year" @click="prev('year', 0)"><i class="mdi mdi-chevron-double-left"></i></div>
+								<div class="btn prev-month" @click="prev('month', 0)"><i class="mdi mdi-chevron-left"></i></div>
+								<div class="current-month"><strong>{{startMonth}} {{startYear}}</strong></div>
+								<div class="btn next-month" @click="next('month', 0)"><i class="mdi mdi-chevron-right"></i></div>
+								<div class="btn next-year" @click="next('year', 0)"><i class="mdi mdi-chevron-double-right"></i></div>
+							</div>
+							<div class="days-of-week">
+								<div>Su</div>
+								<div>Mo</div>
+								<div>Tu</div>
+								<div>We</div>
+								<div>Th</div>
+								<div>Fr</div>
+								<div>Sa</div>
+							</div>
+						</div>
+						<div class="calendar-body">
+							<div v-for="week in weeks(0)" class="week">
+								<div v-for="date in week" :class="{
+										'day' : true,
+										'dim' : !isInCurrentMonth(date.month, 0),
+										'not-selectable' : !isSelectable(date.moment, 0),
+										'selected' : isSelected(date.moment, 0),
+										'highlight' : isHighlighted(date.moment, 0),
+										'in-range' : isInRange(date.moment),
+										'range-start' : isRangeStart(date.moment),
+										'range-end' : isRangeEnd(date.moment)
+									}"
+									@click="inputHandler(date.moment, 0)">{{date.day}}</div>
+							</div>
+						</div>
+					</div>
+					<div class="calendar end" v-if="isRange">
+						<div class="calendar-header">
+							<div class="month">
+								<div class="btn prev-year" @click="prev('year', 1)"><i class="mdi mdi-chevron-double-left"></i></div>
+								<div class="btn prev-month" @click="prev('month', 1)"><i class="mdi mdi-chevron-left"></i></div>
+								<div class="current-month"><strong>{{endMonth}} {{endYear}}</strong></div>
+								<div class="btn next-month" @click="next('month', 1)"><i class="mdi mdi-chevron-right"></i></div>
+								<div class="btn next-year" @click="next('year', 1)"><i class="mdi mdi-chevron-double-right"></i></div>
+							</div>
+							<div class="days-of-week">
+								<div>Su</div>
+								<div>Mo</div>
+								<div>Tu</div>
+								<div>We</div>
+								<div>Th</div>
+								<div>Fr</div>
+								<div>Sa</div>
+							</div>
+						</div>
+						<div class="calendar-body">
+							<div v-for="week in weeks(1)" class="week">
+								<div v-for="date in week" :class="{
+										'day' : true,
+										'dim' : !isInCurrentMonth(date.month, 1),
+										'not-selectable' : !isSelectable(date.moment, 1),
+										'selected' : isSelected(date.moment, 1),
+										'highlight' : isHighlighted(date.moment, 1),
+										'in-range' : isInRange(date.moment),
+										'range-start' : isRangeStart(date.moment),
+										'range-end' : isRangeEnd(date.moment)
+									}" 
+									@click="inputHandler(date.moment, 1)">{{date.day}}</div>
+							</div>
+						</div>
+					</div>
+					<div class="presets" v-if="isRange">
+						<h2>Presets</h2>
+						<ul>
+							<li @click="setRange(0)">Today</li>
+							<li @click="setRange(1)">Yesterday</li>
+							<li @click="setRange(2)">7 Days Ago</li>
+							<li @click="setRange(3)">Last 7 Days</li>
+							<li @click="setRange(4)">This Month</li>
+							<li @click="setRange(5)">Last Month</li>
+						</ul>
+						<button @click="applyHandler()"><span class="label">Apply</span></button>
+					</div>
+				</div>
+			</transition>
+		</div>
+	</div>
+</template>
+
+<script>
+import formField from '../mixins/formField';
+import moment from 'moment-timezone';
+import { mixin as clickaway } from 'vue-clickaway';
+
+export default {
+	data() {
+		return {
+			cursor_value : [
+				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
+				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
+			],
+			selection_value : [
+				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
+				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
+			],
+			current_cursor_index : 0,
+			current_selection_index : 0,
+			focused : false,
+			is_open : false
+		};
+	},
+	props : {
+		value : {
+			type : [String, Array],
+			required : true
+		},
+		minValue : String,
+		maxValue : String,
+		disabled : {
+			type : Boolean,
+			default : false
+		},
+		format : {
+			type : String,
+			default : 'ddd, MMM D, YYYY'
+		}
+	},
+	computed : {
+		displayValue() {
+			if (this.isRange) {
+				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
+					return moment(this.value[0]).format(this.format);
+				}
+
+				return moment(this.value[0]).format(this.format) + ' - ' + moment(this.value[1]).format(this.format);
+			}
+
+			else {
+				return moment(this.value).format(this.format);
+			}
+		},
+		isRange() {
+			return Array.isArray(this.value);
+		},
+		startMonth() {
+			return moment(this.cursor_value[0]).format('MMM');
+		},
+		startYear() {
+			return moment(this.cursor_value[0]).format('YYYY');
+		},
+		endMonth() {
+			return moment(this.cursor_value[1]).format('MMM');
+		},
+		endYear() {
+			return moment(this.cursor_value[1]).format('YYYY');
+		},
+		minDate() {
+			return moment(this.minValue);
+		},
+		maxDate() {
+			return moment(this.maxValue);
+		},
+		listeners() {
+			let vm = this;
+			return Object.assign(
+				{},
+				this.$listeners,
+				{
+					click(event) {
+						vm.openCalendar(event);
+					},
+					keydown(event) {
+						vm.keydownHandler(event);
+					},
+					input(event) {
+						vm.dirty = true;
+						vm.validate();
+					}
+				}
+			);
+		}
+	},
+	methods : {
+
+		// Return the weeks of the month
+		weeks(index) {
+			let weeks     = [];
+			let first_day = moment(this.cursor_value[index]).startOf('month').startOf('week');
+			let last_day  = first_day.clone().add(5, 'weeks').endOf('week');
+
+			let cursor = first_day.clone();
+
+			while (cursor.isSameOrBefore(last_day)) {
+				let week = [];
+				let end_of_week = cursor.clone().endOf('week');
+
+				while (cursor.isSameOrBefore(end_of_week)) {
+					week.push({
+						moment  : cursor.clone(),
+						weekday : cursor.day(),
+						month   : cursor.month(),
+						day     : cursor.date(),
+						muted   : (cursor.month() !== moment(this.cursor_value[index]).month())
+					});
+					cursor.add(1, 'day');
+				}
+
+				weeks.push(week);
+			}
+
+			return weeks;
+		},
+
+		// Go to the previous period
+		prev(period, index) {
+			let target_date = moment(this.cursor_value[index]).subtract(1, period);
+			if (!this.prevAvailable(period, index)) {
+				target_date = this.minDate.date(target_date.date());
+			}
+			this.$set(this.cursor_value, index, target_date.format());
+		},
+
+		// Check if you can go to the previous period
+		prevAvailable(period, index) {
+			if (this.minValue) {
+				let target_date = moment(this.cursor_value[index]).subtract(1, period);
+				return (this.minDate.startOf('month').isSameOrBefore(target_date));
+			}
+			return true;
+		},
+
+		// Go the the next period
+		next(period, index) {
+			let target_date = moment(this.cursor_value[index]).add(1, period);
+			if (!this.nextAvailable(period, index)) {
+				target_date = this.maxDate.date(target_date.date());
+			}
+			this.$set(this.cursor_value, index, target_date.format());
+		},
+
+		// Check if you can go to the next period
+		nextAvailable(period, index) {
+			if (this.maxValue) {
+				let target_date = moment(this.cursor_value[index]).add(1, period);
+				return (this.maxDate.endOf('month').isSameOrAfter(target_date));
+			}
+			return true;
+		},
+
+		// The date is in the active month
+		isInCurrentMonth(month, index) {
+			return month === moment(this.cursor_value[index]).month();
+		},
+
+		// The cursor is currently on this date
+		isHighlighted(date, index) {
+			return (this.current_cursor_index === index) && (date.format('YYYY-MM-DD') === moment(this.cursor_value[index]).format('YYYY-MM-DD'));
+		},
+
+		// Check if the date is selectable
+		isSelectable(date, index) {
+			if (this.minValue && date.isBefore(this.minValue)) {
+				return false;
+			}
+			if (this.maxValue && date.isAfter(this.maxValue)) {
+				return false;
+			}
+			return true;
+		},
+
+		// The date is the start of end of a range selection
+		isSelected(date, index) {
+			if (this.isRange) {
+				return date.format('YYYY-MM-DD') === moment(this.selection_value[index]).format('YYYY-MM-DD');
+			}
+			return date.format() === moment(this.value).format();
+		},
+
+		// The date is in the selected range
+		isInRange(date) {
+			if (this.isRange) {
+				return date.isBetween(this.selection_value[0], this.selection_value[1], 'day', '[]');
+			}
+		},
+
+		// The date is the start of the selected range
+		isRangeStart(date) {
+			return this.isRange && (date.format('YYYY-MM-DD') === moment(this.selection_value[0]).format('YYYY-MM-DD'));
+		},
+
+		// The date is the end of the selected range
+		isRangeEnd(date) {
+			return this.isRange && (date.format('YYYY-MM-DD') === moment(this.selection_value[1]).format('YYYY-MM-DD'));
+		},
+
+		// Open the calendar interface
+		openCalendar(event) {
+			if (!this.is_open) {
+				if (this.isRange) {
+					this.current_cursor_index = 0;
+					this.current_selection_index = 0;
+					this.cursor_value = [
+						moment(this.value[0]).startOf('day').format(),
+						moment(this.value[1]).endOf('day').format()
+					];
+				}
+				this.is_open = true;
+			}
+		},
+
+		// Close the calendar interface
+		closeCalendar() {
+			if (this.is_open) {
+				this.is_open = false;
+			}
+		},
+
+		// Do stuff when keys get pressed
+		keydownHandler(event) {
+			let period;
+			switch (event.which) {
+
+				// TAB
+				case 9:
+					if (this.is_open) {
+						if (this.isRange) {
+							event.preventDefault();
+							if (event.shiftKey) {
+								if ((this.current_selection_index - 1) < 0) {
+									this.current_selection_index = 2;
+								}
+								else {
+									this.current_selection_index--;
+								}
+								if ((this.current_cursor_index - 1) < 0) {
+									this.current_cursor_index = 2;
+								}
+								else {
+									this.current_cursor_index--;
+								}
+							}
+							else {
+								if ((this.current_selection_index + 1) > 2) {
+									this.current_selection_index = 0;
+								}
+								else {
+									this.current_selection_index++;
+								}
+								if ((this.current_cursor_index + 1) > 2) {
+									this.current_cursor_index = 0;
+								}
+								else {
+									this.current_cursor_index++;
+								}
+							}
+						}
+						else {
+							this.closeCalendar();
+						}
+					}
+					break;
+
+				// SPACEBAR
+				case 32:
+					if (this.is_open) {
+						this.inputHandler(moment(this.cursor_value[this.current_cursor_index]), this.current_cursor_index);
+					}
+					else {
+						this.openCalendar();
+					}
+					break;
+
+				// LEFT
+				case 37:
+					this.openCalendar();
+					period = 'day';
+					if (event.shiftKey) {
+						event.preventDefault();
+						period = 'month';
+						if (event.ctrlKey) period = 'year';
+					}
+					this.prev(period, this.current_selection_index);
+					break;
+
+				// UP
+				case 38:
+					this.openCalendar();
+					this.prev('week', this.current_selection_index);
+					break;
+
+				// RIGHT
+				case 39:
+					this.openCalendar();
+					period = 'day';
+					if (event.shiftKey) {
+						event.preventDefault();
+						period = 'month';
+						if (event.ctrlKey) period = 'year';
+					}
+					this.next(period, this.current_selection_index);
+					break;
+
+				// DOWN
+				case 40:
+					this.openCalendar();
+					this.next('week', this.current_selection_index);
+					break;
+
+				// ENTER
+				case 13:
+					event.preventDefault();
+					if (this.isRange) {
+						this.applyHandler();
+					}
+					else {
+						this.inputHandler(moment(this.cursor_value[0]), 0);
+					}
+					break;
+
+				// ESCAPE
+				case 27:
+					this.closeCalendar();
+					break;
+
+			}
+		},
+
+		// Set the current range
+		setRange(selection) {
+			switch (selection) {
+				// Today
+				case 0:
+					this.selection_value = [
+						moment().startOf('day').format(),
+						moment().endOf('day').format()
+					];
+					this.resetCursors();
+					break;
+
+				// Yesterday
+				case 1:
+					this.selection_value = [
+						moment().subtract(1, 'day').startOf('day').format(),
+						moment().subtract(1, 'day').endOf('day').format()
+					];
+					this.resetCursors();
+					break;
+
+				// 7 Days Ago
+				case 2:
+					this.selection_value = [
+						moment().subtract(1, 'week').startOf('day').format(),
+						moment().subtract(1, 'week').endOf('day').format()
+					];
+					this.resetCursors();
+					break;
+
+				// Last 7 Days
+				case 3:
+					this.selection_value = [
+						moment().subtract(6, 'days').startOf('day').format(),
+						moment().endOf('day').format()
+					];
+					this.resetCursors();
+					break;
+
+				// This Month
+				case 4:
+					this.selection_value = [
+						moment().startOf('month').format(),
+						moment().endOf('month').format()
+					];
+					this.resetCursors();
+					break;
+
+				// Last Month
+				case 5:
+					this.selection_value = [
+						moment().subtract(1, 'month').startOf('month').format(),
+						moment().subtract(1, 'month').endOf('month').format()
+					];
+					this.resetCursors();
+					break;
+
+			}
+		},
+
+		// Reset the cursors
+		resetCursors() {
+			this.cursor_value = this.selection_value;
+		},
+
+		// Handle when a date is selected
+		inputHandler(date, index) {
+			if (this.isSelectable(date, index)) {
+				this.dirty = true;
+				this.current_cursor_index = index;
+				this.current_selection_index = index;
+				if (this.isRange) {
+					if (index === 0) {
+						this.$set(this.selection_value, index, date.startOf('day').format());
+						if (date.isAfter(this.selection_value[1])) {
+							this.$set(this.selection_value, 1, date.endOf('day').format());
+						}
+					}
+					else {
+						this.$set(this.selection_value, index, date.endOf('day').format());
+						if (date.isBefore(this.selection_value[0])) {
+							this.$set(this.selection_value, 0, date.startOf('day').format());
+						}
+					}
+					this.cursor_value = this.selection_value.slice();
+				}
+				else {
+					this.selection_value[index] = date.format();
+					this.cursor_value[index] = date.format();
+					this.$emit('input', date.format());
+					this.closeCalendar();
+				}
+			}
+		},
+
+		// Apply the selected dates
+		applyHandler() {
+			this.$emit('input', this.selection_value);
+			this.closeCalendar();
+		}
+	},
+	mixins : [
+		clickaway,
+		formField
+	]
+};
+</script>
+
+<style lang="less">
+// Default variables
+@black: #000;
+@calendar-unit: 32px;
+@control-color: #2196F3;
+@control-height: 40px;
+@gray-05: #F2F2F2;
+@gray-10: #E5E5E5;
+@form-icon-size: 20px;
+@layer-control: 300;
+@white: #FFF;
+
+// Import theme
+@import (optional, reference) 'theme.less';
+
+.input-wrapper {
+	border-radius: @control-radius;
+	background-color: @white;
+	border: @control-border-stroke solid @control-border-color;
+	display: inline-flex;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100%;
+
+	input[type='text'] {
+		flex: 1 0 0;
+		background-color: white;
+		border: none;
+		font-family: @font-body;
+		font-size: @font-size-normal;
+		height: @control-height;
+		line-height: @control-height;
+		padding: 0 10px;
+		width: 100%;
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	input[disabled='disabled'] {
+		background-color: #E5E5E5;
+		color: #AAA;
+	}
+
+	.helper {
+		flex: 0 0 @control-height;
+		height: @control-height;
+		line-height: @control-height + @control-border-stroke;
+		min-width: @control-height;
+		padding: 0 10px;
+		text-align: center;
+
+		i::before {
+			font-size: @form-icon-size;
+			height: @control-height;
+			line-height: @control-height;
+		}
+
+		&.string {
+			padding: 0 15px;
+		}
+	}
+
+	&:focus {
+		.form-focus;
+		outline: none;
+	}
+}
+
+.datepicker {
+	cursor: pointer;
+	position: relative;
+
+	&:focus {
+		box-shadow: none;
+		outline: none;
+	}
+
+	input {
+		cursor: pointer;
+		opacity: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	.display {
+		flex: 1 0 auto;
+		height: @control-height;
+		line-height: @control-height;
+		padding: 0 10px;
+	}
+
+	.calendar-wrapper {
+		border-radius: 3px;
+		box-shadow: 0 2px 10px fade(black, 25%);
+		background-color: white;
+		left: 3px;
+		overflow: hidden;
+		padding: 3px;
+		position: absolute;
+		top: @control-height;
+		white-space: nowrap;
+		z-index: @layer-control;
+	}
+
+	.presets {
+		display: inline-block;
+		height: 100%;
+		padding: 5px;
+		vertical-align: top;
+		width: 160px;
+
+		h2 {
+			color: @black;
+			font-size: 1.4rem;
+			height: @calendar-unit;
+			line-height: @calendar-unit;
+			text-transform: uppercase;
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				border-top: 1px solid @gray-05;
+				font-size: 1.3rem;
+				height: @calendar-unit;
+				line-height: @calendar-unit;
+				padding: 0 10px;
+
+				&:hover {
+					color: @control-color;
+				}
+			}
+		}
+
+		button {
+			font-size: 1.4rem;
+			margin-top: 10px;
+			text-transform: uppercase;
+			width: 100%;
+		}
+	}
+
+	.calendar {
+		border: 1px solid @gray-10;
+		display: inline-block;
+		vertical-align: top;
+		width: (@calendar-unit * 7) + 10px;
+
+		.calendar-header {
+			background-color: @control-color;
+			color: @white;
+			padding: 5px 5px 0;
+			
+			.month {
+				display: flex;
+				flex-direction: row;
+				height: @calendar-unit;
+				line-height: @calendar-unit;
+
+				.btn {
+					border-radius: 15px;
+					cursor: pointer;
+					flex: 0 0 @calendar-unit;
+					text-align: center;
+
+					i::before {
+						line-height: @calendar-unit;
+						font-size: @form-icon-size;
+					}
+
+					&:hover {
+						background-color: darken(@control-color, 15%);
+					}
+				}
+
+				.current-month {
+					flex: 1 0 auto;
+					text-align: center;
+				}
+			}
+
+			.days-of-week {
+				display: flex;
+				flex-direction: row;
+				font-size: 13px;
+				height: @calendar-unit;
+				line-height: @calendar-unit;
+
+				> div {
+					flex: 0 0 @calendar-unit;
+					text-align: center;
+				}
+			}
+		}
+
+		.calendar-body {
+			background-color: @white;
+			padding: 5px;
+			
+			.week {
+				display: flex;
+				flex-direction: row;
+				height: @calendar-unit;
+				line-height: @calendar-unit;
+				margin: 1px 0;
+			}
+
+			.day {
+				border-radius: @control-radius;
+				cursor: pointer;
+				flex: 0 0 @calendar-unit;
+				font-size: 11px;
+				text-align: center;
+
+				&:hover {
+					background-color: @gray-05;
+				}
+
+				&.in-range {
+					border-radius: 0;
+					background-color: fade(@control-color, 35%);
+					color: @white;
+
+					&:hover {
+						background-color: fade(@control-color, 45%);
+					}
+				}
+
+				&.dim {
+					color: @gray-15;
+
+					&.in-range {
+						color: fade(@control-color, 40%);
+					}
+				}
+
+				&.selected {
+					background-color: @control-color;
+					color: @white;
+				}
+
+				&.range-start {
+					border-radius: @control-radius 0 0 @control-radius;
+				}
+
+				&.range-end {
+					border-radius: 0 @control-radius @control-radius 0;
+
+					&.range-start {
+						border-radius: @control-radius;
+					}
+				}
+
+				&.highlight {
+					font-weight: bold;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+</style>
