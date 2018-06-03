@@ -11,7 +11,7 @@ Vue.use(RemixUI);
 
 const app = new Vue({
 	el : '#app',
-	template : '<preview/>',
+	template : '<Preview/>',
 	components : {
 		Preview
 	}

@@ -1,57 +1,22 @@
 <template>
-	<div
-		class="input-wrapper currency"
-	>
-		<slot name="left">
-			<div class="helper">$</div>
-		</slot>
-		<input
-			type="text"
+	<div class="input-wrapper">
+		<input type="password"
 			ref="input"
 			:name="name"
-			:disabled="disabled"
-			v-model="string_value"
-			v-money="settings"
+			:value="value"
+			:placeholder="placeholder"
 			v-on="listeners"
-			@blur=""
 		>
-		<slot name="right"></slot>
 	</div>
 </template>
 
 <script>
-import { VMoney } from 'v-money';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			string_value : parseFloat(this.value).toFixed(2)
-		};
-	},
 	props : {
-		value : Number,
-		disabled : {
-			type : Boolean,
-			default : false
-		},
-		settings : {
-			type : Object,
-			default() {
-				return {
-					decimal : '.',
-					thousands : ',',
-					prefix : '',
-					suffix : '',
-					precision : 2,
-					masked : false
-				};
-			}
-		},
-		symbol : {
-			type : String,
-			default : '$'
-		}
+		placeholder : String,
+		value : String
 	},
 	computed : {
 		listeners() {
@@ -62,7 +27,7 @@ export default {
 				{
 					input(event) {
 						vm.dirty = true;
-						vm.inputHandler(event);
+						vm.$emit('input', event.target.value);
 						vm.validate();
 					},
 					blur(event) {
@@ -74,14 +39,10 @@ export default {
 		}
 	},
 	methods : {
-		inputHandler(event) {
-			let value = parseFloat(this.string_value.replace(/[^0-9\\.-]/g, ''));
+		inputHandler(value) {
+			this.dirty = true;
 			this.$emit('input', value);
-			this.validate();
 		}
-	},
-	directives : {
-		'money' : VMoney
 	},
 	mixins : [
 		formField
@@ -91,22 +52,23 @@ export default {
 
 <style lang="less">
 // Default variables
+@black: #000;
 @white: #FFF;
 @control-bkg-color: @white;
-@control-border-color: #CCC;
 @control-border-stroke: 1px;
+@control-border-color: #CCC;
+@control-color: #1F73D6;
 @control-height: 2.5em;
-@control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
 
-// Import themes
+// Import custom variables
 @import (optional, reference) '~theme';
 
-.input-wrapper.currency {
-	border: @control-border-stroke solid @control-border-color;
+.input-wrapper {
 	border-radius: @control-radius;
+	border: @control-border-stroke solid @control-border-color;
+	display: inline-block;
 	display: inline-flex;
 	overflow: hidden;
 	vertical-align: middle;
@@ -120,17 +82,12 @@ export default {
 		min-width: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;
 	}
-
-	input {
-		text-align: right;
-	}
 }
 
-input[type='text'] {
+input[type='password'] {
 	background-color: @control-bkg-color;
 	border: 0;
 	flex: 1 0 0;
-	font-family: @mono-font;
 	font-size: @font-size;
 	height: calc(@control-height - (@control-border-stroke * 2));
 	padding: 0 @control-padding;

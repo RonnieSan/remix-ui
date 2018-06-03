@@ -1,85 +1,114 @@
 <template>
 	<div id="wrapper">
 		<div class="container">
-			<grid>
-				<row>
-					<column>
-						<div class="control-group">
-							<label class="control-label">Checkbox:</label>
-							<div class="controls">
-								<div class="field">
-									<r-checkbox
-										value="Yellow"
-									/>
-								</div>
-							</div>
-						</div>
-						
-						<div class="control-group">
-							<label class="control-label">Checklist:</label>
-							<div class="controls">
-								<div class="field">
-									<r-checklist
-										v-model="colors"
-										:options="checklist_options"
-									/>
-								</div>
-							</div>
-						</div>
+			<r-form>
+				<grid>
+					<row>
+						<column>
 
-						<div class="control-group">
-							<label class="control-label">Code Editor:</label>
-							<div class="controls">
-								<div class="field">
-									<r-code
-										id="code-editor"
-										:options="{
-											fontFamily : 'Consolas'
-										}"
-									/>
+							<div class="control-group">
+								<label class="control-label">Checkbox:</label>
+								<div class="controls">
+									<div class="field">
+										<r-checkbox
+											value="Yellow"
+										/>
+									</div>
 								</div>
 							</div>
-						</div>
+							
+							<div class="control-group">
+								<label class="control-label">Checklist:</label>
+								<div class="controls">
+									<div class="field">
+										<r-checklist
+											v-model="colors"
+											:options="checklist_options"
+										/>
+									</div>
+								</div>
+							</div>
 
-						<div class="control-group">
-							<label class="control-label">Currency Field:</label>
-							<div class="controls">
-								<div class="field">
-									<r-currency
-										v-model="currency"
-									/>
+							<div class="control-group">
+								<label class="control-label">Code Editor:</label>
+								<div class="controls">
+									<div class="field">
+										<r-code
+											id="code-editor"
+											:options="{
+												fontFamily : 'Consolas'
+											}"
+										/>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="control-group">
-							<label class="control-label">Datepicker:</label>
-							<div class="controls">
-								<div class="field">
-									<r-datepicker
-										v-model="date"
-									/>
+							<div class="control-group">
+								<label class="control-label">Currency Field:</label>
+								<div class="controls">
+									<div class="field">
+										<r-currency
+											v-model="currency"
+										/>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="control-group">
-							<label class="control-label">Multi-Select:</label>
-							<div class="controls">
-								<div class="field">
-									<r-multi-select
-										v-model="multi_select"
-										:options="multi_select_options"
-									/>
+							<div class="control-group">
+								<label class="control-label">Datepicker:</label>
+								<div class="controls">
+									<div class="field">
+										<r-datepicker
+											v-model="date"
+										/>
+									</div>
 								</div>
 							</div>
-						</div>
-					</column>
-					<column>
-						Hello
-					</column>
-				</row>
-			</grid>
+
+							<div class="control-group">
+								<label class="control-label">Multi-Select:</label>
+								<div class="controls">
+									<div class="field">
+										<r-multi-select
+											v-model="multi_select"
+											:options="multi_select_options"
+										/>
+									</div>
+								</div>
+							</div>
+							
+
+						</column>
+						<spacer size="50px"/>
+						<column>
+							
+							<div class="control-group">
+								<label class="control-label">Number:</label>
+								<div class="controls">
+									<div class="field">
+										<r-number
+											v-model="number"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Password:</label>
+								<div class="controls">
+									<div class="field">
+										<r-password
+											v-model="password"
+											placeholder="Your password"
+										/>
+									</div>
+								</div>
+							</div>
+
+						</column>
+					</row>
+				</grid>
+			</r-form>
 		</div>
 	</div>
 </template>
@@ -101,7 +130,9 @@ export default {
 				'Red',
 				'Green',
 				'Blue'
-			]
+			],
+			number : 1,
+			password : ''
 		};
 	}
 };
@@ -115,11 +146,13 @@ export default {
 }
 
 html, body {
+	font-family: 'Roboto';
 	margin: 0;
 	padding: 0;
 }
 
 #wrapper {
+	height
 	width: 100vw;
 }
 

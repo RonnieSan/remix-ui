@@ -122,6 +122,7 @@ export default {
 
 input[type='checkbox'] {
 	appearance: none;
+	background-color: @control-bkg-color;
 	border: @control-border-stroke solid @control-border-color;
 	font-size: @font-size;
 	height: calc(@control-height * 0.6);
@@ -139,6 +140,7 @@ input[type='checkbox'] {
 }
 
 .checkbox-wrapper::before {
+	color: @control-bkg-color;
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8" /></svg>');
 	font-size: @font-size;
 	height: calc(@control-height * 0.6);

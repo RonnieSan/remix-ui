@@ -9,6 +9,9 @@
 		</div>
 		<transition name="dropfade">
 			<div ref="list" class="list" :style="{'min-width' : this.minWidth, 'max-height' : this.maxListHeight, 'top' : this.list_top, 'bottom' : this.list_bottom}" v-show="is_open">
+				<div class="selection-options">
+					<strong>Select:</strong> <a @click="selectAll()" href="javascript:void(0)">All</a> | <a @click="selectNone()" href="javascript:void(0)">None</a>
+				</div>
 				<r-checklist
 					v-model="local_value"
 					:options="options"
@@ -38,7 +41,7 @@ export default {
 	props : {
 		minWidth : {
 			type : String,
-			default : '120px'
+			default : '200px'
 		},
 		name : String,
 		options : {
@@ -120,6 +123,17 @@ export default {
 			if (this.is_open) {
 				this.is_open = false;
 			}
+		},
+		selectAll() {
+			this.local_value = [];
+			this.options.forEach((option) => {
+				this.local_value.push(option.value || option);
+			});
+			this.$emit('input', this.local_value);
+		},
+		selectNone() {
+			this.local_value = [];
+			this.$emit('input', this.local_value);
 		}
 	},
 	components : {
@@ -186,13 +200,26 @@ export default {
 		background-color: @control-bkg-color;
 		border-radius: 3px;
 		box-shadow: 0 2px 10px fade(black, 25%);
-		left: 2px; 
-		min-width: 250px;
+		left: 2px;
 		overflow-y: auto;
-		padding: 10px 20px;
+		padding: @control-padding;
 		position: absolute;
-		width: 95%;
 		z-index: @layer-control;
+
+		.selection-options {
+			font-size: 0.875em;
+			height: calc(@control-height - (@control-border-stroke * 2));
+			line-height: calc(@control-height - (@control-border-stroke * 2));
+			padding: 0 @control-padding;
+		}
+
+		.option {
+			padding: 0 @control-padding;
+
+			&:hover {
+				background-color: tint(@control-color, 90%);
+			}
+		}
 
 		.checkbox-wrapper {
 			width: 100%;
