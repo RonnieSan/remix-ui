@@ -12,17 +12,37 @@
 				v-on="listeners"
 			/>
 			<div class="display">{{displayValue}}</div>
-			<div class="helper"><i class="mdi mdi-calendar"></i></div>
+			<div class="helper"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
 			<transition name="dropfade">
 				<div class="calendar-wrapper" v-if="is_open" v-on-clickaway="closeCalendar">
+					<div class="presets" v-if="isRange">
+						<h2>Presets</h2>
+						<ul>
+							<li @click="setRange(0)">Today</li>
+							<li @click="setRange(1)">Yesterday</li>
+							<li @click="setRange(2)">7 Days Ago</li>
+							<li @click="setRange(3)">Last 7 Days</li>
+							<li @click="setRange(4)">This Month</li>
+							<li @click="setRange(5)">Last Month</li>
+						</ul>
+						<button @click="applyHandler()"><span class="label">Apply</span></button>
+					</div>
 					<div class="calendar start">
 						<div class="calendar-header">
 							<div class="month">
-								<div class="btn prev-year" @click="prev('year', 0)"><i class="mdi mdi-chevron-double-left"></i></div>
-								<div class="btn prev-month" @click="prev('month', 0)"><i class="mdi mdi-chevron-left"></i></div>
+								<div class="btn prev-year" @click="prev('year', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+								</div>
+								<div class="btn prev-month" @click="prev('month', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 8 12 13 7"></polyline></svg>
+								</div>
 								<div class="current-month"><strong>{{startMonth}} {{startYear}}</strong></div>
-								<div class="btn next-month" @click="next('month', 0)"><i class="mdi mdi-chevron-right"></i></div>
-								<div class="btn next-year" @click="next('year', 0)"><i class="mdi mdi-chevron-double-right"></i></div>
+								<div class="btn next-month" @click="next('month', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 16 12 11 7"></polyline></svg>
+								</div>
+								<div class="btn next-year" @click="next('year', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+								</div>
 							</div>
 							<div class="days-of-week">
 								<div>Su</div>
@@ -85,18 +105,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="presets" v-if="isRange">
-						<h2>Presets</h2>
-						<ul>
-							<li @click="setRange(0)">Today</li>
-							<li @click="setRange(1)">Yesterday</li>
-							<li @click="setRange(2)">7 Days Ago</li>
-							<li @click="setRange(3)">Last 7 Days</li>
-							<li @click="setRange(4)">This Month</li>
-							<li @click="setRange(5)">Last Month</li>
-						</ul>
-						<button @click="applyHandler()"><span class="label">Apply</span></button>
-					</div>
 				</div>
 			</transition>
 		</div>
@@ -121,7 +129,6 @@ export default {
 			],
 			current_cursor_index : 0,
 			current_selection_index : 0,
-			focused : false,
 			is_open : false
 		};
 	},
@@ -190,6 +197,10 @@ export default {
 					},
 					input(event) {
 						vm.dirty = true;
+						vm.validate();
+					},
+					blur(event) {
+						vm.touched = true;
 						vm.validate();
 					}
 				}
@@ -315,11 +326,18 @@ export default {
 				if (this.isRange) {
 					this.current_cursor_index = 0;
 					this.current_selection_index = 0;
-					this.cursor_value = [
+					this.selection_value = [
 						moment(this.value[0]).startOf('day').format(),
 						moment(this.value[1]).endOf('day').format()
 					];
 				}
+				else {
+					this.selection_value = [
+						moment(this.value).startOf('day').format(),
+						moment(this.value).endOf('day').format()
+					];
+				}
+				this.resetCursors();
 				this.is_open = true;
 			}
 		},
@@ -552,17 +570,18 @@ export default {
 <style lang="less">
 // Default variables
 @black: #000;
-@calendar-unit: 32px;
+@calendar-unit: 2.5em;
 @control-color: #2196F3;
-@control-height: 40px;
+@control-height: 2.5em;
+@control-radius: 3px;
+@font-size: 16px;
 @gray-05: #F2F2F2;
 @gray-10: #E5E5E5;
-@form-icon-size: 20px;
 @layer-control: 300;
 @white: #FFF;
 
 // Import theme
-@import (optional, reference) 'theme.less';
+@import (optional, reference) '~theme';
 
 .input-wrapper {
 	border-radius: @control-radius;
@@ -573,73 +592,53 @@ export default {
 	vertical-align: middle;
 	width: 100%;
 
-	input[type='text'] {
-		flex: 1 0 0;
-		background-color: white;
-		border: none;
-		font-family: @font-body;
-		font-size: @font-size-normal;
-		height: @control-height;
-		line-height: @control-height;
-		padding: 0 10px;
-		width: 100%;
-
-		&:focus {
-			box-shadow: none;
-			outline: none;
-		}
-	}
-
-	input[disabled='disabled'] {
-		background-color: #E5E5E5;
-		color: #AAA;
-	}
-
 	.helper {
-		flex: 0 0 @control-height;
-		height: @control-height;
-		line-height: @control-height + @control-border-stroke;
-		min-width: @control-height;
-		padding: 0 10px;
+		background-color: #E5E5E5;
+		flex: 0 0 auto;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		min-width: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;
 
-		i::before {
-			font-size: @form-icon-size;
-			height: @control-height;
-			line-height: @control-height;
-		}
-
-		&.string {
-			padding: 0 15px;
+		svg {
+			height: 66%;
+			margin: 16.5%;
+			width: 66%;
 		}
 	}
+}
 
-	&:focus {
-		.form-focus;
-		outline: none;
-	}
+input[type='text'] {
+	background-color: @control-bkg-color;
+	border: 0;
+	flex: 1 0 0;
+	font-size: @font-size;
+	height: calc(@control-height - (@control-border-stroke * 2));
+	padding: 0 @control-padding;
+	width: 100%;
+}
+
+input[disabled='disabled'] {
+	background-color: #E5E5E5;
+	color: #A6A6A6;
 }
 
 .datepicker {
 	cursor: pointer;
+	font-size: @font-size;
 	position: relative;
-
-	&:focus {
-		box-shadow: none;
-		outline: none;
-	}
 
 	input {
 		cursor: pointer;
 		opacity: 0;
+		padding: 0;
 		position: absolute;
-		width: 100%;
+		width: calc(100% - (@control-border-stroke * 2));
 	}
 
 	.display {
-		flex: 1 0 auto;
-		height: @control-height;
-		line-height: @control-height;
+		flex: 1 0 0;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		line-height: calc(@control-height - (@control-border-stroke * 2));
 		padding: 0 10px;
 	}
 
@@ -649,25 +648,28 @@ export default {
 		background-color: white;
 		left: 3px;
 		overflow: hidden;
-		padding: 3px;
+		padding: 0.5em;
 		position: absolute;
-		top: @control-height;
+		top: calc(@control-height - (@control-border-stroke * 2));
 		white-space: nowrap;
 		z-index: @layer-control;
 	}
 
 	.presets {
 		display: inline-block;
+		font-size: @font-size;
 		height: 100%;
-		padding: 5px;
+		padding-right: 0.125em;
 		vertical-align: top;
 		width: 160px;
 
 		h2 {
 			color: @black;
-			font-size: 1.4rem;
-			height: @calendar-unit;
-			line-height: @calendar-unit;
+			font-size: 1em;
+			height: 2.125em;
+			line-height: 2.125em;
+			margin: 0;
+			padding: 0 10px;
 			text-transform: uppercase;
 		}
 
@@ -678,9 +680,9 @@ export default {
 
 			li {
 				border-top: 1px solid @gray-05;
-				font-size: 1.3rem;
-				height: @calendar-unit;
-				line-height: @calendar-unit;
+				font-size: 0.875em;
+				height: 2.125em;
+				line-height: 2.125em;
 				padding: 0 10px;
 
 				&:hover {
@@ -690,18 +692,36 @@ export default {
 		}
 
 		button {
-			font-size: 1.4rem;
-			margin-top: 10px;
+			background-color: @control-color;
+			border: 0;
+			border-radius: @control-radius;
+			color: @white;
+			font-size: @font-size;
+			height: 2.5em;
+			margin-top: 11px;
 			text-transform: uppercase;
 			width: 100%;
+
+			&:hover {
+				background-color: lighten(@control-color, 15%);
+			}
+
+			&:active {
+				background-color: darken(@control-color, 5%);
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 3px fade(@black, 10%);
+			}
 		}
 	}
 
 	.calendar {
 		border: 1px solid @gray-10;
 		display: inline-block;
+		font-size: 0.75em;
 		vertical-align: top;
-		width: (@calendar-unit * 7) + 10px;
+		width: calc((@calendar-unit * 7) + 10px);
 
 		.calendar-header {
 			background-color: @control-color;
@@ -720,9 +740,10 @@ export default {
 					flex: 0 0 @calendar-unit;
 					text-align: center;
 
-					i::before {
-						line-height: @calendar-unit;
-						font-size: @form-icon-size;
+					svg {
+						height: 60%;
+						margin: 20%;
+						width: 60%;
 					}
 
 					&:hover {
@@ -739,9 +760,9 @@ export default {
 			.days-of-week {
 				display: flex;
 				flex-direction: row;
-				font-size: 13px;
 				height: @calendar-unit;
 				line-height: @calendar-unit;
+				width: @calendar-unit * 7;
 
 				> div {
 					flex: 0 0 @calendar-unit;
@@ -765,8 +786,7 @@ export default {
 			.day {
 				border-radius: @control-radius;
 				cursor: pointer;
-				flex: 0 0 @calendar-unit;
-				font-size: 11px;
+				flex: 1 0 0;
 				text-align: center;
 
 				&:hover {

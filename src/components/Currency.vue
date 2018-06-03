@@ -113,7 +113,7 @@ export default {
 
 	.helper {
 		background-color: fade(@black, 10%);
-		line-height: calc(@control-height - (@control-border-stroke * 2));
+		line-height: @control-height;
 		min-width: @control-height;
 		padding: 0 1em;
 	}

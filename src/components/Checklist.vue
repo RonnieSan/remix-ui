@@ -1,9 +1,5 @@
 <template>
-	<div
-		class="checklist"
-		@focusin="focused = true"
-		@focusout="focused = false; touched = true; validate();"
-	>
+	<div class="checklist">
 		<div class="option" v-for="(option, index) in options">
 			<r-checkbox
 				:ref="'input_' + index"

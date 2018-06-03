@@ -9,6 +9,8 @@ import Checkbox from './components/Checkbox';
 import Checklist from './components/Checklist';
 import Code from './components/Code';
 import Currency from './components/Currency';
+import Datepicker from './components/Datepicker';
+import MultiSelect from './components/MultiSelect';
 
 // Import layout elements
 import Column from './components/Column';
@@ -26,7 +28,9 @@ export {
 	Code,
 	Column,
 	Currency,
+	Datepicker,
 	Grid,
+	MultiSelect,
 	Row,
 };
 
@@ -40,6 +44,8 @@ export default {
 		Vue.component('rChecklist', Checklist);
 		Vue.component('rCode', Code);
 		Vue.component('rCurrency', Currency);
+		Vue.component('rDatepicker', Datepicker);
+		Vue.component('rMultiSelect', MultiSelect);
 		
 		Vue.component('column', Column);
 		Vue.component('row', Row);
