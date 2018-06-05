@@ -66,6 +66,18 @@
 							</div>
 
 							<div class="control-group">
+								<label class="control-label">Select:</label>
+								<div class="controls">
+									<div class="field">
+										<r-select
+											v-model="select"
+											:options="select_options"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Multi-Select:</label>
 								<div class="controls">
 									<div class="field">
@@ -76,7 +88,6 @@
 									</div>
 								</div>
 							</div>
-							
 
 						</column>
 						<spacer size="50px"/>
@@ -105,6 +116,70 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<label class="control-label">Text Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-text
+											v-model="text"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Email Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-text
+											v-model="email"
+											type="email"
+										><div class="helper" slot="left"><icon type="email" size="18"/></div></r-text>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Text Input with Mask:</label>
+								<div class="controls">
+									<div class="field">
+										<r-text
+											v-model="phone"
+											mask="(###) ###-####"
+										><div class="helper" slot="left"><icon type="phone" size="18"/></div></r-text>
+									</div>
+								</div>
+							</div>
+
+							<div class="icons">
+								<icon type="home" size="48"/>
+								<icon type="home" size="36"/>
+								<icon type="home" size="24"/>
+								<icon type="home" size="18"/>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Multi-Text Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-multi-text
+											v-model="multi_text"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Pillbox:</label>
+								<div class="controls">
+									<div class="field">
+										<r-pillbox
+											v-model="pillbox"
+										/>
+									</div>
+								</div>
+							</div>
+
 						</column>
 					</row>
 				</grid>
@@ -125,6 +200,12 @@ export default {
 				'Blue'
 			],
 			date : ['2018-01-01', '2018-01-01'],
+			select : [],
+			select_options : [
+				'Red',
+				'Green',
+				'Blue'
+			],
 			multi_select : [],
 			multi_select_options : [
 				'Red',
@@ -132,7 +213,12 @@ export default {
 				'Blue'
 			],
 			number : 1,
-			password : ''
+			password : '',
+			text : '',
+			email : '',
+			phone : '',
+			multi_text : [],
+			pillbox : []
 		};
 	}
 };

@@ -99,12 +99,12 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
-@black: #000;
+@control-bkg-color: #FFF;
 @control-border-stroke: 1px;
 @control-border-color: #CCC;
-@control-color: #1F73D6;
+@control-color: #2196F3;
 @control-height: 2.5em;
 @control-radius: 3px;
 @font-size: 16px;
@@ -133,11 +133,12 @@ input[type='checkbox'] {
 	width: calc(@control-height * 0.6);
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-tap-highlight-color: transparent;
-
-	&:focus {
-		box-shadow: 0 0 0 3px fade(@black, 10%);
-	}
 }
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
+};
 
 .checkbox-wrapper::before {
 	color: @control-bkg-color;

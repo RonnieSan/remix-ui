@@ -8,7 +8,7 @@
 export default {};
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
 @gutter-size: 20px;
 

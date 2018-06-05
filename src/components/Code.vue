@@ -128,7 +128,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
 @control-border-color: #CCC;
 @control-border-stroke: 1px;

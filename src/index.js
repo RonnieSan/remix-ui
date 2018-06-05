@@ -12,8 +12,15 @@ import Code from './components/Code';
 import Currency from './components/Currency';
 import Datepicker from './components/Datepicker';
 import MultiSelect from './components/MultiSelect';
+import MultiText from './components/MultiText';
 import NumberInput from './components/Number';
 import Password from './components/Password';
+import Pillbox from './components/Pillbox';
+import Select from './components/Select';
+import Text from './components/Text';
+
+// Import Icons
+import Icon from './components/Icon';
 
 // Import layout elements
 import Spacer from './components/Spacer';
@@ -35,11 +42,16 @@ export {
 	Datepicker,
 	Form,
 	Grid,
+	Icon,
 	MultiSelect,
+	MultiText,
 	Number,
 	Password,
+	Pillbox,
 	Row,
-	Spacer
+	Select,
+	Spacer,
+	Text
 };
 
 // Export the package
@@ -55,8 +67,14 @@ export default {
 		Vue.component('rCurrency', Currency);
 		Vue.component('rDatepicker', Datepicker);
 		Vue.component('rMultiSelect', MultiSelect);
+		Vue.component('rMultiText', MultiText);
 		Vue.component('rNumber', NumberInput);
 		Vue.component('rPassword', Password);
+		Vue.component('rPillbox', Pillbox);
+		Vue.component('rSelect', Select);
+		Vue.component('rText', Text);
+
+		Vue.component('icon', Icon);
 		
 		Vue.component('spacer', Spacer);
 		Vue.component('column', Column);

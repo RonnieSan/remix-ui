@@ -170,10 +170,10 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
 @control-height: 2.5em;
-@control-padding: 0.75em;
+@control-padding: 0.625em;
 @layer-popup: 400;
 
 // Import custom variables

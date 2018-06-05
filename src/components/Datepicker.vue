@@ -12,7 +12,7 @@
 				v-on="listeners"
 			/>
 			<div class="display">{{displayValue}}</div>
-			<div class="helper"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+			<div class="helper"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
 			<transition name="dropfade">
 				<div class="calendar-wrapper" v-if="is_open" v-on-clickaway="closeCalendar">
 					<div class="presets" v-if="isRange">
@@ -575,25 +575,27 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
-@black: #000;
+@control-bkg-color: #FFF;
 @calendar-unit: 2.5em;
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
 @control-color: #2196F3;
 @control-height: 2.5em;
+@control-helper-bkg-color: #E5E5E5;
+@control-helper-color: #000;
+@control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@gray-05: #F2F2F2;
-@gray-10: #E5E5E5;
 @layer-control: 300;
-@white: #FFF;
 
 // Import theme
 @import (optional, reference) '~theme';
 
 .input-wrapper {
 	border-radius: @control-radius;
-	background-color: @white;
+	background-color: #FFF;
 	border: @control-border-stroke solid @control-border-color;
 	display: inline-flex;
 	overflow: hidden;
@@ -601,7 +603,8 @@ export default {
 	width: 100%;
 
 	.helper {
-		background-color: #E5E5E5;
+		background-color: @control-helper-bkg-color;
+		color: @control-helper-color;
 		flex: 0 0 auto;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		min-width: calc(@control-height - (@control-border-stroke * 2));
@@ -672,8 +675,9 @@ input[disabled='disabled'] {
 		width: 160px;
 
 		h2 {
-			color: @black;
+			color: #000;
 			font-size: 1em;
+			font-weight: bold;
 			height: 2.125em;
 			line-height: 2.125em;
 			margin: 0;
@@ -687,10 +691,10 @@ input[disabled='disabled'] {
 			padding: 0;
 
 			li {
-				border-top: 1px solid @gray-05;
+				border-top: 1px solid #F2F2F2;
 				font-size: 0.875em;
-				height: 2.125em;
-				line-height: 2.125em;
+				height: 2.1375em;
+				line-height: 2.1375em;
 				padding: 0 10px;
 
 				&:hover {
@@ -703,12 +707,17 @@ input[disabled='disabled'] {
 			background-color: @control-color;
 			border: 0;
 			border-radius: @control-radius;
-			color: @white;
+			color: #FFF;
 			font-size: @font-size;
 			height: 2.5em;
-			margin-top: 11px;
+			margin-top: 10px;
+			text-align: center;
 			text-transform: uppercase;
 			width: 100%;
+
+			.label {
+				width: 100%;
+			}
 
 			&:hover {
 				background-color: lighten(@control-color, 15%);
@@ -719,13 +728,13 @@ input[disabled='disabled'] {
 			}
 
 			&:focus {
-				box-shadow: 0 0 0 3px fade(@black, 10%);
+				box-shadow: 0 0 0 3px fade(#000, 10%);
 			}
 		}
 	}
 
 	.calendar {
-		border: 1px solid @gray-10;
+		border: 1px solid #E5E5E5;
 		display: inline-block;
 		font-size: 0.75em;
 		vertical-align: top;
@@ -733,7 +742,7 @@ input[disabled='disabled'] {
 
 		.calendar-header {
 			background-color: @control-color;
-			color: @white;
+			color: #FFF;
 			padding: 5px 5px 0;
 			
 			.month {
@@ -780,7 +789,7 @@ input[disabled='disabled'] {
 		}
 
 		.calendar-body {
-			background-color: @white;
+			background-color: #FFF;
 			padding: 5px;
 			
 			.week {
@@ -798,13 +807,13 @@ input[disabled='disabled'] {
 				text-align: center;
 
 				&:hover {
-					background-color: @gray-05;
+					background-color: #F2F2F2;
 				}
 
 				&.in-range {
 					border-radius: 0;
 					background-color: fade(@control-color, 35%);
-					color: @white;
+					color: #FFF;
 
 					&:hover {
 						background-color: fade(@control-color, 45%);
@@ -812,7 +821,7 @@ input[disabled='disabled'] {
 				}
 
 				&.dim {
-					color: @gray-15;
+					color: #D8D8D8;
 
 					&.in-range {
 						color: fade(@control-color, 40%);
@@ -821,7 +830,7 @@ input[disabled='disabled'] {
 
 				&.selected {
 					background-color: @control-color;
-					color: @white;
+					color: #FFF;
 				}
 
 				&.range-start {

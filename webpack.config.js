@@ -91,7 +91,8 @@ module.exports = {
 				loader: 'file-loader',
 				options: {
 					limit: 10000,
-					name: '/assets/fonts/[name].[hash:7].[ext]'
+					name: '/assets/fonts/[name].[hash:7].[ext]',
+					outputPath : 'fonts/'
 				}
 			}
 		]

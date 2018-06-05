@@ -1,61 +1,57 @@
 <template>
 	<div
-		class="input-wrapper currency"
+		tabindex="-1"
+		class="input-wrapper"
 	>
-		<slot name="left">
-			<div class="helper">$</div>
-		</slot>
-		<input
-			type="text"
+		<slot name="left"/>
+		<text-input
 			ref="input"
-			:name="name"
+			:allowed="allowed"
 			:disabled="disabled"
-			v-model="string_value"
-			v-money="settings"
+			:filter="filter"
+			:mask="mask"
+			:name="name"
+			:number="number"
+			:output-mask="outputMask"
+			:placeholder="placeholder"
+			:type="type"
+			:value="value"
 			v-on="listeners"
-			@blur=""
-		>
-		<slot name="right"></slot>
+		/>
+		<slot name="right"/>
 	</div>
 </template>
 
 <script>
-import { VMoney } from 'v-money';
+import TextInput from './TextInput';
 import formField from '../mixins/formField';
 
 export default {
 	data() {
 		return {
-			string_value : parseFloat(this.value).toFixed(2)
+			focused : false
 		};
 	},
 	props : {
-		value : Number,
+		allowed : String,
 		disabled : {
 			type : Boolean,
 			default : false
 		},
-		settings : {
-			type : Object,
-			default() {
-				return {
-					decimal : '.',
-					thousands : ',',
-					prefix : '',
-					suffix : '',
-					precision : 2,
-					masked : false
-				};
-			}
+		filter : Function,
+		mask : String,
+		number : Boolean,
+		outputMask : {
+			type : Boolean,
+			default : false
 		},
-		symbol : {
-			type : String,
-			default : '$'
-		}
+		placeholder : String,
+		type : String,
+		value : [String, Number]
 	},
 	computed : {
 		listeners() {
-			let vm = this;
+			const vm = this;
 			return Object.assign(
 				{},
 				this.$listeners,
@@ -74,18 +70,16 @@ export default {
 		}
 	},
 	methods : {
-		inputHandler(event) {
-			let value = parseFloat(this.string_value.replace(/[^0-9\\.-]/g, ''));
+		inputHandler(value) {
 			this.$emit('input', value);
-			this.validate();
 		}
-	},
-	directives : {
-		'money' : VMoney
 	},
 	mixins : [
 		formField
-	]
+	],
+	components : {
+		TextInput
+	}
 };
 </script>
 
@@ -105,9 +99,9 @@ export default {
 // Import themes
 @import (optional, reference) '~theme';
 
-.input-wrapper.currency {
-	border: @control-border-stroke solid @control-border-color;
+.input-wrapper {
 	border-radius: @control-radius;
+	border: @control-border-stroke solid @control-border-color;
 	display: inline-flex;
 	overflow: hidden;
 	vertical-align: middle;
@@ -115,24 +109,11 @@ export default {
 
 	.helper {
 		background-color: @control-helper-bkg-color;
-		color: @control-helper-color;
 		flex: 0 0 auto;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		line-height: calc(@control-height - (@control-border-stroke * 2));
 		min-width: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;
 	}
-}
-
-.currency input[type='text'] {
-	background-color: @control-bkg-color;
-	border: 0;
-	flex: 1 0 0;
-	font-family: @mono-font;
-	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
-	padding: 0 @control-padding;
-	text-align: right;
-	width: 100%;
 }
 </style>

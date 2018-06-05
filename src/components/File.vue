@@ -99,12 +99,12 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
-@color-primary: #2375B9;
+@color-primary: #2196F3;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
-@control-color: #4285F9;
+@control-color: #2196F3;
 @control-height: 40px;
 @ease-out-quad: cubic-bezier(0.250,  0.460, 0.450, 0.940);
 @white: #FFF;

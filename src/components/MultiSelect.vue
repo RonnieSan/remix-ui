@@ -149,10 +149,9 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // Default variables
-@color-body: #333;
-@control-bkg-color: @white;
+@control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #4285F9;
@@ -160,10 +159,7 @@ export default {
 @control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@gray-10: #E5E5E5;
-@gray-35: #A6A6A6;
 @layer-control: 300;
-@white: #FFF;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -213,7 +209,7 @@ export default {
 			padding: 0 @control-padding;
 		}
 
-		.option {
+		/deep/ .option {
 			padding: 0 @control-padding;
 
 			&:hover {
