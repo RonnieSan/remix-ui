@@ -12,7 +12,7 @@
 				v-on="listeners"
 			/>
 			<div class="display">{{displayValue}}</div>
-			<div class="helper"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
+			<div class="helper"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
 			<transition name="dropfade">
 				<div class="calendar-wrapper" v-if="is_open" v-on-clickaway="closeCalendar">
 					<div class="presets" v-if="isRange">
@@ -589,6 +589,7 @@ export default {
 @control-radius: 3px;
 @font-size: 16px;
 @layer-control: 300;
+@mobile-window-max: 767px;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -607,13 +608,13 @@ export default {
 		color: @control-helper-color;
 		flex: 0 0 auto;
 		height: calc(@control-height - (@control-border-stroke * 2));
-		min-width: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;
+		width: calc(@control-height - (@control-border-stroke * 2));
 
 		svg {
-			height: 66%;
-			margin: 16.5%;
-			width: 66%;
+			height: 60%;
+			margin: 20%;
+			width: 60%;
 		}
 	}
 }
@@ -664,6 +665,12 @@ input[disabled='disabled'] {
 		top: calc(@control-height - (@control-border-stroke * 2));
 		white-space: nowrap;
 		z-index: @layer-control;
+
+		@media screen and (max-width: @mobile-window-max) {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+		}
 	}
 
 	.presets {
@@ -673,6 +680,12 @@ input[disabled='disabled'] {
 		padding-right: 0.125em;
 		vertical-align: top;
 		width: 160px;
+
+		@media screen and (max-width: @mobile-window-max) {
+			flex: 0 0 10em;
+			order: 3;
+			width: auto;
+		}
 
 		h2 {
 			color: #000;
@@ -739,6 +752,11 @@ input[disabled='disabled'] {
 		font-size: 0.75em;
 		vertical-align: top;
 		width: calc((@calendar-unit * 7) + 10px);
+
+		@media screen and (max-width: @mobile-window-max) {
+			flex: 0 0 calc((@calendar-unit * 7) + 10px);
+			margin-bottom: 0.5em;
+		}
 
 		.calendar-header {
 			background-color: @control-color;

@@ -159,7 +159,7 @@ export default {
 @control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@layer-control: 300;
+@layer-popup: 400;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -200,7 +200,7 @@ export default {
 		overflow-y: auto;
 		padding: @control-padding;
 		position: absolute;
-		z-index: @layer-control;
+		z-index: @layer-popup;
 
 		.selection-options {
 			font-size: 0.875em;
@@ -209,16 +209,21 @@ export default {
 			padding: 0 @control-padding;
 		}
 
+		.checklist {
+			flex-direction: column;
+		}
+
 		/deep/ .option {
+			margin: 0;
 			padding: 0 @control-padding;
 
 			&:hover {
 				background-color: tint(@control-color, 90%);
 			}
-		}
 
-		.checkbox-wrapper {
-			width: 100%;
+			.checkbox-wrapper {
+				width: 100%;
+			}
 		}
 	}
 }

@@ -16,7 +16,10 @@ import MultiText from './components/MultiText';
 import NumberInput from './components/Number';
 import Password from './components/Password';
 import Pillbox from './components/Pillbox';
+import Radio from './components/Radio';
+import RadioGroup from './components/RadioGroup';
 import Select from './components/Select';
+import Slider from './components/Slider';
 import Text from './components/Text';
 
 // Import Icons
@@ -48,8 +51,11 @@ export {
 	Number,
 	Password,
 	Pillbox,
+	Radio,
+	RadioGroup,
 	Row,
 	Select,
+	Slider,
 	Spacer,
 	Text
 };
@@ -71,7 +77,10 @@ export default {
 		Vue.component('rNumber', NumberInput);
 		Vue.component('rPassword', Password);
 		Vue.component('rPillbox', Pillbox);
+		Vue.component('rRadio', Radio);
+		Vue.component('rRadioGroup', RadioGroup);
 		Vue.component('rSelect', Select);
+		Vue.component('rSlider', Slider);
 		Vue.component('rText', Text);
 
 		Vue.component('icon', Icon);

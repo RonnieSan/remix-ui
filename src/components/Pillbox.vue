@@ -256,7 +256,7 @@ export default {
 		height: 2em;
 		line-height: 2em;
 		padding: 0 0 0 @control-padding;
-		margin: auto 0 auto 0.5em;
+		margin: 0.45em 0 0 0.45em;
 
 		&.selected {
 			background-color: darken(@control-color, 15%);

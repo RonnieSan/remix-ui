@@ -89,6 +89,17 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<label class="control-label">Slider:</label>
+								<div class="controls">
+									<div class="field">
+										<r-slider
+											v-model="slider"
+										/>
+									</div>
+								</div>
+							</div>
+
 						</column>
 						<spacer size="50px"/>
 						<column>
@@ -180,6 +191,18 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<label class="control-label">Radio Group:</label>
+								<div class="controls">
+									<div class="field">
+										<r-radio-group
+											v-model="radio"
+											:options="radio_options"
+										/>
+									</div>
+								</div>
+							</div>
+
 						</column>
 					</row>
 				</grid>
@@ -212,13 +235,20 @@ export default {
 				'Green',
 				'Blue'
 			],
+			slider : [25, 75],
 			number : 1,
 			password : '',
 			text : '',
 			email : '',
 			phone : '',
 			multi_text : [],
-			pillbox : []
+			pillbox : [],
+			radio : 1,
+			radio_options : [
+				{label : '<strong>One</strong>', value : 1},
+				{label : '<em>Two</em>', value : 2},
+				{label : 'Three', value : 3}
+			]
 		};
 	}
 };
