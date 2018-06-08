@@ -75,6 +75,8 @@ export default {
 	display: inline-flex;
 	padding: calc(@control-height * 0.2) 0;
 	position: relative;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
 }
 
 input[type='radio'] {
@@ -88,8 +90,6 @@ input[type='radio'] {
 	transition: border 100ms ease-out;
 	vertical-align: middle;
 	width: calc(@control-height * 0.6);
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-tap-highlight-color: transparent;
 
 	&:focus {
 		outline: none;
