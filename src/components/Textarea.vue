@@ -1,0 +1,144 @@
+<template>
+	<div
+		:style="{maxHeight}"
+		class="textarea-wrapper"
+	>
+		<div class="mirror">
+			<pre>{{value}}
+			</pre>
+		</div>
+		<textarea
+			ref="input"
+			:name="name"
+			:value="value"
+			v-on="listeners"
+		></textarea>
+	</div>
+</template>
+
+<script>
+import formField from '../mixins/formField';
+
+export default {
+	data() {
+		return {
+			focused : false
+		};
+	},
+	props : {
+		maxHeight : {
+			type : String,
+			default : '500px'
+		},
+		value : String
+	},
+	computed : {
+		listeners() {
+			const vm = this;
+			return Object.assign(
+				{},
+				this.$listeners,
+				{
+					input(event) {
+						vm.dirty = true;
+						vm.$emit('input', event.target.value);
+						vm.validate();
+					},
+					blur(event) {
+						vm.touched = true;
+						vm.validate();
+					}
+				}
+			);
+		}
+	},
+	mixins : [
+		formField
+	]
+};
+</script>
+
+<style lang="less" scoped>
+// Default variables
+@body-font: 'Roboto', Arial, Helvetica, Sans-serif;
+@control-bkg-color: #FFF;
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
+@font-size-small: 0.875em;
+@line-height: 1.5em;
+@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~theme';
+
+.textarea-wrapper {
+	border: @control-border-stroke solid @control-border-color;
+	border-radius: @control-radius;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	vertical-align: top;
+	width: 100%;
+
+	.mirror {
+		min-height: calc((@control-height * 3) - (@control-border-stroke * 2));
+		opacity: 0.5;
+		padding: 10px;
+		vertical-align: middle;
+		margin-bottom: -1.5em;
+		width: 100%;
+
+		pre {
+			font-family: @body-font;
+			font-size: @font-size;
+			line-height: @line-height;
+			white-space: pre-line;
+		}
+	}
+
+	textarea {
+		background-color: @control-bkg-color;
+		border: 0;
+		bottom: 0;
+		font-size: @font-size;
+		left: 0;
+		line-height: 1.5em;
+		margin-bottom: -1.5em;
+		min-height: calc((@control-height * 3) - (@control-border-stroke * 2));
+		padding: (@control-padding * 0.75) @control-padding;
+		position: absolute;
+		right: 0;
+		top: 0;
+		vertical-align: middle;
+		width: 100%;
+		z-index: 1;
+
+		&:focus {
+			box-shadow: 0;
+			outline: 0;
+		}
+	}
+
+	&.code {
+		overflow-x: hidden;
+
+		.mirror pre {
+			font-family: @mono-font;
+			font-size: @font-size-small;
+			white-space: pre;
+		}
+
+		textarea {
+			font-family: @mono-font;
+			font-size: @font-size-small;
+			min-width: 100%;
+			white-space: pre;
+			width: auto;
+		}
+	}
+}
+</style>

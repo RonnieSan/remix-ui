@@ -44,6 +44,17 @@
 							</div>
 
 							<div class="control-group">
+								<label class="control-label">Textarea:</label>
+								<div class="controls">
+									<div class="field">
+										<r-textarea
+											v-model="textarea"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Currency Field:</label>
 								<div class="controls">
 									<div class="field">
@@ -203,6 +214,17 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<label class="control-label">Toggle:</label>
+								<div class="controls">
+									<div class="field">
+										<r-toggle
+											v-model="toggle"
+										>The label</r-toggle>
+									</div>
+								</div>
+							</div>
+
 						</column>
 					</row>
 				</grid>
@@ -229,6 +251,7 @@ export default {
 				'Green',
 				'Blue'
 			],
+			textarea : '',
 			multi_select : [],
 			multi_select_options : [
 				'Red',
@@ -248,7 +271,8 @@ export default {
 				{label : '<strong>One</strong>', value : 1},
 				{label : '<em>Two</em>', value : 2},
 				{label : 'Three', value : 3}
-			]
+			],
+			toggle : false
 		};
 	}
 };

@@ -21,6 +21,8 @@ import RadioGroup from './components/RadioGroup';
 import Select from './components/Select';
 import Slider from './components/Slider';
 import Text from './components/Text';
+import Textarea from './components/Textarea';
+import Toggle from './components/Toggle';
 
 // Import Icons
 import Icon from './components/Icon';
@@ -57,7 +59,9 @@ export {
 	Select,
 	Slider,
 	Spacer,
-	Text
+	Text,
+	Textarea,
+	Toggle
 };
 
 // Export the package
@@ -82,6 +86,8 @@ export default {
 		Vue.component('rSelect', Select);
 		Vue.component('rSlider', Slider);
 		Vue.component('rText', Text);
+		Vue.component('rTextarea', Textarea);
+		Vue.component('rToggle', Toggle);
 
 		Vue.component('icon', Icon);
 		
