@@ -89,7 +89,6 @@ export default {
 		opacity: 0.5;
 		padding: 10px;
 		vertical-align: middle;
-		margin-bottom: -1.5em;
 		width: 100%;
 
 		pre {
@@ -107,7 +106,6 @@ export default {
 		font-size: @font-size;
 		left: 0;
 		line-height: 1.5em;
-		margin-bottom: -1.5em;
 		min-height: calc((@control-height * 3) - (@control-border-stroke * 2));
 		padding: (@control-padding * 0.75) @control-padding;
 		position: absolute;

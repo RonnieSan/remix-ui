@@ -35,6 +35,10 @@ import Grid from './components/Grid';
 
 // Import utilities
 import Autocomplete from './components/Autocomplete';
+import Validation from './components/Validation';
+
+// Import libraries
+import Validator from './lib/Validator';
 
 // Export components
 export {
@@ -61,7 +65,9 @@ export {
 	Spacer,
 	Text,
 	Textarea,
-	Toggle
+	Toggle,
+	Validation,
+	Validator
 };
 
 // Export the package
@@ -97,5 +103,6 @@ export default {
 		Vue.component('grid', Grid);
 		
 		Vue.component('rAutocomplete', Autocomplete);
+		Vue.component('rValidation', Validation);
 	}
 };

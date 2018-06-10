@@ -4,10 +4,10 @@
 			<r-radio
 				ref="input"
 				:name="name"
-				:value="option.value"
+				:value="option.value || option"
 				:model="value"
 				@change="changeHandler"
-			><span v-html="option.label"/></r-radio>
+			><span v-html="option.label || option"/></r-radio>
 		</div>
 	</div>
 </template>

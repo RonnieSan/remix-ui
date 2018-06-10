@@ -88,7 +88,7 @@ export default {
 		});
 
 		// Option defaults
-		this.settings.fontFamily          = this.options.fontFamily || 'Roboto Mono';
+		this.settings.fontFamily          = this.options.fontFamily || 'Consolas';
 		this.settings.fontSize            = this.options.fontSize || 14;
 		this.settings.highlightActiveLine = this.options.highlightActiveLine || false;
 		this.settings.highlightGutterLine = this.options.highlightGutterLine || false;

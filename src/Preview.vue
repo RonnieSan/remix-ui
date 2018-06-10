@@ -5,122 +5,47 @@
 				<grid>
 					<row>
 						<column>
-
-							<div class="control-group">
-								<label class="control-label">Checkbox:</label>
-								<div class="controls">
-									<div class="field">
-										<r-checkbox
-											value="Yellow"
-										/>
-									</div>
-								</div>
-							</div>
-							
-							<div class="control-group">
-								<label class="control-label">Checklist:</label>
-								<div class="controls">
-									<div class="field">
-										<r-checklist
-											v-model="colors"
-											:options="checklist_options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Code Editor:</label>
-								<div class="controls">
-									<div class="field">
-										<r-code
-											id="code-editor"
-											:options="{
-												fontFamily : 'Consolas'
-											}"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Textarea:</label>
-								<div class="controls">
-									<div class="field">
-										<r-textarea
-											v-model="textarea"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Currency Field:</label>
-								<div class="controls">
-									<div class="field">
-										<r-currency
-											v-model="currency"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Datepicker:</label>
-								<div class="controls">
-									<div class="field">
-										<r-datepicker
-											v-model="date"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Select:</label>
-								<div class="controls">
-									<div class="field">
-										<r-select
-											v-model="select"
-											:options="select_options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Multi-Select:</label>
-								<div class="controls">
-									<div class="field">
-										<r-multi-select
-											v-model="multi_select"
-											:options="multi_select_options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Slider:</label>
-								<div class="controls">
-									<div class="field">
-										<r-slider
-											v-model="slider"
-										/>
-									</div>
-								</div>
-							</div>
-
+							<h1>Remix UI Components</h1>
+							<hr>
 						</column>
-						<spacer size="50px"/>
+					</row>
+
+					<row>
 						<column>
 							
+							<h2>Standard HTML Components</h2>
+
 							<div class="control-group">
-								<label class="control-label">Number:</label>
+								<label class="control-label">Text Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-validation
+											ref="text_validation"
+											v-model="text_value"
+											:validator="validator"
+											:rules="[validator.rules.required]"
+										>
+											<r-text
+												name="text"
+												v-model="text_value"
+												@validate="$refs.text_validation.validate()"
+											>
+											<div class="helper" slot="right">
+												<icon type="comment" size="24"/>
+											</div>
+											</r-text>
+										</r-validation>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Number Input:</label>
 								<div class="controls">
 									<div class="field">
 										<r-number
-											v-model="number"
+											name="number"
+											v-model="number_value"
 										/>
 									</div>
 								</div>
@@ -131,72 +56,51 @@
 								<div class="controls">
 									<div class="field">
 										<r-password
-											v-model="password"
-											placeholder="Your password"
+											name="password"
+											v-model="password_value"
+										>
+										<div class="helper" slot="left">
+											<icon type="lock" size="24"/>
+										</div>
+										</r-password>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Textarea:</label>
+								<div class="controls">
+									<div class="field">
+										<r-textarea
+											name="textarea"
+											v-model="textarea_value"
+											max-height="300px"
 										/>
 									</div>
 								</div>
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Text Input:</label>
+								<label class="control-label">Select:</label>
 								<div class="controls">
 									<div class="field">
-										<r-text
-											v-model="text"
+										<r-select
+											name="select"
+											v-model="select_value"
+											:options="options"
 										/>
 									</div>
 								</div>
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Email Input:</label>
+								<label class="control-label">Checklist:</label>
 								<div class="controls">
 									<div class="field">
-										<r-text
-											v-model="email"
-											type="email"
-										><div class="helper" slot="left"><icon type="email" size="18"/></div></r-text>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Text Input with Mask:</label>
-								<div class="controls">
-									<div class="field">
-										<r-text
-											v-model="phone"
-											mask="(###) ###-####"
-										><div class="helper" slot="left"><icon type="phone" size="18"/></div></r-text>
-									</div>
-								</div>
-							</div>
-
-							<div class="icons">
-								<icon type="home" size="48"/>
-								<icon type="home" size="36"/>
-								<icon type="home" size="24"/>
-								<icon type="home" size="18"/>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Multi-Text Input:</label>
-								<div class="controls">
-									<div class="field">
-										<r-multi-text
-											v-model="multi_text"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Pillbox:</label>
-								<div class="controls">
-									<div class="field">
-										<r-pillbox
-											v-model="pillbox"
+										<r-checklist
+											name="checklist"
+											v-model="checklist_value"
+											:options="options"
 										/>
 									</div>
 								</div>
@@ -207,8 +111,102 @@
 								<div class="controls">
 									<div class="field">
 										<r-radio-group
-											v-model="radio"
-											:options="radio_options"
+											name="radio_group"
+											v-model="radio_group_value"
+											:options="options"
+										/>
+									</div>
+								</div>
+							</div>
+
+						</column>
+						<spacer size="100px"/>
+						<column>
+							
+							<h2>Extended Form Elements</h2>
+
+							<div class="control-group">
+								<label class="control-label">Currency:</label>
+								<div class="controls">
+									<div class="field">
+										<r-currency
+											name="currency"
+											v-model="currency_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Pillbox:</label>
+								<div class="controls">
+									<div class="field">
+										<r-pillbox
+											name="pillbox"
+											v-model="pillbox_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Datepicker:</label>
+								<div class="controls">
+									<div class="field">
+										<r-datepicker
+											name="datepicker"
+											v-model="datepicker_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Code Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-code
+											name="code"
+											id="code"
+											v-model="code_value"
+											max-height="300px"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Multi-Text:</label>
+								<div class="controls">
+									<div class="field">
+										<r-multi-text
+											name="multi_text"
+											v-model="multi_text_value"		
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Multi-Select:</label>
+								<div class="controls">
+									<div class="field">
+										<r-multi-select
+											name="multi_select"
+											v-model="multi_select_value"
+											:options="options"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Slider:</label>
+								<div class="controls">
+									<div class="field">
+										<r-slider
+											name="slider"
+											v-model="slider_value"
 										/>
 									</div>
 								</div>
@@ -219,8 +217,9 @@
 								<div class="controls">
 									<div class="field">
 										<r-toggle
-											v-model="toggle"
-										>The label</r-toggle>
+											name="toggle"
+											v-model="toggle_value"
+										>This is the value</r-toggle>
 									</div>
 								</div>
 							</div>
@@ -234,45 +233,41 @@
 </template>
 
 <script>
+import Validator from './lib/Validator';
+
 export default {
 	data() {
 		return {
-			currency : 5,
-			colors : [],
-			checklist_options : [
+			validator : new Validator(),
+			text_value : '',
+			number_value : 12345,
+			password_value : '',
+			textarea_value : '',
+			select_value : 'Red',
+			checklist_value : [],
+			radio_group_value : 'Red',
+			currency_value : 5.00,
+			pillbox_value : [],
+			datepicker_value : [
+				'2018-01-01',
+				'2018-01-31'
+			],
+			code_value : '',
+			multi_text_value : [],
+			multi_select_value : [],
+			slider_value : [
+				25,
+				75
+			],
+			toggle_value : true,
+			options : [
 				'Red',
+				'Purple',
+				'Blue',
 				'Green',
-				'Blue'
-			],
-			date : ['2018-01-01', '2018-01-01'],
-			select : [],
-			select_options : [
-				'Red',
-				'Green',
-				'Blue'
-			],
-			textarea : '',
-			multi_select : [],
-			multi_select_options : [
-				'Red',
-				'Green',
-				'Blue'
-			],
-			slider : [25, 75],
-			number : 1,
-			password : '',
-			text : '',
-			email : '',
-			phone : '',
-			multi_text : [],
-			pillbox : [],
-			radio : 1,
-			radio_options : [
-				{label : '<strong>One</strong>', value : 1},
-				{label : '<em>Two</em>', value : 2},
-				{label : 'Three', value : 3}
-			],
-			toggle : false
+				'Yellow',
+				'Orange'
+			]
 		};
 	}
 };
@@ -297,7 +292,7 @@ html, body {
 }
 
 .container {
-	padding: 0 50px;
+	padding: 50px 100px;
 	width: 100%;
 }
 

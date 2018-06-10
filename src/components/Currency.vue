@@ -135,4 +135,9 @@ export default {
 	text-align: right;
 	width: 100%;
 }
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
+}
 </style>

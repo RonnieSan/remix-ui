@@ -3,7 +3,7 @@
 		tabindex="-1"
 		class="input-wrapper"
 	>
-		<slot name="left"/>
+		<slot name="left"></slot>
 		<text-input
 			ref="input"
 			:allowed="allowed"
@@ -18,7 +18,7 @@
 			:value="value"
 			v-on="listeners"
 		/>
-		<slot name="right"/>
+		<slot name="right"></slot>
 	</div>
 </template>
 

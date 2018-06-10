@@ -1,5 +1,6 @@
 <template>
 	<div class="input-wrapper">
+		<slot name="left"></slot>
 		<input type="password"
 			ref="input"
 			:name="name"
@@ -7,6 +8,7 @@
 			:placeholder="placeholder"
 			v-on="listeners"
 		>
+		<slot name="right"></slot>
 	</div>
 </template>
 
@@ -92,5 +94,10 @@ input[type='password'] {
 	height: calc(@control-height - (@control-border-stroke * 2));
 	padding: 0 @control-padding;
 	width: 100%;
+}
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
 }
 </style>

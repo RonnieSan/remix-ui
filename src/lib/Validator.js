@@ -16,7 +16,7 @@ import {
 	uniqueId
 } from 'lodash';
 
-export default class Validator {
+class Validator {
 	constructor(options = {}) {
 		// Create a container for the fields
 		this.fields = {};
@@ -131,8 +131,6 @@ export default class Validator {
 		if (options.rules) {
 			merge(this.rules, options.rules);
 		}
-
-		return this;
 	}
 
 	// Add a new field to the validator
@@ -185,3 +183,5 @@ export default class Validator {
 			});
 	}
 }
+
+export default Validator;

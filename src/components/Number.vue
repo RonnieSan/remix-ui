@@ -116,4 +116,9 @@ input[type='number'] {
 		margin: 0;
 	}
 }
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
+}
 </style>

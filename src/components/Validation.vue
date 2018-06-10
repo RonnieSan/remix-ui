@@ -1,9 +1,11 @@
 <template>
 	<div :class="{'invalid' : errors.length > 0, 'valid' : isValid}">
-		<slot :errors="errors"></slot>
-		<ul v-if="errors.length > 0" class="validation-errors">
-			<li v-for="error in errors">{{error}}</li>
-		</ul>
+		<slot></slot>
+		<slot name="errors" :errors="errors">
+			<ul v-if="errors.length > 0" class="validation-errors">
+				<li v-for="error in errors">{{error}}</li>
+			</ul>
+		</slot>
 	</div>
 </template>
 
@@ -118,7 +120,7 @@ export default {
 	font-size: 100%;
 	font: inherit;
 	list-style: none;
-	margin: 0;
+	margin: 0.25em 0 0;
 	padding: 0;
 	vertical-align: baseline;
 
