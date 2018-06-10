@@ -11,6 +11,8 @@ import Checklist from './components/Checklist';
 import Code from './components/Code';
 import Currency from './components/Currency';
 import Datepicker from './components/Datepicker';
+import FileInput from './components/FileInput';
+import Markdown from './components/Markdown';
 import MultiSelect from './components/MultiSelect';
 import MultiText from './components/MultiText';
 import NumberInput from './components/Number';
@@ -35,6 +37,7 @@ import Grid from './components/Grid';
 
 // Import utilities
 import Autocomplete from './components/Autocomplete';
+import Modal from './components/Modal';
 import Validation from './components/Validation';
 
 // Import libraries
@@ -49,9 +52,12 @@ export {
 	Column,
 	Currency,
 	Datepicker,
+	FileInput,
 	Form,
 	Grid,
 	Icon,
+	Markdown,
+	Modal,
 	MultiSelect,
 	MultiText,
 	Number,
@@ -82,6 +88,8 @@ export default {
 		Vue.component('rCode', Code);
 		Vue.component('rCurrency', Currency);
 		Vue.component('rDatepicker', Datepicker);
+		Vue.component('rFile', FileInput);
+		Vue.component('rMarkdown', Markdown);
 		Vue.component('rMultiSelect', MultiSelect);
 		Vue.component('rMultiText', MultiText);
 		Vue.component('rNumber', NumberInput);
@@ -103,6 +111,7 @@ export default {
 		Vue.component('grid', Grid);
 		
 		Vue.component('rAutocomplete', Autocomplete);
+		Vue.component('modal', Modal);
 		Vue.component('rValidation', Validation);
 	}
 };

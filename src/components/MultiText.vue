@@ -213,6 +213,7 @@ export default {
 	width: 100%;
 
 	.input-row {
+		background-color: @control-bkg-color;
 		border-top: 1px solid #E5E5E5;
 		box-sizing: content-box;
 		display: flex;

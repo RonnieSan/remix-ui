@@ -1,5 +1,11 @@
 <template>
 	<div id="wrapper">
+		<modal ref="modal" max-width="600px">
+			<div class="padded">
+				<h2>My Modal</h2>
+				<p>Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+			</div>
+		</modal>
 		<div class="container">
 			<r-form>
 				<grid>
@@ -119,6 +125,28 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<div class="controls">
+									<div class="field">
+										<button type="button" @click="$refs.modal.open()">
+											<span class="label">Open Modal</span>
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">File Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-file
+											name="file"
+											v-model="file_value"
+										/>
+									</div>
+								</div>
+							</div>
+
 						</column>
 						<spacer size="100px"/>
 						<column>
@@ -224,6 +252,18 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<label class="control-label">Markdown:</label>
+								<div class="controls">
+									<div class="field">
+										<r-markdown
+											name="markdown"
+											v-model="markdown_value"
+										/>
+									</div>
+								</div>
+							</div>
+
 						</column>
 					</row>
 				</grid>
@@ -246,6 +286,7 @@ export default {
 			select_value : 'Red',
 			checklist_value : [],
 			radio_group_value : 'Red',
+			file_value : null,
 			currency_value : 5.00,
 			pillbox_value : [],
 			datepicker_value : [
@@ -260,13 +301,13 @@ export default {
 				75
 			],
 			toggle_value : true,
+			markdown_value : '',
 			options : [
 				'Red',
 				'Purple',
 				'Blue',
 				'Green',
-				'Yellow',
-				'Orange'
+				'Yellow'
 			]
 		};
 	}
@@ -274,7 +315,7 @@ export default {
 </script>
 
 <style lang="less">
-// @import './theme.less';
+@import './theme.less';
 
 *, *::before, *::after {
 	box-sizing: border-box;
@@ -292,11 +333,21 @@ html, body {
 }
 
 .container {
-	padding: 50px 100px;
+	margin: 30px auto;
+	max-width: 1240px;
+	padding: 0 20px;
 	width: 100%;
 }
 
 .control-group {
 	margin-bottom: 1em;
+}
+
+.padded {
+	padding: 1em 2em;
+}
+
+.modal-window {
+	border-radius: 5px;
 }
 </style>

@@ -588,7 +588,7 @@ export default {
 @control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@layer-popup: 400;
+@popup-layer: 400;
 @mobile-window-max: 767px;
 
 // Import theme
@@ -664,7 +664,7 @@ input[disabled='disabled'] {
 		position: absolute;
 		top: calc(@control-height - (@control-border-stroke * 2));
 		white-space: nowrap;
-		z-index: @layer-popup;
+		z-index: @popup-layer;
 
 		@media screen and (max-width: @mobile-window-max) {
 			display: flex;

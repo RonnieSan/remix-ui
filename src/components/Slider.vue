@@ -339,9 +339,9 @@ export default {
 // Default variables
 @control-color: #2196F3;
 @control-height: 2.5em;
+@control-layer: 300;
 @control-radius: 3px;
 @font-size: 16px;
-@layer-control: 300;
 @slider-bar-size: 0.25em;
 @slider-handle-size: 1.5em;
 
@@ -355,7 +355,7 @@ export default {
 	padding: ((@control-height - @slider-bar-size) / 2) (@slider-handle-size / 2);
 	position: relative;
 	width: 100%;
-	z-index: @layer-control;
+	z-index: @control-layer;
 	
 	.handle {
 		background-color: @control-color;

@@ -159,7 +159,7 @@ export default {
 @control-padding: 0.625em;
 @control-radius: 3px;
 @font-size: 16px;
-@layer-popup: 400;
+@popup-layer: 400;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -200,7 +200,7 @@ export default {
 		overflow-y: auto;
 		padding: @control-padding;
 		position: absolute;
-		z-index: @layer-popup;
+		z-index: @popup-layer;
 
 		.selection-options {
 			font-size: 0.875em;

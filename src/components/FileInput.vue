@@ -1,15 +1,17 @@
 <template>
 	<div class="file-wrapper">
-		<input type="text"
-			class="label"
-			ref="input"
-			v-model="value"
-			:name="name"
-			:disabled="disabled"
-			:placeholder="placeholder"
-		/>
-		<div class="button">
-			<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
+		<div class="inner">
+			<input type="text"
+				class="label"
+				ref="input"
+				v-model="value"
+				:name="name"
+				:disabled="disabled"
+				:placeholder="placeholder"
+			/>
+			<div class="button">
+				<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
+			</div>
 		</div>
 		<form enctype="multipart/form-data" novalidate>
 			<input
@@ -49,7 +51,7 @@ export default {
 	props : {
 		accept : {
 			type : String,
-			default : '.*'
+			default : '*/*'
 		},
 		disabled : Boolean,
 		name : String,
@@ -101,60 +103,91 @@ export default {
 
 <style lang="less" scoped>
 // Default variables
-@color-primary: #2196F3;
+@control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #2196F3;
 @control-height: 40px;
-@ease-out-quad: cubic-bezier(0.250,  0.460, 0.450, 0.940);
-@white: #FFF;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
 
 // Import theme
-@import (optional, reference) 'theme.less';
+@import (optional, reference) '~theme';
 
-.upload-wrapper {
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.file-wrapper {
 	border-radius: @control-radius;
 	border: @control-border-stroke solid @control-border-color;
-	display: inline-flex;
-	flex-direction: row;
+	display: inline-block;
 	overflow: hidden;
 	position: relative;
 	width: 100%;
 
+	.inner {
+		display: flex;
+		flex-direction: row;
+	}
+
 	.label {
 		flex: 1 0 auto;
-		height: @control-height;
-		line-height: @control-height;
-		padding: 0 10px;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		line-height: calc(@control-height - (@control-border-stroke * 2));
+		padding: 0 @control-padding;
 	}
 
 	.button {
-		background-color: @color-primary;
-		color: @white;
-		flex: 0 0 @control-height;
-		height: @control-height;
-		line-height: @control-height;
+		background-color: @control-color;
+		color: #FFF;
+		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+		height: calc(@control-height - (@control-border-stroke * 2));
+		line-height: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;
-		transition: background-color 150ms @ease-out-quad;
-		width: @control-height;
+		transition: background-color 150ms ease-out;
 	}
 
 	.spin::before {
 		animation: spin 750ms infinite linear;
 	}
 
-	input[type='file'] {
-		cursor: pointer;
-		height: 100%;
-		left: 0;
-		opacity: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-
 	&:hover .button {
-		background-color: darken(@control-color, 15%);
+		background-color: lighten(@control-color, 15%);
 	}
+}
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
+}
+
+input[type='text'] {
+	background-color: @control-bkg-color;
+	border: 0;
+	flex: 1 0 0 !important;
+	font-size: @font-size;
+	height: calc(@control-height - (@control-border-stroke * 2));
+	padding: 0 @control-padding;
+}
+
+input[type='file'] {
+	cursor: pointer;
+	height: 100%;
+	width: 100%;
+}
+
+form {
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
 }
 </style>

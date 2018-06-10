@@ -174,7 +174,7 @@ export default {
 // Default variables
 @control-height: 2.5em;
 @control-padding: 0.625em;
-@layer-popup: 400;
+@popup-layer: 400;
 
 // Import custom variables
 @import (optional, reference) '~theme';
@@ -193,7 +193,7 @@ export default {
 		min-width: 250px;
 		position: absolute;
 		top: 100%;
-		z-index: @layer-popup;
+		z-index: @popup-layer;
 
 		.option {
 			cursor: default;
