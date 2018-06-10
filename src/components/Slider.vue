@@ -322,7 +322,7 @@ export default {
 		this.selected_handle = this.$refs.min;
 		window.addEventListener('mouseup', this.mouseupHandler);
 		window.addEventListener('touchend', this.mouseupHandler);
-		this.$el.addEventListener('onresize', this.resizeHandler);
+		window.addEventListener('resize', this.resizeHandler);
 		this.$nextTick(() => {
 			this.setHandlePosition();
 		});
@@ -330,7 +330,7 @@ export default {
 	beforeDestroy() {
 		window.removeEventListener('mouseup', this.mouseupHandler);
 		window.removeEventListener('touchend', this.mouseupHandler);
-		this.$el.addEventListener('onresize', this.resizeHandler);
+		window.removeEventListener('resize', this.resizeHandler);
 	}
 };
 </script>

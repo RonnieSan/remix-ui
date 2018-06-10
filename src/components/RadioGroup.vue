@@ -67,6 +67,7 @@ export default {
 
 .radio-group {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-start;
 
 	&:focus {

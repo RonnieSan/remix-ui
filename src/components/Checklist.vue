@@ -96,6 +96,7 @@ export default {
 
 .checklist {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-start;
 
 	&:focus {
