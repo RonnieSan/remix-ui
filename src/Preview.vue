@@ -147,6 +147,16 @@
 								</div>
 							</div>
 
+							<div class="control-group">
+								<div class="controls">
+									<div class="field">
+										<button type="button" @click="$toast.success('Yay!')">
+											<span class="label">Fire Toast</span>
+										</button>
+									</div>
+								</div>
+							</div>
+
 						</column>
 						<spacer size="100px"/>
 						<column>
@@ -315,7 +325,8 @@ export default {
 </script>
 
 <style lang="less">
-@import './theme.less';
+// @import './theme.less';
+@import './styles/toast.less';
 
 *, *::before, *::after {
 	box-sizing: border-box;

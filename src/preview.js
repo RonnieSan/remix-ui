@@ -6,6 +6,9 @@
 import Vue from 'vue';
 import RemixUI from '@';
 import Preview from './Preview.vue';
+import Toast from './lib/Toast';
+
+Vue.prototype.$toast = Toast.init();
 
 Vue.use(RemixUI);
 

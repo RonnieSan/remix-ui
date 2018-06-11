@@ -180,6 +180,7 @@ input[type='text'] {
 input[type='file'] {
 	cursor: pointer;
 	height: 100%;
+	vertical-align: top;
 	width: 100%;
 }
 
@@ -188,6 +189,7 @@ form {
 	left: 0;
 	opacity: 0;
 	position: absolute;
+	right: 0;
 	top: 0;
 }
 </style>
