@@ -1,0 +1,45 @@
+// ----------------------------------------------------------------------
+// REMIX - SYSTEM MESSAGE STYLES
+// ----------------------------------------------------------------------
+
+// Default variables
+@font-size: 16px;
+@line-height: 1.5em;
+@msg-radius: 5px;
+@msg-padding: 0.625em;
+
+@import (optional, reference) '~theme';
+
+.msg {
+	font-size: @font-size;
+
+	.modal-window {
+		border: 2px solid #FFF;
+		border-radius: @msg-radius;
+		overflow: hidden;
+	}
+
+	.title-bar {
+		background-color: #333;
+		color: #FFF;
+		font-weight: bold;
+		height: 2.5em;
+		line-height: 2.5em;
+		padding: 0 @msg-padding;
+	}
+
+	.message {
+		line-height: @line-height;
+		padding: @msg-padding;
+	}
+
+	.input {
+		padding: @msg-padding;
+		text-align: right;
+
+		button {
+			font-size: @font-size;
+			margin-left: @msg-padding;
+		}
+	}
+}
