@@ -116,6 +116,7 @@ export default {
 	align-items: center;
 	cursor: pointer;
 	display: inline-flex;
+	font-size: @font-size;
 	padding: calc(@control-height * 0.2) 0;
 	position: relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);

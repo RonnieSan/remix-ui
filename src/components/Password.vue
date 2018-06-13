@@ -78,7 +78,9 @@ export default {
 
 	.helper {
 		background-color: @control-helper-bkg-color;
+		color: @control-helper-color;
 		flex: 0 0 auto;
+		font-size: @font-size;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		line-height: calc(@control-height - (@control-border-stroke * 2));
 		min-width: calc(@control-height - (@control-border-stroke * 2));

@@ -148,6 +148,7 @@ export default {
 		background-color: @control-color;
 		color: #FFF;
 		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+		font-size: @font-size;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		line-height: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;

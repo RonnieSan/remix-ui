@@ -354,6 +354,7 @@ export default {
 	margin-top: @control-height;
 	padding: ((@control-height - @slider-bar-size) / 2) (@slider-handle-size / 2);
 	position: relative;
+	user-select: none;
 	width: 100%;
 	z-index: @control-layer;
 	
@@ -384,7 +385,7 @@ export default {
 			margin: 0 auto;
 			opacity: 1;
 			position: absolute;
-			top: -10px;
+			top: -0.625em;
 			transform: translateX(-50%);
 			width: 0;
 		}

@@ -1,9 +1,10 @@
 <template>
 	<div id="wrapper">
 		<modal ref="modal" max-width="600px">
-			<div class="padded">
+			<div class="padded" slot-scope="modal">
 				<h2>My Modal</h2>
 				<p>Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+				<a href="javascript:void(0)" @click="modal.close()">Close Modal</a>
 			</div>
 		</modal>
 		<div class="container">
@@ -344,13 +345,17 @@ export default {
 				title : 'Make a Choice',
 				message :  'Are you sure you want to cancel?'
 			});
+		},
+
+		test(test) {
+			console.log(test);
 		}
 	}
 };
 </script>
 
 <style lang="less">
-// @import './theme.less';
+@import './theme.less';
 @import './styles/toast.less';
 @import './styles/msg.less';
 

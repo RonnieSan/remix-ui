@@ -120,6 +120,7 @@ export default {
 		border-left: 1px solid fade(@control-border-color, 50%);
 		content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 11 12 15 16 11" /></svg>');
 		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+		font-size: @font-size;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		line-height: calc(@control-height - (@control-border-stroke * 2));
 		text-align: center;

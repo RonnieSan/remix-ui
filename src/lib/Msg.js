@@ -108,11 +108,11 @@ const Msg = Vue.extend({
 export default {
 	init : function() {
 		// Create the #msg element and append to the DOM
-		let el = document.querySelector('#msg');
+		let el = document.getElementById('msg');
 		if (!el) {
 			el = document.createElement('div');
 			el.id = 'msg';
-			document.querySelector('body').appendChild(el);
+			document.body.appendChild(el);
 		}
 
 		// Create an instance of the msg component

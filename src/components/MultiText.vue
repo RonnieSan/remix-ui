@@ -218,6 +218,7 @@ export default {
 		box-sizing: content-box;
 		display: flex;
 		flex-direction: row;
+		font-size: @font-size;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		width: 100%;
 

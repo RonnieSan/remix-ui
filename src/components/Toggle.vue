@@ -132,6 +132,7 @@ export default {
 .toggle-wrapper {
 	cursor: pointer;
 	display: inline-flex;
+	font-size: @font-size;
 	justify-content: flex-start;
 	line-height: @control-height;
 	min-height: @control-height;

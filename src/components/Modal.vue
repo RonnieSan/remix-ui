@@ -2,7 +2,7 @@
 	<div class="modal-container" @click="clickContainer">
 		<div class="modal-window" :style="{maxWidth : maxWidth}">
 			<div class="modal-content">
-				<slot></slot>
+				<slot v-bind="self"></slot>
 			</div>
 		</div>
 	</div>
@@ -27,6 +27,11 @@ export default {
 		maxWidth : {
 			type : String,
 			default : '1200px'
+		}
+	},
+	computed : {
+		self() {
+			return this;
 		}
 	},
 	methods : {
