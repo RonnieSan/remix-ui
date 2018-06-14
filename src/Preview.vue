@@ -355,7 +355,7 @@ export default {
 </script>
 
 <style lang="less">
-@import './theme.less';
+// @import './theme.less';
 @import './styles/toast.less';
 @import './styles/msg.less';
 

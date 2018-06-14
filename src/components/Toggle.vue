@@ -124,6 +124,7 @@ export default {
 @control-color: #2196F3;
 @control-height: 2.5em;
 @control-padding: 0.625em;
+@font-size: 16px;
 @toggle-size: 1.5em;
 
 // Import themes

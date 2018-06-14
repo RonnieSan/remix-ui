@@ -1,5 +1,5 @@
 <template>
-	<div class="modal-container" @click="clickContainer">
+	<div :class="['modal-container', $attrs.class, {'open' : is_open}]" @click="clickContainer">
 		<div class="modal-window" :style="{maxWidth : maxWidth}">
 			<div class="modal-content">
 				<slot v-bind="self"></slot>
@@ -66,9 +66,6 @@ export default {
 						// Open the modal overlay
 						self.overlay.classList.add('open');
 
-						// Open the modal
-						self.modal.classList.add('open');
-
 						// Trigger the opened method
 						self.$emit('open', self);
 
@@ -77,14 +74,13 @@ export default {
 				}
 
 				else {
-					// Open the modal
-					self.modal.classList.add('open');
-
 					// Trigger the opened method
 					self.$emit('open', self);
 
 					resolve(self);
 				}
+
+				console.log('Opened?')
 
 				self.is_open = true;
 			});

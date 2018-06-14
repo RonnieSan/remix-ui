@@ -46,6 +46,7 @@ const Msg = Vue.extend({
 				this.title   = options.title || false;
 				this.message = options.message;
 				this.accept  = options.accept || 'OK';
+				this.max_width = options.width || '400px';
 				this.$refs.msg.open();
 
 				this.promise = {
@@ -119,7 +120,7 @@ export default {
 		const msg = new Msg();
 
 		// Mount the msg component to the DOM
-		msg.$mount('#msg');
+		msg.$mount(el);
 
 		return msg;
 	}

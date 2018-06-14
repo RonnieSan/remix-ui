@@ -13,7 +13,7 @@
 				<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
 			</div>
 		</div>
-		<form enctype="multipart/form-data" novalidate>
+		<form ref="form" enctype="multipart/form-data" novalidate>
 			<input
 				ref="uploader"
 				type="file"
@@ -34,7 +34,7 @@ export default {
 	data() {
 		return {
 			focused   : false,
-			form_data : new FormData({
+			form_data : new FormData(this.$refs.form, {
 				file_type : 'video'
 			}),
 			status    : 'inactive'
