@@ -14,16 +14,10 @@
 						<column>
 							<h1>Remix UI Components</h1>
 							<hr>
-						</column>
-					</row>
-
-					<row>
-						<column>
-							
-							<h2>Standard HTML Components</h2>
+							<h2>Form Components</h2>
 
 							<div class="control-group">
-								<label class="control-label">Text Input:</label>
+								<label class="control-label"><span class="text-color-red">*</span> Text Input with Validation:</label>
 								<div class="controls">
 									<div class="field">
 										<validation
@@ -38,7 +32,7 @@
 												@validate="$refs.text_validation.validate()"
 											>
 											<div class="helper" slot="right">
-												<icon type="comment" size="24"/>
+												<icon type="alert-circle" size="24"/>
 											</div>
 											</r-text>
 										</validation>
@@ -76,7 +70,19 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Password:</label>
+								<label class="control-label">Currency Input:</label>
+								<div class="controls">
+									<div class="field">
+										<r-currency
+											name="currency"
+											v-model="currency_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Password Input:</label>
 								<div class="controls">
 									<div class="field">
 										<r-password
@@ -92,117 +98,12 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Textarea:</label>
+								<label class="control-label">Multi-Text:</label>
 								<div class="controls">
 									<div class="field">
-										<r-textarea
-											name="textarea"
-											v-model="textarea_value"
-											max-height="300px"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Select:</label>
-								<div class="controls">
-									<div class="field">
-										<r-select
-											name="select"
-											v-model="select_value"
-											:options="options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Checklist:</label>
-								<div class="controls">
-									<div class="field">
-										<r-checklist
-											name="checklist"
-											v-model="checklist_value"
-											:options="options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">Radio Group:</label>
-								<div class="controls">
-									<div class="field">
-										<r-radio-group
-											name="radio_group"
-											v-model="radio_group_value"
-											:options="options"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="controls">
-									<div class="field">
-										<r-button @click="$refs.modal.open()">Open Modal</r-button>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<label class="control-label">File Input:</label>
-								<div class="controls">
-									<div class="field">
-										<r-file
-											name="file"
-											v-model="file_value"
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="controls">
-									<div class="field">
-										<r-button icon="check" @click="$toast.success('Something successful happened.')">Fire Toast Message</r-button>
-									</div>
-									<div class="field">
-										<button type="button" @click="triggerAlert()">
-											<span class="label">Trigger Alert</span>
-										</button>
-									</div>
-									<div class="field">
-										<button type="button" @click="triggerConfirm()">
-											<span class="label">Trigger Confirm</span>
-										</button>
-									</div>
-								</div>
-							</div>
-
-							<tabs active-tab-id="one">
-								<tab label="One" tab-id="one">
-									<p>This is the content</p>
-								</tab>
-								<tab label="Two" tab-id="two">
-									<p>This is some other content</p>
-								</tab>
-							</tabs>
-
-						</column>
-						<spacer size="100px"/>
-						<column>
-							
-							<h2>Extended Form Elements</h2>
-
-							<div class="control-group">
-								<label class="control-label">Currency:</label>
-								<div class="controls">
-									<div class="field">
-										<r-currency
-											name="currency"
-											v-model="currency_value"
+										<r-multi-text
+											name="multi_text"
+											v-model="multi_text_value"		
 										/>
 									</div>
 								</div>
@@ -233,6 +134,19 @@
 							</div>
 
 							<div class="control-group">
+								<label class="control-label">Textarea:</label>
+								<div class="controls">
+									<div class="field">
+										<r-textarea
+											name="textarea"
+											v-model="textarea_value"
+											max-height="300px"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Code Input:</label>
 								<div class="controls">
 									<div class="field">
@@ -247,12 +161,25 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Multi-Text:</label>
+								<label class="control-label">Markdown:</label>
 								<div class="controls">
 									<div class="field">
-										<r-multi-text
-											name="multi_text"
-											v-model="multi_text_value"		
+										<r-markdown
+											name="markdown"
+											v-model="markdown_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Select:</label>
+								<div class="controls">
+									<div class="field">
+										<r-select
+											name="select"
+											v-model="select_value"
+											:options="options"
 										/>
 									</div>
 								</div>
@@ -272,12 +199,25 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Slider:</label>
+								<label class="control-label">File Input:</label>
 								<div class="controls">
 									<div class="field">
-										<r-slider
-											name="slider"
-											v-model="slider_value"
+										<r-file
+											name="file"
+											v-model="file_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Checklist:</label>
+								<div class="controls">
+									<div class="field">
+										<r-checklist
+											name="checklist"
+											v-model="checklist_value"
+											:options="options"
 										/>
 									</div>
 								</div>
@@ -296,16 +236,92 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Markdown:</label>
+								<label class="control-label">Radio Group:</label>
 								<div class="controls">
 									<div class="field">
-										<r-markdown
-											name="markdown"
-											v-model="markdown_value"
+										<r-radio-group
+											name="radio_group"
+											v-model="radio_group_value"
+											:options="options"
 										/>
 									</div>
 								</div>
 							</div>
+
+							<div class="control-group">
+								<label class="control-label">Slider:</label>
+								<div class="controls">
+									<div class="field">
+										<r-slider
+											name="slider"
+											v-model="slider_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Button:</label>
+								<div class="controls">
+									<div class="field">
+										<r-button>Click Me (I Do Nothing)</r-button>
+									</div>
+								</div>
+							</div>
+
+							<h2>Modals</h2>
+
+							<div class="control-group">
+								<div class="controls">
+									<div class="field fit">
+										<r-button @click="$refs.modal.open()">Open Modal</r-button>
+									</div>
+									<div class="field fit">
+										<button type="button" @click="triggerAlert()">
+											<span class="label">Trigger Alert</span>
+										</button>
+									</div>
+									<div class="field fit">
+										<button type="button" @click="triggerConfirm()">
+											<span class="label">Trigger Confirm</span>
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<h2>Toast Messages</h2>
+
+							<div class="control-group">
+								<div class="controls">
+									<div class="field fit">
+										<r-button icon="check" @click="$toast.success('Something successful happened.')">Success</r-button>
+									</div>
+									<div class="field fit">
+										<r-button icon="alert-octagon" @click="$toast.error('Something went wrong.')">Error</r-button>
+									</div>
+									<div class="field fit">
+										<r-button icon="alert" @click="$toast.warning('Be careful!')">Warning</r-button>
+									</div>
+									<div class="field fit">
+										<r-button icon="information" @click="$toast.info('A toast message was fired.')">Info</r-button>
+									</div>
+								</div>
+							</div>
+
+							<h2>Tabs</h2>
+
+							<tabs active-tab-id="one">
+								<tab label="One" tab-id="one">
+									<div class="padded">
+										<p>Tab one is open.</p>
+									</div>
+								</tab>
+								<tab label="Two" tab-id="two">
+									<div class="padded">
+										<p>Tab two is open.</p>
+									</div>
+								</tab>
+							</tabs>
 
 						</column>
 					</row>
@@ -374,52 +390,26 @@ export default {
 			this.$msg.confirm({
 				title : 'Make a Choice',
 				message :  'Are you sure you want to cancel?'
-			});
-		},
-
-		test(test) {
-			console.log(test);
+			})
+				.then((accepted) => {
+					if (accepted) {
+						this.$toast.success('You selected OK.');
+					}
+					else {
+						this.$toast.error('You selected CANCEL.');
+					}
+				});
 		}
 	}
 };
 </script>
 
 <style lang="less">
-// @import './theme.less';
-@import './styles/toast.less';
-@import './styles/msg.less';
-
-*, *::before, *::after {
-	box-sizing: border-box;
-}
-
-html, body {
-	font-family: 'Roboto';
-	margin: 0;
-	padding: 0;
-}
+@import './theme.less';
+@import './styles/Toast.less';
+@import './styles/Msg.less';
 
 #wrapper {
-	height
-	width: 100vw;
-}
-
-.container {
-	margin: 30px auto;
-	max-width: 1240px;
-	padding: 0 20px;
-	width: 100%;
-}
-
-.control-group {
-	margin-bottom: 1em;
-}
-
-.padded {
-	padding: 1em 2em;
-}
-
-.modal-window {
-	border-radius: 5px;
+	padding: 50px 0;
 }
 </style>

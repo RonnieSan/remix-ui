@@ -6,16 +6,18 @@
 // Default values
 @gutter-size: 20px;
 
+@import (optional, reference) '~theme';
+
 .gutter-size(@gutter-size) {
-	@gutter: @gutter-size/2;
+	@gutter: (@gutter-size / 2);
 	margin: -@gutter 0;
 
 	.row {
-		margin: 0 -@gutter;
+		margin: @gutter -@gutter;
 	}
 
 	.column {
-		margin: @gutter;
+		margin: 0 @gutter;
 
 		&.span-2 {
 			flex: 2 0 @gutter-size;

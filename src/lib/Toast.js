@@ -42,10 +42,10 @@ const Toast = Vue.extend({
 							return 'check';
 							break;
 						case 'warning':
-							return 'alert-triangle';
+							return 'alert';
 							break;
 						case 'error':
-							return 'alert-octogon';
+							return 'alert-octagon';
 							break;
 					}
 				}
@@ -90,17 +90,35 @@ const Toast = Vue.extend({
 
 		// Add an error message to the queue
 		error(message, timeout) {
-			this.push(message, 'error', timeout);
+			this.push({
+				icon    : true,
+				title   : 'Error',
+				message : message,
+				type    : 'error',
+				timeout : timeout
+			});
 		},
 
 		// Add an info message to the queue
 		info(message, timeout) {
-			this.push(message, 'info', timeout);
+			this.push({
+				icon    : true,
+				title   : 'Information',
+				message : message,
+				type    : 'info',
+				timeout : timeout
+			});
 		},
 
 		// Add a warning message to the queue
 		warning(message, timeout) {
-			this.push(message, 'warning', timeout);
+			this.push({
+				icon    : true,
+				title   : 'Warning',
+				message : message,
+				type    : 'warning',
+				timeout : timeout
+			});
 		}
 	},
 	components : {

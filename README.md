@@ -1,2 +1,3 @@
 # Remix UI
-A set of UI components for VueJS
+A set of UI components for VueJS.
+
