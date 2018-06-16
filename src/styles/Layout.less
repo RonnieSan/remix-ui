@@ -1,0 +1,107 @@
+// ----------------------------------------------------------------------
+// LAYOUT STYLES
+// Styles for grid, row, and column
+// ----------------------------------------------------------------------
+
+// Default values
+@gutter-size: 20px;
+
+.gutter-size(@gutter-size) {
+	@gutter: @gutter-size/2;
+	margin: -@gutter 0;
+
+	.row {
+		margin: 0 -@gutter;
+	}
+
+	.column {
+		margin: @gutter;
+
+		&.span-2 {
+			flex: 2 0 @gutter-size;
+		}
+
+		&.span-3 {
+			flex: 3 0 (@gutter-size * 2);
+		}
+
+		&.span-4 {
+			flex: 4 0 (@gutter-size * 3);
+		}
+
+		&.span-5 {
+			flex: 5 0 (@gutter-size * 4);
+		}
+	}
+}
+
+.column {
+	flex: 1 0 0;
+	min-width: 320px;
+
+	&.span-2 {
+		flex: 2 0 @gutter-size;
+	}
+
+	&.span-3 {
+		flex: 3 0 (@gutter-size * 2);
+	}
+
+	&.span-4 {
+		flex: 4 0 (@gutter-size * 3);
+	}
+
+	&.span-5 {
+		flex: 5 0 (@gutter-size * 4);
+	}
+
+	&.fit {
+		flex: 0 0 auto;
+	}
+}
+
+.row {
+	align-items: stretch;
+	display: flex;
+	flex: 0 0 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	// Row modifiers
+	&.left {
+		justify-content: flex-start !important;
+	}
+
+	&.center {
+		justify-content: center !important;
+	}
+
+	&.right {
+		justify-content: flex-end !important;
+	}
+
+	&.top {
+		align-items: flex-start !important;
+	}
+
+	&.middle {
+		align-items: center !important;
+	}
+
+	&.bottom {
+		align-items: flex-end !important;
+	}
+}
+
+.grid {
+	.gutter-size(@gutter-size);
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+
+	&.no-gutter {
+		.gutter-size(0);
+	}
+}

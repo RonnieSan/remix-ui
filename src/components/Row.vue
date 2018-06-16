@@ -9,44 +9,5 @@ export default {};
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@gutter-size: 20px;
-
-// Import custom variables
-@import (optional, reference) '~theme';
-
-.row {
-	align-items: stretch;
-	display: flex;
-	flex: 0 0 auto;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin: 0 -(@gutter-size/2);
-
-	// Row modifiers
-	&.left {
-		justify-content: flex-start !important;
-	}
-
-	&.center {
-		justify-content: center !important;
-	}
-
-	&.right {
-		justify-content: flex-end !important;
-	}
-
-	&.top {
-		align-items: flex-start !important;
-	}
-
-	&.middle {
-		align-items: center !important;
-	}
-
-	&.bottom {
-		align-items: flex-end !important;
-	}
-}
+@import (optional) '~remix-ui-styles/Layout.less';
 </style>

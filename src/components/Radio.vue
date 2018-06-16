@@ -57,51 +57,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@control-bkg-color: #FFF;
-@control-border-stroke: 1px;
-@control-border-color: #CCC;
-@control-color: #2196F3;
-@control-height: 2.5em;
-@font-size: 16px;
-
-// Import custom variables
-@import (optional, reference) '~theme';
-
-// Radios and Checkboxes
-.radio-wrapper {
-	align-items: center;
-	cursor: pointer;
-	display: inline-flex;
-	font-size: @font-size;
-	padding: calc(@control-height * 0.2) 0;
-	position: relative;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-tap-highlight-color: transparent;
-}
-
-input[type='radio'] {
-	appearance: none;
-	background-color: @control-bkg-color;
-	border: @control-border-stroke solid @control-border-color;
-	font-size: @font-size;
-	height: calc(@control-height * 0.6);
-	margin: 0 0.5em 0 0;
-	padding: 0;
-	transition: border 100ms ease-out;
-	vertical-align: middle;
-	width: calc(@control-height * 0.6);
-
-	&:focus {
-		outline: none;
-	}
-}
-
-input[type='radio'] {
-	border-radius: 50%;
-
-	&:checked {
-		border: calc(@control-height * 0.2) solid @control-color;
-	}
-}
+@import (optional) '~remix-ui-styles/Radio.less';
 </style>

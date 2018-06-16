@@ -24,7 +24,8 @@ module.exports = {
 		alias : {
 			'vue$' : path.resolve(__dirname, 'node_modules/vue/dist/vue.min.js'),
 			'@' : path.resolve(__dirname, 'src'),
-			'theme' : path.resolve(__dirname, 'src/theme.less')
+			'theme' : path.resolve(__dirname, 'src/theme.less'),
+			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
 		}
 	},
 	devServer : {

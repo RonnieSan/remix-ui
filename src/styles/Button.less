@@ -1,0 +1,66 @@
+// ----------------------------------------------------------------------
+// BUTTON STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@body-font: 'Roboto', Arial, Helvetica, Sans-serif;
+@control-height: 2.5em;
+@control-radius: 3px;
+@font-size: 16px;
+@primary-color: #2993F7;
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(#000, 10%);
+};
+
+@import (optional, reference) '~theme';
+
+button {
+	appearance: none;
+	background-color: @primary-color;
+	border: 0;
+	border-radius: @control-radius;
+	color: #FFF;
+	cursor: pointer;
+	font-size: @font-size;
+	height: @control-height;
+	margin: 0;
+	padding: 0 1em;
+
+	&:hover {
+		background-color: lighten(@primary-color, 5%);
+	}
+
+	&:active {
+		background-color: darken(@primary-color, 5%);
+	}
+
+	&:focus {
+		box-shadow: 0;
+		outline: 0;
+		@control-focus();
+	}
+}
+
+button {
+	align-items: center;
+	display: inline-block;
+	padding: 0;
+
+	.icon {
+		background-color: fade(#000, 10%);
+		display: inline-block;
+		height: @control-height;
+		line-height: @control-height;
+		text-align: center;
+		vertical-align: middle;
+		width: @control-height;
+	}
+	
+	.label {
+		display: inline-block;
+		font-family: @body-font;
+		padding: 0 1em;
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+}

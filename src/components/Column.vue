@@ -44,32 +44,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-// Default variables
-@gutter-size: 20px;
-
-// Import custom variables
-@import (optional, reference) '~theme';
-
-.column {
-	flex: 1 0 0;
-	margin: (@gutter-size/2);
-	min-width: 320px;
-
-	&.span-2 {
-		flex: 2 0 @gutter-size;
-	}
-
-	&.span-3 {
-		flex: 3 0 (@gutter-size * 2);
-	}
-
-	&.span-4 {
-		flex: 4 0 (@gutter-size * 3);
-	}
-
-	&.span-5 {
-		flex: 5 0 (@gutter-size * 4);
-	}
-}
+<style lang="less">
+@import (optional) '~remix-ui-styles/Layout.less';
 </style>

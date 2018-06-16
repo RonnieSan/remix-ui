@@ -171,41 +171,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@control-height: 2.5em;
-@control-padding: 0.625em;
-@popup-layer: 400;
-
-// Import custom variables
-@import (optional, reference) '~theme';
-
-.control-selection {
-	background-color: #F2F2F2;
-}
-
-// Import themes
-@import (optional, reference) 'theme.less';
-
-.autocomplete-wrapper {
-	position: relative;
-
-	.autocomplete-options {
-		min-width: 250px;
-		position: absolute;
-		top: 100%;
-		z-index: @popup-layer;
-
-		.option {
-			cursor: default;
-			height: @control-height;
-			line-height: @control-height;
-			padding: 0 @control-padding;
-			white-space: nowrap;
-
-			&.selected {
-				.control-selection;
-			}
-		}
-	}
-}
+@import (optional) '~remix-ui-styles/Autocomplete.less';
 </style>

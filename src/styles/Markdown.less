@@ -1,0 +1,216 @@
+// ----------------------------------------------------------------------
+// MARKDOWN STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-color: #2196F3;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
+@font-size-small: 0.875em;
+@fullscreen-layer: 500;
+@line-height: 1.5em;
+@mobile-width: 320px;
+@mobile-window-max: 767px;
+@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~theme';
+
+.markdown-wrapper {
+	border: @control-border-stroke solid @control-border-color;
+	border-radius: @control-radius;
+	display: inline-flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+	vertical-align: top;
+	width: 100%;
+
+	&.focused {
+		box-shadow: 0 0 0 3px fade(#000, 10%);
+		outline: none;
+	}
+
+	.editor {
+		.input {
+			background-color: #FFF;
+			border: none;
+			display: none;
+			max-width: 100%;
+			min-height: @control-height * 4;
+			overflow: hidden;
+			position: relative;
+			vertical-align: top;
+			width: 100%;
+
+			&.active {
+				display: block;
+			}
+
+			.mirror {
+				opacity: 0;
+				padding: @control-padding;
+				padding-right: 1.5em;
+				vertical-align: middle;
+				width: 100%;
+
+				pre {
+					font-family: @mono-font;
+					font-size: @font-size-small;
+					line-height: @line-height;
+					white-space: pre-line;
+				}
+			}
+
+			textarea {
+				background-color: transparent;
+				border: 0;
+				bottom: 0;
+				font-family: @mono-font;
+				font-size: @font-size-small;
+				left: 0;
+				line-height: @line-height;
+				padding: @control-padding;
+				position: absolute;
+				resize: none;
+				right: 0;
+				top: 0;
+				vertical-align: middle;
+				white-space: pre-line;
+				width: 100%;
+				z-index: 1;
+
+				&:focus {
+					border: 0;
+					outline: none;
+				}
+			}
+
+			@media screen and (max-width: @mobile-window-max) {
+				width: @mobile-width;
+			};
+		}
+
+		.output {
+			background-color: #FFF;
+			border: none;
+			display: none;
+			min-height: @control-height * 4;
+			overflow: hidden;
+			overflow-y: scroll;
+			position: relative;
+			vertical-align: top;
+			width: 100%;
+
+			&.active {
+				display: block;
+			}
+
+			.markdown {
+				min-height: @control-height * 4;
+				padding: 20px;
+				width: 100%;
+			}
+		}
+	}
+
+	&.fullscreen {
+		background-color: #FFF;
+		bottom: 0;
+		left: 0;
+		max-height: 100vh !important;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: @fullscreen-layer;
+
+		.toolbar {
+			div.btn {
+				&.mode {
+					display: none;
+				}
+
+				&.compact {
+					display: block;
+				}
+
+				&.fullscreen {
+					display: none;
+				}
+			}
+		}
+
+		.editor {
+			bottom: 0;
+			display: flex;
+			flex-direction: row;
+			left: 0;
+			overflow-y: scroll;
+			position: absolute;
+			right: 0;
+			top: @control-height;
+
+			.input, .output {
+				display: block;
+				flex: 1 0 0;
+				height: 100%;
+			}
+
+			.output {
+				border-left: 1px solid fade(@control-border-color, 50%);
+				overflow-y: auto;
+			}
+		}
+	}
+}
+
+.toolbar {
+	background-color: #F2F2F2;
+	border-bottom: 1px solid fade(@control-border-color, 50%);
+	display: flex;
+	flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+	justify-content: space-between;
+
+	.tools,
+	.utils {
+		display: flex;
+		flex: 0 0 auto;
+	}
+
+	.btn {
+		border-right: 1px solid fade(@control-border-color, 50%);
+		cursor: pointer;
+		float: left;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		line-height: calc(@control-height - (@control-border-stroke * 2));
+		text-align: center;
+		vertical-align: middle;
+
+		&.active {
+			background-color: #FFF;
+		}
+
+		&.icon {
+			min-width: calc(@control-height - (@control-border-stroke * 2));
+			padding: 0;
+		}
+
+		&.right {
+			border-left: 1px solid fade(@control-border-color, 50%);
+			border-right: none;
+			float: right;
+		}
+
+		&.compact {
+			display: none;
+		}
+
+		&:hover {
+			color: @control-color;
+		}
+	}
+}

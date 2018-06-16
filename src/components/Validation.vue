@@ -109,24 +109,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@font-size-small: 0.875em;
-
-// Import themes
-@import (optional, reference) '~theme';
-
-.validation-errors {
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	list-style: none;
-	margin: 0.25em 0 0;
-	padding: 0;
-	vertical-align: baseline;
-
-	li {
-		color: #FF4136;
-		font-size: @font-size-small;
-	}
-}
+@import (optional) '~remix-ui-styles/Validation.less';
 </style>

@@ -1,0 +1,47 @@
+// ----------------------------------------------------------------------
+// COMMON TEXT INPUT STYLES
+// Shared by elements with text inputs
+// ----------------------------------------------------------------------
+
+// Default values
+@control-bkg-color: #FFF;
+@control-border-stroke: 1px;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@font-size: 16px;
+@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~theme';
+
+.input-box {
+	flex: 1 0 0;
+}
+
+input:focus {
+	box-shadow: 0;
+	outline: 0;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='password'],
+input[type='tel'],
+input[type='email'] {
+	background-color: @control-bkg-color;
+	border: 0;
+	flex: 1 0 0;
+	font-size: @font-size;
+	height: calc(@control-height - (@control-border-stroke * 2));
+	padding: 0 @control-padding;
+	width: 100%;
+}
+
+input[type='number'] {
+	font-family: @mono-font;
+}
+
+input[disabled='disabled'] {
+	background-color: #E5E5E5;
+	color: #A6A6A6;
+}

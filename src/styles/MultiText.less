@@ -1,0 +1,84 @@
+// ----------------------------------------------------------------------
+// MULTI-TEXT STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-bkg-color: #FFF;
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
+@green: #2ECC40;
+@red: #FF4136;
+
+// Import themes
+@import (optional, reference) '~theme';
+
+.multi-text-wrapper {
+	border: @control-border-stroke solid @control-border-color;
+	border-radius: @control-radius;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100%;
+
+	.input-row {
+		background-color: @control-bkg-color;
+		border-top: 1px solid #E5E5E5;
+		box-sizing: content-box;
+		display: flex;
+		flex-direction: row;
+		font-size: @font-size;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		width: 100%;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		.handle {
+			cursor: ns-resize;
+			text-align: center;
+			width: calc(@control-height - (@control-border-stroke * 2));
+		}
+
+		.icon svg {
+			height: 45%;
+			margin: 27.5%;
+			width: 45%;
+		}
+
+		.button {
+			color: #A6A6A6;
+			text-align: center;
+			width: calc(@control-height - (@control-border-stroke * 2));
+
+			&:hover {
+				color: #FF4136;
+			}
+		}
+
+		&.add {
+			background-color: #F2F2F2;
+			cursor: crosshair;
+
+			.input-box {
+				color: #A6A6A6;
+				line-height: calc(@control-height - (@control-border-stroke * 2));
+				margin: 0;
+				padding: 0 0.625em;
+			}
+
+			&:hover .button {
+				color: #2ECC40;
+			}
+		}
+	}
+
+	.input-box {
+		flex: 1 0 0;
+		margin-left: -@control-padding;
+	}
+}

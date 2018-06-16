@@ -88,33 +88,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@mobile-window-max: 767px;
-
-// Import theme
-@import (optional, reference) '~theme';
-
-.checklist {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-
-	&:focus {
-		outline: 0;
-	}
-
-	> .option {
-		flex: 0 0 auto;
-		margin-right: 2em;
-
-		&:last-child {
-			margin-right: 0;
-		}
-	}
-
-	@media screen and (max-width: @mobile-window-max) {
-		flex-direction: column;
-		margin-right: 0;
-	}
-}
+@import (optional) '~remix-ui-styles/Checklist.less';
 </style>

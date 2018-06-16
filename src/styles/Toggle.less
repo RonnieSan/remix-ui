@@ -1,0 +1,90 @@
+// ----------------------------------------------------------------------
+// TOGGLE STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-color: #2196F3;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@font-size: 16px;
+@toggle-size: 1.5em;
+
+// Import themes
+@import (optional, reference) '~theme';
+
+.toggle-wrapper {
+	cursor: pointer;
+	display: inline-flex;
+	font-size: @font-size;
+	justify-content: flex-start;
+	line-height: @control-height;
+	min-height: @control-height;
+	vertical-align: middle;
+}
+
+.toggle {
+	display: inline-block;
+	flex: 0 0 @toggle-size * 2;
+	height: @toggle-size;
+	margin: ((@control-height - @toggle-size) / 2) 0;
+	position: relative;
+	vertical-align: middle;
+	width: @toggle-size * 2;
+
+	&::before {
+		background-color: #D8D8D8;
+		border-radius: @toggle-size / 4;
+		content: '';
+		height: @toggle-size / 3;
+		left: @toggle-size / 2;
+		overflow: hidden;
+		position: absolute;
+		top: @toggle-size / 3;
+		width: @toggle-size;
+		z-index: 10;
+	}
+
+	input {
+		cursor:  pointer;
+		height: @toggle-size;
+		left: 0;
+		margin: 0 !important;
+		opacity: 0;
+		padding: 0 !important;
+		position: absolute;
+		top: 0;
+		width: @toggle-size * 2;
+		z-index: 30;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	input:checked + .handle {
+		transition: all 100ms ease-out;
+		background-color: @control-color;
+		left: @toggle-size;
+	}
+}
+
+.handle {
+	background-color: #A6A6A6;
+	border-radius: @toggle-size / 2;
+	display: block;
+	height: @toggle-size;
+	left: 0;
+	position: absolute;
+	top: 0;
+	transition: all 100ms ease-out;
+	width: @toggle-size;
+	z-index: 20;
+}
+
+.toggle-label {
+	display: inline-block;
+	flex: 1 0 0;
+	height: @control-height;
+	line-height: @control-height;
+	margin-left: @control-padding;
+}

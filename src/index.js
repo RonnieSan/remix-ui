@@ -6,6 +6,7 @@
 
 // Import form elements
 import Form from './components/Form';
+import Button from './components/Button';
 import Checkbox from './components/Checkbox';
 import Checklist from './components/Checklist';
 import Code from './components/Code';
@@ -22,6 +23,8 @@ import Radio from './components/Radio';
 import RadioGroup from './components/RadioGroup';
 import Select from './components/Select';
 import Slider from './components/Slider';
+import Tab from './components/Tab';
+import Tabs from './components/Tabs';
 import Text from './components/Text';
 import Textarea from './components/Textarea';
 import Toggle from './components/Toggle';
@@ -46,6 +49,7 @@ import Validator from './lib/Validator';
 // Export components
 export {
 	Autocomplete,
+	Button,
 	Checkbox,
 	Checklist,
 	Code,
@@ -69,6 +73,8 @@ export {
 	Select,
 	Slider,
 	Spacer,
+	Tab,
+	Tabs,
 	Text,
 	Textarea,
 	Toggle,
@@ -83,6 +89,7 @@ export default {
 		options = options || {};
 
 		Vue.component('rForm', Form);
+		Vue.component('rButton', Button);
 		Vue.component('rCheckbox', Checkbox);
 		Vue.component('rChecklist', Checklist);
 		Vue.component('rCode', Code);
@@ -99,6 +106,8 @@ export default {
 		Vue.component('rRadioGroup', RadioGroup);
 		Vue.component('rSelect', Select);
 		Vue.component('rSlider', Slider);
+		Vue.component('tab', Tab);
+		Vue.component('tabs', Tabs);
 		Vue.component('rText', Text);
 		Vue.component('rTextarea', Textarea);
 		Vue.component('rToggle', Toggle);
@@ -110,8 +119,8 @@ export default {
 		Vue.component('row', Row);
 		Vue.component('grid', Grid);
 		
-		Vue.component('rAutocomplete', Autocomplete);
+		Vue.component('autocomplete', Autocomplete);
 		Vue.component('modal', Modal);
-		Vue.component('rValidation', Validation);
+		Vue.component('validation', Validation);
 	}
 };

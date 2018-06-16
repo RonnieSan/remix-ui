@@ -129,20 +129,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// Default variables
-@control-border-color: #CCC;
-@control-border-stroke: 1px;
-@control-radius: 3px;
-
-// Import theme
-@import (optional, reference) '~theme';
-
-.code-wrapper {
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
-	overflow-y: auto;
-	position: relative;
-	vertical-align: top;
-	width: 100%;
-}
+@import (optional) '~remix-ui-styles/Code.less';
 </style>

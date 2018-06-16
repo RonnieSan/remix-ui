@@ -4,7 +4,7 @@
 			<div class="padded" slot-scope="modal">
 				<h2>My Modal</h2>
 				<p>Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-				<a href="javascript:void(0)" @click="modal.close()">Close Modal</a>
+				<a href="javascript:void(0)" @click="triggerAlert()">Open Nested Modal</a> | <a href="javascript:void(0)" @click="modal.close()">Close Modal</a>
 			</div>
 		</modal>
 		<div class="container">
@@ -26,7 +26,7 @@
 								<label class="control-label">Text Input:</label>
 								<div class="controls">
 									<div class="field">
-										<r-validation
+										<validation
 											ref="text_validation"
 											v-model="text_value"
 											:validator="validator"
@@ -41,7 +41,24 @@
 												<icon type="comment" size="24"/>
 											</div>
 											</r-text>
-										</r-validation>
+										</validation>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Text with Auto-Complete:</label>
+								<div class="controls">
+									<div class="field">
+										<autocomplete
+											v-model="autocomplete_value"
+											:options="autocomplete_options"
+										>
+											<r-text
+												name="autocomplete_text"
+												v-model="autocomplete_value"
+											/>
+										</autocomplete>
 									</div>
 								</div>
 							</div>
@@ -129,9 +146,7 @@
 							<div class="control-group">
 								<div class="controls">
 									<div class="field">
-										<button type="button" @click="$refs.modal.open()">
-											<span class="label">Open Modal</span>
-										</button>
+										<r-button @click="$refs.modal.open()">Open Modal</r-button>
 									</div>
 								</div>
 							</div>
@@ -151,9 +166,7 @@
 							<div class="control-group">
 								<div class="controls">
 									<div class="field">
-										<button type="button" @click="$toast.success('Something successful happened.')">
-											<span class="label">Fire Toast</span>
-										</button>
+										<r-button icon="check" @click="$toast.success('Something successful happened.')">Fire Toast Message</r-button>
 									</div>
 									<div class="field">
 										<button type="button" @click="triggerAlert()">
@@ -167,6 +180,15 @@
 									</div>
 								</div>
 							</div>
+
+							<tabs active-tab-id="one">
+								<tab label="One" tab-id="one">
+									<p>This is the content</p>
+								</tab>
+								<tab label="Two" tab-id="two">
+									<p>This is some other content</p>
+								</tab>
+							</tabs>
 
 						</column>
 						<spacer size="100px"/>
@@ -301,6 +323,14 @@ export default {
 		return {
 			validator : new Validator(),
 			text_value : '',
+			autocomplete_value : '',
+			autocomplete_options : [
+				'Red',
+				'Purple',
+				'Blue',
+				'Green',
+				'Yellow'
+			],
 			number_value : 12345,
 			password_value : '',
 			textarea_value : '',
