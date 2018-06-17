@@ -11,7 +11,7 @@
 
 // Full
 @full-window-min: 1921px;
-@full-width: 100%;
+@full-width: 720px;
 
 // Desktop
 @desktop-window-max: 1920px;
@@ -30,7 +30,7 @@
 
 // Mobile
 @mobile-window-max: 767px;
-@mobile-width: 360px;
+@mobile-width: 320px;
 
 // END WINDOW SNAPPING
 // ----------------------------------------------------------------------
@@ -47,9 +47,9 @@
 @yellow: #FFDC00;
 @orange: #FF851B;
 @red: #FF4136;
-@brown: #765843;
 @magenta: #E73062;
 @purple: #673AB7;
+@brown: #775745;
 
 // Grayscale
 @white: #FFF;
@@ -136,7 +136,7 @@
 @modal-layer: 600;					// Layer for modal boxes
 @notification-layer: 700;			// Layer for notifications
 
-@gutter-size: 40px;					// Default width/height of gutters for grids
+@gutter-size: 20px;					// Default width/height of gutters for grids
 @content-padding: 1em;				// The padding around nested .padded elements
 
 // END LAYOUT ELEMENTS
@@ -179,10 +179,16 @@
 @control-border-color: @gray-20;					// The color of the stroke around form elements
 @control-border-stroke: 1px;						// The thickness of the stroke around form elements
 @control-color: @primary-color;						// The accent color of form elements
+@control-gutter: 0.3125em;							// The space between field elements in a control group
 @control-padding: 0.625em;							// The padding value for form elements
 @control-radius: 3px;								// The corner radius of boxed form elements
-@control-helper-bkg-color: @gray-10;			// The color behind helpers
+@control-helper-bkg-color: @gray-10;				// The color behind helpers
 @control-helper-color: @black;						// The color of the content in a helper
+
+// Focus styles
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(@black, 10%);
+};
 
 @control-invalid-border-color: @red;				// The border color of invalid control fields
 
@@ -202,40 +208,10 @@
 @table-row-color: @white;							// Default row background color for tables
 @table-row-alt-color: @gray-05;						// Default alternate row background color for tables
 @table-row-hover-color: tint(@primary-color, 85%);	// Default row hover color for tables
-@table-cell-height: 40px;							// Default minimum cell height for tables
-@table-cell-padding: 0.7em 1em;					// Default padding for tables
+@table-cell-height: 2.5em;							// Default minimum cell height for tables
+@table-cell-padding: 0.7em 1em;						// Default padding for tables
 
 // END TABLE ELEMENTS
-// ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
-// OTHER STYLES
-// Drop variables for other elements here
-
-// Modals
-@modal-easing: @ease-out-quad;						// Default easing function for opening/closing modals
-@modal-overlay-color: @black;						// The color of the overlay when a modal is open
-@modal-overlay-opacity: 0.25;						// The opacity of the modal overlay
-@modal-margin: 50px;								// The default margin around a modal window
-@modal-dimmed: 0.35;								// The opacity of a dimmed modal
-@modal-speed: 300ms;								// The speed at which to open/close a modal
-
-// Toasts
-@toast-radius: 5px;									// The corner radius of a toast message
-@toast-width: 400px;								// The max-width of a toast message
-@toast-default: @gray-65;							// The background-color for default toast messages
-@toast-info: @blue;									// The background-color for info toast messages
-@toast-success: @green;								// The background-color for success toast messages
-@toast-warning: @yellow;							// The background-color for warning toast messages
-@toast-error: @red;									// The background-color for error toast messages
-
-// Tooltips
-@tooltip-bkg-color: @gray-90;						// The background-color of tooltips
-@tooltip-text-color: @white;						// The text of tooltips
-@tooltip-font-size: 0.825em;						// The size of the text in the tooltips
-@tooltip-radius: 3px;								// The corner radius on tooltip bubbles
-
-// END OTHER STYLES
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------

@@ -61,6 +61,9 @@ export default {
 	created() {
 		this.tab_group = this.getParentByTagName(this, 'tabs');
 		this.tab_group.addTab(this);
+	},
+	beforeDestroy() {
+		this.tab_group.removeTab(this.tabId);
 	}
 };
 </script>

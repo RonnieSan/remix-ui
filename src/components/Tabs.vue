@@ -36,6 +36,11 @@ export default {
 			this.active_tab_id = tab.tabId;
 			tab.$emit('open');
 			this.$emit('change', this.active_tab);
+		},
+		removeTab(tab_id) {
+			this.tabs = this.tabs.filter((tab) => {
+				return (tab.tabId !== tab_id);
+			});
 		}
 	},
 	mounted() {

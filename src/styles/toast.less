@@ -62,6 +62,7 @@
 
 		> .type-icon,
 		> .close {
+			cursor: pointer;
 			flex: 0 0 auto;
 			text-align: center;
 		}
@@ -92,4 +93,22 @@
 			background-color: @error-color;
 		}
 	}
+}
+
+.toast-enter-active,
+.toast-leave-active {
+	transition: all 250ms ease-out;
+}
+
+.toast-enter,
+.toast-leave-to {
+	opacity: 0;
+}
+
+.toast-enter {
+	transform: translateY(-15px);
+}
+
+.toast-leave-to {
+	transform: translateY(15px);
 }

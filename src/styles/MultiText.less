@@ -26,17 +26,13 @@
 
 	.input-row {
 		background-color: @control-bkg-color;
-		border-top: 1px solid #E5E5E5;
+		border-bottom: 1px solid #E5E5E5;
 		box-sizing: content-box;
 		display: flex;
 		flex-direction: row;
 		font-size: @font-size;
 		height: calc(@control-height - (@control-border-stroke * 2));
 		width: 100%;
-
-		&:first-child {
-			border-top: none;
-		}
 
 		.handle {
 			cursor: ns-resize;
@@ -62,6 +58,7 @@
 
 		&.add {
 			background-color: #F2F2F2;
+			border-bottom: 0;
 			cursor: crosshair;
 
 			.input-box {

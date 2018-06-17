@@ -22,7 +22,7 @@ const Toast = Vue.extend({
 					'<div v-if="message.title" class="title">{{message.title}}</div>' +
 					'{{message.content}}' +
 				'</div>' +
-				'<div class="close" @click="pop(message.id)"><icon type="close" size="24"/></div>' +
+				'<div class="close" @click="remove(message.id)"><icon type="close" size="24"/></div>' +
 			'</div>' +
 		'</transition-group>' +
 	'</div>',
@@ -54,9 +54,9 @@ const Toast = Vue.extend({
 		},
 
 		// Push a toast message onto the queue
-		push(params) {
+		add(params) {
 			let id = uniqueId('toast-');
-			this.queue.push({
+			this.queue.unshift({
 				id      : id,
 				icon    : params.icon || false,
 				title   : params.title || null,
@@ -64,12 +64,12 @@ const Toast = Vue.extend({
 				type    : params.type || 'info'
 			});
 			setTimeout(() => {
-				this.pop(id);
+				this.remove(id);
 			}, params.timeout || this.$options.timeout);
 		},
 
 		// Remove a toast message from the queue
-		pop(id) {
+		remove(id) {
 			this.queue.forEach((item, index) => {
 				if (item.id === id) {
 					this.queue.splice(index, 1);
@@ -79,7 +79,7 @@ const Toast = Vue.extend({
 
 		// Add a success message to the queue
 		success(message, timeout) {
-			this.push({
+			this.add({
 				icon    : true,
 				title   : 'Success',
 				message : message,
@@ -90,7 +90,7 @@ const Toast = Vue.extend({
 
 		// Add an error message to the queue
 		error(message, timeout) {
-			this.push({
+			this.add({
 				icon    : true,
 				title   : 'Error',
 				message : message,
@@ -101,7 +101,7 @@ const Toast = Vue.extend({
 
 		// Add an info message to the queue
 		info(message, timeout) {
-			this.push({
+			this.add({
 				icon    : true,
 				title   : 'Information',
 				message : message,
@@ -112,7 +112,7 @@ const Toast = Vue.extend({
 
 		// Add a warning message to the queue
 		warning(message, timeout) {
-			this.push({
+			this.add({
 				icon    : true,
 				title   : 'Warning',
 				message : message,
