@@ -59,5 +59,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import (optional) '~remix-ui-styles/Radio.less';
 @import (optional) '~remix-ui-styles/RadioGroup.less';
 </style>
