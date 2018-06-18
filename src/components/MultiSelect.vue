@@ -8,7 +8,11 @@
 			<span v-else class="selected-items">{{value.length}} Selected</span>
 		</div>
 		<transition name="dropfade">
-			<div ref="list" class="list" :style="{'min-width' : this.minWidth, 'max-height' : this.maxListHeight, 'top' : this.list_top, 'bottom' : this.list_bottom}" v-show="is_open">
+			<div
+				v-show="is_open"
+				ref="list"
+				class="list"
+				:style="{'min-width' : this.minWidth, 'max-height' : this.maxListHeight, 'top' : this.list_top, 'bottom' : this.list_bottom}">
 				<div class="selection-options">
 					<strong>Select:</strong> <a @click="selectAll()" href="javascript:void(0)">All</a> | <a @click="selectNone()" href="javascript:void(0)">None</a>
 				</div>
@@ -34,8 +38,7 @@ export default {
 			focused         : false,
 			list_bottom     : null,
 			list_top        : null,
-			max_list_height : null,
-			input_box       : {}
+			max_list_height : null
 		};
 	},
 	props : {
@@ -99,22 +102,28 @@ export default {
 			// Set the dropdown size
 			this.$nextTick(() => {
 				if (this.is_open) {
-					let list_box = this.$refs.list.getBoundingClientRect();
+					let input_box     = this.$el.getBoundingClientRect();
 					let window_height = window.innerHeight;
 
-					// Display below
-					this.list_bottom = null;
-					this.list_top = (this.input_box.height - 5 + 'px');
-					this.max_list_height = ((window_height - this.input_box.bottom - 20));
+					// Calculate max list heights
+					let max_list_height_below = (window_height - input_box.bottom - 20);
+					let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
+					
+					// Choose where to display
+					let display_above = false;
+					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
+						display_above = true;
+					}
 
-					// Display above
-					if (this.max_list_height < list_box.height
-						&& (this.max_list_height < 200)
-						&& ((window_height - (window_height - this.input_box.top) - 20) > this.max_list_height))
-					{
-						this.list_bottom = (this.input_box.height - 5 + 'px');
+					if (display_above) {
+						this.max_list_height = max_list_height_above;
+						this.list_bottom = (input_box.height - 5 + 'px');
 						this.list_top = null;
-						this.max_list_height = (window_height - (window_height - this.input_box.top) - 20);
+					}
+					else {
+						this.max_list_height = max_list_height_below;
+						this.list_bottom = null;
+						this.list_top = (input_box.height - 5 + 'px');
 					}
 				}
 			});
@@ -142,10 +151,7 @@ export default {
 	mixins : [
 		clickaway,
 		formField
-	],
-	mounted() {
-		this.input_box = this.$el.getBoundingClientRect();
-	}
+	]
 };
 </script>
 

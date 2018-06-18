@@ -41,12 +41,14 @@ export default {
 	},
 	computed : {
 		listeners() {
+			const vm = this;
 			return Object.assign(
 				{},
 				this.$listeners,
 				{
 					change(event) {
-						// Do nothing
+						vm.dirty = true;
+						vm.validate();
 					},
 					blur(event) {
 						vm.touched = true;

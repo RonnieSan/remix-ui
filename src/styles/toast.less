@@ -22,22 +22,22 @@
 
 @import (optional, reference) '~theme';
 
-.toast-enter {
-	opacity: 0.01;
-
-	&.toast-enter-active {
-		opacity: 1;
-		transition: opacity 250ms ease-out;
-	}
+.toast-enter-active,
+.toast-leave-active {
+	transition: all 250ms ease-out;
 }
 
-.toast-leave {
-	opacity: 1;
+.toast-enter,
+.toast-leave-to {
+	opacity: 0;
+}
 
-	&.toast-leave-active {
-		opacity: 0.01;
-		transition: opacity 250ms ease-in;
-	}
+.toast-enter {
+	transform: translateY(-15px);
+}
+
+.toast-leave-to {
+	transform: translateY(15px);
 }
 
 #toast {
@@ -93,22 +93,4 @@
 			background-color: @error-color;
 		}
 	}
-}
-
-.toast-enter-active,
-.toast-leave-active {
-	transition: all 250ms ease-out;
-}
-
-.toast-enter,
-.toast-leave-to {
-	opacity: 0;
-}
-
-.toast-enter {
-	transform: translateY(-15px);
-}
-
-.toast-leave-to {
-	transform: translateY(15px);
 }

@@ -75,22 +75,28 @@
 @black: #000;
 
 // Color Scheme
-@primary-color: @blue;
-@primary-color-light: lighten(@primary-color, 15%);
-@primary-color-dark: darken(@primary-color, 15%);
-@secondary-color: @green;
-@secondary-color-light: lighten(@secondary-color, 15%);
-@secondary-color-dark: darken(@secondary-color, 15%);
-@accent-color: @gray-35;
-@accent-color-light: lighten(@accent-color, 15%);
-@accent-color-dark: darken(@accent-color, 15%);
-@body-color: #333;
-@heading-color: @primary-color;
-@link-color: @primary-color;
-@link-hover-color: @primary-color-light;
-@link-active-color: @secondary-color;
+@color-primary: @blue;
+@color-secondary: @green;
+@color-accent: @gray-65;
+@color-alt-1: @gray-35;
+@color-alt-2: @gray-15;
 
+@text-color: #333;
+@link-color: @color-primary;
+@link-hover-color: @color-primary-light;
+@link-active-color: @color-secondary;
 
+// Color scheme modifiers
+@color-primary-light: lighten(@color-primary, 15%);
+@color-primary-dark: darken(@color-primary, 15%);
+@color-secondary-light: lighten(@color-secondary, 15%);
+@color-secondary-dark: darken(@color-secondary, 15%);
+@color-accent-light: lighten(@color-accent, 15%);
+@color-accent-dark: darken(@color-accent, 15%);
+@color-alt-1-light: lighten(@color-alt-1, 15%);
+@color-alt-1-dark: darken(@color-alt-1, 15%);
+@color-alt-2-light: lighten(@color-alt-2, 15%);
+@color-alt-2-dark: darken(@color-alt-2, 15%);
 
 // END COLORS
 // ----------------------------------------------------------------------
@@ -178,7 +184,7 @@
 @control-bkg-color: @white;							// The background color of inputs
 @control-border-color: @gray-20;					// The color of the stroke around form elements
 @control-border-stroke: 1px;						// The thickness of the stroke around form elements
-@control-color: @primary-color;						// The accent color of form elements
+@control-color: @color-primary;						// The accent color of form elements
 @control-gutter: 0.3125em;							// The space between field elements in a control group
 @control-padding: 0.625em;							// The padding value for form elements
 @control-radius: 3px;								// The corner radius of boxed form elements
@@ -204,10 +210,10 @@
 @table-head-bkg-color: @gray-65;					// Default header background color for tables
 @table-head-text-color: @white;						// Default header font color for tables
 @table-body-border-color: @gray-25;					// Default border color for table body
-@table-body-text-color: @body-color;				// Default font color for table body
+@table-body-text-color: @text-color;				// Default font color for table body
 @table-row-color: @white;							// Default row background color for tables
 @table-row-alt-color: @gray-05;						// Default alternate row background color for tables
-@table-row-hover-color: tint(@primary-color, 85%);	// Default row hover color for tables
+@table-row-hover-color: tint(@color-primary, 85%);	// Default row hover color for tables
 @table-cell-height: 2.5em;							// Default minimum cell height for tables
 @table-cell-padding: 0.7em 1em;						// Default padding for tables
 

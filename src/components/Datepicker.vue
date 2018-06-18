@@ -10,11 +10,16 @@
 				:placeholder="value"
 				:disabled="disabled"
 				v-on="listeners"
+				autocomplete="off"
 			/>
 			<div class="display">{{displayValue}}</div>
 			<div class="helper"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
 			<transition name="dropfade">
-				<div class="calendar-wrapper" v-if="is_open" v-on-clickaway="closeCalendar">
+				<div
+					class="calendar-wrapper" v-if="is_open"
+					v-on-clickaway="closeCalendar"
+					:style="{'top' : popup_top, 'bottom' : popup_bottom}"
+				>
 					<div class="presets" v-if="isRange">
 						<h2>Presets</h2>
 						<ul>
@@ -137,7 +142,9 @@ export default {
 			],
 			current_cursor_index : 0,
 			current_selection_index : 0,
-			is_open : false
+			is_open : false,
+			popup_top : null,
+			popup_bottom : null
 		};
 	},
 	props : {
@@ -348,6 +355,33 @@ export default {
 				this.resetCursors();
 				this.is_open = true;
 			}
+
+			// Set the dropdown size
+			this.$nextTick(() => {
+				if (this.is_open) {
+					let input_box     = this.$el.getBoundingClientRect();
+					let window_height = window.innerHeight;
+
+					// Calculate max list heights
+					let max_list_height_below = (window_height - input_box.bottom - 20);
+					let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
+					
+					// Choose where to display
+					let display_above = false;
+					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
+						display_above = true;
+					}
+
+					if (display_above) {
+						this.popup_bottom = (input_box.height - 5 + 'px');
+						this.popup_top = null;
+					}
+					else {
+						this.popup_bottom = null;
+						this.popup_top = (input_box.height - 5 + 'px');
+					}
+				}
+			});
 		},
 
 		// Close the calendar interface

@@ -16,13 +16,26 @@
 // Import theme
 @import (optional, reference) '~theme';
 
+.dropfade-enter-active,
+.dropfade-leave-active {
+	transition: all 150ms ease-out;
+}
+
+.dropfade-enter,
+.dropfade-leave-to {
+	opacity: 0;
+	transform: translateY(-5px);
+}
+
 .multi-select-wrapper {
 	align-items: center;
 	background-color: @control-bkg-color;
 	border-radius: @control-radius;
 	border: @control-border-stroke solid @control-border-color;
+	cursor: default;
 	display: inline-flex;
 	position: relative;
+	user-select: none;
 	vertical-align: middle;
 	width: 100%;
 
@@ -47,8 +60,9 @@
 
 	.list {
 		background-color: @control-bkg-color;
+		border: @control-border-stroke solid @control-border-color;
 		border-radius: 3px;
-		box-shadow: 0 2px 10px fade(black, 25%);
+		box-shadow: 2px 2px 0 0 fade(#000, 10%);
 		left: 2px;
 		overflow-y: auto;
 		padding: @control-padding;

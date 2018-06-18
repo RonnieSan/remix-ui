@@ -23,10 +23,10 @@ const Msg = Vue.extend({
 		'<section class="title-bar" v-if="title">{{title}}</section>' +
 		'<section class="message" v-html="message"></section>' +
 		'<section class="input">' +
-			'<button v-if="type === \'confirm\'" type="button" class="text" @click="closeMsg(false)">' +
+			'<button ref="cancel_btn" v-if="type === \'confirm\'" type="button" class="text" @click="closeMsg(false)">' +
 				'<span class="label">{{decline}}</span>' +
 			'</button>' +
-			'<button type="button" @click="closeMsg(true)">' +
+			'<button ref="accept_btn" type="button" @click="closeMsg(true)">' +
 				'<span class="label">{{accept}}</span>' +
 			'</button>' +
 		'</section>' +
@@ -47,7 +47,10 @@ const Msg = Vue.extend({
 				this.message = options.message;
 				this.accept  = options.accept || 'OK';
 				this.max_width = options.width || '400px';
-				this.$refs.msg.open();
+				this.$refs.msg.open()
+					.then(() => {
+						this.$refs.accept_btn.focus();
+					});
 
 				this.promise = {
 					resolve,
@@ -72,7 +75,10 @@ const Msg = Vue.extend({
 				this.accept    = options.accept || 'OK';
 				this.decline   = options.decline || 'Cancel';
 				this.max_width = options.width || '400px';
-				this.$refs.msg.open();
+				this.$refs.msg.open()
+					.then(() => {
+						this.$refs.cancel_btn.focus();
+					});
 
 				this.promise = {
 					resolve,

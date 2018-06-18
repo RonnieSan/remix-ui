@@ -20,6 +20,17 @@
 // Import theme
 @import (optional, reference) '~theme';
 
+.dropfade-enter-active,
+.dropfade-leave-active {
+	transition: all 150ms ease-out;
+}
+
+.dropfade-enter,
+.dropfade-leave-to {
+	opacity: 0;
+	transform: translateY(-5px);
+}
+
 .input-wrapper {
 	border-radius: @control-radius;
 	background-color: #FFF;
@@ -88,7 +99,6 @@ input[disabled='disabled'] {
 		overflow: hidden;
 		padding: 0.5em;
 		position: absolute;
-		top: calc(@control-height - (@control-border-stroke * 2));
 		white-space: nowrap;
 		z-index: @popup-layer;
 

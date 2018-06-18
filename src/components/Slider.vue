@@ -96,7 +96,6 @@ export default {
 	},
 	watch : {
 		value(new_value) {
-			console.log(new_value)
 			if (!isEqual(this.local_value, new_value)) {
 				this.local_value = new_value
 				this.setHandlePosition();
