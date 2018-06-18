@@ -27,7 +27,7 @@
 <script>
 import { isNull, isUndefined } from 'lodash';
 import { mask as vueMask, tokens } from 'vue-the-mask';
-import masker from 'vue-the-mask/src/masker';
+import masker from '../lib/Masker';
 
 export default {
 	data() {
