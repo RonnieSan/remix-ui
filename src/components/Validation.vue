@@ -2,8 +2,14 @@
 	<div :class="{'invalid' : errors.length > 0, 'valid' : isValid}">
 		<slot v-bind="self"></slot>
 		<slot name="errors" v-bind="self">
+
 			<ul v-if="errors.length > 0" class="validation-errors">
-				<li v-for="error in errors">{{error}}</li>
+				<template v-if="showAllErrors">
+					<li v-for="error in errors">{{error}}</li>
+				</template>
+				<template v-else>
+					<li>{{errors[0]}}</li>
+				</template>
 			</ul>
 		</slot>
 	</div>
@@ -37,6 +43,10 @@ export default {
 			required : true
 		},
 		watch : {
+			type : Boolean,
+			default : false
+		},
+		showAllErrors : {
 			type : Boolean,
 			default : false
 		},
