@@ -308,6 +308,11 @@
 								</div>
 							</div>
 
+							<h2>Responsive Menu</h2>
+							<r-menu
+								:items="nav_items"
+							/>
+
 							<h2>Tabs</h2>
 
 							<tabs active-tab-id="one">
@@ -375,6 +380,11 @@ export default {
 				'Blue',
 				'Green',
 				'Yellow'
+			],
+			nav_items : [
+				{target : '#one', label : 'One'},
+				{target : '#two', label : 'Two'},
+				{target : '#three', label : 'Three'}
 			]
 		};
 	},

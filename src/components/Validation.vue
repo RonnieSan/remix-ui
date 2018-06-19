@@ -1,7 +1,7 @@
 <template>
 	<div :class="{'invalid' : errors.length > 0, 'valid' : isValid}">
-		<slot></slot>
-		<slot name="errors" :errors="errors">
+		<slot v-bind="self"></slot>
+		<slot name="errors" v-bind="self">
 			<ul v-if="errors.length > 0" class="validation-errors">
 				<li v-for="error in errors">{{error}}</li>
 			</ul>
@@ -38,7 +38,7 @@ export default {
 		},
 		watch : {
 			type : Boolean,
-			default : true
+			default : false
 		},
 		rules : {
 			type : Array,
@@ -50,6 +50,9 @@ export default {
 		}
 	},
 	computed : {
+		self() {
+			return this;
+		},
 		isValid() {
 			return this.errors.length === 0;
 		}
@@ -59,6 +62,7 @@ export default {
 		value(new_value) {
 			if (new_value !== this.local_value) {
 				this.local_value = new_value;
+				this.$emit('change', new_value);
 				if (this.watch) {
 					this.validate();
 				}
