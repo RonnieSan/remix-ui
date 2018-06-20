@@ -7,7 +7,7 @@
 			v-model.lazy="selected"
 			v-on="listeners"
 		>
-			<option disabled :value="{value : ''}">{{placeholder}}</option>
+			<option disabled :value="{value : null}">{{placeholder}}</option>
 			<option
 				v-for="option in options"
 				:value="{value : option.value || option}"
