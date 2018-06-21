@@ -5,29 +5,29 @@
 
 
 // Import form elements
-import Form from './components/Form';
-import Button from './components/Button';
-import Checkbox from './components/Checkbox';
-import Checklist from './components/Checklist';
-import Code from './components/Code';
-import Currency from './components/Currency';
-import Datepicker from './components/Datepicker';
-import FileInput from './components/FileInput';
-import Markdown from './components/Markdown';
-import MultiSelect from './components/MultiSelect';
-import MultiText from './components/MultiText';
-import NumberInput from './components/Number';
-import Password from './components/Password';
-import Pillbox from './components/Pillbox';
-import Radio from './components/Radio';
-import RadioGroup from './components/RadioGroup';
-import Select from './components/Select';
-import Slider from './components/Slider';
+import rForm from './components/Form';
+import rButton from './components/Button';
+import rCheckbox from './components/Checkbox';
+import rChecklist from './components/Checklist';
+import rCode from './components/Code';
+import rCurrency from './components/Currency';
+import rDatepicker from './components/Datepicker';
+import rFileInput from './components/FileInput';
+import rMarkdown from './components/Markdown';
+import rMultiSelect from './components/MultiSelect';
+import rMultiText from './components/MultiText';
+import rNumber from './components/Number';
+import rPassword from './components/Password';
+import rPillbox from './components/Pillbox';
+import rRadio from './components/Radio';
+import rRadioGroup from './components/RadioGroup';
+import rSelect from './components/Select';
+import rSlider from './components/Slider';
 import Tab from './components/Tab';
 import Tabs from './components/Tabs';
-import Text from './components/Text';
-import Textarea from './components/Textarea';
-import Toggle from './components/Toggle';
+import rText from './components/Text';
+import rTextarea from './components/Textarea';
+import rToggle from './components/Toggle';
 
 // Import Icons
 import Icon from './components/Icon';
@@ -49,35 +49,35 @@ import Validator from './lib/Validator';
 // Export components
 export {
 	Autocomplete,
-	Button,
-	Checkbox,
-	Checklist,
-	Code,
+	rButton,
+	rCheckbox,
+	rChecklist,
+	rCode,
 	Column,
-	Currency,
-	Datepicker,
-	FileInput,
-	Form,
+	rCurrency,
+	rDatepicker,
+	rFileInput,
+	rForm,
 	Grid,
 	Icon,
-	Markdown,
+	rMarkdown,
 	Modal,
-	MultiSelect,
-	MultiText,
-	Number,
-	Password,
-	Pillbox,
-	Radio,
-	RadioGroup,
+	rMultiSelect,
+	rMultiText,
+	rNumber,
+	rPassword,
+	rPillbox,
+	rRadio,
+	rRadioGroup,
 	Row,
-	Select,
-	Slider,
+	rSelect,
+	rSlider,
 	Spacer,
 	Tab,
 	Tabs,
-	Text,
-	Textarea,
-	Toggle,
+	rText,
+	rTextarea,
+	rToggle,
 	Validation,
 	Validator
 };
@@ -88,29 +88,29 @@ export default {
 	install(Vue, options) {
 		options = options || {};
 
-		Vue.component('rForm', Form);
-		Vue.component('rButton', Button);
-		Vue.component('rCheckbox', Checkbox);
-		Vue.component('rChecklist', Checklist);
-		Vue.component('rCode', Code);
-		Vue.component('rCurrency', Currency);
-		Vue.component('rDatepicker', Datepicker);
-		Vue.component('rFile', FileInput);
-		Vue.component('rMarkdown', Markdown);
-		Vue.component('rMultiSelect', MultiSelect);
-		Vue.component('rMultiText', MultiText);
-		Vue.component('rNumber', NumberInput);
-		Vue.component('rPassword', Password);
-		Vue.component('rPillbox', Pillbox);
-		Vue.component('rRadio', Radio);
-		Vue.component('rRadioGroup', RadioGroup);
-		Vue.component('rSelect', Select);
-		Vue.component('rSlider', Slider);
+		Vue.component('rForm', rForm);
+		Vue.component('rButton', rButton);
+		Vue.component('rCheckbox', rCheckbox);
+		Vue.component('rChecklist', rChecklist);
+		Vue.component('rCode', rCode);
+		Vue.component('rCurrency', rCurrency);
+		Vue.component('rDatepicker', rDatepicker);
+		Vue.component('rFile', rFileInput);
+		Vue.component('rMarkdown', rMarkdown);
+		Vue.component('rMultiSelect', rMultiSelect);
+		Vue.component('rMultiText', rMultiText);
+		Vue.component('rNumber', rNumberInput);
+		Vue.component('rPassword', rPassword);
+		Vue.component('rPillbox', rPillbox);
+		Vue.component('rRadio', rRadio);
+		Vue.component('rRadioGroup', rRadioGroup);
+		Vue.component('rSelect', rSelect);
+		Vue.component('rSlider', rSlider);
 		Vue.component('tab', Tab);
 		Vue.component('tabs', Tabs);
-		Vue.component('rText', Text);
-		Vue.component('rTextarea', Textarea);
-		Vue.component('rToggle', Toggle);
+		Vue.component('rText', rText);
+		Vue.component('rTextarea', rTextarea);
+		Vue.component('rToggle', rToggle);
 
 		Vue.component('icon', Icon);
 		
