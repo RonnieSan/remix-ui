@@ -18,7 +18,7 @@
 @line-height: 1.5em;
 @success-color: #2DCC40;
 @error-color: #FF4136;
-@warning-color: #FFDC00;
+@warning-color: #FAC300;
 
 @import (optional, reference) '~theme';
 
@@ -43,6 +43,7 @@
 #toast {
 	@position();
 	position: fixed;
+	max-width: calc(100% - 40px);
 	width: @toast-width;
 	z-index: @toast-layer;
 
@@ -69,7 +70,7 @@
 
 		> .content {
 			flex: 1 0 0;
-			padding: 0 1.25em;
+			padding-left: 1em;
 		}
 
 		.title {
@@ -92,5 +93,15 @@
 		&.error {
 			background-color: @error-color;
 		}
+
+		.mobile({
+			> .type-icon {
+				display: none;
+			}
+
+			.content {
+				padding-left: 0;
+			}
+		});
 	}
 }

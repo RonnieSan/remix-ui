@@ -108,7 +108,7 @@ export default {
 					// Calculate max list heights
 					let max_list_height_below = (window_height - input_box.bottom - 20);
 					let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
-					
+
 					// Choose where to display
 					let display_above = false;
 					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {

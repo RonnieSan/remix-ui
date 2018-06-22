@@ -26,8 +26,8 @@ export default {
 				}
 			}
 		},
-		validate() {
-			if (this.touched) {
+		validate(force) {
+			if (this.touched || force) {
 				this.$emit('validate');
 			}
 		}

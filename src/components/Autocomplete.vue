@@ -3,7 +3,9 @@
 		class="autocomplete-wrapper"
 		@keydown="keydownHandler"
 		@keypress="update_filters = true;"
+		@input="androidInputHandler"
 		@focusin="focusinHandler"
+		@focusout="closeOptions"
 		v-on-clickaway="closeOptions">
 		<slot></slot>
 		<div v-if="filtered_options.length > 0" class="autocomplete-options">
@@ -29,7 +31,8 @@ export default {
 			original_value   : '',
 			selected_index   : -1,
 			selected_value   : '',
-			update_filters   : false
+			update_filters   : false,
+			is_android       : /(android)/i.test(window.navigator.userAgent)
 		};
 	},
 	props : {
@@ -162,11 +165,20 @@ export default {
 					this.selected_index = -1;
 					break;
 			}
+		},
+		androidInputHandler() {
+			if (this.is_android) {
+				this.update_filters = true;
+			}
 		}
 	},
 	mixins : [
 		clickaway
-	]
+	],
+	mounted() {
+		// Turn off native auto complete on child element
+		this.$el.querySelector('input').setAttribute('autocomplete', 'off');
+	}
 };
 </script>
 

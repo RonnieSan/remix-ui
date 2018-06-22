@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { isNull, isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash-es';
 import { mask as vueMask, tokens } from 'vue-the-mask';
 import masker from '../lib/Masker';
 
@@ -33,7 +33,8 @@ export default {
 	data() {
 		return {
 			display_value : this.value,
-			last_value    : null
+			last_value    : null,
+			is_android    : /(android)/i.test(window.navigator.userAgent)
 		};
 	},
 	props : {
@@ -97,6 +98,9 @@ export default {
 				this.$listeners,
 				{
 					input(event) {
+						if (vm.is_android) {
+							vm.$emit('android-input', event.data);
+						}
 						vm.inputHandler(event);
 					},
 					keypress(event) {

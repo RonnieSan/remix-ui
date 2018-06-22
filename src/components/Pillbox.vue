@@ -21,6 +21,7 @@
 					:number="number"
 					:outputMask="outputMask"
 					v-on="listeners"
+					@android-input="androidInputHandler"
 				/>
 			</div>
 		</div>
@@ -29,7 +30,7 @@
 
 <script>
 import formField from '../mixins/formField';
-import { includes } from 'lodash';
+import { includes } from 'lodash-es';
 import TextInput from './TextInput';
 
 export default {
@@ -155,7 +156,9 @@ export default {
 						new_array.push(obj_value || value);
 						this.$emit('input', new_array);
 						this.validate();
-						this.input_value = '';
+						this.$nextTick(() => {
+							this.input_value = '';
+						});
 					}
 					else {
 						this.error_class = 'errored';
@@ -188,6 +191,11 @@ export default {
 
 			else {
 				this.selected_item = null;
+			}
+		},
+		androidInputHandler(value) {
+			if (value.length && includes(this.commit, value)) {
+				this.commitValue(this.input_value);
 			}
 		},
 		removeItem(index) {

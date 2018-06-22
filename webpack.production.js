@@ -4,17 +4,15 @@
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-	mode : 'development',
-	entry : './src/preview.js',
+	mode : 'production',
+	entry : './src/index.js',
 	output : {
-		filename : '[name].js',
+		filename : 'index.js',
 		path : path.resolve(__dirname, 'dist'),
 		publicPath : '/'
 	},
@@ -26,11 +24,6 @@ module.exports = {
 			'theme' : path.resolve(__dirname, 'node_modules/remix-css-theme-default'),
 			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
 		}
-	},
-	devServer : {
-		contentBase : './dist',
-		hot : true,
-		port : 3010
 	},
 	module : {
 		rules : [
@@ -80,19 +73,19 @@ module.exports = {
 			},
 			{
 				test : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-				loader : 'url-loader',
-				options : {
-					limit : 10000,
-					name : '[name].[hash:7].[ext]',
+				loader: 'url-loader',
+				options: {
+					limit: 10000,
+					name: '[name].[hash:7].[ext]',
 					outputPath : 'assets/img/'
 				}
 			},
 			{
-				test : /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-				loader : 'file-loader',
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+				loader: 'file-loader',
 				options: {
-					limit : 10000,
-					name : '[name].[hash:7].[ext]',
+					limit: 10000,
+					name: '[name].[hash:7].[ext]',
 					outputPath : 'assets/fonts/'
 				}
 			}
@@ -100,11 +93,8 @@ module.exports = {
 	},
 	plugins : [
 		new VueLoaderPlugin(),
-		new HTMLWebpackPlugin({
-			template : './src/preview.html'
-		}),
+		new CleanWebpackPlugin(['dist']),
 		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
 		new BundleAnalyzerPlugin({
 			analyzermode : 'static',
 			openAnalyzer : false

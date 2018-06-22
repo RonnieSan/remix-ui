@@ -14,7 +14,7 @@ import {
 	keys,
 	merge,
 	uniqueId
-} from 'lodash';
+} from 'lodash-es';
 
 class Validator {
 	constructor(options = {}) {
@@ -25,106 +25,110 @@ class Validator {
 		// Default validation rules
 		this.rules = {
 			// The field is required
-			required(value) {
-				switch (typeof value) {
-					case 'string':
-					case 'array':
-						if (value.length > 0) {
-							return null;
-						}
-						break;
-					case 'number':
-						if (value > 0) {
-							return null;
-						}
-						break;
-					case 'boolean':
-						if (value !== false) {
-							return null;
-						}
-						break;
-					case 'object':
-						if (!isEmpty(value)) {
-							return null;
-						}
-						break;
-					default:
-						if (!isUndefined(value) && !isNull(value)) {
-							return null;
-						}
-						break;
+			required(message) {
+				return function(value) {
+					switch (typeof value) {
+						case 'string':
+						case 'array':
+							if (value.length > 0) {
+								return null;
+							}
+							break;
+						case 'number':
+							if (value > 0) {
+								return null;
+							}
+							break;
+						case 'boolean':
+							if (value !== false) {
+								return null;
+							}
+							break;
+						case 'object':
+							if (!isEmpty(value)) {
+								return null;
+							}
+							break;
+						default:
+							if (!isUndefined(value) && !isNull(value)) {
+								return null;
+							}
+							break;
+					}
+					return message || 'This field is required';
 				}
-				return 'This field is required';
 			},
 
 			// The field has a minimum length required
-			minLength(min_length) {
+			minLength(min_length, message) {
 				return function(value) {
 					if (typeof value !== 'undefined' && value.length >= min_length) {
 						return null;
 					}
-					return `This field requires a minimum length of ${min_length} characters`;
+					return message || `Value must be at least ${min_length} characters`;
 				};
 			},
 
 			// The field has a maximum length required
-			maxLength(max_length) {
+			maxLength(max_length, message) {
 				return function(value) {
 					if (typeof value !== 'undefined' && value.length <= max_length) {
 						return null;
 					}
-					return `This field has a maximum allowed length of ${max_length} characters`;
+					return message || `Value cannot exceed ${max_length} characters`;
 				};
 			},
 
 			// The field has a minimum value required
-			min(min) {
+			min(min, message) {
 				return function(value) {
 					if (typeof value !== 'undefined' && value >= min) {
 						return null;
 					}
-					return `This field must be at least ${min}`;
+					return message || `Value must be at least ${min}`;
 				};
 			},
 
 			// The field has a maximum value required
-			max(max) {
+			max(max, message) {
 				return function(value) {
 					if (typeof value !== 'undefined' && value <= max) {
 						return null;
 					}
-					return `This field must not be greater than ${max}`;
+					return message || `Value must not exceed ${max}`;
 				};
 			},
 
 			// The field must match a pattern
-			pattern(regex) {
+			pattern(regex, message) {
 				return function(value) {
 					const pattern = new RegExp(regex);
 					if (typeof value !== 'undefined' && pattern.test(value)) {
 						return null;
 					}
-					return 'Please enter a valid value';
+					return message || 'Please enter a valid value';
 				};
 			},
 
 			// The field must match a value
-			match(match_value) {
+			match(match_value, message) {
 				return function(value) {
 					if (!match_value || value === match_value) {
 						return null;
 					}
-					return 'The value does not match';
+					return message || 'The value does not match';
 				};
 			},
 
 			// The field must be an email
-			email(value) {
-				const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-				if (typeof value !== 'undefined' && pattern.test(value)) {
-					return null;
+			email(value, message) {
+				return function(value) {
+					const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+					if (typeof value !== 'undefined' && pattern.test(value)) {
+						return null;
+					}
+					return message || 'Please enter a valid email address';
 				}
-				return 'Please enter a valid email address';
 			}
 		};
 
@@ -163,10 +167,10 @@ class Validator {
 		let field_validations = [];
 		forIn(this.fields, (field, name) => {
 			if (group_name && field.group === group_name) {
-				field_validations.push(field.validate());
+				field_validations.push(field.validate(true));
 			}
 			else {
-				field_validations.push(field.validate());
+				field_validations.push(field.validate(true));
 			}
 		});
 

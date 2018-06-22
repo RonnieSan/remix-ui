@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { compact } from 'lodash';
+import { compact } from 'lodash-es';
 
 export default {
 	data() {

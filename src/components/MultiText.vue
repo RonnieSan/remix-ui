@@ -49,7 +49,7 @@
 <script>
 import uuid from 'uuid';
 import formField from '../mixins/formField';
-import { isEqual, map, merge } from 'lodash';
+import { isEqual, map, merge } from 'lodash-es';
 import Sortable from 'sortablejs';
 import TextInput from './TextInput';
 

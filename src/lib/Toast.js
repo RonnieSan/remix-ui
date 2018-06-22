@@ -5,7 +5,7 @@
 
 // Import dependencies
 import Vue from 'vue';
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'lodash-es';
 import Icon	from '../components/Icon';
 
 const Toast = Vue.extend({

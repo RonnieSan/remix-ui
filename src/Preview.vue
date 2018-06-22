@@ -24,7 +24,7 @@
 											ref="text_validation"
 											v-model="text_value"
 											:validator="validator"
-											:rules="[validator.rules.required]"
+											:rules="[validator.rules.required(), validator.rules.minLength(5)]"
 										>
 											<r-text
 												name="text"
@@ -294,24 +294,19 @@
 							<div class="control-group">
 								<div class="controls">
 									<div class="field fit">
-										<r-button icon="check" @click="$toast.success('Something successful happened.')">Success</r-button>
+										<r-button class="bkg-color-green" icon="check" @click="$toast.success('Something successful happened.')">Success</r-button>
 									</div>
 									<div class="field fit">
-										<r-button icon="alert-octagon" @click="$toast.error('Something went wrong.')">Error</r-button>
+										<r-button class="bkg-color-red" icon="alert-octagon" @click="$toast.error('Something went wrong.')">Error</r-button>
 									</div>
 									<div class="field fit">
-										<r-button icon="alert" @click="$toast.warning('Be careful!')">Warning</r-button>
+										<r-button class="bkg-color-yellow" icon="alert" @click="$toast.warning('Be careful!')">Warning</r-button>
 									</div>
 									<div class="field fit">
 										<r-button icon="information" @click="$toast.info('A toast message was fired.')">Info</r-button>
 									</div>
 								</div>
 							</div>
-
-							<h2>Responsive Menu</h2>
-							<r-menu
-								:items="nav_items"
-							/>
 
 							<h2>Tabs</h2>
 
@@ -415,9 +410,14 @@ export default {
 </script>
 
 <style lang="less">
-@import './theme.less';
+@import '~remix-css-theme-default';
 @import './styles/Toast.less';
 @import './styles/Msg.less';
+
+@full-width: 720px;
+@desktop-width: 720px;
+@laptop-width: 720px;
+@mono-font: 'Roboto Mono', Menlo, 'Droid Sans Mono', Courier, System;
 
 #wrapper {
 	padding: 50px 0;

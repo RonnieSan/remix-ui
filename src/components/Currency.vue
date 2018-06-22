@@ -6,14 +6,13 @@
 			<div class="helper">$</div>
 		</slot>
 		<input
-			type="text"
+			type="tel"
 			ref="input"
 			:name="name"
 			:disabled="disabled"
 			v-model="string_value"
 			v-money="settings"
 			v-on="listeners"
-			@blur=""
 		>
 		<slot name="right"></slot>
 	</div>
@@ -58,12 +57,19 @@ export default {
 			let vm = this;
 			return Object.assign(
 				{},
-				this.$listeners,
+				vm.$listeners,
 				{
 					input(event) {
 						vm.dirty = true;
 						vm.inputHandler(event);
 						vm.validate();
+					},
+					keyup(event) {
+						if (event.key === 'Tab') {
+							setTimeout(() => {
+								vm.$refs.input.select();
+							});
+						}
 					},
 					blur(event) {
 						vm.touched = true;

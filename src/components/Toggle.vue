@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import _ from 'lodash';
+import { includes } from 'lodash-es';
 import formField from '../mixins/formField';
 
 export default {
@@ -34,7 +34,7 @@ export default {
 	computed : {
 		is_checked() {
 			if (Array.isArray(this.model)) {
-				return (_.includes(this.model, this.value));
+				return (includes(this.model, this.value));
 			}
 			else {
 				if ((typeof this.falseValue !== 'undefined') && this.model === this.falseValue) {
