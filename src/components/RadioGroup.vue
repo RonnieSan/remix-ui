@@ -25,7 +25,7 @@ export default {
 	props : {
 		name : String,
 		value : {
-			type : [String, Number, Boolean]
+			type : [String, Number, Boolean, Object]
 		},
 		options : {
 			type : Array,
