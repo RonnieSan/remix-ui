@@ -19,9 +19,9 @@ import formField from '../mixins/formField';
 
 export default {
 	props : {
-		model : [String, Boolean, Number],
+		model : [String, Boolean, Number, Object],
 		name  : String,
-		value : [String, Boolean, Number]
+		value : [String, Boolean, Number, Object]
 	},
 	computed : {
 		is_checked() {
