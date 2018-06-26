@@ -23,11 +23,10 @@ import rRadio from './components/Radio';
 import rRadioGroup from './components/RadioGroup';
 import rSelect from './components/Select';
 import rSlider from './components/Slider';
-import Tab from './components/Tab';
-import Tabs from './components/Tabs';
 import rText from './components/Text';
 import rTextarea from './components/Textarea';
 import rToggle from './components/Toggle';
+import rValidation from './components/Validation';
 
 // Import Icons
 import Icon from './components/Icon';
@@ -41,27 +40,25 @@ import Grid from './components/Grid';
 // Import utilities
 import Autocomplete from './components/Autocomplete';
 import Modal from './components/Modal';
-import Validation from './components/Validation';
+import Tab from './components/Tab';
+import Tabs from './components/Tabs';
 
 // Import libraries
+import Msg from './lib/Msg';
+import Toast from './lib/Toast';
 import Validator from './lib/Validator';
 
 // Export components
-export {
-	Autocomplete,
+export const modules = {
 	rButton,
 	rCheckbox,
 	rChecklist,
 	rCode,
-	Column,
 	rCurrency,
 	rDatepicker,
 	rFileInput,
 	rForm,
-	Grid,
-	Icon,
 	rMarkdown,
-	Modal,
 	rMultiSelect,
 	rMultiText,
 	rNumber,
@@ -69,16 +66,23 @@ export {
 	rPillbox,
 	rRadio,
 	rRadioGroup,
-	Row,
 	rSelect,
 	rSlider,
-	Spacer,
-	Tab,
-	Tabs,
 	rText,
 	rTextarea,
 	rToggle,
-	Validation,
+	rValidation,
+	Grid,
+	Row,
+	Column,
+	Spacer,
+	Icon,
+	Autocomplete,
+	Modal,
+	Tab,
+	Tabs,
+	Msg,
+	Toast,
 	Validator
 };
 
@@ -88,39 +92,50 @@ export default {
 	install(Vue, options) {
 		options = options || {};
 
-		Vue.component('rForm', rForm);
-		Vue.component('rButton', rButton);
-		Vue.component('rCheckbox', rCheckbox);
-		Vue.component('rChecklist', rChecklist);
-		Vue.component('rCode', rCode);
-		Vue.component('rCurrency', rCurrency);
-		Vue.component('rDatepicker', rDatepicker);
-		Vue.component('rFile', rFileInput);
-		Vue.component('rMarkdown', rMarkdown);
-		Vue.component('rMultiSelect', rMultiSelect);
-		Vue.component('rMultiText', rMultiText);
-		Vue.component('rNumber', rNumber);
-		Vue.component('rPassword', rPassword);
-		Vue.component('rPillbox', rPillbox);
-		Vue.component('rRadio', rRadio);
-		Vue.component('rRadioGroup', rRadioGroup);
-		Vue.component('rSelect', rSelect);
-		Vue.component('rSlider', rSlider);
-		Vue.component('tab', Tab);
-		Vue.component('tabs', Tabs);
-		Vue.component('rText', rText);
-		Vue.component('rTextarea', rTextarea);
-		Vue.component('rToggle', rToggle);
+		// Install specific components
+		if (options.components) {
+			options.components.forEach((component) => {
+				Vue.component(component, modules[component]);
+			});
+		}
+		else {
+			Vue.component('rForm', rForm);
+			Vue.component('rButton', rButton);
+			Vue.component('rCheckbox', rCheckbox);
+			Vue.component('rChecklist', rChecklist);
+			Vue.component('rCode', rCode);
+			Vue.component('rCurrency', rCurrency);
+			Vue.component('rDatepicker', rDatepicker);
+			Vue.component('rFile', rFileInput);
+			Vue.component('rMarkdown', rMarkdown);
+			Vue.component('rMultiSelect', rMultiSelect);
+			Vue.component('rMultiText', rMultiText);
+			Vue.component('rNumber', rNumber);
+			Vue.component('rPassword', rPassword);
+			Vue.component('rPillbox', rPillbox);
+			Vue.component('rRadio', rRadio);
+			Vue.component('rRadioGroup', rRadioGroup);
+			Vue.component('rSelect', rSelect);
+			Vue.component('rSlider', rSlider);
+			Vue.component('rText', rText);
+			Vue.component('rTextarea', rTextarea);
+			Vue.component('rToggle', rToggle);
+			Vue.component('rValidation', rValidation);
 
-		Vue.component('icon', Icon);
-		
-		Vue.component('spacer', Spacer);
-		Vue.component('column', Column);
-		Vue.component('row', Row);
-		Vue.component('grid', Grid);
-		
-		Vue.component('autocomplete', Autocomplete);
-		Vue.component('modal', Modal);
-		Vue.component('validation', Validation);
+			Vue.component('icon', Icon);
+			
+			Vue.component('spacer', Spacer);
+			Vue.component('column', Column);
+			Vue.component('row', Row);
+			Vue.component('grid', Grid);
+			
+			Vue.component('autocomplete', Autocomplete);
+			Vue.component('modal', Modal);
+			Vue.component('tab', Tab);
+			Vue.component('tabs', Tabs);
+
+			Vue.prototype.$msg   = Msg.init();
+			Vue.prototype.$toast = Toast.init();
+		}
 	}
 };
