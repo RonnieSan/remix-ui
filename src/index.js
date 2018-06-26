@@ -99,7 +99,7 @@ export default {
 		Vue.component('rMarkdown', rMarkdown);
 		Vue.component('rMultiSelect', rMultiSelect);
 		Vue.component('rMultiText', rMultiText);
-		Vue.component('rNumber', rNumberInput);
+		Vue.component('rNumber', rNumber);
 		Vue.component('rPassword', rPassword);
 		Vue.component('rPillbox', rPillbox);
 		Vue.component('rRadio', rRadio);
