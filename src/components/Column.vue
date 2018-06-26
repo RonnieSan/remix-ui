@@ -8,6 +8,7 @@
 export default {
 	computed : {
 		style() {
+			let column_size = '1 0 0';
 			if (this.minWidth || this.maxWidth || this.span) {
 				if (this.span) {
 					column_size = this.span + ' 0 0';
