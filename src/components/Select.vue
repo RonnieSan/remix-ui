@@ -7,11 +7,11 @@
 			v-model.lazy="selected"
 			v-on="listeners"
 		>
-			<option disabled :value="{value : null}">{{placeholder}}</option>
+			<option disabled :value="{value : emptyValue}">{{placeholder}}</option>
 			<option
 				v-for="option in options"
-				:value="{value : option.value || option}"
-			>{{option.label || option}}</option>
+				:value="{value : (option.value !== undefined) ? option.value : option}"
+			>{{(option.label !== undefined) ? option.label : option}}</option>
 		</select>
 	</div>
 </template>
@@ -33,6 +33,9 @@ export default {
 			type : [String, Number, Boolean, Object]
 		},
 		name : String,
+		emptyValue : {
+			default : null
+		},
 		options : Array,
 		placeholder : {
 			type : String,

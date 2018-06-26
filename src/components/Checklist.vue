@@ -5,9 +5,9 @@
 				:ref="'input_' + index"
 				:name="name"
 				:model="local_value"
-				:value="option.value || option"
+				:value="(option.value !== undefined) ? option.value : option"
 				v-on="listeners"
-			><span v-html="option.label || option"/></r-checkbox>
+			><span v-html="(option.label !== undefined) ? option.label : option"/></r-checkbox>
 		</div>
 	</div>
 </template>

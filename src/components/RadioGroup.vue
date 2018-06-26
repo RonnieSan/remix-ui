@@ -4,10 +4,10 @@
 			<r-radio
 				ref="input"
 				:name="name"
-				:value="option.value || option"
+				:value="(option.value !== undefined) ? option.value : option"
 				:model="value"
 				@change="changeHandler"
-			><span v-html="option.label || option"/></r-radio>
+			><span v-html="(option.label !== undefined) ? option.label : option"/></r-radio>
 		</div>
 	</div>
 </template>
