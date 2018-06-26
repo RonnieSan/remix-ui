@@ -25,7 +25,7 @@
 
 	.tab-row {
 		display: flex;
-		margin: 0 calc(-@tab-spacing / 2);
+		margin: 0 ~"calc(-@{tab-spacing} / 2)";
 	}
 
 	.tab {
@@ -37,7 +37,7 @@
 		flex: 0 0 auto;
 		height: @tab-height;
 		line-height: @tab-height;
-		margin: 0 calc(@tab-spacing / 2) -1px;
+		margin: 0 ~"calc(@{tab-spacing} / 2)" -1px;
 		padding: 0 @tab-padding;
 
 		&:hover {

@@ -29,9 +29,9 @@
 	.helper {
 		background-color: @control-helper-bkg-color;
 		flex: 0 0 auto;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
-		min-width: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
 	}
 }
@@ -43,7 +43,7 @@ input[type='number'] {
 	flex: 1 0 0;
 	font-family: @mono-font;
 	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	padding: 0 @control-padding;
 	text-align: right;
 	width: 100%;

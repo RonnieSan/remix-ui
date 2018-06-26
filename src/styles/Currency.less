@@ -30,9 +30,9 @@
 		color: @control-helper-color;
 		flex: 0 0 auto;
 		font-size: @font-size;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
-		min-width: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc({@control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc({@control-height} - (@{control-border-stroke} * 2))";
+		min-width: ~"calc({@control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
 	}
 }
@@ -43,7 +43,7 @@
 	flex: 1 0 0;
 	font-family: @mono-font;
 	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	padding: 0 @control-padding;
 	text-align: right;
 	width: 100%;

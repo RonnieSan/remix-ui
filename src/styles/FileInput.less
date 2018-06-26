@@ -39,18 +39,18 @@
 
 	.label {
 		flex: 1 0 auto;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 @control-padding;
 	}
 
 	.button {
 		background-color: @control-color;
 		color: #FFF;
-		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+		flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		font-size: @font-size;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
 		transition: background-color 150ms ease-out;
 	}
@@ -74,7 +74,7 @@ input[type='text'] {
 	border: 0;
 	flex: 1 0 0 !important;
 	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	padding: 0 @control-padding;
 }
 

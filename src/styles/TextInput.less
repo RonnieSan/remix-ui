@@ -32,7 +32,7 @@ input[type='email'] {
 	border: 0;
 	flex: 1 0 0;
 	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	padding: 0 @control-padding;
 	width: 100%;
 }

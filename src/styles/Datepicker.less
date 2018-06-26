@@ -44,9 +44,9 @@
 		background-color: @control-helper-bkg-color;
 		color: @control-helper-color;
 		flex: 0 0 auto;
-		height: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
-		width: calc(@control-height - (@control-border-stroke * 2));
+		width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 
 		svg {
 			height: 60%;
@@ -61,7 +61,7 @@ input[type='text'] {
 	border: 0;
 	flex: 1 0 0;
 	font-size: @font-size;
-	height: calc(@control-height - (@control-border-stroke * 2));
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	padding: 0 @control-padding;
 	width: 100%;
 }
@@ -81,13 +81,13 @@ input[disabled='disabled'] {
 		opacity: 0;
 		padding: 0;
 		position: absolute;
-		width: calc(100% - (@control-border-stroke * 2));
+		width: ~"calc(100% - (@{control-border-stroke} * 2))";
 	}
 
 	.display {
 		flex: 1 0 0;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 10px;
 	}
 
@@ -187,10 +187,10 @@ input[disabled='disabled'] {
 		display: inline-block;
 		font-size: 0.75em;
 		vertical-align: top;
-		width: calc((@calendar-unit * 7) + 10px);
+		width: ~"calc((@{calendar-unit} * 7) + 10px)";
 
 		@media screen and (max-width: @mobile-window-max) {
-			flex: 0 0 calc((@calendar-unit * 7) + 10px);
+			flex: 0 0 ~"calc((@{calendar-unit} * 7) + 10px)";
 			margin-bottom: 0.5em;
 		}
 

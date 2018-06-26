@@ -28,7 +28,7 @@
 	width: 100%;
 
 	.mirror {
-		min-height: calc((@control-height * 3) - (@control-border-stroke * 2));
+		min-height: ~"calc((@{control-height} * 3) - (@{control-border-stroke} * 2))";
 		opacity: 0.5;
 		padding: 10px;
 		vertical-align: middle;
@@ -50,7 +50,7 @@
 		font-size: @font-size;
 		left: 0;
 		line-height: 1.5em;
-		min-height: calc((@control-height * 3) - (@control-border-stroke * 2));
+		min-height: ~"calc((@{control-height} * 3) - (@{control-border-stroke} * 2))";
 		padding: (@control-padding * 0.75) @control-padding;
 		position: absolute;
 		right: 0;

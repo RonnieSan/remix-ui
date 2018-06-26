@@ -172,7 +172,7 @@
 	background-color: #F2F2F2;
 	border-bottom: 1px solid fade(@control-border-color, 50%);
 	display: flex;
-	flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+	flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	justify-content: space-between;
 
 	.tools,
@@ -185,8 +185,8 @@
 		border-right: 1px solid fade(@control-border-color, 50%);
 		cursor: pointer;
 		float: left;
-		height: calc(@control-height - (@control-border-stroke * 2));
-		line-height: calc(@control-height - (@control-border-stroke * 2));
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
 		vertical-align: middle;
 
@@ -195,7 +195,7 @@
 		}
 
 		&.icon {
-			min-width: calc(@control-height - (@control-border-stroke * 2));
+			min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 			padding: 0;
 		}
 
