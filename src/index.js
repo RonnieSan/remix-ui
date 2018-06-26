@@ -3,7 +3,6 @@
 // Author: RonnieSan
 // ----------------------------------------------------------------------
 
-
 // Import form elements
 import rForm from './components/Form';
 import rButton from './components/Button';
@@ -89,13 +88,35 @@ export const modules = {
 // Export the package
 export default {
 	// Vue plugin installation
-	install(Vue, options) {
-		options = options || {};
+	install(Vue, components) {
 
 		// Install specific components
-		if (options.components) {
-			options.components.forEach((component) => {
-				Vue.component(component, modules[component]);
+		if (components) {
+			components.forEach((component) => {
+				if (component !== 'Msg'
+					&& component !== 'Toast'
+					&& component !== 'Validator')
+				{
+					if (modules[component]) {
+						Vue.component(component, modules[component]);
+					}
+					else if (modules['r' + component]) {
+						Vue.component('r' + component, modules['r' + component]);
+					}
+				}
+				else {
+					switch(component) {
+						case 'Msg':
+							Vue.prototype.$msg   = Msg.init();
+							break;
+						case 'Toast':
+							Vue.prototype.$toast = Toast.init();
+							break;
+						case 'Validator':
+							Vue.prototype.$validator = Validator;
+							break;
+					}
+				}
 			});
 		}
 		else {
@@ -134,8 +155,9 @@ export default {
 			Vue.component('tab', Tab);
 			Vue.component('tabs', Tabs);
 
-			Vue.prototype.$msg   = Msg.init();
-			Vue.prototype.$toast = Toast.init();
+			Vue.prototype.$msg       = Msg.init();
+			Vue.prototype.$toast     = Toast.init();
+			Vue.prototype.$Validator = Validator;
 		}
 	}
 };
