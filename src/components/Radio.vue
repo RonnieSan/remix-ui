@@ -8,7 +8,6 @@
 				:checked="is_checked"
 				v-on="listeners"
 			>
-			<span class="radio-btn"></span>
 		</span>
 		<span class="radio-label"><slot></slot></span>
 	</label>

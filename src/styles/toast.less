@@ -8,7 +8,7 @@
 @toast-padding: 0.625em;
 @toast-radius: 3px;
 @toast-width: 500px;
-@position: {
+@toast-position: {
 	right: 20px;
 	top: 20px;
 };
@@ -41,9 +41,9 @@
 }
 
 #toast {
-	@position();
+	@toast-position();
 	position: fixed;
-	max-width: ~"calc(100% - 40px)";
+	max-width: ~"calc(100% - 20px)";
 	width: @toast-width;
 	z-index: @toast-layer;
 
