@@ -48,7 +48,44 @@ import Toast from './lib/Toast';
 import Validator from './lib/Validator';
 
 // Export components
-export const modules = {
+const modules = {
+	rButton,
+	rCheckbox,
+	rChecklist,
+	rCode,
+	rCurrency,
+	rDatepicker,
+	rFileInput,
+	rForm,
+	rMarkdown,
+	rMultiSelect,
+	rMultiText,
+	rNumber,
+	rPassword,
+	rPillbox,
+	rRadio,
+	rRadioGroup,
+	rSelect,
+	rSlider,
+	rText,
+	rTextarea,
+	rToggle,
+	rValidation,
+	Grid,
+	Row,
+	Column,
+	Spacer,
+	Icon,
+	Autocomplete,
+	Modal,
+	Tab,
+	Tabs,
+	Msg,
+	Toast,
+	Validator
+};
+
+export {
 	rButton,
 	rCheckbox,
 	rChecklist,
