@@ -3,7 +3,7 @@
 		class="input-wrapper currency"
 	>
 		<slot name="left">
-			<div class="helper">$</div>
+			<div v-if="symbol" class="helper">{{symbol}}</div>
 		</slot>
 		<input
 			type="tel"
@@ -19,13 +19,14 @@
 </template>
 
 <script>
+import { defaultsDeep } from 'lodash';
 import { VMoney } from 'v-money';
 import formField from '../mixins/formField';
 
 export default {
 	data() {
 		return {
-			string_value : parseFloat(this.value).toFixed(2)
+			string_value : parseFloat(this.value).toFixed(this.settings.precision)
 		};
 	},
 	props : {
@@ -91,7 +92,17 @@ export default {
 	},
 	mixins : [
 		formField
-	]
+	],
+	created() {
+		this.settings = defaultsDeep({}, this.settings, {
+			decimal : '.',
+			thousands : ',',
+			prefix : '',
+			suffix : '',
+			precision : 2,
+			masked : false
+		});
+	}
 };
 </script>
 
