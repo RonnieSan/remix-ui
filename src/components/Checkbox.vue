@@ -12,7 +12,7 @@
 			:false-value="falseValue"
 			v-on="listeners"
 		>
-		<slot></slot>
+		<span class="checkbox-label"><slot>{{value}}</slot></span>
 	</label>
 </template>
 
