@@ -80,8 +80,6 @@ export default {
 					resolve(self);
 				}
 
-				console.log('Opened?')
-
 				self.is_open = true;
 			});
 
