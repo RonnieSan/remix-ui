@@ -9,7 +9,9 @@ module.exports = {
   env: {
     browser: true,
   },
-  extends: 'standard',
+  extends: [
+    'plugin:vue/essential'
+  ],
   plugins: [
     'html'
   ],
