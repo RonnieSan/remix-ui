@@ -15,10 +15,11 @@
 @import (optional, reference) '~theme';
 
 .checkbox-wrapper {
-	align-items: center;
+	align-items: flex-start;
 	cursor: pointer;
 	display: inline-flex;
 	font-size: @font-size;
+	line-height: ~"calc(@{control-height} * 0.6)";
 	padding: ~"calc(@{control-height} * 0.2) 0";
 	position: relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);

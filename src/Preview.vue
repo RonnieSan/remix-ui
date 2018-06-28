@@ -224,6 +224,16 @@
 							</div>
 
 							<div class="control-group">
+								<div class="inner">
+									<div class="controls">
+										<div class="field">
+											<r-checkbox>This is the label<br />And it's so cool...</r-checkbox>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Toggle:</label>
 								<div class="controls">
 									<div class="field">

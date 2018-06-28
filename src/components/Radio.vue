@@ -9,7 +9,7 @@
 				v-on="listeners"
 			>
 		</span>
-		<span class="radio-label"><slot></slot></span>
+		<slot></slot>
 	</label>
 </template>
 
