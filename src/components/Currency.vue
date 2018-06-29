@@ -11,7 +11,7 @@
 			:name="name"
 			:disabled="disabled"
 			v-model="string_value"
-			v-money="settings"
+			v-money="local_settings"
 			v-on="listeners"
 		>
 		<slot name="right"></slot>
@@ -26,7 +26,8 @@ import formField from '../mixins/formField';
 export default {
 	data() {
 		return {
-			string_value : parseFloat(this.value).toFixed(this.settings.precision)
+			string_value : parseFloat(this.value).toFixed(this.settings.precision),
+			local_settings : {}
 		};
 	},
 	props : {
@@ -80,13 +81,6 @@ export default {
 			);
 		}
 	},
-	watch : {
-		value(new_value) {
-			if (this.string_value !== new_value) {
-				this.string_value = parseFloat(this.value).toFixed(this.settings.precision);
-			}
-		}
-	},
 	methods : {
 		inputHandler(event) {
 			let value = parseFloat(this.string_value.replace(/[^0-9\\.-]/g, ''));
@@ -101,7 +95,7 @@ export default {
 		formField
 	],
 	created() {
-		this.settings = defaultsDeep({}, this.settings, {
+		this.local_settings = defaultsDeep({}, this.settings, {
 			decimal : '.',
 			thousands : ',',
 			prefix : '',
