@@ -80,6 +80,13 @@ export default {
 			);
 		}
 	},
+	watch : {
+		value(new_value) {
+			if (this.string_value !== new_value) {
+				this.string_value = parseFloat(this.value).toFixed(this.settings.precision);
+			}
+		}
+	},
 	methods : {
 		inputHandler(event) {
 			let value = parseFloat(this.string_value.replace(/[^0-9\\.-]/g, ''));
