@@ -1,11 +1,11 @@
 {
   "name": "remix-ui",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "A UI kit for VueJS",
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "webpack -p --progress",
+    "build": "webpack --config webpack.production.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "RonnieSan",

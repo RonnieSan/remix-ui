@@ -16,12 +16,13 @@
 @import (optional, reference) '~theme';
 
 .toggle-wrapper {
+	align-items: flex-start;
 	cursor: pointer;
 	display: inline-flex;
 	font-size: @font-size;
 	justify-content: flex-start;
-	line-height: @control-height;
-	min-height: @control-height;
+	line-height: @toggle-size;
+	padding: calc((@control-height - @toggle-size) / 2) 0;
 	vertical-align: middle;
 
 	&:focus-within .handle {
@@ -33,7 +34,6 @@
 	display: inline-block;
 	flex: 0 0 @toggle-size * 2;
 	height: @toggle-size;
-	margin: ((@control-height - @toggle-size) / 2) 0;
 	position: relative;
 	vertical-align: middle;
 	width: @toggle-size * 2;
@@ -89,9 +89,5 @@
 }
 
 .toggle-label {
-	display: inline-block;
-	flex: 1 0 0;
-	height: @control-height;
-	line-height: @control-height;
 	margin-left: @control-padding;
 }

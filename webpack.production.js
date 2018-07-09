@@ -25,6 +25,7 @@ module.exports = {
 			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
 		}
 	},
+	target : 'node',
 	module : {
 		rules : [
 			{
