@@ -1,6 +1,9 @@
 <template>
-	<button :class="$attrs.class" :type="type" @click="$emit('click')">
-		<span v-if="icon" class="icon"><icon v-if="icon" :type="icon" size="24"/></span><span class="label"><slot></slot></span>
+	<button :class="[$attrs.class, {disabled, loading}]" :type="type" :disabled="disabled || loading" @click="$emit('click')">
+		<span v-if="icon || loading" class="icon">
+			<icon v-if="!loading" :type="icon" :size="iconSize"/>
+			<icon v-else type="loading" :size="iconSize"/>
+		</span><span class="label"><slot></slot></span>
 	</button>
 </template>
 
@@ -16,6 +19,17 @@ export default {
 		icon : {
 			type : String,
 			default : null
+		},
+		iconSize : {
+			type : String,
+			default : '24'
+		},
+		loading : {
+			type : Boolean,
+			default : false
+		},
+		disabled : {
+			type : Boolean
 		}
 	},
 	components : {

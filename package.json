@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "webpack -p --progress",
+    "build": "webpack --config webpack.production.js -p --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "RonnieSan",
@@ -42,6 +42,7 @@
     "lodash-es": "^4.17.10",
     "markdown-it": "^8.4.0",
     "markdown-it-attrs": "^2.2.0",
+    "mdi": "^2.2.43",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.18",
     "remix-css": "^1.0.7",

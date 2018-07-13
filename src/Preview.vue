@@ -261,10 +261,22 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label">Button:</label>
 								<div class="controls">
-									<div class="field">
-										<r-button>Click Me (I Do Nothing)</r-button>
+									<div class="field fit">
+										<label class="control-label">Button:</label><br />
+										<r-button>No Action</r-button>
+									</div>
+									<div class="field fit">
+										<label class="control-label">Button with Icon:</label><br />
+										<r-button icon="cancel">No Action</r-button>
+									</div>
+									<div class="field fit">
+										<label class="control-label">Loading Button:</label><br />
+										<r-button icon="send" :loading="is_loading" @click="buttonLoader()">Loading</r-button>
+									</div>
+									<div class="field fit">
+										<label class="control-label">Disabled Button:</label><br />
+										<r-button disabled @click="alert('hello')">Disabled</r-button>
 									</div>
 								</div>
 							</div>
@@ -380,7 +392,8 @@ export default {
 				{target : '#one', label : 'One'},
 				{target : '#two', label : 'Two'},
 				{target : '#three', label : 'Three'}
-			]
+			],
+			is_loading : false
 		};
 	},
 	methods : {
@@ -404,6 +417,14 @@ export default {
 						this.$toast.error('You selected CANCEL.');
 					}
 				});
+		},
+
+		buttonLoader() {
+			this.is_loading = true;
+
+			setTimeout(() => {
+				this.is_loading = false;
+			}, 3000);
 		}
 	}
 };

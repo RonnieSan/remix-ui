@@ -25,6 +25,10 @@ module.exports = {
 			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
 		}
 	},
+	externals : {
+		vue : 'vue',
+		moment : 'moment'
+	},
 	module : {
 		rules : [
 			{
@@ -76,8 +80,7 @@ module.exports = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: '[name].[hash:7].[ext]',
-					outputPath : 'assets/img/'
+					name: '[name].[hash:7].[ext]'
 				}
 			},
 			{
@@ -85,8 +88,7 @@ module.exports = {
 				loader: 'file-loader',
 				options: {
 					limit: 10000,
-					name: '[name].[hash:7].[ext]',
-					outputPath : 'assets/fonts/'
+					name: '[name].[hash:7].[ext]'
 				}
 			}
 		]

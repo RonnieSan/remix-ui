@@ -14,6 +14,15 @@
 
 @import (optional, reference) '~theme';
 
+@keyframes spin {
+    from {
+    	transform: rotate(0deg);
+    }
+    to {
+    	transform: rotate(360deg);
+    }
+}
+
 button {
 	appearance: none;
 	background-color: @color-primary;
@@ -39,6 +48,11 @@ button {
 		outline: 0;
 		@control-focus();
 	}
+
+	&.disabled {
+		background-color: #CCC;
+		cursor: not-allowed;
+	}
 }
 
 button {
@@ -55,6 +69,14 @@ button {
 		text-align: center;
 		vertical-align: middle;
 		width: @control-height;
+	}
+
+	&.loading {
+		cursor: not-allowed;
+
+		.mdi::before {
+			animation: spin 750ms linear infinite;
+		}
 	}
 	
 	.label {
