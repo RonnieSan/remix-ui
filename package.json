@@ -1,11 +1,11 @@
 {
   "name": "remix-ui",
-  "version": "1.1.11",
+  "version": "1.1.18",
   "description": "A UI kit for VueJS",
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "webpack --config webpack.production.js -p --progress",
+    "build": "webpack --config webpack.production.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "RonnieSan",
@@ -18,6 +18,9 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "eslint": "^5.0.1",
+    "eslint-plugin-html": "^4.0.5",
+    "eslint-plugin-vue": "^4.5.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.0.4",

@@ -2,19 +2,16 @@
 	<label
 		class="checkbox-wrapper"
 	>
-		<span class="checkbox">
-			<input
-				type="checkbox"
-				ref="input"
-				:name="name"
-				:checked="checked"
-				:value="value"
-				:true-value="trueValue"
-				:false-value="falseValue"
-				v-on="listeners"
-			>
-			<span class="check"></span>
-		</span>
+		<input
+			type="checkbox"
+			ref="input"
+			:name="name"
+			:checked="checked"
+			:value="value"
+			:true-value="trueValue"
+			:false-value="falseValue"
+			v-on="listeners"
+		>
 		<span class="checkbox-label"><slot>{{value}}</slot></span>
 	</label>
 </template>

@@ -15,11 +15,12 @@
 @import (optional, reference) '~theme';
 
 .checkbox-wrapper {
-	align-items: center;
+	align-items: flex-start;
 	cursor: pointer;
 	display: inline-flex;
 	font-size: @font-size;
-	padding: ~"calc(@{control-height} * 0.2) 0";
+	line-height: calc(@control-height * 0.6);
+	padding: calc(@control-height * 0.2) 0;
 	position: relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-tap-highlight-color: transparent;
@@ -30,12 +31,12 @@ input[type='checkbox'] {
 	background-color: @control-bkg-color;
 	border: @control-border-stroke solid @control-border-color;
 	font-size: @font-size;
-	height: ~"calc(@{control-height} * 0.6)";
+	height: calc(@control-height * 0.6);
 	margin: 0 0.5em 0 0;
 	padding: 0;
 	transition: border 100ms ease-out;
 	vertical-align: middle;
-	width: ~"calc(@{control-height} * 0.6)";
+	width: calc(@control-height * 0.6);
 }
 
 input:focus {
@@ -46,11 +47,11 @@ input:focus {
 .checkbox-wrapper::before {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="@{control-bkg-color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8" /></svg>');
 	font-size: @font-size;
-	height: ~"calc(@{control-height} * 0.6)";
+	height: calc(@control-height * 0.6);
 	left: 0;
 	position: absolute;
-	top: ~"calc(@{control-height} * 0.2)";
-	width: ~"calc(@{control-height} * 0.6)";
+	top: calc(@control-height * 0.2);
+	width: calc(@control-height * 0.6);
 	z-index: 10;
 }
 
@@ -59,6 +60,10 @@ input[type='checkbox'] {
 	position: relative;
 
 	&:checked {
-		border: ~"calc(@{control-height} * 0.3)" solid @control-color;
+		border: calc(@control-height * 0.3) solid @control-color;
 	}
+}
+
+.checkbox-label {
+	line-height: calc(@control-height * 0.6);
 }
