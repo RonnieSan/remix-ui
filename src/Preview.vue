@@ -20,10 +20,9 @@
 								<label class="control-label"><span class="text-color-red">*</span> Text Input with Validation:</label>
 								<div class="controls">
 									<div class="field">
-										<validation
+										<r-validation
 											ref="text_validation"
 											v-model="text_value"
-											:validator="validator"
 											:rules="[validator.rules.required(), validator.rules.minLength(5)]"
 										>
 											<r-text
@@ -35,7 +34,7 @@
 												<icon type="alert-circle" size="24"/>
 											</div>
 											</r-text>
-										</validation>
+										</r-validation>
 									</div>
 								</div>
 							</div>

@@ -19,14 +19,19 @@
 
 <script>
 export default {
+	provide() {
+		return {
+			tab_group : this
+		};
+	},
+	props : {
+		activeTabId : String
+	},
 	data() {
 		return {
 			tabs : [],
 			active_tab_id : this.activeTabId
 		};
-	},
-	props : {
-		activeTabId : String
 	},
 	methods : {
 		addTab(tab) {

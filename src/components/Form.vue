@@ -5,11 +5,15 @@
 </template>
 
 <script>
+import Validator from '@/lib/Validator';
+
 export default {
+	provide : {
+		form_validator : new Validator()
+	},
 	props : {
-		action    : String,
-		method    : String,
-		validator : Object
+		action : String,
+		method : String
 	},
 	methods : {
 		// Submit the form

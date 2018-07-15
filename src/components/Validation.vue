@@ -19,13 +19,9 @@
 import { compact } from 'lodash-es';
 
 export default {
-	data() {
-		return {
-			local_value : this.value,
-			errors      : [],
-			id          : null
-		};
-	},
+	inject : [
+		'form_validator'
+	],
 	props : {
 		value : {
 			required : true
@@ -40,7 +36,9 @@ export default {
 		},
 		validator : {
 			type : Object,
-			required : true
+			default() {
+				return this.form_validator
+			}
 		},
 		watch : {
 			type : Boolean,
@@ -58,6 +56,13 @@ export default {
 				];
 			}
 		}
+	},
+	data() {
+		return {
+			local_value : this.value,
+			errors      : [],
+			id          : null
+		};
 	},
 	computed : {
 		self() {

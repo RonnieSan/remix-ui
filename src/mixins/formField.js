@@ -4,15 +4,22 @@
 // ----------------------------------------------------------------------
 
 export default {
+	inject : {
+		field_validation : {
+			default() {
+				return {};
+			}
+		}
+	},
+	props : {
+		name     : String,
+		tabindex : Number
+	},
 	data() {
 		return {
 			dirty   : false,		// The field has been modified
 			touched : false			// The field has been focused
 		};
-	},
-	props : {
-		name     : String,
-		tabindex : Number
 	},
 	methods : {
 		// Focus on form element when called
