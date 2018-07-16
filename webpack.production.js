@@ -21,9 +21,7 @@ module.exports = {
 		extensions : ['.js', '.json', '.vue'],
 		alias : {
 			'vue$' : path.resolve(__dirname, 'node_modules/vue/dist/vue.min.js'),
-			'@' : path.resolve(__dirname, 'src'),
-			'theme' : path.resolve(__dirname, 'node_modules/remix-css-theme-default'),
-			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
+			'@' : path.resolve(__dirname, 'src')
 		}
 	},
 	externals : {
