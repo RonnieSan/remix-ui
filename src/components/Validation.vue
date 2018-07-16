@@ -19,6 +19,11 @@
 import { compact } from 'lodash-es';
 
 export default {
+	provide() {
+		return {
+			field_validator : this
+		};
+	},
 	inject : [
 		'form_validator'
 	],

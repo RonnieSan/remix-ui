@@ -5,10 +5,8 @@
 
 export default {
 	inject : {
-		field_validation : {
-			default() {
-				return {};
-			}
+		field_validator : {
+			default : false
 		}
 	},
 	props : {
@@ -36,6 +34,9 @@ export default {
 		validate(force) {
 			if (this.touched || force) {
 				this.$emit('validate');
+				if (this.field_validator) {
+					this.field_validator.validate();
+				}
 			}
 		}
 	}

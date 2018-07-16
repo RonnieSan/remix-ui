@@ -21,14 +21,12 @@
 								<div class="controls">
 									<div class="field">
 										<r-validation
-											ref="text_validation"
 											v-model="text_value"
 											:rules="[validator.rules.required(), validator.rules.minLength(5)]"
 										>
 											<r-text
 												name="text"
 												v-model="text_value"
-												@validate="$refs.text_validation.validate()"
 											>
 											<div class="helper" slot="right">
 												<icon type="alert-circle" size="24"/>
