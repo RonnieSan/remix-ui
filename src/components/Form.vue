@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Validator from '@/lib/Validator';
+import Validator from '../lib/Validator';
 
 export default {
 	provide : {
