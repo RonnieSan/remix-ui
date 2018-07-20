@@ -10,7 +10,7 @@
 			ref="input"
 			:name="name"
 			:disabled="disabled"
-			v-model="string_value"
+			v-model="stringValue"
 			v-money="local_settings"
 			v-on="listeners"
 		>
@@ -24,12 +24,6 @@ import { VMoney } from 'v-money';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			string_value : parseFloat(this.value).toFixed(this.settings.precision),
-			local_settings : {}
-		};
-	},
 	props : {
 		value : Number,
 		disabled : {
@@ -54,7 +48,23 @@ export default {
 			default : '$'
 		}
 	},
+	data() {
+		return {
+			string_value : parseFloat(this.value).toFixed(this.settings.precision),
+			local_settings : {}
+		};
+	},
 	computed : {
+		stringValue : {
+			get() {
+				return parseFloat(this.value).toFixed(this.settings.precision);
+			},
+			set(new_value) {
+				let value = (parseFloat(new_value.replace(/\D/g, '')) * 0.01).toFixed(2);
+				this.$emit('input', parseFloat(value));
+				this.validate();
+			}
+		},
 		listeners() {
 			let vm = this;
 			return Object.assign(
@@ -63,8 +73,8 @@ export default {
 				{
 					input(event) {
 						vm.dirty = true;
-						vm.inputHandler(event);
-						vm.validate();
+						// vm.inputHandler(event);
+						// vm.validate();
 					},
 					keyup(event) {
 						if (event.key === 'Tab') {
@@ -79,13 +89,6 @@ export default {
 					}
 				}
 			);
-		}
-	},
-	methods : {
-		inputHandler(event) {
-			let value = parseFloat(this.string_value.replace(/[^0-9\\.-]/g, ''));
-			this.$emit('input', value);
-			this.validate();
 		}
 	},
 	directives : {
