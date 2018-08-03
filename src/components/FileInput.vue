@@ -54,7 +54,10 @@ export default {
 			default : '*/*'
 		},
 		disabled : Boolean,
-		name : String,
+		name : {
+			type : String,
+			default : 'files'
+		},
 		placeholder : {
 			type : String,
 			default : 'Select a file'
@@ -75,7 +78,7 @@ export default {
 			Array
 				.from(Array(event.target.files.length).keys())
 				.forEach((index) => {
-					this.appendData('files', event.target.files[index], event.target.files[index].name);
+					this.appendData(this.name, event.target.files[index], event.target.files[index].name);
 					this.filename = event.target.files[index].name;
 				});
 
@@ -83,7 +86,7 @@ export default {
 			this.$emit('input', this.filename);
 
 			// Emit the form data
-			this.$emit('change', {
+			this.$emit('select', {
 				data : this.form_data,
 				name : this.filename
 			});
