@@ -4,7 +4,7 @@
 			<input type="checkbox"
 				ref="input"
 				:name="name"
-				:checked="is_checked"
+				:checked="isChecked"
 				:value="value"
 				:true-value="trueValue"
 				:false-value="falseValue"
@@ -12,7 +12,7 @@
 			>
 			<span class="handle"></span>
 		</span>
-		<span class="toggle-label"><slot><span v-if="model">{{trueLabel}}</span><span v-else>{{falseLabel}}</span></slot></span>
+		<span class="toggle-label"><slot><span v-if="isChecked">{{trueLabel}}</span><span v-else>{{falseLabel}}</span></slot></span>
 	</label>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 		value : {}
 	},
 	computed : {
-		is_checked() {
+		isChecked() {
 			if (Array.isArray(this.model)) {
 				return (includes(this.model, this.value));
 			}
@@ -75,14 +75,14 @@ export default {
 
 				// LEFT ARROW
 				case 37:
-					if (this.is_checked) {
+					if (this.isChecked) {
 						this.changeHandler(false);
 					}
 					break;
 
 				// RIGHT ARROW
 				case 39:
-					if (!this.is_checked) {
+					if (!this.isChecked) {
 						this.changeHandler(true);
 					}
 					break;
