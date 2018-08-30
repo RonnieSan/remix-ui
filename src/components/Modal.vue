@@ -217,10 +217,15 @@ export default {
 	},
 	beforeDestroy() {
 		window.removeEventListener('keydown', this.escPressed);
-		this.layer.removeChild(this.modal);
-		this.$el.querySelectorAll('.close-modal').forEach((el) => {
-			el.removeEventListener('click', this.close);
-		});
+		if (this.is_open) {
+			this.close()
+				.then(() => {
+					this.$el.querySelectorAll('.close-modal').forEach((el) => {
+						el.removeEventListener('click', this.close);
+					});
+					this.layer.removeChild(this.modal);
+				});
+		}
 	}
 };
 </script>
