@@ -226,6 +226,12 @@ export default {
 					this.layer.removeChild(this.modal);
 				});
 		}
+		else {
+			this.$el.querySelectorAll('.close-modal').forEach((el) => {
+				el.removeEventListener('click', this.close);
+			});
+			this.layer.removeChild(this.modal);
+		}
 	}
 };
 </script>
