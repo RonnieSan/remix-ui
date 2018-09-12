@@ -341,7 +341,9 @@
 </template>
 
 <script>
-import Validator from './lib/Validator';
+import Validator, { rules } from './lib/Validator';
+
+console.log('Rules exported from Validator', rules)
 
 export default {
 	data() {
@@ -423,7 +425,10 @@ export default {
 				this.is_loading = false;
 			}, 3000);
 		}
-	}
+	},
+  mounted () {
+    console.log('Localized rules:', this.validator.rules)
+  }
 };
 </script>
 

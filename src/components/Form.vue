@@ -8,12 +8,20 @@
 import Validator from '../lib/Validator';
 
 export default {
-	provide : {
-		form_validator : new Validator()
+	provide () {
+    return {
+		  form_validator : this.validator
+    }
 	},
 	props : {
 		action : String,
-		method : String
+		method : String,
+    validator: {
+      type: Object,
+      default () {
+        return new Validator()
+      }
+    }
 	},
 	methods : {
 		// Submit the form
