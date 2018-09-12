@@ -18,7 +18,12 @@ import {
 
 export const rules = {
   // The field is required
-  required(message) {
+  required (message, options = { }) {
+    options = Object.assign({
+      min: 1,
+      max: Infinity
+    }, options)
+
     return function(value) {
       switch (typeof value) {
         case 'string':
@@ -28,8 +33,8 @@ export const rules = {
           }
           break;
         case 'number':
-          if (value > 0) {
-            return null;
+          if (value >= options.min && value <= options.max) {
+            return null
           }
           break;
         case 'boolean':

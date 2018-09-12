@@ -58,10 +58,16 @@
 								<label class="control-label">Number Input:</label>
 								<div class="controls">
 									<div class="field">
-										<r-number
-											name="number"
+										<r-validation
 											v-model="number_value"
-										/>
+											:rules="[validator.rules.required()]"
+										>
+                      <r-number
+                        name="number"
+                        :rules="[ rules.required() ]"
+                        v-model.number="number_value"
+                      />
+                    </r-validation>
 									</div>
 								</div>
 							</div>
@@ -348,6 +354,7 @@ console.log('Rules exported from Validator', rules)
 export default {
 	data() {
 		return {
+      rules,
 			validator : new Validator(),
 			text_value : '',
 			autocomplete_value : '',
