@@ -60,8 +60,8 @@ export default {
 				return parseFloat(this.value).toFixed(this.settings.precision);
 			},
 			set(new_value) {
-				let value = (parseFloat(new_value.replace(/\D/g, '')) * 0.01).toFixed(2);
-				this.$emit('input', parseFloat(value));
+				let value = parseFloat(new_value.replace(/\D/g, '')) * (1 / Math.pow(10, this.settings.precision))
+				this.$emit('input', parseFloat(value.toFixed(this.settings.precision)));
 				this.validate();
 			}
 		},
