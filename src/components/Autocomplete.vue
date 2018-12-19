@@ -5,17 +5,19 @@
 		@keypress="update_filters = true;"
 		@input="androidInputHandler"
 		@focusin="focusinHandler"
-		@focusout="closeOptions"
-		v-on-clickaway="closeOptions">
+	    v-on-clickaway="closeOptions">
 		<slot></slot>
-		<div v-if="filtered_options.length > 0" class="autocomplete-options">
+		<div v-if="filtered_options.length > 0 && !loading_data" class="autocomplete-options">
 			<div
-				v-for="(option, index) in filtered_options"
+				v-for="(option, index) in filtered_options" :key="index"
 				:class="['option', {'selected' : (selected_index === index)}]"
 				@click="clickHandler($event, option)"
 				@mouseover="selected_index = index"
 				@mouseout="selected_index = -1"
 			>{{option.label || option}}</div>
+		</div>
+		<div class="autocomplete-loading autocomplete-options" v-else-if="loading_data">
+			<div class="option">Loading...</div>
 		</div>
 	</div>
 </template>
@@ -32,6 +34,7 @@ export default {
 			selected_index   : -1,
 			selected_value   : '',
 			update_filters   : false,
+			loading_data     : false,
 			is_android       : /(android)/i.test(window.navigator.userAgent)
 		};
 	},
@@ -79,7 +82,8 @@ export default {
 		},
 		clickHandler(event, value) {
 			event.preventDefault();
-			event.stopPropagation();
+            event.stopPropagation();
+
 			this.$emit('input', value);
 			this.$nextTick(() => {
 				this.focus_element.focus();
@@ -89,14 +93,22 @@ export default {
 		getNewOptions(value) {
 			if (value.length >= this.settings.min_length) {
 				this.selected_index = -1;
-				this.selected_value = '';
-				if (typeof this.options === 'function') {
-					this.options(value)
-						.then((choices) => {
-							this.filtered_options = choices;
-						});
-				}
-				else {
+                this.selected_value = '';
+
+                if (typeof this.options === 'function') {
+                    const option = this.options(value)
+                    if (option && typeof option.then === 'function') {
+                        this.loading_data = true
+
+                        option.then((choices) => {
+                            this.filtered_options = choices
+                            this.loading_data = false
+                        }).catch((err) => {
+                            // Silent fail
+                        })
+                    }
+                }
+                else {
 					let choices = fuzzy.filter(value, this.options);
 					this.filtered_options = choices.map((choice) => choice.string);
 				}
@@ -122,7 +134,7 @@ export default {
 						else {
 							this.selected_value = this.filtered_options[this.selected_index];
 						}
-						this.$emit('input', this.selected_value);
+						this.$emit('selected', this.selected_value);
 					}
 					break;
 
@@ -133,16 +145,17 @@ export default {
 					if (this.selected_index < (this.filtered_options.length - 1)) {
 						this.selected_index++;
 						this.selected_value = this.filtered_options[this.selected_index];
-						this.$emit('input', this.selected_value);
+						this.$emit('selected', this.selected_value);
 					}
 					break;
 
 				// Enter
 				case 13:
 					event.preventDefault();
-					event.stopPropagation();
+                    event.stopPropagation();
+
 					if (this.selected_value !== '') {
-						this.$emit('input', this.selected_value);
+                        this.$emit('input', this.selected_value);
 						this.closeOptions();
 					}
 					break;
