@@ -31,23 +31,6 @@
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			focused   : false,
-			form_data : new FormData(this.$refs.form, {
-				file_type : 'video'
-			}),
-			status    : 'inactive'
-		};
-	},
-	computed : {
-		icon() {
-			if (this.status === 'uploading') {
-				return 'loading';
-			}
-			return 'dots-horizontal';
-		}
-	},
 	props : {
 		accept : {
 			type : String,
@@ -67,6 +50,21 @@ export default {
 			default : ''
 		}
 	},
+	data() {
+		return {
+			focused   : false,
+			form_data : new FormData(this.$refs.form),
+			status    : 'inactive'
+		};
+	},
+	computed : {
+		icon() {
+			if (this.status === 'uploading') {
+				return 'loading';
+			}
+			return 'dots-horizontal';
+		}
+	},
 	methods : {
 
 		// Select a file to upload
@@ -78,6 +76,7 @@ export default {
 			Array
 				.from(Array(event.target.files.length).keys())
 				.forEach((index) => {
+					this.form_data.delete(this.name);
 					this.appendData(this.name, event.target.files[index], event.target.files[index].name);
 					this.filename = event.target.files[index].name;
 				});

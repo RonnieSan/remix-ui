@@ -1,6 +1,6 @@
 {
   "name": "remix-ui",
-  "version": "1.2.10",
+  "version": "1.2.12",
   "description": "A UI kit for VueJS",
   "main": "src/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "devDependencies": {
     "autoprefixer": "^8.6.3",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.4",
     "babel-plugin-lodash": "^3.3.4",
     "babel-preset-env": "^1.7.0",

@@ -16,7 +16,7 @@ module.exports = {
 		path : path.resolve(__dirname, 'dist'),
 		publicPath : '/'
 	},
-    target : 'node',
+	target : 'node',
 	resolve : {
 		extensions : ['.js', '.json', '.vue'],
 		alias : {
