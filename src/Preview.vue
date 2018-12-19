@@ -176,6 +176,17 @@
 							</div>
 
 							<div class="control-group">
+								<label class="control-label">Template Editor:</label>
+								<div class="controls">
+									<div class="field">
+										<r-template-editor
+											template-src="http://www.ronniesan.com"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Select:</label>
 								<div class="controls">
 									<div class="field">
@@ -349,8 +360,6 @@
 <script>
 import Validator, { rules } from './lib/Validator';
 
-console.log('Rules exported from Validator', rules)
-
 export default {
 	data() {
 		return {
@@ -432,10 +441,7 @@ export default {
 				this.is_loading = false;
 			}, 3000);
 		}
-	},
-  mounted () {
-    console.log('Localized rules:', this.validator.rules)
-  }
+	}
 };
 </script>
 

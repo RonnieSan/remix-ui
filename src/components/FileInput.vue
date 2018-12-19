@@ -78,6 +78,7 @@ export default {
 			Array
 				.from(Array(event.target.files.length).keys())
 				.forEach((index) => {
+					this.form_data.delete(this.name);
 					this.appendData(this.name, event.target.files[index], event.target.files[index].name);
 					this.filename = event.target.files[index].name;
 				});

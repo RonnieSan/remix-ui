@@ -4,6 +4,7 @@
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
 const webpack = require('webpack');
@@ -14,9 +15,11 @@ module.exports = {
 	output : {
 		filename : 'index.js',
 		path : path.resolve(__dirname, 'dist'),
-		publicPath : '/'
+		publicPath : '/',
+		library : 'RemixUI',
+		libraryTarget : 'umd'
 	},
-    target : 'node',
+    target : 'web',
 	resolve : {
 		extensions : ['.js', '.json', '.vue'],
 		alias : {
@@ -25,8 +28,9 @@ module.exports = {
 		}
 	},
 	externals : {
-		vue : 'vue',
-		moment : 'moment'
+		'vue' : 'vue',
+		'moment-timezone' : 'moment',
+		'brace' : 'brace'
 	},
 	module : {
 		rules : [
@@ -95,10 +99,11 @@ module.exports = {
 	plugins : [
 		new VueLoaderPlugin(),
 		new CleanWebpackPlugin(['dist']),
+		new LodashModuleReplacementPlugin,
 		new webpack.NamedModulesPlugin(),
 		new BundleAnalyzerPlugin({
 			analyzermode : 'static',
-			openAnalyzer : false
+			openAnalyzer : true
 		})
 	]
 };

@@ -142,7 +142,6 @@ export default {
 					value = this.filter(value);
 				}
 			}
-
 			this.$emit('input', value);
 		},
 		keypressHandler(event) {
@@ -152,6 +151,7 @@ export default {
 					event.preventDefault();
 				}
 			}
+			this.$emit('keypress', event);
 		}
 	},
 	directives : {

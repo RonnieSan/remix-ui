@@ -53,6 +53,11 @@ button {
 		background-color: #CCC;
 		cursor: not-allowed;
 	}
+
+	&.toolbar {
+		background-color: @gray-05;
+		color: @gray-80;
+	}
 }
 
 button {
@@ -60,6 +65,10 @@ button {
 	display: inline-block;
 	padding: 0;
 	white-space: nowrap;
+
+	&.icon .label {
+		display: none;
+	}
 
 	.icon {
 		background-color: fade(#000, 10%);

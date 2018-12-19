@@ -22,6 +22,7 @@ import rRadio from './components/Radio';
 import rRadioGroup from './components/RadioGroup';
 import rSelect from './components/Select';
 import rSlider from './components/Slider';
+import rTemplateEditor from './components/TemplateEditor';
 import rText from './components/Text';
 import rTextarea from './components/Textarea';
 import rToggle from './components/Toggle';
@@ -67,6 +68,7 @@ const modules = {
 	rRadioGroup,
 	rSelect,
 	rSlider,
+	rTemplateEditor,
 	rText,
 	rTextarea,
 	rToggle,
@@ -175,6 +177,7 @@ export default {
 			Vue.component('rRadioGroup', rRadioGroup);
 			Vue.component('rSelect', rSelect);
 			Vue.component('rSlider', rSlider);
+			Vue.component('rTemplateEditor', rTemplateEditor);
 			Vue.component('rText', rText);
 			Vue.component('rTextarea', rTextarea);
 			Vue.component('rToggle', rToggle);
