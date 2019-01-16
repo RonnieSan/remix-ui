@@ -446,6 +446,7 @@ export default {
 </script>
 
 <style lang="less">
+@import (css) '~@mdi/font/css/materialdesignicons.min.css';
 @import '~remix-css-theme-default';
 @import './styles/Toast.less';
 @import './styles/Msg.less';

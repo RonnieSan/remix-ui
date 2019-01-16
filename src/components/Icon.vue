@@ -24,7 +24,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less">
-@import (css) '~@mdi/font/css/materialdesignicons.min.css';
-</style>
