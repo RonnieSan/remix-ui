@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { isEqual } from 'lodash-es';
+import { debounce, isEqual } from 'lodash-es';
 import formField from '../mixins/formField';
 
 export default {
