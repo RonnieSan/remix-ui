@@ -101,7 +101,7 @@ module.exports = (env) => {
 		]
 	};
 
-	if (env.theme) {
+	if (env && env.theme) {
 		config.output.filename = 'index-styled.js';
 		config.resolve.alias['remix-ui-styles'] = path.resolve(__dirname, 'src/styles');
 		config.resolve.alias['theme'] = path.resolve(env.theme);

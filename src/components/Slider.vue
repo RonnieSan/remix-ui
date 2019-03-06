@@ -99,6 +99,7 @@ export default {
 			if (!isEqual(this.local_value, new_value)) {
 				this.local_value = new_value
 				this.setHandlePosition();
+				this.$emit('change', this.local_value);
 			}
 		}
 	},
