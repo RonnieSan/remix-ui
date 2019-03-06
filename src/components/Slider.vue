@@ -193,8 +193,9 @@ export default {
 				case 37:
 				case 40:
 					event.preventDefault();
-					let min = (index === 0 ? this.settings.min : this.local_value[0]);
+					let min = this.settings.min;
 					if (this.isRange) {
+						min = (index === 0 ? this.settings.min : this.local_value[0]);
 						value = this.local_value[index] - this.settings.increment;
 						if (value >= min) {
 							this.$set(this.local_value, index, value);
@@ -214,8 +215,9 @@ export default {
 				case 38:
 				case 39:
 					event.preventDefault();
-					let max = (index === 1 ? this.settings.max : this.local_value[1]);
+					let max = this.settings.max;
 					if (this.isRange) {
+						max = (index === 1 ? this.settings.max : this.local_value[1]);
 						value = this.local_value[index] + this.settings.increment;
 						if (value <= max) {
 							this.$set(this.local_value, index, value);
