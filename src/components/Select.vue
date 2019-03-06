@@ -47,7 +47,17 @@ export default {
 			const vm = this;
 			return Object.assign(
 				{},
-				this.$listeners
+				this.$listeners,
+				{
+					change(event) {
+						vm.dirty = true;
+						vm.validate();
+					},
+					blur(event) {
+						vm.touched = true;
+						vm.validate();
+					}
+				}
 			);
 		}
 	},
