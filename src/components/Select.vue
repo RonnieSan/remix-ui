@@ -47,17 +47,7 @@ export default {
 			const vm = this;
 			return Object.assign(
 				{},
-				this.$listeners,
-				{
-					change(event) {
-						vm.dirty = true;
-						vm.validate();
-					},
-					blur(event) {
-						vm.touched = true;
-						vm.validate();
-					}
-				}
+				this.$listeners
 			);
 		}
 	},
