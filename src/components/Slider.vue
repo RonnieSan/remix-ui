@@ -173,6 +173,7 @@ export default {
 
 			this.dirty = true;
 			this.$emit('input', this.local_value);
+			this.emitChange();
 		},
 		mouseupHandler() {
 			window.removeEventListener('mousemove', this.mousemoveHandler);
@@ -329,7 +330,10 @@ export default {
 			if (this.$refs.max) {
 				return parseFloat(this.$refs.max.style.left);
 			}
-		}
+		},
+		emitChange : debounce(function() {
+			this.$emit('change', this.local_value);
+		}, 50)
 	},
 	mixins : [
 		formField

@@ -69,6 +69,7 @@ export default {
 		selected(new_value) {
 			this.dirty = true;
 			this.$emit('change', new_value.value);
+			new_value.value = this.model;
 			this.validate();
 		},
 		model : {
