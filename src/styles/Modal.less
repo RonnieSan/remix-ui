@@ -23,7 +23,6 @@
 
 .modal-container {
 	opacity: 0;
-	transition: opacity @modal-speed @modal-easing;
 	display: flex;
 	height: 100%;
 	height: 100vh;
@@ -32,12 +31,14 @@
 	padding: 20px;
 	position: fixed;
 	top: 0;
+	transition: filter @modal-speed @modal-easing;
 	width: 100%;
 	width: 100vw;
+	z-index: -1;
 
 	&.open {
-		opacity: 0.25;
-		transition: opacity @modal-speed @modal-easing;
+		filter: brightness(65%);
+		opacity: 1;
 
 		.modal-window {
 			transform: scale(0.95,0.95);
@@ -46,8 +47,7 @@
 	}
 
 	&.open:last-child {
-		opacity: 1;
-		transition: opacity @modal-speed @modal-easing;
+		filter: brightness(100%);
 
 		.modal-window {
 			transform: scale(1,1);
