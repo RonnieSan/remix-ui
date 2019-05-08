@@ -137,6 +137,21 @@
 							</div>
 
 							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Timepicker: {{timepicker_value}}</label>
+									<div class="controls">
+										<div class="field">
+											<r-timepicker
+												name="timepicker"
+												v-model="timepicker_value"
+												:options="{seconds : true, second_interval : 20}"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Textarea:</label>
 								<div class="controls">
 									<div class="field">
@@ -387,6 +402,7 @@ export default {
 				'2018-01-01',
 				'2018-01-31'
 			],
+			timepicker_value : '00:00:00',
 			code_value : '',
 			multi_text_value : [],
 			multi_select_value : [],

@@ -1,6 +1,6 @@
 <template>
 	<div class="slider-wrapper" @focusout="touched = true">
-		<div v-if="isRange" ref="merged_tooltip" :class="['tooltip', 'merged', {'invisible' : !merged_tooltip}]" :style="{'left' : merged_tooltip_left}">{{tooltipMin}} - {{tooltipMax}}</div>
+		<div v-if="isRange" ref="merged_tooltip" :class="['tooltip', 'merged', {'invisible' : !merged_tooltip}]" :style="{'left' : merged_tooltip_left}">{{tooltipRange}}</div>
 		<div
 			ref="min"
 			class="handle min"
@@ -83,6 +83,14 @@ export default {
 				return this.settings.formatter(value, 1);
 			}
 			return value;
+		},
+		tooltipRange() {
+			if (this.tooltipMin === this.tooltipMax) {
+				return this.tooltipMin;
+			}
+			else {
+				return this.tooltipMin + ' - ' + this.tooltipMax;
+			}
 		},
 		segmentSize() {
 			return ((this.container.width - this.selected_handle.offsetWidth) / ((this.settings.max - this.settings.min) / this.settings.increment));
