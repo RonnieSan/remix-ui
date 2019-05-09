@@ -69,9 +69,6 @@ export default {
 
 		// Select a file to upload
 		select(event) {
-			// Return if no files added
-			if (!event.target.files.length) return;
-
 			// Add files to form_data
 			Array
 				.from(Array(event.target.files.length).keys())
