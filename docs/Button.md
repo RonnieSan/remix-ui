@@ -1,6 +1,9 @@
 # Button
 A form button with options for styling and interaction states.
 
+## Slots
+* **default** - The button label
+
 ## Props
 * **type** : STRING - The button type to use for this button ['button', 'submit', or 'reset'] (Defaults to 'button')
 * **icon** : STRING - If using MDI, the name of the icon to show on this button
@@ -11,7 +14,7 @@ A form button with options for styling and interaction states.
 ## Usage
 In the template...
 ```html
-<r-button type="submit" icon="check" :loading="loading" :disabled="loading">
+<r-button type="submit" icon="check" :loading="loading" :disabled="loading">Submit Form</r-button>
 ```
 
 Change loading status in the script...
