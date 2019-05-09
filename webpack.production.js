@@ -52,8 +52,21 @@ module.exports = (env) => {
 					]
 				},
 				{
-					test: /\.vue$/,
-					loader: 'vue-loader'
+					test : /\.vue$/,
+					loader : 'vue-loader'
+				},
+				{
+					resourceQuery : /blockType=docs/,
+					loader : [
+						{
+							loader : 'file-loader',
+							options: {
+								name : '[name].md',
+								outputPath : '../docs/'
+							}
+						},
+						require.resolve('./trim-loader.js')
+					]
 				},
 				{
 					test : /\.less$/,
