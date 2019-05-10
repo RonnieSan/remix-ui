@@ -25,7 +25,7 @@ import formField from '../mixins/formField';
 
 export default {
 	props : {
-		value : Number,
+		value : [String, Number],
 		disabled : {
 			type : Boolean,
 			default : false

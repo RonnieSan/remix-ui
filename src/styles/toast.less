@@ -12,6 +12,7 @@
 	right: 20px;
 	top: 20px;
 };
+@toast-margin: 10px;
 @toast-color: #CCC;
 @font-size: 16px;
 @info-color: #2196F3;
@@ -41,9 +42,11 @@
 }
 
 #toast {
-	@toast-position();
+	margin: @toast-margin;
+	max-width: ~"calc(100% - (@{toast-margin} * 2))";
 	position: fixed;
-	max-width: ~"calc(100% - 20px)";
+	right: 0;
+	top: 0;
 	width: @toast-width;
 	z-index: @toast-layer;
 

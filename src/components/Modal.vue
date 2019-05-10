@@ -211,25 +211,27 @@ export default {
 		}
 
 		// Add the close modal event to any element with the .close-modal class
-		this.$el.querySelectorAll('.close-modal').forEach((el) => {
-			el.addEventListener('click', this.close);
-		});
+		let close_els = this.$el.querySelectorAll('.close-modal');
+		for (let n = 0; n < close_els.length; n++) {
+			close_els[n].addEventListener('click', this.close);
+		}
 	},
 	beforeDestroy() {
 		window.removeEventListener('keydown', this.escPressed);
+		let close_els = this.$el.querySelectorAll('.close-modal');
 		if (this.is_open) {
 			this.close()
 				.then(() => {
-					this.$el.querySelectorAll('.close-modal').forEach((el) => {
-						el.removeEventListener('click', this.close);
-					});
+					for (let n = 0; n < close_els.length; n++) {
+						close_els[n].removeEventListener('click', this.close);
+					}
 					this.layer.removeChild(this.modal);
 				});
 		}
 		else {
-			this.$el.querySelectorAll('.close-modal').forEach((el) => {
-				el.removeEventListener('click', this.close);
-			});
+			for (let n = 0; n < close_els.length; n++) {
+				close_els[n].removeEventListener('click', this.close);
+			}
 			this.layer.removeChild(this.modal);
 		}
 	}
