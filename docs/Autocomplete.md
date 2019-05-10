@@ -11,46 +11,46 @@ The auto-complete component should be used in tandem with another form element l
 In the template...
 ```html
 <r-autocomplete
-    v-model="autocomplete_value"
-    :options="autocomplete_options"
+  v-model="autocomplete_value"
+  :options="autocomplete_options"
 >
-    <r-text
-        name="autocomplete_text"
-        v-model="autocomplete_value"
-    />
+  <r-text
+    name="autocomplete_text"
+    v-model="autocomplete_value"
+  />
 </r-autocomplete>
 ```
 
 In the script...
 ```js
 {
-    data() {
-        return {
-            autocomplete_options : [
-                'Red',
-                'Purple',
-                'Blue',
-                'Green',
-                'Yellow'
-            ]
-        };
-    }
+  data() {
+    return {
+      autocomplete_options : [
+        'Red',
+        'Purple',
+        'Blue',
+        'Green',
+        'Yellow'
+      ]
+    };
+  }
 }
 ```
 
 Async options using promises...
 ```js
 {
-    data() {
-        return {
-            autocomplete_options : (value) => {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        resolve(['Foo', 'Bar']);
-                    }, 2000);
-                });
-            }
-        };
-    }
+  data() {
+    return {
+      autocomplete_options : (value) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(['Foo', 'Bar']);
+          }, 2000);
+        });
+      }
+    };
+  }
 }
 ```

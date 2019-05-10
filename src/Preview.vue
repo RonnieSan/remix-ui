@@ -157,6 +157,7 @@
 											name="code"
 											id="code"
 											v-model="code_value"
+											:options="{fontFamily : 'Courier New'}"
 											max-height="300px"
 										/>
 									</div>

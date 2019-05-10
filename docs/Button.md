@@ -20,16 +20,16 @@ In the template...
 Change loading status in the script...
 ```js
 {
-	methods : {
-		submitForm() {
-			this.loading = true;
-			this.asyncMethod();
-		},
-		asyncMethod() {
-			setTimeout(() => {
-				this.loading = false;
-			}, 3000);
-		}
-	}
+  methods : {
+    submitForm() {
+      this.loading = true;
+      this.asyncMethod();
+    },
+    asyncMethod() {
+      setTimeout(() => {
+        this.loading = false;
+      }, 3000);
+    }
+  }
 }
 ```

@@ -5,7 +5,7 @@
 		@keypress="update_filters = true;"
 		@input="androidInputHandler"
 		@focusin="focusinHandler"
-	    v-on-clickaway="closeOptions">
+		v-on-clickaway="closeOptions">
 		<slot></slot>
 		<div v-if="filtered_options.length > 0 && !loading_data" class="autocomplete-options">
 			<div
@@ -82,7 +82,7 @@ export default {
 		},
 		clickHandler(event, value) {
 			event.preventDefault();
-            event.stopPropagation();
+			event.stopPropagation();
 
 			this.$emit('input', value);
 			this.$nextTick(() => {
@@ -93,22 +93,22 @@ export default {
 		getNewOptions(value) {
 			if (value.length >= this.settings.min_length) {
 				this.selected_index = -1;
-                this.selected_value = '';
+				this.selected_value = '';
 
-                if (typeof this.options === 'function') {
-                    const option = this.options(value)
-                    if (option && typeof option.then === 'function') {
-                        this.loading_data = true
+				if (typeof this.options === 'function') {
+					const option = this.options(value)
+					if (option && typeof option.then === 'function') {
+						this.loading_data = true
 
-                        option.then((choices) => {
-                            this.filtered_options = choices
-                            this.loading_data = false
-                        }).catch((err) => {
-                            // Silent fail
-                        })
-                    }
-                }
-                else {
+						option.then((choices) => {
+							this.filtered_options = choices
+							this.loading_data = false
+						}).catch((err) => {
+							// Silent fail
+						})
+					}
+				}
+				else {
 					let choices = fuzzy.filter(value, this.options);
 					this.filtered_options = choices.map((choice) => choice.string);
 				}
@@ -152,10 +152,10 @@ export default {
 				// Enter
 				case 13:
 					event.preventDefault();
-                    event.stopPropagation();
+					event.stopPropagation();
 
 					if (this.selected_value !== '') {
-                        this.$emit('input', this.selected_value);
+						this.$emit('input', this.selected_value);
 						this.closeOptions();
 					}
 					break;
@@ -213,47 +213,47 @@ The auto-complete component should be used in tandem with another form element l
 In the template...
 ```html
 <r-autocomplete
-    v-model="autocomplete_value"
-    :options="autocomplete_options"
+	v-model="autocomplete_value"
+	:options="autocomplete_options"
 >
-    <r-text
-        name="autocomplete_text"
-        v-model="autocomplete_value"
-    />
+	<r-text
+		name="autocomplete_text"
+		v-model="autocomplete_value"
+	/>
 </r-autocomplete>
 ```
 
 In the script...
 ```js
 {
-    data() {
-        return {
-            autocomplete_options : [
-                'Red',
-                'Purple',
-                'Blue',
-                'Green',
-                'Yellow'
-            ]
-        };
-    }
+	data() {
+		return {
+			autocomplete_options : [
+				'Red',
+				'Purple',
+				'Blue',
+				'Green',
+				'Yellow'
+			]
+		};
+	}
 }
 ```
 
 Async options using promises...
 ```js
 {
-    data() {
-        return {
-            autocomplete_options : (value) => {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        resolve(['Foo', 'Bar']);
-                    }, 2000);
-                });
-            }
-        };
-    }
+	data() {
+		return {
+			autocomplete_options : (value) => {
+				return new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve(['Foo', 'Bar']);
+					}, 2000);
+				});
+			}
+		};
+	}
 }
 ```
 </docs>

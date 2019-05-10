@@ -4,5 +4,5 @@
 // -------------------------------------------------------
 
 module.exports = function(source) {
-	return source.trim();
+	return source.trim().replace(/\t/g, '  ');
 };

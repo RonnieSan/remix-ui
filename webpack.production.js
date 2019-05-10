@@ -65,7 +65,7 @@ module.exports = (env) => {
 								outputPath : '../docs/'
 							}
 						},
-						require.resolve('./trim-loader.js')
+						require.resolve('./docs-loader.js')
 					]
 				},
 				{

@@ -27,12 +27,12 @@ In the template...
 In the script...
 ```js
 {
-	data() {
-		return {
-			boolean_value : false,
-			string_value : 'No',
-			array_value : []
-		};
-	}
+  data() {
+    return {
+      boolean_value : false,
+      string_value : 'No',
+      array_value : []
+    };
+  }
 }
 ```
