@@ -8,10 +8,19 @@
 			v-on="listeners"
 		>
 			<option disabled :value="{value : emptyValue}">{{placeholder}}</option>
-			<option
-				v-for="option in options"
-				:value="{value : (option.value !== undefined) ? option.value : option}"
-			>{{(option.label !== undefined) ? option.label : option}}</option>
+			<template v-for="option in options">
+				<template v-if="isArray(option.value)">
+					<optgroup :label="option.label">
+					<option
+						v-for="child_option in option.value"
+						:value="{value : (child_option.value !== undefined) ? child_option.value : child_option}"
+					>{{(child_option.label !== undefined) ? child_option.label : child_option}}</option>
+					</optgroup>
+				</template>
+				<template v-else>
+					<option :value="{value : (option.value !== undefined) ? option.value : option}">{{(option.label !== undefined) ? option.label : option}}</option>
+				</template>
+			</template>
 		</select>
 	</div>
 </template>
@@ -82,6 +91,11 @@ export default {
 			},
 			immediate : true,
 			deep : true
+		}
+	},
+	methods : {
+		isArray(value) {
+			return Array.isArray(value);
 		}
 	},
 	mixins : [

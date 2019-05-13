@@ -194,7 +194,7 @@
 										<r-select
 											name="select"
 											v-model="select_value"
-											:options="options"
+											:options="select_options"
 										/>
 									</div>
 								</div>
@@ -246,6 +246,28 @@
 											name="toggle"
 											v-model="toggle_value"
 										>This is the value</r-toggle>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label">Radio:</label>
+								<div class="controls">
+									<div class="field">
+										<r-radio
+											name="radio"
+											v-model="radio_value"
+											@change="radioChanged($event)"
+											value="Yes"
+										>Yes</r-radio>
+									</div>
+									<div class="field">
+										<r-radio
+											name="radio"
+											v-model="radio_value"
+											@change="radioChanged($event)"
+											value="No"
+										>No</r-radio>
 									</div>
 								</div>
 							</div>
@@ -364,7 +386,7 @@ import Validator, { rules } from './lib/Validator';
 export default {
 	data() {
 		return {
-      rules,
+			rules,
 			validator : new Validator(),
 			text_value : '',
 			autocomplete_value : '',
@@ -380,6 +402,7 @@ export default {
 			textarea_value : '',
 			select_value : 'Red',
 			checklist_value : [],
+			radio_value : 'Yes',
 			radio_group_value : 'Red',
 			file_value : null,
 			currency_value : 5.00,
@@ -404,6 +427,15 @@ export default {
 				'Blue',
 				'Green',
 				'Yellow'
+			],
+			select_options : [
+				{label : 'One', value : 1},
+				{label : 'Two', value : 2},
+				{label : 'Other Numbers', value : [
+					{label : 'Three', value : 3},
+					{label : 'Four', value : 4},
+					{label : 'Five', value : 5}
+				]}
 			],
 			nav_items : [
 				{target : '#one', label : 'One'},
@@ -442,6 +474,10 @@ export default {
 			setTimeout(() => {
 				this.is_loading = false;
 			}, 3000);
+		},
+
+		radioChanged(value) {
+			console.log(111, value);
 		}
 	}
 };
