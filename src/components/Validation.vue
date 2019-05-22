@@ -57,7 +57,7 @@ export default {
 			type : Array,
 			default() {
 				return [
-					'required'
+					this.validator.rules.required()
 				];
 			}
 		}

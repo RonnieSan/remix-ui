@@ -39,7 +39,7 @@ export default {
 	},
 	props : {
 		model : {
-			type : [String, Number, Boolean, Object]
+			type : [String, Number, Boolean, Object, Function]
 		},
 		name : String,
 		emptyValue : {

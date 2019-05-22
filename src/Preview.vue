@@ -15,7 +15,7 @@
 							<h1>Remix UI Components</h1>
 							<hr>
 							<h2>Form Components</h2>
-
+							
 							<div class="control-group">
 								<label class="control-label"><span class="text-color-red">*</span> Text Input with Validation:</label>
 								<div class="controls">
@@ -62,12 +62,12 @@
 											v-model="number_value"
 											:rules="[validator.rules.required()]"
 										>
-                      <r-number
-                        name="number"
-                        :rules="[ rules.required() ]"
-                        v-model.number="number_value"
-                      />
-                    </r-validation>
+											<r-number
+												name="number"
+												:rules="[ rules.required() ]"
+												v-model.number="number_value"
+											/>
+										</r-validation>
 									</div>
 								</div>
 							</div>
@@ -318,6 +318,8 @@
 								</div>
 							</div>
 
+							<r-form-builder :config.sync="formBuilderConfig"/>
+
 							<h2>Modals</h2>
 
 							<div class="control-group">
@@ -421,6 +423,11 @@ export default {
 			],
 			toggle_value : true,
 			markdown_value : '',
+			form_data : {
+				name : 'Fermegatroid Skittle',
+				phone : '6195551212',
+				gender : 'male'
+			},
 			options : [
 				'Red',
 				'Purple',
@@ -444,6 +451,65 @@ export default {
 			],
 			is_loading : false
 		};
+	},
+	computed : {
+		formBuilderConfig : {
+			get : function() {
+				return [
+					{
+						type : 'fieldset',
+						class : 'my-set',
+						heading : 'Form Builder',
+						controls : [
+							{
+								fields : [
+									{
+										before : '<label class="control-label">Name:</label>',
+										type : 'text',
+										model : 'name',
+										value : this.form_data.name,
+										validation : {
+											rules : [rules.required()]
+										}
+									},
+									{
+										before : '<label class="control-label">Last Name:</label>',
+										type : 'text',
+										model : 'phone',
+										value : this.form_data.phone,
+										props : {
+											mask : '(###) ###-####'
+										},
+										validation : {
+											rules : [rules.required()]
+										}
+									}
+								]
+							},
+							{
+								label : 'Gender:',
+								fields : [
+									{
+										type : 'select',
+										model : 'gender',
+										value : this.form_data.gender,
+										props : {
+											options : [
+												{label : 'Male', value : 'male'},
+												{label : 'Female', value : 'female'}
+											]
+										}
+									}
+								]
+							}
+						]
+					}
+				];
+			},
+			set : function(new_value) {
+				Object.assign(this.form_data, new_value);
+			}
+		}
 	},
 	methods : {
 		triggerAlert() {
@@ -475,10 +541,6 @@ export default {
 				this.is_loading = false;
 			}, 3000);
 		},
-
-		radioChanged(value) {
-			console.log(111, value);
-		}
 	}
 };
 </script>

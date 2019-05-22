@@ -28,7 +28,7 @@ In order to use the styling included with Remix UI, you'll need to create an ali
 {
     resolve : {
         alias : {
-            'remix-ui-styles' : resolve('node_modules/remix-ui/src/styles')
+            'remix-ui-styles' : path.resolve(__dirname, 'node_modules/remix-ui/src/styles')
         }
     }
 }

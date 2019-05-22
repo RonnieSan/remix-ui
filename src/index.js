@@ -5,6 +5,7 @@
 
 // Import form elements
 import rForm from './components/Form';
+import rFormBuilder from './components/FormBuilder';
 import rButton from './components/Button';
 import rCheckbox from './components/Checkbox';
 import rChecklist from './components/Checklist';
@@ -58,6 +59,7 @@ const modules = {
 	rDatepicker,
 	rFileInput,
 	rForm,
+	rFormBuilder,
 	rMarkdown,
 	rMultiSelect,
 	rMultiText,
@@ -160,6 +162,7 @@ export default {
 		}
 		else {
 			Vue.component('rForm', rForm);
+			Vue.component('rFormBuilder', rFormBuilder);
 			Vue.component('rButton', rButton);
 			Vue.component('rCheckbox', rCheckbox);
 			Vue.component('rChecklist', rChecklist);
