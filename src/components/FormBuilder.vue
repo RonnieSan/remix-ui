@@ -20,14 +20,14 @@
 									v-bind="field.validation"
 								>
 									<component
-										:is="'r-' + field.type"
+										:is="field.component"
 										v-model="values[field.model]"
 										v-bind="field.props"
 									>{{field.label}}</component>
 								</r-validation>
 								<component
 									v-else
-									:is="'r-' + field.type"
+									:is="field.component"
 									v-model="values[field.model]"
 									v-bind="field.props"
 								>{{field.label}}</component>
@@ -43,14 +43,14 @@
 									v-bind="field.validation"
 								>
 									<component
-										:is="'r-' + field.type"
+										:is="field.component"
 										v-model="values[field.model]"
 										v-bind="field.props"
 									>{{field.label}}</component>
 								</r-validation>
 								<component
 									v-else
-									:is="'r-' + field.type"
+									:is="field.component"
 									v-model="values[field.model]"
 									v-bind="field.props"
 								>{{field.label}}</component>
@@ -173,9 +173,9 @@ The form builder component creates form based on a JSON configuration passed int
 
 // Object Field
 {
-	type : {
+	component : {
 		type : String,
-		description : 'The Remix UI element type to display (without the leading "r" -- "select", "multi-text", etc)'
+		description : 'The type of component to use for the field'
 	},
 	model : {
 		type : String,
@@ -250,7 +250,7 @@ In the script...
 								fields : [
 									{
 										before : '<label class="control-label">Name:</label>',
-										type : 'text',
+										component : 'r-text',
 										model : 'name',
 										value : this.form_data.name,
 										validation : {
@@ -259,7 +259,7 @@ In the script...
 									},
 									{
 										before : '<label class="control-label">Last Name:</label>',
-										type : 'text',
+										component : 'r-text',
 										model : 'phone',
 										value : this.form_data.phone,
 										props : {
@@ -275,7 +275,7 @@ In the script...
 								label : 'Gender:',
 								fields : [
 									{
-										type : 'select',
+										component : 'r-select',
 										model : 'gender',
 										value : this.form_data.gender,
 										props : {

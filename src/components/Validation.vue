@@ -17,6 +17,7 @@
 
 <script>
 import { compact } from 'lodash-es';
+import Validator from '../lib/Validator';
 
 export default {
 	provide() {
@@ -24,9 +25,14 @@ export default {
 			field_validator : this
 		};
 	},
-	inject : [
-		'form_validator'
-	],
+	inject : {
+		form_validator : {
+			name : 'form_validator',
+			default() {
+				return new Validator();
+			}
+		}
+	},
 	props : {
 		value : {
 			required : true

@@ -426,7 +426,8 @@ export default {
 			form_data : {
 				name : 'Fermegatroid Skittle',
 				phone : '6195551212',
-				gender : 'male'
+				gender : 'male',
+				age : 38
 			},
 			options : [
 				'Red',
@@ -465,7 +466,7 @@ export default {
 								fields : [
 									{
 										before : '<label class="control-label">Name:</label>',
-										type : 'text',
+										component : 'r-text',
 										model : 'name',
 										value : this.form_data.name,
 										validation : {
@@ -474,7 +475,7 @@ export default {
 									},
 									{
 										before : '<label class="control-label">Last Name:</label>',
-										type : 'text',
+										component : 'r-text',
 										model : 'phone',
 										value : this.form_data.phone,
 										props : {
@@ -490,7 +491,7 @@ export default {
 								label : 'Gender:',
 								fields : [
 									{
-										type : 'select',
+										component : 'r-select',
 										model : 'gender',
 										value : this.form_data.gender,
 										props : {
