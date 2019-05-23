@@ -101,12 +101,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import (reference) '~theme';
-
-
-</style>
-
 <docs>
 # Form Builder
 The form builder component creates form based on a JSON configuration passed into it.
@@ -114,7 +108,7 @@ The form builder component creates form based on a JSON configuration passed int
 ## Props
 * **config** : ARRAY - An array containing a collection of fieldsets, controls, and fields. See below for formatting.
 
-**Note: When creating the config object, use a computed value that returns the config object on get and sets local properties on set. When the config values change on form input, the computed `set()` function will be passed an object containing the new values using the model names as keys.
+**Note: When creating the config object, use a computed value that returns the config object on get and sets local properties on set. When the config values change on form input, the computed `set()` function will be passed an object containing the new values using the model names as keys.**
 
 ## Config Format
 ```json

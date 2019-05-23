@@ -12,7 +12,7 @@ A code input based off of Ace Editor.
 ## Usage
 In the template...
 ```html
-<r-code id="my_code_editor" v-model="code_editor_value" :options="code_editor_options" max-height="500px"/>
+<r-code id="my_code_editor" v-model="code_editor_value" :options="code_editor_options" max-height="600px"/>
 ```
 
 In the script...
