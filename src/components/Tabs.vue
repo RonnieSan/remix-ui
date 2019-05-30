@@ -33,6 +33,11 @@ export default {
 			active_tab_id : this.activeTabId
 		};
 	},
+	watch : {
+		activeTabId(new_value) {
+			this.active_tab_id = new_value;
+		}
+	},
 	methods : {
 		addTab(tab) {
 			this.tabs.push(tab);
@@ -53,7 +58,7 @@ export default {
 			return tab.tabId === this.activeTabId;
 		});
 		if (default_tab) {
-			default_tab.$emit('open');
+			this.selectTab(default_tab);
 		}
 	}
 };
