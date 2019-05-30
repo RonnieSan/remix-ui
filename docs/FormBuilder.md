@@ -7,7 +7,7 @@ The form builder component creates form based on a JSON configuration passed int
 **Note: When creating the config object, use a computed value that returns the config object on get and sets local properties on set. When the config values change on form input, the computed `set()` function will be passed an object containing the new values using the model names as keys.**
 
 ## Config Format
-```json
+```js
 // config
 [
   [Object FieldSet]
