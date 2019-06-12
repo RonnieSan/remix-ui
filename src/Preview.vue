@@ -449,10 +449,14 @@ export default {
 			},
 			options : [
 				'Red',
+				'Orange',
 				'Purple',
 				'Blue',
 				'Green',
-				'Yellow'
+				'Yellow',
+				'Indigo',
+				'Cyan',
+				'Magenta'
 			],
 			select_options : [
 				{label : 'One', value : 1},

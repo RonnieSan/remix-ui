@@ -85,15 +85,21 @@
 }
 
 .input-controls {
+	display: flex;
+	flex-direction: column;
 	flex: 0 0 auto;
 	padding: 0 5px;
+
+	.control-spacer {
+		flex: 0 0 1.5em;
+	}
 
 	.control-buttons {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
+		flex: 1 0 0;
 		justify-content: center;
-		margin-top: 1.5em;
 		min-height: @control-height * 5;	
 	}
 

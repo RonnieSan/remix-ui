@@ -19,6 +19,7 @@
 			</ul>
 		</div>
 		<div class="input-controls">
+			<div class="control-spacer"/>
 			<div class="control-buttons">
 				<r-button class="icon" icon="chevron-double-left" @click="moveSelected('active', true)"/>
 				<r-button class="icon" icon="chevron-left" @click="moveSelected('active')"/>
@@ -168,7 +169,6 @@ export default {
 					group : 'items',
 					multiDrag : true,
 					selectedClass : 'selected',
-					animation : 150,
 					onSelect(event) {
 						// Add the selected class
 						let class_list = event.item.className.split(' ');
