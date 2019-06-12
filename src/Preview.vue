@@ -452,8 +452,7 @@ export default {
 				'Purple',
 				'Blue',
 				'Green',
-				'Yellow',
-				'Australopithacus is my name'
+				'Yellow'
 			],
 			select_options : [
 				{label : 'One', value : 1},
