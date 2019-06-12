@@ -13,6 +13,7 @@ import rCode from './components/Code';
 import rCurrency from './components/Currency';
 import rDatepicker from './components/Datepicker';
 import rFileInput from './components/FileInput';
+import rGroupSelect from './components/GroupSelect';
 import rMarkdown from './components/Markdown';
 import rMultiSelect from './components/MultiSelect';
 import rMultiText from './components/MultiText';
@@ -60,6 +61,7 @@ const modules = {
 	rFileInput,
 	rForm,
 	rFormBuilder,
+	rGroupSelect,
 	rMarkdown,
 	rMultiSelect,
 	rMultiText,
@@ -98,6 +100,7 @@ export {
 	rDatepicker,
 	rFileInput,
 	rForm,
+	rGroupSelect,
 	rMarkdown,
 	rMultiSelect,
 	rMultiText,
@@ -136,8 +139,7 @@ export default {
 			components.forEach((component) => {
 				if (component !== 'Msg'
 					&& component !== 'Toast'
-					&& component !== 'Validator')
-				{
+					&& component !== 'Validator') {
 					if (modules[component]) {
 						Vue.component(component, modules[component]);
 					}
@@ -170,6 +172,7 @@ export default {
 			Vue.component('rCurrency', rCurrency);
 			Vue.component('rDatepicker', rDatepicker);
 			Vue.component('rFile', rFileInput);
+			Vue.component('rGroupSelect', rGroupSelect);
 			Vue.component('rMarkdown', rMarkdown);
 			Vue.component('rMultiSelect', rMultiSelect);
 			Vue.component('rMultiText', rMultiText);

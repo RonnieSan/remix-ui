@@ -1,0 +1,101 @@
+// ----------------------------------------------------------------------
+// GROUP SELECT STYLES
+// ----------------------------------------------------------------------
+
+@black: #000;
+@control-bkg-color: #FFF;
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-color: #4285F9;
+@control-height: 2.5em;
+@control-icon-color: #333;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
+@gray-35: #A6A6A6;
+@popup-layer: 400;
+
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(@black, 10%);
+};
+
+.group-select-wrapper {
+	align-items: stretch;
+	cursor: default;
+	display: inline-flex;
+	flex-direction: row;
+	margin-bottom: 1em;
+	min-height: @control-height * 3;
+	position: relative;
+	vertical-align: middle;
+
+	&:focus,
+	&:focus-within {
+		box-shadow: none;
+		outline: 0;
+
+		.list-group {
+			@control-focus();
+		}
+	}
+}
+
+.group-column {
+
+	.group-column-header {
+		font-size: 0.875rem;
+		font-weight: bold;
+		height: 1.5em;
+		text-transform: uppercase;
+	}
+
+	.list-group {
+		background-color: @control-bkg-color;
+		border: @control-border-stroke solid @control-border-color;
+		border-radius: @control-radius;
+		flex: 1 0 0;
+		min-width: @control-height * 6;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	.inactive {
+		color: @gray-35;
+	}
+	
+	.list-group-item {
+		border-bottom: 1px solid tint(@control-border-color, 50%);
+		cursor: pointer;
+		height: @control-height;
+		padding: @control-padding;
+
+		&:hover {
+			background-color: tint(@control-color, 95%);
+		}
+	}
+
+	.selected {
+		background-color: tint(@control-color, 85%);
+
+		&:hover {
+			background-color: tint(@control-color, 85%);
+		}
+	}
+}
+
+.input-controls {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: @control-height * 5;
+	padding: 1.5em 5px 0;
+
+	button {
+		margin: 5px;
+	}
+}
+
+.sortable-chosen {
+	background-color: fade(@control-bkg-color, 90%);
+}

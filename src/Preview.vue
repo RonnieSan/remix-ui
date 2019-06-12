@@ -201,6 +201,21 @@
 							</div>
 
 							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Group Select:</label>
+									<div class="controls">
+										<div class="field">
+											<r-group-select
+												name="group_select"
+												v-model="group_select_value"
+												:options="options"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Multi-Select:</label>
 								<div class="controls">
 									<div class="field">
@@ -403,6 +418,9 @@ export default {
 			password_value : '',
 			textarea_value : '',
 			select_value : 'Red',
+			group_select_value : [
+				'Red'
+			],
 			checklist_value : [],
 			radio_value : 'Yes',
 			radio_group_value : 'Red',
@@ -434,7 +452,8 @@ export default {
 				'Purple',
 				'Blue',
 				'Green',
-				'Yellow'
+				'Yellow',
+				'Australopithacus is my name'
 			],
 			select_options : [
 				{label : 'One', value : 1},
