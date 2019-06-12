@@ -19,10 +19,12 @@
 			</ul>
 		</div>
 		<div class="input-controls">
-			<r-button class="icon" icon="chevron-double-left" @click="moveSelected('active', true)"/>
-			<r-button class="icon" icon="chevron-left" @click="moveSelected('active')"/>
-			<r-button class="icon" icon="chevron-right" @click="moveSelected('inactive')"/>
-			<r-button class="icon" icon="chevron-double-right" @click="moveSelected('inactive', true)"/>
+			<div class="control-buttons">
+				<r-button class="icon" icon="chevron-double-left" @click="moveSelected('active', true)"/>
+				<r-button class="icon" icon="chevron-left" @click="moveSelected('active')"/>
+				<r-button class="icon" icon="chevron-right" @click="moveSelected('inactive')"/>
+				<r-button class="icon" icon="chevron-double-right" @click="moveSelected('inactive', true)"/>
+			</div>
 		</div>
 		<div class="inactive group-column">
 			<div class="group-column-header">{{inactiveHeader}}</div>
