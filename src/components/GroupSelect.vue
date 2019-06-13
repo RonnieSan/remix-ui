@@ -227,6 +227,13 @@ export default {
 							});
 							vnode.context.$emit('input', new_value);
 						}
+					},
+					onEnd(event) {
+						if (event.to !== event.from) {
+							event.items.forEach((item) => {
+								Sortable.utils.deselect(item);
+							});
+						}
 					}
 				});
 
