@@ -27,11 +27,6 @@ import TextInput from './TextInput';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			focused : false
-		};
-	},
 	props : {
 		allowed : String,
 		disabled : {
@@ -48,6 +43,11 @@ export default {
 		placeholder : String,
 		type : String,
 		value : [String, Number]
+	},
+	data() {
+		return {
+			focused : false
+		};
 	},
 	computed : {
 		listeners() {

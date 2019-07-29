@@ -27,6 +27,7 @@ import rSlider from './components/Slider';
 import rTemplateEditor from './components/TemplateEditor';
 import rText from './components/Text';
 import rTextarea from './components/Textarea';
+import rTimepicker from './components/Timepicker';
 import rToggle from './components/Toggle';
 import rValidation from './components/Validation';
 
@@ -75,6 +76,7 @@ const modules = {
 	rTemplateEditor,
 	rText,
 	rTextarea,
+	rTimepicker,
 	rToggle,
 	rValidation,
 	Grid,
@@ -113,6 +115,7 @@ export {
 	rSlider,
 	rText,
 	rTextarea,
+	rTimepicker,
 	rToggle,
 	rValidation,
 	Grid,
@@ -186,6 +189,7 @@ export default {
 			Vue.component('rTemplateEditor', rTemplateEditor);
 			Vue.component('rText', rText);
 			Vue.component('rTextarea', rTextarea);
+			Vue.component('rTimepicker', rTimepicker);
 			Vue.component('rToggle', rToggle);
 			Vue.component('rValidation', rValidation);
 

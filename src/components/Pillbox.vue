@@ -34,16 +34,6 @@ import { includes } from 'lodash-es';
 import TextInput from './TextInput';
 
 export default {
-	data() {
-		return {
-			input_value   : this.inputValue,
-			focused       : false,
-			full_value    : this.propValue,
-			masked        : this.outputMask || false,
-			selected_item : null,
-			error_class   : []
-		};
-	},
 	props : {
 		allowed : {
 			type : [String, Boolean],
@@ -77,7 +67,10 @@ export default {
 			default : 'text'
 		},
 		value : Array,
-		inputValue : [String, Object],
+		inputValue : {
+			type : [String, Object],
+			default : ''
+		},
 		commit : {
 			type : [Array, String],
 			default : function() {
@@ -88,6 +81,16 @@ export default {
 				];
 			}
 		}
+	},
+	data() {
+		return {
+			input_value   : this.inputValue,
+			focused       : false,
+			full_value    : this.propValue,
+			masked        : this.outputMask || false,
+			selected_item : null,
+			error_class   : []
+		};
 	},
 	computed : {
 		propValue() {

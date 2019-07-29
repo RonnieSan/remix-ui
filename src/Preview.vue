@@ -137,6 +137,21 @@
 							</div>
 
 							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Timepicker: {{timepicker_value}}</label>
+									<div class="controls">
+										<div class="field">
+											<r-timepicker
+												name="timepicker"
+												v-model="timepicker_value"
+												:options="{seconds : true}"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Textarea:</label>
 								<div class="controls">
 									<div class="field">
