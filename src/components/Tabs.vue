@@ -44,8 +44,10 @@ export default {
 		},
 		selectTab(tab) {
 			this.active_tab_id = tab.tabId;
-			tab.$emit('open');
 			this.$emit('change', this.active_tab_id);
+			this.$nextTick(() => {
+				tab.$emit('open');
+			});
 		},
 		removeTab(tab_id) {
 			this.tabs = this.tabs.filter((tab) => {

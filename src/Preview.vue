@@ -281,13 +281,24 @@
 							</div>
 
 							<div class="control-group">
+								<label class="control-label">Switch:</label>
+								<div class="controls">
+									<div class="field">
+										<r-switch
+											name="switch"
+											v-model="switch_value"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Radio:</label>
 								<div class="controls">
 									<div class="field">
 										<r-radio
 											name="radio"
 											v-model="radio_value"
-											@change="radioChanged($event)"
 											value="Yes"
 										>Yes</r-radio>
 									</div>
@@ -295,7 +306,6 @@
 										<r-radio
 											name="radio"
 											v-model="radio_value"
-											@change="radioChanged($event)"
 											value="No"
 										>No</r-radio>
 									</div>
@@ -455,6 +465,7 @@ export default {
 				75
 			],
 			toggle_value : true,
+			switch_value : false,
 			markdown_value : '',
 			form_data : {
 				name : 'Fermegatroid Skittle',

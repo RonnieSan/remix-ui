@@ -24,6 +24,7 @@ import rRadio from './components/Radio';
 import rRadioGroup from './components/RadioGroup';
 import rSelect from './components/Select';
 import rSlider from './components/Slider';
+import rSwitch from './components/Switch';
 import rTemplateEditor from './components/TemplateEditor';
 import rText from './components/Text';
 import rTextarea from './components/Textarea';
@@ -73,6 +74,7 @@ const modules = {
 	rRadioGroup,
 	rSelect,
 	rSlider,
+	rSwitch,
 	rTemplateEditor,
 	rText,
 	rTextarea,
@@ -113,6 +115,7 @@ export {
 	rRadioGroup,
 	rSelect,
 	rSlider,
+	rSwitch,
 	rText,
 	rTextarea,
 	rTimepicker,
@@ -186,6 +189,7 @@ export default {
 			Vue.component('rRadioGroup', rRadioGroup);
 			Vue.component('rSelect', rSelect);
 			Vue.component('rSlider', rSlider);
+			Vue.component('rSwitch', rSwitch);
 			Vue.component('rTemplateEditor', rTemplateEditor);
 			Vue.component('rText', rText);
 			Vue.component('rTextarea', rTextarea);
