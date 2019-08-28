@@ -5,7 +5,7 @@
 // Default values
 @control-bkg-color: #FFF;
 @control-border-color: #CCC;
-@control-border-stroke: 1px;
+@control-border-stroke: 4px;
 @control-color: #2196F3;
 @control-focus: {
 	box-shadow: 0 0 0 3px fade(black, 10%);
@@ -38,7 +38,7 @@
 		color: @control-border-color;
 		display: inline-block;
 		height: 100%;
-		line-height: @switch-size;
+		line-height: ~'calc(@{switch-size} - (@{control-border-stroke} * 1.5))';
 		padding: 0 (@switch-size * 0.5);
 		position: relative;
 
