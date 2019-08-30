@@ -12,7 +12,12 @@
 export default {
 	data() {
 		return {
-			is_open : false
+			is_open : false,
+			parent  : null,
+			layer   : null,
+			overlay : null,
+			modal   : null,
+			window  : null
 		};
 	},
 	props : {
@@ -53,6 +58,9 @@ export default {
 
 				// Disable scrolling on the document
 				document.documentElement.classList.add('no-scroll');
+
+				// Append the modal to the modal layer
+				this.layer.appendChild(this.$el);
 
 				// Set the z-index of the modal
 				self.modal.style.zIndex = 500 + (open_modals * 10);
