@@ -59,9 +59,6 @@ export default {
 				// Disable scrolling on the document
 				document.documentElement.classList.add('no-scroll');
 
-				// Append the modal to the modal layer
-				this.layer.appendChild(this.$el);
-
 				// Set the z-index of the modal
 				self.modal.style.zIndex = 500 + (open_modals * 10);
 
@@ -210,8 +207,12 @@ export default {
 			event.stopPropagation();
 		});
 
+		function insertAfter(el, referenceNode) {
+			referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+		}
+
 		// Append the modal to the modal layer
-		this.layer.appendChild(this.$el);
+		insertAfter(this.$el, this.overlay);
 
 		if (window.innerHeight < this.window.style.height) {
 			// Make the container scrollable
