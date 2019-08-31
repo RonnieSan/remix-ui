@@ -1,7 +1,7 @@
 <template>
 	<div
 		:style="{maxHeight}"
-		class="code-wrapper"
+		:class="['code-wrapper', {'disabled' : disabled}]"
 		@focusout.native="touched = true; $emit('validate')"
 	>
 		<slot name="panel"></slot>
@@ -18,15 +18,6 @@ import 'brace/theme/sqlserver';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			dirty       : false,
-			touched     : false,
-			editor      : null,
-			local_value : null,
-			settings    : {}
-		};
-	},
 	props : {
 		id : {
 			type : String,
@@ -42,7 +33,17 @@ export default {
 			}
 		},
 		maxHeight : String,
-		value : String
+		value : String,
+		disabled : Boolean
+	},
+	data() {
+		return {
+			dirty       : false,
+			touched     : false,
+			editor      : null,
+			local_value : null,
+			settings    : {}
+		};
 	},
 	watch : {
 		value(new_value) {
@@ -119,11 +120,17 @@ export default {
 			this.editor.setValue(this.value, -1);
 		}
 
-		// Editor value changes
-		this.editor.on('change', () => {
-			let new_value = this.local_value = this.editor.getValue();
-			this.$emit('input', new_value);
-		});
+		if (this.disabled) {
+			this.editor.setReadOnly(true);
+		}
+		else {
+			// Editor value changes
+			this.editor.on('change', () => {
+				let new_value = this.local_value = this.editor.getValue();
+				this.$emit('input', new_value);
+			});
+		}
+
 	}
 };
 </script>

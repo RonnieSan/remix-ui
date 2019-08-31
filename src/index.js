@@ -31,6 +31,7 @@ import rTextarea from './components/Textarea';
 import rTimepicker from './components/Timepicker';
 import rToggle from './components/Toggle';
 import rValidation from './components/Validation';
+import rValidator from './components/Validator';
 
 // Import Icons
 import Icon from './components/Icon';
@@ -81,6 +82,7 @@ const modules = {
 	rTimepicker,
 	rToggle,
 	rValidation,
+	rValidator,
 	Grid,
 	Row,
 	Column,
@@ -121,6 +123,7 @@ export {
 	rTimepicker,
 	rToggle,
 	rValidation,
+	rValidator,
 	Grid,
 	Row,
 	Column,
@@ -196,6 +199,7 @@ export default {
 			Vue.component('rTimepicker', rTimepicker);
 			Vue.component('rToggle', rToggle);
 			Vue.component('rValidation', rValidation);
+			Vue.component('rValidator', rValidator);
 
 			Vue.component('icon', Icon);
 			

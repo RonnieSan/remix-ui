@@ -1,9 +1,9 @@
 <template>
-	<div class="group-select-wrapper" tabindex="-1">
+	<div :class="['group-select-wrapper', {'disabled' : disabled}]" tabindex="-1">
 		<div class="active group-column">
 			<div class="group-column-header">{{activeHeader}}</div>
 			<ul
-				v-sortable="sortableOptions"
+				v-sortable="mergedSortableOptions"
 				id="active"
 				class="list-group active"
 				:style="{maxHeight : maxHeight}"
@@ -21,16 +21,16 @@
 		<div class="input-controls">
 			<div class="control-spacer"/>
 			<div class="control-buttons">
-				<r-button class="icon" icon="chevron-double-left" @click="moveSelected('active', true)"/>
-				<r-button class="icon" icon="chevron-left" @click="moveSelected('active')"/>
-				<r-button class="icon" icon="chevron-right" @click="moveSelected('inactive')"/>
-				<r-button class="icon" icon="chevron-double-right" @click="moveSelected('inactive', true)"/>
+				<r-button :disabled="disabled" class="icon" icon="chevron-double-left" @click="moveSelected('active', true)"/>
+				<r-button :disabled="disabled" class="icon" icon="chevron-left" @click="moveSelected('active')"/>
+				<r-button :disabled="disabled" class="icon" icon="chevron-right" @click="moveSelected('inactive')"/>
+				<r-button :disabled="disabled" class="icon" icon="chevron-double-right" @click="moveSelected('inactive', true)"/>
 			</div>
 		</div>
 		<div class="inactive group-column">
 			<div class="group-column-header">{{inactiveHeader}}</div>
 			<ul
-				v-sortable="sortableOptions"
+				v-sortable="mergedSortableOptions"
 				id="inactive"
 				class="list-group inactive"
 				:style="{maxHeight : maxHeight}"
@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { differenceBy, includes, merge, sortBy, uniq, without } from 'lodash';
 import rButton from './Button';
+import { differenceBy, includes, merge, sortBy, uniq, without } from 'lodash';
 import { Sortable, MultiDrag } from 'sortablejs';
 
 Sortable.mount(new MultiDrag());
@@ -82,7 +82,8 @@ export default {
 		value : {
 			type : Array,
 			required : true
-		}
+		},
+		disabled : Boolean
 	},
 	data() {
 		return {
@@ -119,6 +120,14 @@ export default {
 			});
 			let value = differenceBy(options, this.active, 'value');
 			return sortBy(value, 'label');
+		},
+		mergedSortableOptions() {
+			if (this.disabled) {
+				return merge({}, this.sortableOptions, {
+					disabled : true
+				});
+			}
+			return this.sortableOptions;
 		}
 	},
 	methods : {

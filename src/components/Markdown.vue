@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="['markdown-wrapper', mode]"
+		:class="['markdown-wrapper', mode, {'disabled' : disabled}]"
 		:style="{maxHeight}"
 	>
 		<div class="toolbar">
@@ -23,6 +23,7 @@
 					cols="1"
 					:name="name"
 					:value.sync="value"
+					:disabled="disabled"
 					v-on="listeners"
 				></textarea>
 			</div>
@@ -43,15 +44,6 @@ const markdown = new MarkdownIt();
 markdown.use(MarkdownItAttrs);
 
 export default {
-	data() {
-		return {
-			input   : this.value,
-			edit    : true,
-			focused : false,
-			mode    : 'compact',
-			preview : 'eye-off'
-		};
-	},
 	props : {
 		name  : String,
 		value : {
@@ -61,7 +53,17 @@ export default {
 		maxHeight : {
 			type : String,
 			default : '500px'
-		}
+		},
+		disabled : Boolean
+	},
+	data() {
+		return {
+			input   : this.value,
+			edit    : true,
+			focused : false,
+			mode    : 'compact',
+			preview : 'eye-off'
+		};
 	},
 	computed : {
 		output() {

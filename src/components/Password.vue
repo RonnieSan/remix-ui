@@ -1,5 +1,5 @@
 <template>
-	<div class="input-wrapper">
+	<div :class="['input-wrapper', {'disabled' : disabled}]">
 		<slot name="left"></slot>
 		<input type="password"
 			ref="input"
@@ -7,6 +7,7 @@
 			:value="value"
 			:placeholder="placeholder"
 			v-on="listeners"
+			:disabled="disabled"
 		>
 		<slot name="right"></slot>
 	</div>
@@ -18,7 +19,8 @@ import formField from '../mixins/formField';
 export default {
 	props : {
 		placeholder : String,
-		value : String
+		value : String,
+		disabled : Boolean
 	},
 	computed : {
 		listeners() {

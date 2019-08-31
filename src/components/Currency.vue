@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="input-wrapper currency"
+		:class="['input-wrapper', 'currency', {'disabled' : disabled}]"
 	>
 		<slot name="left">
 			<div v-if="symbol" class="helper">{{symbol}}</div>
@@ -26,10 +26,6 @@ import formField from '../mixins/formField';
 export default {
 	props : {
 		value : [String, Number],
-		disabled : {
-			type : Boolean,
-			default : false
-		},
 		settings : {
 			type : Object,
 			default() {
@@ -46,7 +42,8 @@ export default {
 		symbol : {
 			type : String,
 			default : '$'
-		}
+		},
+		disabled : Boolean
 	},
 	data() {
 		return {

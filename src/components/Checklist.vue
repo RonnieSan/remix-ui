@@ -1,9 +1,10 @@
 <template>
-	<div class="checklist">
+	<div :class="['checklist', {'disabled' : disabled}]">
 		<div class="option" v-for="(option, index) in options">
 			<r-checkbox
 				:ref="'input_' + index"
 				:name="name"
+				:disabled="disabled"
 				:model="local_value"
 				:value="(option.value !== undefined) ? option.value : option"
 				v-on="listeners"
@@ -17,15 +18,6 @@ import rCheckbox from './Checkbox';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			local_value : this.model
-		};
-	},
-	model : {
-		prop  : 'model',
-		event : 'change'
-	},
 	props : {
 		model : {
 			type : Array,
@@ -37,7 +29,17 @@ export default {
 			default() {
 				return [];
 			}
-		}
+		},
+		disabled : Boolean
+	},
+	data() {
+		return {
+			local_value : this.model
+		};
+	},
+	model : {
+		prop  : 'model',
+		event : 'change'
 	},
 	computed : {
 		listeners() {

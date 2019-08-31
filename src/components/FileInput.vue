@@ -1,5 +1,5 @@
 <template>
-	<div class="file-wrapper">
+	<div :class="['file-wrapper', {'disabled' : disabled}]">
 		<div class="inner">
 			<input type="text"
 				class="label"
@@ -36,7 +36,6 @@ export default {
 			type : String,
 			default : '*/*'
 		},
-		disabled : Boolean,
 		name : {
 			type : String,
 			default : 'files'
@@ -48,7 +47,8 @@ export default {
 		value : {
 			type : String,
 			default : ''
-		}
+		},
+		disabled : Boolean
 	},
 	data() {
 		return {

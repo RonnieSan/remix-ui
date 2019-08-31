@@ -1,5 +1,5 @@
 <template>
-	<div class="datepicker">
+	<div :class="['datepicker', {'disabled' : disabled}]">
 		<div
 			class="input-wrapper"
 		>
@@ -154,14 +154,11 @@ export default {
 		},
 		minValue : String,
 		maxValue : String,
-		disabled : {
-			type : Boolean,
-			default : false
-		},
 		format : {
 			type : String,
 			default : 'ddd, MMM D, YYYY'
-		}
+		},
+		disabled : Boolean
 	},
 	computed : {
 		displayValue() {

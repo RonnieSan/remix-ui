@@ -1,5 +1,5 @@
 <template>
-	<div class="input-wrapper">
+	<div :class="['input-wrapper', {'disabled' : disabled}]">
 		<slot name="left"></slot>
 		<input
 			ref="input"
@@ -7,6 +7,7 @@
 			type="number"
 			v-model.number="localValue"
 			v-on="listeners"
+			:disabled="disabled"
 		>
 		<slot name="right"></slot>
 	</div>
@@ -16,6 +17,13 @@
 import formField from '../mixins/formField';
 
 export default {
+	props : {
+		value : {
+			type : Number,
+			required : true
+		},
+		disabled : Boolean
+	},
 	data() {
 		return {
 			focused : false
@@ -49,12 +57,6 @@ export default {
 					}
 				}
 			);
-		}
-	},
-	props : {
-		value : {
-			type : Number,
-			required : true
 		}
 	},
 	mixins : [

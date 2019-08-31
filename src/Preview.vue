@@ -106,7 +106,7 @@
 									<div class="field">
 										<r-multi-text
 											name="multi_text"
-											v-model="multi_text_value"		
+											v-model="multi_text_value"
 										/>
 									</div>
 								</div>
@@ -341,7 +341,7 @@
 								<div class="controls">
 									<div class="field fit">
 										<label class="control-label">Button:</label><br />
-										<r-button @click="tab_id = 'two'">No Action</r-button>
+										<r-button>No Action</r-button>
 									</div>
 									<div class="field fit">
 										<label class="control-label">Button with Icon:</label><br />

@@ -1,11 +1,12 @@
 <template>
 	<label
-		class="checkbox-wrapper"
+		:class="['checkbox-wrapper', {'disabled' : disabled}]"
 	>
 		<input
 			type="checkbox"
 			ref="input"
 			:name="name"
+			:disabled="disabled"
 			:checked="checked"
 			:value="value"
 			:true-value="trueValue"
@@ -20,17 +21,18 @@
 import formField from '../mixins/formField';
 
 export default {
+	props : [
+		'disabled',
+		'falseValue',
+		'model',
+		'name',
+		'trueValue',
+		'value'
+	],
 	model : {
 		prop  : 'model',
 		event : 'change'
 	},
-	props : [
-		'model',
-		'name',
-		'trueValue',
-		'falseValue',
-		'value'
-	],
 	computed : {
 		checked() {
 			if (Array.isArray(this.model)) {

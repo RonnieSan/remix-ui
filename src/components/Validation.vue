@@ -2,7 +2,6 @@
 	<div :class="{'invalid' : errors.length > 0, 'valid' : isValid}">
 		<slot v-bind="self"></slot>
 		<slot name="errors" v-bind="self">
-
 			<ul v-if="errors.length > 0" class="validation-errors">
 				<template v-if="showAllErrors">
 					<li v-for="error in errors">{{error}}</li>
@@ -38,10 +37,7 @@ export default {
 			required : true
 		},
 		label : String,
-		disabled : {
-			type : Boolean,
-			default : false
-		},
+		disabled : Boolean,
 		group : {
 			default : null
 		},
@@ -51,14 +47,8 @@ export default {
 				return this.form_validator
 			}
 		},
-		watch : {
-			type : Boolean,
-			default : false
-		},
-		showAllErrors : {
-			type : Boolean,
-			default : false
-		},
+		watch : Boolean,
+		showAllErrors : Boolean,
 		rules : {
 			type : Array,
 			default() {

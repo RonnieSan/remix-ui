@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="multi-select-wrapper"
+		:class="['multi-select-wrapper', {'disabled' : disabled}]"
 		v-on-clickaway="closeList"
 	>
 		<div class="display" @click="toggleList">
@@ -31,16 +31,6 @@ import formField from '../mixins/formField';
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
-	data() {
-		return {
-			local_value     : this.value,
-			is_open         : false,
-			focused         : false,
-			list_bottom     : null,
-			list_top        : null,
-			max_list_height : null
-		};
-	},
 	props : {
 		minWidth : {
 			type : String,
@@ -60,7 +50,18 @@ export default {
 		value : {
 			type : Array,
 			required : true
-		}
+		},
+		disabled : Boolean
+	},
+	data() {
+		return {
+			local_value     : this.value,
+			is_open         : false,
+			focused         : false,
+			list_bottom     : null,
+			list_top        : null,
+			max_list_height : null
+		};
 	},
 	computed : {
 		maxListHeight() {
@@ -97,36 +98,38 @@ export default {
 			this.$emit('input', this.local_value);
 		},
 		toggleList() {
-			this.is_open = !this.is_open;
+			if (!this.disabled) {
+				this.is_open = !this.is_open;
 
-			// Set the dropdown size
-			this.$nextTick(() => {
-				if (this.is_open) {
-					let input_box     = this.$el.getBoundingClientRect();
-					let window_height = window.innerHeight;
+				// Set the dropdown size
+				this.$nextTick(() => {
+					if (this.is_open) {
+						let input_box     = this.$el.getBoundingClientRect();
+						let window_height = window.innerHeight;
 
-					// Calculate max list heights
-					let max_list_height_below = (window_height - input_box.bottom - 20);
-					let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
+						// Calculate max list heights
+						let max_list_height_below = (window_height - input_box.bottom - 20);
+						let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
 
-					// Choose where to display
-					let display_above = false;
-					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
-						display_above = true;
+						// Choose where to display
+						let display_above = false;
+						if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
+							display_above = true;
+						}
+
+						if (display_above) {
+							this.max_list_height = max_list_height_above;
+							this.list_bottom = (input_box.height - 5 + 'px');
+							this.list_top = null;
+						}
+						else {
+							this.max_list_height = max_list_height_below;
+							this.list_bottom = null;
+							this.list_top = (input_box.height - 5 + 'px');
+						}
 					}
-
-					if (display_above) {
-						this.max_list_height = max_list_height_above;
-						this.list_bottom = (input_box.height - 5 + 'px');
-						this.list_top = null;
-					}
-					else {
-						this.max_list_height = max_list_height_below;
-						this.list_bottom = null;
-						this.list_top = (input_box.height - 5 + 'px');
-					}
-				}
-			});
+				});
+			}
 		},
 		closeList() {
 			if (this.is_open) {

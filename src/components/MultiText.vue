@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="multi-text-wrapper"
+		:class="['multi-text-wrapper', {'disabled' : disabled}]"
 		@focusout="touched = true; validate();"
 	>
 		<div class="sortable" v-sortable="options">
@@ -25,6 +25,7 @@
 					:number="number"
 					:outputMask="outputMask"
 					:placeholder="placeholder"
+					:disabled="disabled"
 					v-on="listeners"
 					@input="updateItem($event, index)"
 				/>
@@ -54,16 +55,6 @@ import Sortable from 'sortablejs';
 import TextInput from './TextInput';
 
 export default {
-	data() {
-		return {
-			local_value : this.addKeys(this.value),
-			focused : false,
-			options : {
-				draggable : '.input-row',
-				handle    : '.handle'
-			}
-		};
-	},
 	props : {
 		addText : {
 			type : String,
@@ -99,7 +90,18 @@ export default {
 			type : String,
 			default : 'text'
 		},
-		value : Array
+		value : Array,
+		disabled : Boolean
+	},
+	data() {
+		return {
+			local_value : this.addKeys(this.value),
+			focused : false,
+			options : {
+				draggable : '.input-row',
+				handle    : '.handle'
+			}
+		};
 	},
 	computed : {
 		listeners() {
@@ -142,14 +144,16 @@ export default {
 			return new_value;
 		},
 		addItem() {
-			let key = uuid.v4();
-			this.local_value.push({
-				key   : key,
-				value : ''
-			});
-			this.$nextTick(() => {
-				this.$refs[key][0].focus();
-			});
+			if (!this.disabled) {
+				let key = uuid.v4();
+				this.local_value.push({
+					key   : key,
+					value : ''
+				});
+				this.$nextTick(() => {
+					this.$refs[key][0].focus();
+				});
+			}
 		},
 		updateItem(value, index) {
 			this.$set(this.local_value[index], 'value', value);
