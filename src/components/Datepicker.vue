@@ -30,7 +30,9 @@
 							<li @click="setRange(4)">This Month</li>
 							<li @click="setRange(5)">Last Month</li>
 						</ul>
-						<button @click="applyHandler()"><span class="label">Apply</span></button>
+						<div class="button-wrapper">
+							<button @click="applyHandler()"><span class="label">Apply</span></button>
+						</div>
 					</div>
 					<div class="calendar start">
 						<div class="calendar-header">
@@ -74,6 +76,13 @@
 									@click="inputHandler(date.moment, 0)">{{date.day}}</div>
 							</div>
 						</div>
+						<div v-if="options.timepicker" class="time-inputs">
+							<Timepicker
+								name="timepicker_start"
+								v-model="time_value[0]"
+								:options="options.timepicker_options"
+							/>
+						</div>
 					</div>
 					<div class="calendar end" v-if="isRange">
 						<div class="calendar-header">
@@ -113,9 +122,16 @@
 										'in-range' : isInRange(date.moment),
 										'range-start' : isRangeStart(date.moment),
 										'range-end' : isRangeEnd(date.moment)
-									}" 
+									}"
 									@click="inputHandler(date.moment, 1)">{{date.day}}</div>
 							</div>
+						</div>
+						<div v-if="options.timepicker" class="time-inputs">
+							<Timepicker
+								name="timepicker_start"
+								v-model="time_value[1]"
+								:options="options.timepicker_options"
+							/>
 						</div>
 					</div>
 				</div>
@@ -128,24 +144,11 @@
 import formField from '../mixins/formField';
 import moment from 'moment-timezone';
 import { mixin as clickaway } from 'vue-clickaway';
+import Timepicker from '@/components/Timepicker';
 
 export default {
-	data() {
-		return {
-			cursor_value : [
-				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
-				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
-			],
-			selection_value : [
-				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
-				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
-			],
-			current_cursor_index : 0,
-			current_selection_index : 0,
-			is_open : false,
-			popup_top : null,
-			popup_bottom : null
-		};
+	components : {
+		Timepicker
 	},
 	props : {
 		value : {
@@ -158,20 +161,51 @@ export default {
 			type : String,
 			default : 'ddd, MMM D, YYYY'
 		},
+		options : {
+			type : Object,
+			default() {
+				return {
+					format             : 'ddd, MMM D, YYYY',
+					timepicker         : false,
+					timepicker_options : {}
+				};
+			}
+		},
 		disabled : Boolean
+	},
+	data() {
+		return {
+			cursor_value : [
+				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
+				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
+			],
+			selection_value : [
+				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
+				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
+			],
+			time_value : [
+				'00:00:00',
+				'23:59:59'
+			],
+			current_cursor_index : 0,
+			current_selection_index : 0,
+			is_open : false,
+			popup_top : null,
+			popup_bottom : null
+		};
 	},
 	computed : {
 		displayValue() {
 			if (this.isRange) {
 				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
-					return moment(this.value[0]).format(this.format);
+					return moment(this.value[0]).format(this.options.format || this.format);
 				}
 
-				return moment(this.value[0]).format(this.format) + ' - ' + moment(this.value[1]).format(this.format);
+				return moment(this.value[0]).format(this.options.format || this.format) + ' - ' + moment(this.value[1]).format(this.options.format || this.format);
 			}
 
 			else {
-				return moment(this.value).format(this.format);
+				return moment(this.value).format(this.options.format || this.format);
 			}
 		},
 		isRange() {
@@ -339,14 +373,20 @@ export default {
 					this.current_cursor_index = 0;
 					this.current_selection_index = 0;
 					this.selection_value = [
-						moment(this.value[0]).startOf('day').format(),
-						moment(this.value[1]).endOf('day').format()
+						moment(this.value[0]).format(),
+						moment(this.value[1]).format()
 					];
 				}
 				else {
 					this.selection_value = [
-						moment(this.value).startOf('day').format(),
-						moment(this.value).endOf('day').format()
+						moment(this.value).format(),
+						moment(this.value).format()
+					];
+				}
+				if (this.options.timepicker) {
+					this.time_value = [
+						moment(this.selection_value[0]).format('HH:mm:ss'),
+						moment(this.selection_value[1]).format('HH:mm:ss')
 					];
 				}
 				this.resetCursors();
@@ -571,20 +611,35 @@ export default {
 				this.current_selection_index = index;
 				if (this.isRange) {
 					if (index === 0) {
-						this.$set(this.selection_value, index, date.startOf('day').format());
+						if (this.options.timepicker) {
+							date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[0]);
+						}
+						else {
+							date = date.startOf('day');
+						}
+						this.$set(this.selection_value, index, date.format());
 						if (date.isAfter(this.selection_value[1])) {
-							this.$set(this.selection_value, 1, date.endOf('day').format());
+							this.$set(this.selection_value, 1, date.format());
 						}
 					}
 					else {
-						this.$set(this.selection_value, index, date.endOf('day').format());
+						if (this.options.timepicker) {
+							date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[1]);
+						}
+						else {
+							date = date.endOf('day');
+						}
+						this.$set(this.selection_value, index, date.format());
 						if (date.isBefore(this.selection_value[0])) {
-							this.$set(this.selection_value, 0, date.startOf('day').format());
+							this.$set(this.selection_value, 0, date.format());
 						}
 					}
 					this.cursor_value = this.selection_value.slice();
 				}
 				else {
+					if (this.options.timepicker) {
+						date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[0]);
+					}
 					this.selection_value[index] = date.format();
 					this.cursor_value[index] = date.format();
 					this.$emit('input', date.format());
@@ -595,7 +650,14 @@ export default {
 
 		// Apply the selected dates
 		applyHandler() {
-			this.$emit('input', this.selection_value);
+			let output_value = this.selection_value;
+			if (this.options.timepicker) {
+				output_value = [
+					moment(moment(this.selection_value[0]).format('YYYY-MM-DD') + ' ' + this.time_value[0]).format(),
+					moment(moment(this.selection_value[1]).format('YYYY-MM-DD') + ' ' + this.time_value[1]).format()
+				]
+			}
+			this.$emit('input', output_value);
 			this.closeCalendar();
 		}
 	},
@@ -621,7 +683,9 @@ The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or 
 * **min-value** : STRING - An ISO8601 date that the user cannot select a date below.
 * **max-value** : STRING - An ISO8601 date that the user cannot select a date above.
 * **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
-* **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
+* **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
+* **options** : STRING - Options for the datepicker (see momentjs.com for possible values).
+* **options.timepicker** : BOOLEAN - Set to true to use a timepicker.
 
 ## Usage
 In the template...

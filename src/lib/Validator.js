@@ -18,11 +18,11 @@ import {
 
 export const rules = {
 	// The field is required
-	required (message, options = { }) {
+	required(message, options = {}) {
 		options = Object.assign({
 			min: 1,
 			max: Infinity
-		}, options)
+		}, options);
 
 		return function(value) {
 			switch (typeof value) {
@@ -54,7 +54,7 @@ export const rules = {
 					break;
 			}
 			return message || 'This field is required';
-		}
+		};
 	},
 
 	// The field has a minimum length required
@@ -126,9 +126,9 @@ export const rules = {
 				return null;
 			}
 			return message || 'Please enter a valid email address';
-		}
+		};
 	}
-}
+};
 
 export default class Validator {
 	constructor(options = {}) {

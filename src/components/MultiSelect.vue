@@ -16,16 +16,22 @@
 				<div class="selection-options">
 					<strong>Select:</strong> <a @click="selectAll()" href="javascript:void(0)">All</a> | <a @click="selectNone()" href="javascript:void(0)">None</a>
 				</div>
-				<r-checklist
-					v-model="local_value"
-					:options="options"
-				/>
+				<template v-for="(options_group, index) in wrappedOptions">
+					<r-checklist
+						v-if="Array.isArray(options_group)"	
+						:key="index" 
+						v-model="local_value"
+						:options="options_group"
+					/>
+					<div v-else class="subtitle">{{options_group}}</div>
+				</template>
 			</div>
 		</transition>
 	</div>
 </template>
 
 <script>
+import { some } from 'lodash';
 import Checklist from './Checklist';
 import formField from '../mixins/formField';
 import { mixin as clickaway } from 'vue-clickaway';
@@ -64,6 +70,14 @@ export default {
 		};
 	},
 	computed : {
+		wrappedOptions() {
+			if (!some(this.options, (option) => {
+				return Array.isArray(option);
+			})) {
+				return [this.options];
+			}
+			return this.options;
+		},
 		maxListHeight() {
 			return this.max_list_height + 'px';
 		},
@@ -138,8 +152,12 @@ export default {
 		},
 		selectAll() {
 			this.local_value = [];
-			this.options.forEach((option) => {
-				this.local_value.push(option.value || option);
+			this.wrappedOptions.forEach((option_group) => {
+				if (Array.isArray(option_group)) {
+					option_group.forEach((option) => {
+						this.local_value.push(option.value || option);
+					});
+				}
 			});
 			this.$emit('input', this.local_value);
 		},

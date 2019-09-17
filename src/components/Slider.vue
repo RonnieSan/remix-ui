@@ -33,6 +33,19 @@ import { debounce, isEqual } from 'lodash-es';
 import formField from '../mixins/formField';
 
 export default {
+	props : {
+		value : [String, Number, Array],
+		options : {
+			type : Object,
+			default : function() {
+				return {};
+			}
+		},
+		allowSame : {
+			type : Boolean,
+			default : false
+		}
+	},
 	data() {
 		return {
 			container           : null,
@@ -94,19 +107,6 @@ export default {
 		},
 		segmentSize() {
 			return ((this.container.width - this.selected_handle.offsetWidth) / ((this.settings.max - this.settings.min) / this.settings.increment));
-		}
-	},
-	props : {
-		value : [String, Number, Array],
-		options : {
-			type : Object,
-			default : function() {
-				return {};
-			}
-		},
-		allowSame : {
-			type : Boolean,
-			default : false
 		}
 	},
 	watch : {

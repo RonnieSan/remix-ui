@@ -1,11 +1,12 @@
 <template>
-	<div class="radio-group" tabindex="-1">
+	<div :class="['radio-group', {'disabled' : disabled}]" tabindex="-1">
 		<div class="option" v-for="(option, index) in options">
 			<r-radio
 				ref="input"
 				:name="name"
 				:value="(option.value !== undefined) ? option.value : option"
 				:model="value"
+				:disabled="disabled"
 				@change="changeHandler"
 			><span v-html="(option.label !== undefined) ? option.label : option"/></r-radio>
 		</div>
@@ -32,7 +33,8 @@ export default {
 			default() {
 				return [];
 			}
-		}
+		},
+		disabled : Boolean
 	},
 	watch : {
 		'value' : {

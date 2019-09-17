@@ -36,6 +36,9 @@ export default {
 			},
 			set(value) {
 				this.dirty = true;
+				if (value === '') {
+					value = 0;
+				}
 				this.$emit('input', value);
 			}
 		},

@@ -1,11 +1,12 @@
 <template>
-	<div class="select-wrapper">
+	<div :class="['select-wrapper', {'disabled' : disabled}]">
 		<select
 			ref="input"
 			:class="{'default' : model === ''}"
 			:name="name"
 			v-model.lazy="selected"
 			v-on="listeners"
+			:disabled="disabled"
 		>
 			<option disabled :value="{value : emptyValue}">{{placeholder}}</option>
 			<template v-for="option in options">
@@ -49,7 +50,8 @@ export default {
 		placeholder : {
 			type : String,
 			default : 'Select One'
-		}
+		},
+		disabled : Boolean
 	},
 	computed : {
 		listeners() {

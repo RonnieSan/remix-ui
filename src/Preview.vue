@@ -131,6 +131,7 @@
 										<r-datepicker
 											name="datepicker"
 											v-model="datepicker_value"
+											:options="{timepicker : true}"
 										/>
 									</div>
 								</div>
@@ -237,7 +238,7 @@
 										<r-multi-select
 											name="multi_select"
 											v-model="multi_select_value"
-											:options="options"
+											:options="multiselect_options"
 										/>
 									</div>
 								</div>
@@ -332,6 +333,7 @@
 										<r-slider
 											name="slider"
 											v-model="slider_value"
+											:options="slider_options"
 										/>
 									</div>
 								</div>
@@ -442,7 +444,7 @@ export default {
 			number_value : 12345,
 			password_value : '',
 			textarea_value : '',
-			select_value : 'Red',
+			select_value : null,
 			group_select_value : [
 				'Red'
 			],
@@ -461,9 +463,16 @@ export default {
 			multi_text_value : [],
 			multi_select_value : [],
 			slider_value : [
-				25,
-				75
+				1,
+				8
 			],
+			slider_options : {
+				min       : 1,
+				max       : 8,
+				increment : 1,
+				formatter : false,
+				snap      : true
+			},
 			toggle_value : true,
 			switch_value : false,
 			markdown_value : '',
@@ -483,6 +492,20 @@ export default {
 				'Indigo',
 				'Cyan',
 				'Magenta'
+			],
+			multiselect_options : [
+				'Primary Colors',
+				[
+					'Red',
+					'Blue',
+					'Yellow'
+				],
+				'Secondary Colors',
+				[
+					'Orange',
+					'Purple',
+					'Green'
+				]
 			],
 			select_options : [
 				{label : 'One', value : 1},

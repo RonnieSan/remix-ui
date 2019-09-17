@@ -1,11 +1,12 @@
 <template>
-	<label class="radio-wrapper">
+	<label :class="['radio-wrapper', {'disabled' : disabled}]">
 		<span class="radio">
 			<input type="radio"
 				ref="input"
 				:name="name"
 				:value="value"
 				:checked="is_checked"
+				:disabled="disabled"
 				v-on="listeners"
 			>
 		</span>
@@ -18,9 +19,10 @@ import formField from '../mixins/formField';
 
 export default {
 	props : {
-		model : [String, Boolean, Number, Object],
-		name  : String,
-		value : [String, Boolean, Number, Object]
+		model    : [String, Boolean, Number, Object],
+		name     : String,
+		value    : [String, Boolean, Number, Object],
+		disabled : Boolean
 	},
 	computed : {
 		is_checked() {

@@ -1,5 +1,5 @@
 <template>
-	<div class="pillbox-wrapper">
+	<div :class="['pillbox-wrapper', {'disabled' : disabled}]">
 		<div class="inner">
 			<div v-for="(item_value, index) in propValue" :class="['item', {'selected' : index === selected_item}]">
 				<span class="value">{{item_value.label || item_value}}</span>
@@ -21,6 +21,8 @@
 					:number="number"
 					:outputMask="outputMask"
 					v-on="listeners"
+					:disabled="disabled"
+					:placeholder="placeholder"
 					@android-input="androidInputHandler"
 				/>
 			</div>
@@ -80,7 +82,8 @@ export default {
 					','
 				];
 			}
-		}
+		},
+		disabled : Boolean
 	},
 	data() {
 		return {
@@ -202,10 +205,12 @@ export default {
 			}
 		},
 		removeItem(index) {
-			let new_array = this.propValue.slice();
-			new_array.splice(index, 1);
-			this.$emit('input', new_array);
-			this.validate();
+			if (!this.disabled) {
+				let new_array = this.propValue.slice();
+				new_array.splice(index, 1);
+				this.$emit('input', new_array);
+				this.validate();
+			}
 		}
 	},
 	mixins : [
