@@ -1,17 +1,19 @@
 <template>
 	<div :class="['file-wrapper', {'disabled' : disabled}]">
 		<div class="inner">
-			<input type="text"
-				class="label"
-				ref="input"
-				v-model="value"
-				:name="name"
-				:disabled="disabled"
-				:placeholder="placeholder"
-			/>
-			<div class="button">
-				<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
-			</div>
+			<slot>
+				<input type="text"
+					class="label"
+					ref="input"
+					v-model="value"
+					:name="name"
+					:disabled="disabled"
+					:placeholder="placeholder"
+				/>
+				<div class="button">
+					<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
+				</div>
+			</slot>
 		</div>
 		<form ref="form" enctype="multipart/form-data" novalidate>
 			<input
