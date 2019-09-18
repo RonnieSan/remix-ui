@@ -144,7 +144,7 @@
 import formField from '../mixins/formField';
 import moment from 'moment-timezone';
 import { mixin as clickaway } from 'vue-clickaway';
-import Timepicker from '@/components/Timepicker';
+import Timepicker from './Timepicker';
 
 export default {
 	components : {
