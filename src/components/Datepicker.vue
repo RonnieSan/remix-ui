@@ -31,7 +31,7 @@
 							<li @click="setRange(5)">Last Month</li>
 						</ul>
 						<div class="button-wrapper">
-							<button @click="applyHandler()"><span class="label">Apply</span></button>
+							<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
 						</div>
 					</div>
 					<div class="calendar start">
