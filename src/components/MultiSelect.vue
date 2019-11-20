@@ -12,13 +12,14 @@
 				v-show="is_open"
 				ref="list"
 				class="list"
-				:style="{'min-width' : this.minWidth, 'max-height' : this.maxListHeight, 'top' : this.list_top, 'bottom' : this.list_bottom}">
+				:style="{'min-width' : this.minWidth, 'max-height' : this.maxListHeight, 'top' : this.list_top, 'bottom' : this.list_bottom}"
+				@mouseleave="closeListOnMouseLeave()">
 				<div class="selection-options">
 					<strong>Select:</strong> <a @click="selectAll()" href="javascript:void(0)">All</a> | <a @click="selectNone()" href="javascript:void(0)">None</a>
 				</div>
 				<template v-for="(options_group, index) in wrappedOptions">
 					<r-checklist
-						v-if="Array.isArray(options_group)"	
+						v-if="Array.isArray(options_group)"
 						:key="index" 
 						v-model="local_value"
 						:options="options_group"
@@ -57,7 +58,8 @@ export default {
 			type : Array,
 			required : true
 		},
-		disabled : Boolean
+		disabled : Boolean,
+		closeOnMouseOut : false
 	},
 	data() {
 		return {
@@ -148,6 +150,11 @@ export default {
 		closeList() {
 			if (this.is_open) {
 				this.is_open = false;
+			}
+		},
+		closeListOnMouseLeave() {
+			if (this.closeOnMouseOut) {
+				this.closeList();
 			}
 		},
 		selectAll() {
