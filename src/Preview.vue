@@ -131,7 +131,7 @@
 										<r-datepicker
 											name="datepicker"
 											v-model="datepicker_value"
-											:options="{timepicker : true}"
+											:options="{timepicker : false}"
 										/>
 									</div>
 								</div>

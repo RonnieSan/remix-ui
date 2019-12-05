@@ -619,7 +619,7 @@ export default {
 						}
 						this.$set(this.selection_value, index, date.format());
 						if (date.isAfter(this.selection_value[1])) {
-							this.$set(this.selection_value, 1, date.format());
+							this.$set(this.selection_value, 1, date.endOf('day').format());
 						}
 					}
 					else {
@@ -631,7 +631,7 @@ export default {
 						}
 						this.$set(this.selection_value, index, date.format());
 						if (date.isBefore(this.selection_value[0])) {
-							this.$set(this.selection_value, 0, date.format());
+							this.$set(this.selection_value, 0, date.startOf('day').format());
 						}
 					}
 					this.cursor_value = this.selection_value.slice();
