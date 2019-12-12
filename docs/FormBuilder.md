@@ -154,7 +154,7 @@ In the script...
                     }
                   },
                   {
-                    before : '<label class="control-label">Last Name:</label>',
+                    label : 'Phone:',
                     component : 'r-text',
                     model : 'phone',
                     value : this.form_data.phone,
@@ -188,7 +188,7 @@ In the script...
         ];
       },
       set : function(new_value) {
-        Object.assign(this.form_data, new_value);
+        this.form_data = new_value;
       }
     }
   }

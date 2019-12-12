@@ -14,6 +14,7 @@
 						>
 							<div v-for="(field, field_index) in control.fields" :class="['field', (field.class || '')]" :key="field_index">
 								<div v-if="field.before" v-html="field.before"/>
+								<label v-if="field.label" class="control-label">{{field.label}}</label>
 								<r-validation
 									v-if="field.validation"
 									v-model="values[field.model]"
@@ -37,6 +38,7 @@
 						<template v-else>
 							<div v-for="(field, field_index) in control.fields" :class="['field', (field.class || '')]" :key="field_index">
 								<div v-if="field.before" v-html="field.before"/>
+								<label v-if="field.label" class="control-label">{{field.label}}</label>
 								<r-validation
 									v-if="field.validation"
 									v-model="values[field.model]"
@@ -65,7 +67,7 @@
 </template>
 
 <script>
-import { set } from 'lodash';
+import { forIn, set } from 'lodash';
 
 export default {
 	props : {
@@ -82,7 +84,11 @@ export default {
 	watch : {
 		values : {
 			handler(new_value, old_value) {
-				this.$emit('update:config', new_value);
+				let export_value = {};
+				forIn(new_value, (value, key) => {
+					set(export_value, key, value);
+				})
+				this.$emit('update:config', export_value);
 			},
 			deep : true
 		}
@@ -92,7 +98,7 @@ export default {
 		this.config.forEach((group) => {
 			group.controls.forEach((control) => {
 				control.fields.forEach((field) => {
-					set(values, field.model, field.value);
+					values[field.model] = field.value;
 				});
 			});
 		});
@@ -258,7 +264,7 @@ In the script...
 										}
 									},
 									{
-										before : '<label class="control-label">Last Name:</label>',
+										label : 'Phone:',
 										component : 'r-text',
 										model : 'phone',
 										value : this.form_data.phone,
@@ -292,7 +298,7 @@ In the script...
 				];
 			},
 			set : function(new_value) {
-				Object.assign(this.form_data, new_value);
+				this.form_data = new_value;
 			}
 		}
 	}

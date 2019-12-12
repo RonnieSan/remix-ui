@@ -478,7 +478,9 @@ export default {
 			markdown_value : '',
 			form_data : {
 				name : 'Fermegatroid Skittle',
-				phone : '6195551212',
+				contact : {
+					phone : '6195551212'
+				},
 				gender : 'male',
 				age : 38
 			},
@@ -537,7 +539,7 @@ export default {
 							{
 								fields : [
 									{
-										before : '<label class="control-label">Name:</label>',
+										label : 'Name:',
 										component : 'r-text',
 										model : 'name',
 										value : this.form_data.name,
@@ -546,10 +548,10 @@ export default {
 										}
 									},
 									{
-										before : '<label class="control-label">Last Name:</label>',
+										before : '<label class="control-label">Phone:</label>',
 										component : 'r-text',
-										model : 'phone',
-										value : this.form_data.phone,
+										model : 'contact.phone',
+										value : this.form_data.contact.phone,
 										props : {
 											mask : '(###) ###-####'
 										},
@@ -580,7 +582,7 @@ export default {
 				];
 			},
 			set : function(new_value) {
-				Object.assign(this.form_data, new_value);
+				this.form_data = new_value;
 			}
 		}
 	},
