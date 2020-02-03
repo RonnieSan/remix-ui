@@ -3,8 +3,9 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
+@black: #000;
 @calendar-unit: 2.5em;
+@control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #2196F3;
@@ -15,7 +16,9 @@
 @control-radius: 3px;
 @font-size: 16px;
 @popup-layer: 400;
+@red: #FF4136;
 @mobile-window-max: 767px;
+@white: #FFF;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -96,8 +99,6 @@ input[disabled='disabled'] {
 		border-radius: 3px;
 		box-shadow: 0 2px 10px fade(black, 25%);
 		background-color: white;
-		display: flex;
-		flex-direction: row;
 		left: 3px;
 		overflow: hidden;
 		padding: 0.5em;
@@ -284,7 +285,7 @@ input[disabled='disabled'] {
 				}
 
 				&.dim {
-					color: #D8D8D8;
+					color: #CCC;
 
 					&.in-range {
 						color: fade(@control-color, 40%);
@@ -293,7 +294,13 @@ input[disabled='disabled'] {
 
 				&.selected {
 					background-color: @control-color;
-					color: #FFF;
+					color: #FFF !important;
+				}
+
+				&.not-selectable {
+					.dim;
+					background-color: #F5F5F5;
+					border-radius: 0;
 				}
 
 				&.range-start {
@@ -313,6 +320,22 @@ input[disabled='disabled'] {
 					text-decoration: underline;
 				}
 			}
+		}
+	}
+
+	.errors {
+		background-color: @red;
+		border-radius: @control-radius;
+		margin-top: 5px;
+		
+		ul {
+			padding: 0.25em 0.625em;
+		}
+
+		li {
+			color: @white;
+			font-size: 0.875rem;
+			white-space: normal;
 		}
 	}
 }

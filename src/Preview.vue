@@ -454,10 +454,7 @@ export default {
 			file_value : null,
 			currency_value : 5.00,
 			pillbox_value : [],
-			datepicker_value : [
-				'2018-01-01',
-				'2018-01-31'
-			],
+			datepicker_value : [],
 			timepicker_value : '00:00:00',
 			code_value : '',
 			multi_text_value : [],

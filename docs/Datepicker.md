@@ -7,6 +7,7 @@ The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or 
 ## Props
 * **min-value** : STRING - An ISO8601 date that the user cannot select a date below.
 * **max-value** : STRING - An ISO8601 date that the user cannot select a date above.
+* **max-range** : NUMBER - The maximum range length in days the user can select.
 * **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
 * **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
 * **options** : STRING - Options for the datepicker (see momentjs.com for possible values).
