@@ -236,10 +236,13 @@ export default {
 			return moment(this.cursor_value[1]).format('YYYY');
 		},
 		minDate() {
-			return moment(this.minValue);
+			return moment(this.minValue || this.options.min_date);
 		},
 		maxDate() {
-			return moment(this.maxValue);
+			return moment(this.maxValue || this.options.max_date);
+		},
+		maxDateRange() {
+			return this.maxRange || this.options.max_range;
 		},
 		errorMessages() {
 			return uniq(this.error_messages);
@@ -353,12 +356,12 @@ export default {
 		},
 
 		isInMaxRange(date, index) {
-			if (this.maxRange) {
+			if (this.maxDateRange) {
 				if (index === 0) {
-					return moment(this.selection_value[1]).diff(date, 'days') < (this.maxRange);
+					return moment(this.selection_value[1]).diff(date, 'days') < (this.maxDateRange);
 				}
 				else {
-					return date.diff(this.selection_value[0], 'days') < (this.maxRange);
+					return date.diff(this.selection_value[0], 'days') < (this.maxDateRange);
 				}
 			}
 			return false;
@@ -381,16 +384,6 @@ export default {
 				if (this.isRange) {
 					this.current_cursor_index = 0;
 					this.current_selection_index = 0;
-					this.selection_value = [
-						moment(this.value[0]).format(),
-						moment(this.value[1]).format()
-					];
-				}
-				else {
-					this.selection_value = [
-						moment(this.value).format(),
-						moment(this.value).format()
-					];
 				}
 				if (this.options.timepicker) {
 					this.time_value = [
@@ -630,14 +623,14 @@ export default {
 					if (end) {
 						range_length = moment(end).diff(this.selection_value[0], 'days') + 1;
 					}
-					let range_error_msg = 'The range is too long. Adjusting to a maximum of ' + this.maxRange + ' days.';
-					if (range_length > this.maxRange) {
+					let range_error_msg = 'The range is too long. Adjusting to a maximum of ' + this.maxDateRange + ' days.';
+					if (range_length > this.maxDateRange) {
 						this.error_messages.push(range_error_msg);
 						if (start) {
-							this.$set(this.selection_value, 1, moment(start).add(this.maxRange - 1, 'days').format());
+							this.$set(this.selection_value, 1, moment(start).add(this.maxDateRange - 1, 'days').format());
 						}
 						else {
-							this.$set(this.selection_value, 0, moment(end).subtract(this.maxRange - 1, 'days').format());
+							this.$set(this.selection_value, 0, moment(end).subtract(this.maxDateRange - 1, 'days').format());
 						}
 					}
 					else {
@@ -701,7 +694,7 @@ export default {
 				output_value = [
 					moment(moment(this.selection_value[0]).format('YYYY-MM-DD') + ' ' + this.time_value[0]).format(),
 					moment(moment(this.selection_value[1]).format('YYYY-MM-DD') + ' ' + this.time_value[1]).format()
-				]
+				];
 			}
 			this.$emit('input', output_value);
 			this.closeCalendar();
@@ -731,8 +724,12 @@ The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or 
 * **max-range** : NUMBER - The maximum range length in days the user can select.
 * **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
 * **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
-* **options** : STRING - Options for the datepicker (see momentjs.com for possible values).
+* **options** : OBJECT - Options for the datepicker.
 * **options.timepicker** : BOOLEAN - Set to true to use a timepicker.
+* **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
+* **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
+* **options.max_range** : NUMBER - The maximum range length in days the user can select.
+* **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
 
 ## Usage
 In the template...

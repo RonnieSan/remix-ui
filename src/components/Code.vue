@@ -2,7 +2,7 @@
 	<div
 		:style="{maxHeight}"
 		:class="['code-wrapper', {'disabled' : disabled}]"
-		@focusout.native="touched = true; $emit('validate')"
+		@focusout="touched = true; $emit('validate')"
 	>
 		<slot name="panel"></slot>
 		<div ref="editor" :id="id">

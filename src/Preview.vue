@@ -35,6 +35,7 @@
 										</r-validation>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{text_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -52,6 +53,7 @@
 										</autocomplete>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{autocomplete_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -70,6 +72,7 @@
 										</r-validation>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{number_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -82,6 +85,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{currency_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -98,6 +102,7 @@
 										</r-password>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{password_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -110,6 +115,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{multi_text_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -122,6 +128,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{pillbox_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -135,11 +142,12 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{datepicker_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
 								<div class="inner">
-									<label class="control-label">Timepicker: {{timepicker_value}}</label>
+									<label class="control-label">Timepicker:</label>
 									<div class="controls">
 										<div class="field">
 											<r-timepicker
@@ -150,6 +158,7 @@
 										</div>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{timepicker_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -163,6 +172,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{textarea_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -178,6 +188,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{code_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -190,6 +201,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{markdown_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -214,6 +226,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{select_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -225,10 +238,12 @@
 												name="group_select"
 												v-model="group_select_value"
 												:options="options"
+												:sort="true"
 											/>
 										</div>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{group_select_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -242,6 +257,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{multi_select_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -254,6 +270,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{file_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -267,6 +284,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{checklist_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -279,6 +297,7 @@
 										>This is the value</r-toggle>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{toggle_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -291,6 +310,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{switch_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -311,6 +331,7 @@
 										>No</r-radio>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{radio_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -324,6 +345,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{radio_group_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -337,6 +359,7 @@
 										/>
 									</div>
 								</div>
+								<div class="value"><pre>Value: {{slider_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -361,6 +384,7 @@
 							</div>
 
 							<r-form-builder :config.sync="formBuilderConfig"/>
+							<div class="value"><pre>Value: {{form_data}}</pre></div>
 
 							<h2>Modals</h2>
 
@@ -630,5 +654,22 @@ export default {
 
 #wrapper {
 	padding: 50px 0;
+}
+
+.control-group {
+	margin-bottom: 3em;
+}
+
+.my-set {
+	.control-group {
+		margin-bottom: 1em;
+	}
+}
+
+.value {
+	background-color: #F5F5F5;
+	border-radius: 3px;
+	margin-top: 3px;
+	padding: 8px 10px;
 }
 </style>
