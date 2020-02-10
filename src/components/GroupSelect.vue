@@ -50,7 +50,7 @@
 
 <script>
 import rButton from './Button';
-import { differenceBy, includes, merge, some, sortBy, uniq, without } from 'lodash';
+import { find, includes, isEqual, merge, remove, some, sortBy, uniq } from 'lodash';
 import { Sortable, MultiDrag } from 'sortablejs';
 
 Sortable.mount(new MultiDrag());
@@ -93,61 +93,12 @@ export default {
 		return {
 			selected_active : [],
 			selected_inactive : [],
-			changed : false
+			mapped_options : [],
+			active : [],
+			inactive : []
 		};
 	},
 	computed : {
-		active() {
-			if (this.changed) {
-				// WATCH FOR DEEP CHANGES
-			}
-			let value = this.value.map((item) => {
-				if (typeof item === 'string') {
-					return {
-						label : item,
-						value : item
-					}
-				}
-				else {
-					return item;
-				}
-			});
-			if (this.sort) {
-				if (typeof this.sort === 'function') {
-					value = this.sort(value);
-				}
-				else {
-					value = sortBy(value, 'label');
-				}
-			}
-			return value;
-		},
-		inactive() {
-			if (this.changed) {
-				// WATCH FOR DEEP CHANGES
-			}
-			let options = this.options.map((option) => {
-				if (typeof option === 'string') {
-					return {
-						label : option,
-						value : option
-					}
-				}
-				else {
-					return option;
-				}
-			});
-			let value = differenceBy(options, this.active, 'value');
-			if (this.sort) {
-				if (typeof this.sort === 'function') {
-					value = this.sort(value);
-				}
-				else {
-					value = sortBy(value, 'label');
-				}
-			}
-			return value;
-		},
 		mergedSortableOptions() {
 			if (this.disabled) {
 				return merge({}, this.sortableOptions, {
@@ -155,6 +106,16 @@ export default {
 				});
 			}
 			return this.sortableOptions;
+		}
+	},
+	watch : {
+		value : {
+			handler(new_value, old_value) {
+				if (!isEqual(new_value, old_value)) {
+					this.setListValues(new_value);
+				}
+			},
+			deep : true
 		}
 	},
 	methods : {
@@ -168,9 +129,49 @@ export default {
 			this.selected_active   = [];
 			this.selected_inactive = [];
 		},
+		setListValues(value) {			
+			// Map the value into a collection
+			let mapped_value = value.map((item) => {
+				if (typeof item === 'string') {
+					return {
+						value : item
+					}
+				}
+				else {
+					return item;
+				}
+			});
+
+			// Set the active options
+			this.active = [];
+			mapped_value.forEach((item, index) => {
+				let option_item = find(this.mapped_options, {value : item.value});
+				if (option_item) {
+					this.active.push(option_item);
+				}
+			});
+
+			// Remove active values from the inactive collection
+			remove(this.inactive, (item, index) => {
+				return find(this.active, {value : item.value});
+			});
+
+			// Sort the values
+			if (this.sort) {
+				if (typeof this.sort === 'function') {
+					this.active = this.sort(this.active);
+					this.inactive = this.sort(this.inactive);
+				}
+				else {
+					this.active = sortBy(this.active, 'label');
+					this.inactive = sortBy(this.inactive, 'label');
+				}
+			}
+		},
 		moveSelected(to, all) {
 			if (to === 'inactive') {
 				if (all) {
+					this.inactive = this.mapped_options.slice();
 					this.emitNewValue([]);
 				}
 				else {
@@ -184,16 +185,7 @@ export default {
 			}
 			else {
 				if (all) {
-					let values = this.options.map((option) => {
-						if (typeof option === 'string') {
-							return {
-								label : option,
-								value : option
-							};
-						}
-						return option;
-					});
-					this.emitNewValue(values);
+					this.emitNewValue(this.mapped_options);
 				}
 				else {
 					let new_value = this.active.concat(this.selected_inactive);
@@ -202,18 +194,51 @@ export default {
 			}
 			this.resetSelection();
 		},
+		moveSelectedValuesToInactive() {
+
+		},
 		emitNewValue(value) {
-			if (this.sort) {
-				if (typeof this.sort === 'function') {
-					value = this.sort(value);
+			this.$nextTick(() => {
+				if (this.sort) {
+					if (typeof this.sort === 'function') {
+						value = this.sort(value);
+					}
+					else {
+						value = sortBy(value, 'label');
+					}
 				}
-				else {
-					value = sortBy(value, 'label');
+				value = value.map(item => item.value);
+				this.$emit('input', value);
+			});
+		}
+	},
+	mounted()  {
+		// Map the options and set the default inactive values
+		this.mapped_options = this.options.map((option) => {
+			if (typeof option === 'string') {
+				return {
+					label : option,
+					value : option
 				}
 			}
-			value = value.map(item => item.value);
-			this.$emit('input', value);
+			else {
+				return option;
+			}
+		});
+
+		// Sort the options
+		if (this.sort) {
+			if (typeof this.sort === 'function') {
+				this.mapped_options = sort(this.mapped_options);
+			}
+			else {
+				this.mapped_options = this.inactive = sortBy(this.mapped_options, 'label');
+			}
 		}
+		this.inactive = this.mapped_options.slice();
+
+		// Set the default active options
+		this.setListValues(this.value);
 	},
 	directives : {
 		sortable : {
@@ -260,12 +285,15 @@ export default {
 						}, 0);
 					},
 					onSort(event) {
+						let list = 'inactive';
 						let new_value = false;
 						if (includes(event.to.classList, 'active') && includes(event.from.classList, 'active')) {
-							new_value = vnode.context.active;
+							new_value = vnode.context.active.slice();
+							list = 'active';
 						}
 						if (includes(event.to.classList, 'inactive') && includes(event.from.classList, 'inactive')) {
-							new_value = vnode.context.inactive;
+							new_value = vnode.context.inactive.slice();
+							list = 'inactive';
 						}
 						if (new_value) {
 							if (event.items.length > 0) {
@@ -276,12 +304,19 @@ export default {
 							else {
 								new_value.splice(event.newIndex, 0, new_value.splice(event.oldIndex, 1)[0]);
 							}
-							vnode.context.emitNewValue(new_value);
+
+							if (list === 'active') {
+								vnode.context.emitNewValue(new_value);
+							}
+
+							else {
+								vnode.context.inactive = new_value;
+							}
 						}
 					},
 					onAdd(event) {
 						if (includes(event.to.classList, 'active')) {
-							let new_value = vnode.context.active;
+							let new_value = vnode.context.active.slice();
 							if (event.items.length > 0) {
 								event.items.forEach((item, index) => {
 									new_value.splice(event.newIndicies[index].index, 0, item.dataset);
@@ -296,14 +331,20 @@ export default {
 					onRemove(event) {
 						if (includes(event.from.classList, 'active')) {
 							let removed_values = [];
+
+							// Add values to the inactive list
 							if (event.items.length > 0) {
-								event.items.forEach((item) => {
+								event.items.forEach((item, index) => {
 									removed_values.push(item.dataset.value);
+									vnode.context.inactive.splice(event.newIndicies[index].index, 0, item.dataset);
 								});
 							}
 							else {
 								removed_values.push(event.item.dataset.value);
+								vnode.context.inactive.splice(event.newIndex, 0, event.item.dataset);
 							}
+
+							// Remove values from active list
 							let new_value = vnode.context.active.filter((item) => {
 								return !includes(removed_values, item.value);
 							});

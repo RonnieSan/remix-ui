@@ -689,7 +689,10 @@ export default {
 
 		// Apply the selected dates
 		applyHandler() {
-			let output_value = this.selection_value;
+			let output_value = [
+				moment(this.selection_value[0]).format('YYYY-MM-DD'),
+				moment(this.selection_value[1]).format('YYYY-MM-DD')
+			];
 			if (this.options.timepicker) {
 				output_value = [
 					moment(moment(this.selection_value[0]).format('YYYY-MM-DD') + ' ' + this.time_value[0]).format(),

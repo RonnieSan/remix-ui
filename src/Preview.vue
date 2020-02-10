@@ -138,7 +138,7 @@
 										<r-datepicker
 											name="datepicker"
 											v-model="datepicker_value"
-											:options="{timepicker : false}"
+											:options="{timepicker : true}"
 										/>
 									</div>
 								</div>
@@ -238,7 +238,6 @@
 												name="group_select"
 												v-model="group_select_value"
 												:options="options"
-												:sort="true"
 											/>
 										</div>
 									</div>

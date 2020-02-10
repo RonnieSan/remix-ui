@@ -3,8 +3,17 @@
 		[
 			"@babel/env",
 			{
-				"targets" : ">0.25%, not dead",
-				"useBuiltIns" : "usage"
+				"targets" : {
+					"browsers" : [
+						"Chrome >= 52",
+						"FireFox >= 44",
+						"Safari >= 7",
+						"Explorer 11",
+						"last 4 Edge versions"
+					]
+				},
+				"useBuiltIns" : "usage",
+				"corejs" : 3
 			}
 		]
 	],
