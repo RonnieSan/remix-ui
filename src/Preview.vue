@@ -306,6 +306,7 @@
 										<r-switch
 											name="switch"
 											v-model="switch_value"
+											:options="switch_options"
 										/>
 									</div>
 								</div>
@@ -494,7 +495,12 @@ export default {
 				snap      : true
 			},
 			toggle_value : true,
-			switch_value : false,
+			switch_value : true,
+			switch_options : [
+				{label : 'Yes', value : true},
+				{label : 'No', value : false},
+				{label : 'Maybe', value : 'undecided'}
+			],
 			markdown_value : '',
 			form_data : {
 				name : 'Fermegatroid Skittle',
@@ -668,7 +674,7 @@ export default {
 .value {
 	background-color: #F5F5F5;
 	border-radius: 3px;
-	margin-top: 3px;
+	margin-top: 5px;
 	padding: 8px 10px;
 }
 </style>

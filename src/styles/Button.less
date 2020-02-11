@@ -26,16 +26,19 @@
 }
 
 button {
+	align-items: center;
 	appearance: none;
 	background-color: @color-primary;
-	border: 0;
 	border-radius: @control-radius;
+	border: 0;
 	color: #FFF;
 	cursor: pointer;
+	display: inline-block;
 	font-size: @font-size;
 	height: @control-height;
 	margin: 0;
-	padding: 0 1em;
+	padding: 0;
+	white-space: nowrap;
 
 	&:hover {
 		background-color: lighten(@color-primary, 5%);
@@ -60,14 +63,7 @@ button {
 		background-color: @gray-05;
 		color: @gray-80;
 	}
-}
-
-button {
-	align-items: center;
-	display: inline-block;
-	padding: 0;
-	white-space: nowrap;
-
+	
 	&.icon .label {
 		display: none;
 	}

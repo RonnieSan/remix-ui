@@ -42,3 +42,7 @@ export default {
 	}
 };
 </script>
+
+<docs>
+
+</docs>

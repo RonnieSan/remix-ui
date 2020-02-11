@@ -166,51 +166,51 @@
 			}
 		}
 	}
-}
 
-.toolbar {
-	background-color: #F2F2F2;
-	border-bottom: 1px solid fade(@control-border-color, 50%);
-	display: flex;
-	flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-	justify-content: space-between;
-
-	.tools,
-	.utils {
+	.toolbar {
+		background-color: #F2F2F2;
+		border-bottom: 1px solid fade(@control-border-color, 50%);
 		display: flex;
-		flex: 0 0 auto;
-	}
+		flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		justify-content: space-between;
 
-	.btn {
-		border-right: 1px solid fade(@control-border-color, 50%);
-		cursor: pointer;
-		float: left;
-		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		text-align: center;
-		vertical-align: middle;
-
-		&.active {
-			background-color: #FFF;
+		.tools,
+		.utils {
+			display: flex;
+			flex: 0 0 auto;
 		}
 
-		&.icon {
-			min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-			padding: 0;
-		}
+		.btn {
+			border-right: 1px solid fade(@control-border-color, 50%);
+			cursor: pointer;
+			float: left;
+			height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+			line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+			text-align: center;
+			vertical-align: middle;
 
-		&.right {
-			border-left: 1px solid fade(@control-border-color, 50%);
-			border-right: none;
-			float: right;
-		}
+			&.active {
+				background-color: #FFF;
+			}
 
-		&.compact {
-			display: none;
-		}
+			&.icon {
+				min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+				padding: 0;
+			}
 
-		&:hover {
-			color: @control-color;
+			&.right {
+				border-left: 1px solid fade(@control-border-color, 50%);
+				border-right: none;
+				float: right;
+			}
+
+			&.compact {
+				display: none;
+			}
+
+			&:hover {
+				color: @control-color;
+			}
 		}
 	}
 }

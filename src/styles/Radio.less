@@ -24,30 +24,30 @@
 	position: relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-tap-highlight-color: transparent;
-}
+	
+	input[type='radio'] {
+		appearance: none;
+		background-color: @control-bkg-color;
+		border: @control-border-stroke solid @control-border-color;
+		cursor: pointer;
+		font-size: @font-size;
+		height: calc(@control-height * 0.6);
+		margin: 0 0.5em 0 0;
+		padding: 0;
+		transition: border 100ms ease-out;
+		vertical-align: middle;
+		width: ~"calc(@{control-height} * 0.6)";
 
-input[type='radio'] {
-	appearance: none;
-	background-color: @control-bkg-color;
-	border: @control-border-stroke solid @control-border-color;
-	cursor: pointer;
-	font-size: @font-size;
-	height: calc(@control-height * 0.6);
-	margin: 0 0.5em 0 0;
-	padding: 0;
-	transition: border 100ms ease-out;
-	vertical-align: middle;
-	width: ~"calc(@{control-height} * 0.6)";
-
-	&:focus {
-		outline: none;
+		&:focus {
+			outline: none;
+		}
 	}
-}
 
-input[type='radio'] {
-	border-radius: 50%;
+	input[type='radio'] {
+		border-radius: 50%;
 
-	&:checked {
-		border: ~"calc(@{control-height} * 0.2)" solid @control-color;
+		&:checked {
+			border: ~"calc(@{control-height} * 0.2)" solid @control-color;
+		}
 	}
 }

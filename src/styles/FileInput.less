@@ -71,25 +71,25 @@
 		right: 0;
 		top: 0;
 	}
-}
+	
+	input:focus {
+		box-shadow: 0;
+		outline: 0;
+	}
 
-input:focus {
-	box-shadow: 0;
-	outline: 0;
-}
+	input[type='text'] {
+		background-color: @control-bkg-color;
+		border: 0;
+		flex: 1 0 0 !important;
+		font-size: @font-size;
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		padding: 0 @control-padding;
+	}
 
-input[type='text'] {
-	background-color: @control-bkg-color;
-	border: 0;
-	flex: 1 0 0 !important;
-	font-size: @font-size;
-	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-	padding: 0 @control-padding;
-}
-
-input[type='file'] {
-	cursor: pointer;
-	height: 100%;
-	vertical-align: top;
-	width: 100%;
+	input[type='file'] {
+		cursor: pointer;
+		height: 100%;
+		vertical-align: top;
+		width: 100%;
+	}
 }

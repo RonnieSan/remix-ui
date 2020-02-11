@@ -38,77 +38,77 @@
 			@control-focus();
 		}
 	}
-}
 
-.group-column {
-	flex-direction: column;
-	display: flex;
-	flex: 1 0 0;
+	.group-column {
+		flex-direction: column;
+		display: flex;
+		flex: 1 0 0;
 
-	.group-column-header {
-		font-size: 0.875rem;
-		font-weight: bold;
-		height: 1.5em;
-		text-transform: uppercase;
-	}
-
-	.list-group {
-		background-color: @control-bkg-color;
-		border: @control-border-stroke solid @control-border-color;
-		border-radius: @control-radius;
-		min-width: @control-height * 6;
-		height: 100%;
-		overflow-y: auto;
-	}
-
-	.inactive {
-		color: @gray-35;
-	}
-	
-	.list-group-item {
-		border-bottom: 1px solid tint(@control-border-color, 50%);
-		cursor: pointer;
-		height: @control-height;
-		padding: @control-padding;
-
-		&:hover {
-			background-color: tint(@control-color, 95%);
+		.group-column-header {
+			font-size: 0.875rem;
+			font-weight: bold;
+			height: 1.5em;
+			text-transform: uppercase;
 		}
-	}
 
-	.selected {
-		background-color: tint(@control-color, 85%);
+		.list-group {
+			background-color: @control-bkg-color;
+			border: @control-border-stroke solid @control-border-color;
+			border-radius: @control-radius;
+			min-width: @control-height * 6;
+			height: 100%;
+			overflow-y: auto;
+		}
 
-		&:hover {
+		.inactive {
+			color: @gray-35;
+		}
+		
+		.list-group-item {
+			border-bottom: 1px solid tint(@control-border-color, 50%);
+			cursor: pointer;
+			height: @control-height;
+			padding: @control-padding;
+
+			&:hover {
+				background-color: tint(@control-color, 95%);
+			}
+		}
+
+		.selected {
 			background-color: tint(@control-color, 85%);
+
+			&:hover {
+				background-color: tint(@control-color, 85%);
+			}
 		}
 	}
-}
 
-.input-controls {
-	display: flex;
-	flex-direction: column;
-	flex: 0 0 auto;
-	padding: 0 5px;
-
-	.control-spacer {
-		flex: 0 0 1.5em;
-	}
-
-	.control-buttons {
-		align-items: center;
+	.input-controls {
 		display: flex;
 		flex-direction: column;
-		flex: 1 0 0;
-		justify-content: center;
-		min-height: @control-height * 5;	
+		flex: 0 0 auto;
+		padding: 0 5px;
+
+		.control-spacer {
+			flex: 0 0 1.5em;
+		}
+
+		.control-buttons {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			flex: 1 0 0;
+			justify-content: center;
+			min-height: @control-height * 5;	
+		}
+
+		button {
+			margin: 5px;
+		}
 	}
 
-	button {
-		margin: 5px;
+	.sortable-chosen {
+		background-color: fade(@control-bkg-color, 90%);
 	}
-}
-
-.sortable-chosen {
-	background-color: fade(@control-bkg-color, 90%);
 }
