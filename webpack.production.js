@@ -106,7 +106,8 @@ module.exports = (env) => {
 			new VueLoaderPlugin(),
 			// new CleanWebpackPlugin(['dist']),
 			new LodashModuleReplacementPlugin({
-				shorthands : true
+				shorthands : true,
+				collections : true
 			}),
 			new webpack.NamedModulesPlugin(),
 			new BundleAnalyzerPlugin({
