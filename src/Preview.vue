@@ -470,7 +470,8 @@ export default {
 			textarea_value : '',
 			select_value : null,
 			group_select_value : [
-				'Red'
+				'Red',
+				'Orange'
 			],
 			checklist_value : [],
 			radio_value : 'Yes',

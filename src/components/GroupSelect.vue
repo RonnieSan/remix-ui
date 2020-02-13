@@ -50,7 +50,7 @@
 
 <script>
 import rButton from './Button';
-import { find, includes, isEqual, merge, remove, some, sortBy, uniq } from 'lodash';
+import { clone, differenceWith, find, includes, isEqual, merge, pick, remove, some, sortBy, uniqWith } from 'lodash';
 import { Sortable, MultiDrag } from 'sortablejs';
 
 Sortable.mount(new MultiDrag());
@@ -116,6 +116,14 @@ export default {
 				}
 			},
 			deep : true
+		},
+		options : {
+			handler(new_value, old_value) {
+				if (!isEqual(new_value, old_value)) {
+					this.initComponent();
+				}
+			},
+			deep : true
 		}
 	},
 	methods : {
@@ -129,17 +137,24 @@ export default {
 			this.selected_active   = [];
 			this.selected_inactive = [];
 		},
-		setListValues(value) {			
+		setListValues(value) {
 			// Map the value into a collection
 			let mapped_value = value.map((item) => {
-				if (typeof item === 'string') {
-					return {
-						value : item
+				let item_value = item;
+				try {
+					if (typeof item !== 'object') {
+						item_value = JSON.stringify(item);
+					}
+					else {
+						item_value = JSON.stringify(item.value);
 					}
 				}
-				else {
-					return item;
+				catch (err) {
+					// Do nothing
 				}
+
+				// Get the option version of the value
+				return clone(find(this.mapped_options, {value : item_value}));
 			});
 
 			// Set the active options
@@ -155,6 +170,10 @@ export default {
 			remove(this.inactive, (item, index) => {
 				return find(this.active, {value : item.value});
 			});
+
+			// Add missing options to the inactive collection
+			let missing_options = differenceWith(this.mapped_options, this.inactive.concat(this.active), isEqual);
+			this.inactive = uniqWith(this.inactive.concat(missing_options), isEqual);
 
 			// Sort the values
 			if (this.sort) {
@@ -194,9 +213,6 @@ export default {
 			}
 			this.resetSelection();
 		},
-		moveSelectedValuesToInactive() {
-
-		},
 		emitNewValue(value) {
 			this.$nextTick(() => {
 				if (this.sort) {
@@ -207,38 +223,78 @@ export default {
 						value = sortBy(value, 'label');
 					}
 				}
-				value = value.map(item => item.value);
+
+				// Extract the parsed value
+				value = value.map((item) => {
+					let parsed_value = item.value;
+					try {
+						parsed_value = JSON.parse(item.value);
+					}
+					catch (err) {
+						// Do nothing
+					}
+					return parsed_value;
+				});
 				this.$emit('input', value);
 			});
+		},
+		initComponent() {
+			// Map the options and set the default inactive values
+			this.mapped_options = this.options.map((option) => {
+				let stringified_option = option;
+				try {
+					if (typeof option !== 'object') {
+						stringified_option = {
+							label : option.toString(),
+							value : JSON.stringify(option)
+						};
+					}
+					else {
+						stringified_option.value = JSON.stringify(option.value);
+					}
+				}
+				catch (err) {
+					// Do nothing
+				}
+				return stringified_option;
+			});
+
+			// Remove values that are not in the options
+			let sanitized_value = this.value.slice();
+			remove(sanitized_value, (item) => {
+				return !some(this.mapped_options, (mapped_option) => {
+					let parsed_value = mapped_option.value;
+					try {
+						parsed_value = JSON.parse(mapped_option.value);
+					}
+					catch (err) {
+						// Do nothing
+					}
+					return item === parsed_value;
+				});
+			});
+			// Sort the options
+			if (this.sort) {
+				if (typeof this.sort === 'function') {
+					this.mapped_options = this.sort(this.mapped_options);
+				}
+				else {
+					this.mapped_options = sortBy(this.mapped_options, 'label');
+				}
+			}
+			this.inactive = this.mapped_options.slice();
+
+			if (!isEqual(sanitized_value, this.value)) {
+				// Set the default active options
+				this.emitNewValue(sanitized_value);
+			}
+			else {
+				this.setListValues(this.value);
+			}
 		}
 	},
 	mounted()  {
-		// Map the options and set the default inactive values
-		this.mapped_options = this.options.map((option) => {
-			if (typeof option === 'string') {
-				return {
-					label : option,
-					value : option
-				}
-			}
-			else {
-				return option;
-			}
-		});
-
-		// Sort the options
-		if (this.sort) {
-			if (typeof this.sort === 'function') {
-				this.mapped_options = sort(this.mapped_options);
-			}
-			else {
-				this.mapped_options = this.inactive = sortBy(this.mapped_options, 'label');
-			}
-		}
-		this.inactive = this.mapped_options.slice();
-
-		// Set the default active options
-		this.setListValues(this.value);
+		this.initComponent();
 	},
 	directives : {
 		sortable : {
@@ -262,9 +318,9 @@ export default {
 						// Add the values to the selected list
 						let values = [];
 						event.items.forEach((item) => {
-							values.push(item.dataset);
+							values.push(pick(item.dataset, ['label', 'value']));
 						});
-						vnode.context['selected_' + id] = uniq(values);
+						vnode.context['selected_' + id] = uniqWith(values, isEqual);
 					},
 					onDeselect(event) {
 						let id = 'active';
@@ -279,9 +335,9 @@ export default {
 							// Remove values from the selected list
 							let values = [];
 							event.items.forEach((item) => {
-								values.push(item.dataset);
+								values.push(pick(item.dataset, ['label', 'value']));
 							});
-							vnode.context['selected_' + id] = uniq(values);
+							vnode.context['selected_' + id] = uniqWith(values, isEqual);
 						}, 0);
 					},
 					onSort(event) {
@@ -319,11 +375,11 @@ export default {
 							let new_value = vnode.context.active.slice();
 							if (event.items.length > 0) {
 								event.items.forEach((item, index) => {
-									new_value.splice(event.newIndicies[index].index, 0, item.dataset);
+									new_value.splice(event.newIndicies[index].index, 0, pick(item.dataset, ['label', 'value']));
 								});
 							}
 							else {
-								new_value.splice(event.newIndex, 0, event.item.dataset);
+								new_value.splice(event.newIndex, 0, pick(event.item.dataset, ['label', 'value']));
 							}
 							vnode.context.emitNewValue(new_value);
 						}
@@ -332,16 +388,17 @@ export default {
 						if (includes(event.from.classList, 'active')) {
 							let removed_values = [];
 
+
 							// Add values to the inactive list
 							if (event.items.length > 0) {
 								event.items.forEach((item, index) => {
 									removed_values.push(item.dataset.value);
-									vnode.context.inactive.splice(event.newIndicies[index].index, 0, item.dataset);
+									vnode.context.inactive.splice(event.newIndicies[index].index, 0, pick(item.dataset, ['label', 'value']));
 								});
 							}
 							else {
 								removed_values.push(event.item.dataset.value);
-								vnode.context.inactive.splice(event.newIndex, 0, event.item.dataset);
+								vnode.context.inactive.splice(event.newIndex, 0, pick(event.item.dataset, ['label', 'value']));
 							}
 
 							// Remove values from active list
@@ -367,6 +424,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import (optional) '~remix-ui-styles/GroupSelect.less';
 </style>
