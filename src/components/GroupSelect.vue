@@ -241,7 +241,7 @@ export default {
 		initComponent() {
 			// Map the options and set the default inactive values
 			this.mapped_options = this.options.map((option) => {
-				let stringified_option = option;
+				let stringified_option = clone(option);
 				try {
 					if (typeof option !== 'object') {
 						stringified_option = {
