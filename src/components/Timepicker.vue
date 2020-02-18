@@ -379,14 +379,15 @@ export default {
 			}
 		},
 		setPeriod(event) {
-			if (event.key === 'a') {
+			if (event.key === 'a' || event.key === 'A') {
 				this.period = 'AM';
 			}
-			else if (event.key === 'p') {
+			else if (event.key === 'p' || event.key === 'P') {
 				this.period = 'PM';
 			}
 			this.$nextTick(() => {
 				this.$refs.period_input.select();
+				this.setValue();
 			});
 			return false;
 		},
@@ -407,6 +408,9 @@ export default {
 				}
 				let minute = this.minute;
 				let second = this.second || '00';
+				if (!this.options.seconds) {
+					second = '00';
+				}
 				let value = [hour, minute, second].join(':');
 
 				this.$emit('input', value);

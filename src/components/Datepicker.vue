@@ -143,6 +143,9 @@
 							<li v-for="(msg, index) in errorMessages" key="index">{{msg}}</li>
 						</ul>
 					</div>
+					<div v-if="!isRange" class="button-wrapper single-date-apply">
+						<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
+					</div>
 				</div>
 			</transition>
 		</div>
@@ -186,18 +189,9 @@ export default {
 	},
 	data() {
 		return {
-			cursor_value : [
-				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
-				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
-			],
-			selection_value : [
-				Array.isArray(this.value) ? moment(this.value[0]).startOf('day').format() : moment(this.value).startOf('day').format(),
-				Array.isArray(this.value) ? moment(this.value[1]).endOf('day').format() : moment(this.value).endOf('day').format()
-			],
-			time_value : [
-				'00:00:00',
-				'23:59:59'
-			],
+			cursor_value : [],
+			selection_value : [],
+			time_value : [],
 			current_cursor_index : 0,
 			current_selection_index : 0,
 			error_messages : [],
@@ -342,10 +336,7 @@ export default {
 
 		// The date is the start of end of a range selection
 		isSelected(date, index) {
-			if (this.isRange) {
-				return date.format('YYYY-MM-DD') === moment(this.selection_value[index]).format('YYYY-MM-DD');
-			}
-			return date.format() === moment(this.value).format();
+			return date.format('YYYY-MM-DD') === moment(this.selection_value[index]).format('YYYY-MM-DD');
 		},
 
 		// The date is in the selected range
@@ -364,7 +355,7 @@ export default {
 					return date.diff(this.selection_value[0], 'days') < (this.maxDateRange);
 				}
 			}
-			return false;
+			return true;
 		},
 
 		// The date is the start of the selected range
@@ -386,10 +377,7 @@ export default {
 					this.current_selection_index = 0;
 				}
 				if (this.options.timepicker) {
-					this.time_value = [
-						moment(this.selection_value[0]).format('HH:mm:ss'),
-						moment(this.selection_value[1]).format('HH:mm:ss')
-					];
+					this.resetTime(this.value);
 				}
 				this.resetCursors();
 				this.is_open = true;
@@ -468,9 +456,6 @@ export default {
 									this.current_cursor_index++;
 								}
 							}
-						}
-						else {
-							this.closeCalendar();
 						}
 					}
 					break;
@@ -582,9 +567,44 @@ export default {
 			}
 		},
 
+		resetTime(value) {
+			if (this.isRange) {
+				// Get the start time from the value
+				if (value.length > 0 && value[0].length > 10) {
+					this.$set(this.time_value, 0, moment(value[0]).format('HH:mm:ss'));
+				}
+				else {
+					this.$set(this.time_value, 0, '00:00:00');
+				}
+
+				// Get the end time from the value
+				if (value.length > 0 && value[1].length > 10) {
+					this.$set(this.time_value, 1, moment(value[1]).format('HH:mm:ss'));
+				}
+				else {
+					this.$set(this.time_value, 1, '23:59:59');
+				}
+			}
+			else {
+				// Get the time from the value
+				if (value.length > 10) {
+					this.$set(this.time_value, 0, moment(value).format('HH:mm:ss'));
+				}
+				else {
+					this.$set(this.time_value, 0, '00:00:00');
+				}
+			}
+		},
+
 		// Reset the cursors
 		resetCursors() {
-			this.cursor_value = this.selection_value.slice();
+			if (this.isRange) {
+				this.cursor_value = this.selection_value.slice();
+			}
+			else {
+				this.$set(this.selection_value, 0, moment(this.value));
+				this.$set(this.cursor_value, 0, moment(this.value));
+			}
 		},
 
 		// Set the selection value
@@ -649,58 +669,82 @@ export default {
 			this.current_selection_index = index;
 			if (this.isRange) {
 				if (index === 0) {
-					if (this.options.timepicker) {
-						date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[0]);
-					}
-					else {
-						date = date.startOf('day');
-					}
+					date = date.startOf('day');
 					this.$set(this.selection_value, index, date.format());
 					if (date.isAfter(this.selection_value[1])) {
 						this.setSelectionValue(null, date.endOf('day').format());
-						// this.$set(this.selection_value, 1, date.endOf('day').format());
 					}
 				}
 				else {
-					if (this.options.timepicker) {
-						date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[1]);
-					}
-					else {
-						date = date.endOf('day');
-					}
+					date = date.endOf('day');
 					this.$set(this.selection_value, index, date.format());
 					if (date.isBefore(this.selection_value[0])) {
 						this.setSelectionValue(date.startOf('day').format(), null);
-						// this.$set(this.selection_value, 0, date.startOf('day').format());
 					}
 				}
 				this.cursor_value = this.selection_value.slice();
 			}
 			else {
-				if (this.options.timepicker) {
-					date = moment(date.format('YYYY-MM-DD') + ' ' + this.time_value[0]);
-				}
-				this.selection_value[index] = date.format();
-				this.cursor_value[index] = date.format();
-				this.$emit('input', date.format());
-				this.closeCalendar();
+				this.$set(this.selection_value, index, date.format());
+				this.$set(this.cursor_value, index, date.format());
 			}
 		},
 
 		// Apply the selected dates
 		applyHandler() {
-			let output_value = [
-				moment(this.selection_value[0]).format('YYYY-MM-DD'),
-				moment(this.selection_value[1]).format('YYYY-MM-DD')
-			];
-			if (this.options.timepicker) {
+			let output_value;
+			if (this.isRange) {
 				output_value = [
-					moment(moment(this.selection_value[0]).format('YYYY-MM-DD') + ' ' + this.time_value[0]).format(),
-					moment(moment(this.selection_value[1]).format('YYYY-MM-DD') + ' ' + this.time_value[1]).format()
+					moment(this.selection_value[0]).format('YYYY-MM-DD'),
+					moment(this.selection_value[1]).format('YYYY-MM-DD')
 				];
+				if (this.options.timepicker) {
+					output_value = [
+						moment(output_value[0] + ' ' + this.time_value[0]).format(),
+						moment(output_value[1] + ' ' + this.time_value[1]).format()
+					];
+				}
+
+				// Check if end date is before start date
+				if (moment(output_value[1]).isBefore(output_value[0])) {
+					output_value[1] = output_value[0];
+				}
+			}
+			else {
+				output_value = moment(this.selection_value[0]).format('YYYY-MM-DD');
+				if (this.options.timepicker) {
+					output_value = moment(output_value + ' ' + this.time_value[0]).format();
+				}
 			}
 			this.$emit('input', output_value);
 			this.closeCalendar();
+		}
+	},
+	mounted() {
+		// Set the default value if it's empty
+		let initial_value = this.value;
+		if (this.isRange) {
+			if (initial_value.length === 0) {
+				initial_value = [
+					moment().startOf('day').format(),
+					moment().endOf('day').format()
+				];
+			}
+		}
+		else {
+			if (!this.value) {
+				initial_value = moment().startOf('day').format();
+			}
+		}
+
+		// Set the cursor and selection value
+		if (this.isRange) {
+			this.cursor_value = this.selection_value = initial_value;
+		}
+
+		// Set the time value
+		if (this.options.timepicker) {
+			this.resetTime(initial_value);
 		}
 	},
 	mixins : [
