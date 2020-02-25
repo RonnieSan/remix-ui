@@ -7,6 +7,7 @@
 		<text-input
 			ref="input"
 			:allowed="allowed"
+			:autocomplete="autocomplete"
 			:disabled="disabled"
 			:filter="filter"
 			:mask="mask"
@@ -29,6 +30,7 @@ import formField from '../mixins/formField';
 export default {
 	props : {
 		allowed : String,
+		autocomplete : String,
 		disabled : {
 			type : Boolean,
 			default : false

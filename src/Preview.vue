@@ -93,6 +93,7 @@
 								<div class="controls">
 									<div class="field">
 										<r-password
+											autocomplete="off"
 											name="password"
 											v-model="password_value"
 										>

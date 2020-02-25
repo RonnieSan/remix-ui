@@ -4,10 +4,11 @@
 		<input type="password"
 			ref="input"
 			:name="name"
-			:value="value"
-			:placeholder="placeholder"
-			v-on="listeners"
+			:autocomplete="autocomplete"
 			:disabled="disabled"
+			:placeholder="placeholder"
+			:value="value"
+			v-on="listeners"
 		>
 		<slot name="right"></slot>
 	</div>
@@ -18,9 +19,10 @@ import formField from '../mixins/formField';
 
 export default {
 	props : {
+		autocomplete : String,
+		disabled : Boolean,
 		placeholder : String,
-		value : String,
-		disabled : Boolean
+		value : String
 	},
 	computed : {
 		listeners() {
