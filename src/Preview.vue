@@ -439,6 +439,11 @@
 										<p>Tab two is open.</p>
 									</div>
 								</tab>
+								<tab label="Disabled" tab-id="three" disabled>
+									<div class="padded">
+										<p>This tab is disabled</p>
+									</div>
+								</tab>
 							</tabs>
 
 						</column>

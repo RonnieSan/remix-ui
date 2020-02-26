@@ -20,15 +20,16 @@ export default {
 		tabId : {
 			type : String,
 			required : true
+		},
+		disabled : {
+			type : Boolean,
+			default : false
 		}
 	},
 	computed : {
 		self() {
 			return this;
 		}
-	},
-	methods : {
-		
 	},
 	created() {
 		this.tab_group.addTab(this);

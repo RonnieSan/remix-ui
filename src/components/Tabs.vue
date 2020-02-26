@@ -4,7 +4,7 @@
 			<div class="tab-row">
 				<div
 					v-for="tab in tabs"
-					:class="['tab', {'active' : active_tab_id === tab.tabId}]"
+					:class="['tab', {'active' : active_tab_id === tab.tabId, 'disabled' : tab.disabled}]"
 					@click="selectTab(tab)"
 				>
 					<div class="label" v-html="tab.label"></div>
@@ -43,11 +43,16 @@ export default {
 			this.tabs.push(tab);
 		},
 		selectTab(tab) {
-			this.active_tab_id = tab.tabId;
-			this.$emit('change', this.active_tab_id);
-			this.$nextTick(() => {
-				tab.$emit('open');
-			});
+			if (!tab.disabled) {
+				this.active_tab_id = tab.tabId;
+				this.$emit('change', this.active_tab_id);
+				this.$nextTick(() => {
+					tab.$emit('open');
+				});
+			}
+			else {
+				this.$emit('error');
+			}
 		},
 		removeTab(tab_id) {
 			this.tabs = this.tabs.filter((tab) => {
