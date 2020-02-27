@@ -543,13 +543,14 @@ export default {
 				]
 			],
 			select_options : [
-				{label : 'One', value : 1},
-				{label : 'Two', value : 2},
+				{label : 'One', value : 'one'},
+				{label : 'Two', value : 'two'},
 				{label : 'Other Numbers', value : [
 					{label : 'Three', value : 3},
 					{label : 'Four', value : 4},
 					{label : 'Five', value : 5}
-				]}
+				]},
+				{label : 'Six', value : {value : 6}}
 			],
 			nav_items : [
 				{target : '#one', label : 'One'},

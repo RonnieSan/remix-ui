@@ -4,22 +4,23 @@
 			ref="input"
 			:class="{'default' : model === ''}"
 			:name="name"
-			v-model.lazy="selected"
+			v-model="selected_option"
 			v-on="listeners"
+			@change="changeHandler"
 			:disabled="disabled"
 		>
 			<option disabled :value="{value : emptyValue}">{{placeholder}}</option>
-			<template v-for="option in options">
+			<template v-for="option in optionList">
 				<template v-if="isArray(option.value)">
 					<optgroup :label="option.label">
 					<option
 						v-for="child_option in option.value"
-						:value="{value : (child_option.value !== undefined) ? child_option.value : child_option}"
-					>{{(child_option.label !== undefined) ? child_option.label : child_option}}</option>
+						:value="child_option.value"
+					>{{child_option.label}}</option>
 					</optgroup>
 				</template>
 				<template v-else>
-					<option :value="{value : (option.value !== undefined) ? option.value : option}">{{(option.label !== undefined) ? option.label : option}}</option>
+					<option :value="option.value">{{option.label}}</option>
 				</template>
 			</template>
 		</select>
@@ -33,6 +34,7 @@ export default {
 	data() {
 		return {
 			focused : false,
+			selected_option : null,
 			selected : {
 				value : this.value
 			}
@@ -70,34 +72,47 @@ export default {
 					}
 				}
 			);
+		},
+		optionList() {
+			return this.options.map((option) => {
+				if (option instanceof Object) {
+					if (this.isArray(option.value)) {
+						option.value = option.value.map((child_option) => {
+							if (child_option instanceof Object) {
+								return child_option;
+							}
+							else {
+								return {
+									label : child_option,
+									value : child_option
+								};
+							}
+						});
+					}
+					return option;
+				}
+				else {
+					return {
+						label : option,
+						value : option
+					};
+				}
+			});
 		}
 	},
 	model : {
 		prop  : 'model',
 		event : 'change'
 	},
-	watch : {
-		selected(new_value) {
-			this.dirty = true;
-			this.$emit('change', new_value.value);
-			new_value.value = this.model;
-			this.validate();
-		},
-		model : {
-			handler(new_value) {
-				if (new_value !== this.selected.value) {
-					this.selected = {
-						value : new_value
-					};
-				}
-			},
-			immediate : true,
-			deep : true
-		}
-	},
 	methods : {
 		isArray(value) {
 			return Array.isArray(value);
+		},
+		changeHandler(data) {
+			this.dirty = true;
+			this.$emit('change', this.selected_option);
+			this.$emit('input', this.selected_option);
+			this.validate();
 		}
 	},
 	mixins : [
