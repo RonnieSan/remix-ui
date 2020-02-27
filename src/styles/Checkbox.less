@@ -9,7 +9,7 @@
 @control-color: #2196F3;
 @control-height: 2.5em;
 @control-radius: 3px;
-@font-size: 16px;
+
 
 // Import custom variables
 @import (optional, reference) '~theme';
@@ -18,7 +18,7 @@
 	align-items: flex-start;
 	cursor: pointer;
 	display: inline-flex;
-	font-size: @font-size;
+	font-size: 1em;
 	line-height: calc(@control-height * 0.6);
 	padding: calc(@control-height * 0.2) 0;
 	position: relative;
@@ -29,7 +29,7 @@
 		appearance: none;
 		background-color: @control-bkg-color;
 		border: @control-border-stroke solid @control-border-color;
-		font-size: @font-size;
+		font-size: 1em;
 		height: calc(@control-height * 0.6);
 		margin: 0 0.5em 0 0;
 		padding: 0;
@@ -46,7 +46,7 @@
 	&::before {
 		@icon-color: replace(@control-bkg-color, '#', '%23');
 		content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="@{icon-color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 12 10 16 18 8" /></svg>');
-		font-size: @font-size;
+		font-size: 1em;
 		height: calc(@control-height * 0.6);
 		left: 0;
 		position: absolute;

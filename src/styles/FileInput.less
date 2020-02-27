@@ -10,7 +10,6 @@
 @control-height: 40px;
 @control-padding: 0.625em;
 @control-radius: 3px;
-@font-size: 16px;
 
 // Import theme
 @import (optional, reference) '~theme';
@@ -48,7 +47,7 @@
 		background-color: @control-color;
 		color: #FFF;
 		flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		font-size: @font-size;
+		font-size: 1em;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		text-align: center;
@@ -81,7 +80,7 @@
 		background-color: @control-bkg-color;
 		border: 0;
 		flex: 1 0 0 !important;
-		font-size: @font-size;
+		font-size: 1em;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 @control-padding;
 	}
