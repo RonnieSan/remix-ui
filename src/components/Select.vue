@@ -9,7 +9,7 @@
 			@change="changeHandler"
 			:disabled="disabled"
 		>
-			<option disabled :value="{value : emptyValue}">{{placeholder}}</option>
+			<option :disabled="allowEmpty" :value="emptyValue">{{placeholder}}</option>
 			<template v-for="option in optionList">
 				<template v-if="isArray(option.value)">
 					<optgroup :label="option.label">
@@ -31,15 +31,6 @@
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			focused : false,
-			selected_option : null,
-			selected : {
-				value : this.value
-			}
-		};
-	},
 	props : {
 		model : {
 			type : [String, Number, Boolean, Object, Function]
@@ -48,12 +39,25 @@ export default {
 		emptyValue : {
 			default : null
 		},
+		allowEmpty : {
+			type : Boolean,
+			default : true
+		},
 		options : Array,
 		placeholder : {
 			type : String,
 			default : 'Select One'
 		},
 		disabled : Boolean
+	},
+	data() {
+		return {
+			focused : false,
+			selected_option : this.model,
+			selected : {
+				value : this.value
+			}
+		};
 	},
 	computed : {
 		listeners() {
@@ -100,6 +104,14 @@ export default {
 			});
 		}
 	},
+	watch : {
+		model(new_value) {
+			if (new_value !== this.selected_option) {
+				this.selected_option = new_value;
+				this.changeHandler();
+			}
+		}
+	},
 	model : {
 		prop  : 'model',
 		event : 'change'
@@ -108,7 +120,7 @@ export default {
 		isArray(value) {
 			return Array.isArray(value);
 		},
-		changeHandler(data) {
+		changeHandler() {
 			this.dirty = true;
 			this.$emit('change', this.selected_option);
 			this.$emit('input', this.selected_option);
