@@ -25,33 +25,45 @@ export const rules = {
 		}, options);
 
 		return function(value) {
+			let valid = false;
 			switch (typeof value) {
 				case 'string':
 				case 'array':
 					if (value.length > 0) {
-						return null;
+						valid = true;
 					}
 					break;
 				case 'number':
 					if (value >= options.min && value <= options.max) {
-						return null
+						valid = true;
 					}
 					break;
 				case 'boolean':
-					if (value !== false) {
-						return null;
+					if (options.allow_false) {
+						if (!isUndefined(value) && !isNull(value)) {
+							valid = true;
+						}
+					}
+					else {
+						if (value !== false) {
+							valid = true;
+						}
 					}
 					break;
 				case 'object':
 					if (!isEmpty(value)) {
-						return null;
+						valid = true;
 					}
 					break;
 				default:
 					if (!isUndefined(value) && !isNull(value)) {
-						return null;
+						valid = true;
 					}
 					break;
+			}
+
+			if (valid) {
+				return null;
 			}
 			return message || 'This field is required';
 		};

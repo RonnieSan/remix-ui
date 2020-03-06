@@ -5,7 +5,8 @@
 	>
 		<div class="display" @click="toggleList">
 			<span v-if="value.length === 0" class="none-selected">{{placeholder}}</span>
-			<span v-else class="selected-items">{{value.length}} Selected</span>
+			<span v-else-if="typeof template === 'function'" class="selected-items" v-html="template(value)"/>
+			<span v-else="" class="selected-items">{{value.length}} Selected</span>
 		</div>
 		<transition name="dropfade">
 			<div
@@ -57,6 +58,9 @@ export default {
 		value : {
 			type : Array,
 			required : true
+		},
+		template : {
+			type : Function
 		},
 		disabled : Boolean,
 		closeOnMouseOut : false
