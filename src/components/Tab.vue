@@ -29,6 +29,18 @@ export default {
 	computed : {
 		self() {
 			return this;
+		},
+		listeners() {
+			let vm = this;
+			return Object.assign(
+				{},
+				{
+					click(event) {
+						vm.tab_group.selectTab(vm);
+					}
+				},
+				vm.$listeners
+			);
 		}
 	},
 	created() {

@@ -5,7 +5,7 @@
 				<div
 					v-for="tab in tabs"
 					:class="['tab', {'active' : active_tab_id === tab.tabId, 'disabled' : tab.disabled}]"
-					@click="selectTab(tab)"
+					v-on="tab.listeners"
 				>
 					<div class="label" v-html="tab.label"></div>
 				</div>
