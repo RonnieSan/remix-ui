@@ -448,6 +448,7 @@ export default {
 				}
 				else if (hour === 0) {
 					hour = '12';
+					period = 'AM';
 				}
 			}
 

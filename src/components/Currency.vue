@@ -43,6 +43,7 @@ export default {
 			type : String,
 			default : '$'
 		},
+		selectOnFocus : Boolean,
 		disabled : Boolean
 	},
 	data() {
@@ -73,8 +74,6 @@ export default {
 				{
 					input(event) {
 						vm.dirty = true;
-						// vm.inputHandler(event);
-						// vm.validate();
 					},
 					keyup(event) {
 						if (event.key === 'Tab') {

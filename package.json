@@ -1,6 +1,6 @@
 {
   "name": "remix-ui",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "A UI kit for VueJS",
   "main": "dist/index.js",
   "scripts": {
@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
-    "@mdi/font": "^3.9.97",
     "brace": "^0.11.1",
     "core-js": "^3.6.4",
     "fuzzy": "^0.1.3",

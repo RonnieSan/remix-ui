@@ -84,6 +84,17 @@
 									v-model="time_value[0]"
 									:options="options.timepicker_options"
 								/>
+								<div class="timepicker-presets">
+									<div class="button" @click="setTime(0, 'start')">
+										<icon type="arrow-collapse-left"/>
+									</div>
+									<div class="button" @click="setTime(0, 'now')">
+										<icon type="clock-outline"/>
+									</div>
+									<div class="button" @click="setTime(0, 'end')">
+										<icon type="arrow-collapse-right"/>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="calendar end" v-if="isRange">
@@ -135,6 +146,17 @@
 									v-model="time_value[1]"
 									:options="options.timepicker_options"
 								/>
+								<div class="timepicker-presets">
+									<div class="button" @click="setTime(1, 'start')">
+										<icon type="arrow-collapse-left"/>
+									</div>
+									<div class="button" @click="setTime(1, 'now')">
+										<icon type="clock-outline"/>
+									</div>
+									<div class="button" @click="setTime(1, 'end')">
+										<icon type="arrow-collapse-right"/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -409,6 +431,16 @@ export default {
 					}
 				}
 			});
+		},
+
+		// Set the time on one of the pickers
+		setTime(index, preset) {
+			let presets = {
+				start : '00:00:00',
+				now : moment().format('HH:mm:ss'),
+				end : '23:59:59'
+			};
+			this.$set(this.time_value, index, presets[preset]);
 		},
 
 		// Close the calendar interface

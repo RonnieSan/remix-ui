@@ -349,15 +349,43 @@
 		}
 	}
 
-	.time-inputs /deep/ .timepicker {
-		& .inputs {
-			margin : 0 auto;
-		}
+	.time-inputs {
+		display: flex;
+		flex-direction: row;
 
-		& .input-wrapper {
-			border: 0;
-			border-top: 1px solid @gray-05;
-			border-radius: 0;
+		& ::v-deep {
+			.timepicker {
+				flex: 1 0 0;
+
+				& .inputs {
+					margin : 0 auto;
+				}
+
+				& .input-wrapper {
+					border: 0;
+					border-top: 1px solid @gray-05;
+					border-radius: 0;
+				}
+			}
+
+			.timepicker-presets {
+				border-top: 1px solid @gray-05;
+				flex: 0 0 auto;
+				padding: 0 0.25em;
+
+				.button {
+					background-color: @control-color;
+					border-radius: @control-radius;
+					color: @white;
+					display: inline-block;
+					font-size: 1em;
+					height: 2em;
+					line-height: 2em;
+					margin: 0.25em 0;
+					text-align: center;
+					width: 2em;
+				}
+			}
 		}
 	}
 }
