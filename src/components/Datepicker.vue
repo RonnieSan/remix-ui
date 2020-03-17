@@ -24,12 +24,7 @@
 						<div class="presets" v-if="isRange">
 							<h2>Presets</h2>
 							<ul>
-								<li @click="setRange(0)">Today</li>
-								<li @click="setRange(1)">Yesterday</li>
-								<li @click="setRange(2)">7 Days Ago</li>
-								<li @click="setRange(3)">Last 7 Days</li>
-								<li @click="setRange(4)">This Month</li>
-								<li @click="setRange(5)">Last Month</li>
+								<li v-for="(preset, index) in mergedOptions.presets" @click="setRange(index)">{{preset.label}}</li>
 							</ul>
 							<div class="button-wrapper">
 								<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
@@ -78,11 +73,11 @@
 										@click="setSelectionValue(date.moment, null, $event)">{{date.day}}</div>
 								</div>
 							</div>
-							<div v-if="options.timepicker" class="time-inputs">
+							<div v-if="mergedOptions.timepicker" class="time-inputs">
 								<Timepicker
 									name="timepicker_start"
 									v-model="time_value[0]"
-									:options="options.timepicker_options"
+									:options="mergedOptions.timepicker_options"
 								/>
 								<div class="timepicker-presets">
 									<div class="button" @click="setTime(0, 'start')">
@@ -140,11 +135,11 @@
 										@click="setSelectionValue(null, date.moment, $event)">{{date.day}}</div>
 								</div>
 							</div>
-							<div v-if="options.timepicker" class="time-inputs">
+							<div v-if="mergedOptions.timepicker" class="time-inputs">
 								<Timepicker
 									name="timepicker_start"
 									v-model="time_value[1]"
-									:options="options.timepicker_options"
+									:options="mergedOptions.timepicker_options"
 								/>
 								<div class="timepicker-presets">
 									<div class="button" @click="setTime(1, 'start')">
@@ -179,7 +174,7 @@ import formField from '../mixins/formField';
 import moment from 'moment-timezone';
 import { mixin as clickaway } from 'vue-clickaway';
 import Timepicker from './Timepicker';
-import { uniq, without } from 'lodash';
+import { merge, uniq, without } from 'lodash';
 
 export default {
 	components : {
@@ -203,7 +198,33 @@ export default {
 				return {
 					format : 'ddd, MMM D, YYYY',
 					timepicker : false,
-					timepicker_options : {}
+					timepicker_options : {},
+					presets : [
+						{
+							label : 'Today',
+							value : [moment().startOf('day').format(), moment().endOf('day').format()]
+						},
+						{
+							label : 'Yesterday',
+							value : [moment().subtract(1, 'day').startOf('day').format(), moment().subtract(1, 'day').endOf('day').format()]
+						},
+						{
+							label : '7 Days Ago',
+							value : [moment().subtract(1, 'week').startOf('day').format(), moment().subtract(1, 'week').endOf('day').format()]
+						},
+						{
+							label : 'Last 7 Days',
+							value : [moment().subtract(6, 'days').startOf('day').format(), moment().endOf('day').format()]
+						},
+						{
+							label : 'This Month',
+							value : [moment().startOf('month').format(), moment().endOf('month').format()]
+						},
+						{
+							label : 'Last Month',
+							value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
+						}
+					]
 				};
 			}
 		},
@@ -226,14 +247,14 @@ export default {
 		displayValue() {
 			if (this.isRange) {
 				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
-					return moment(this.value[0]).format(this.options.format || this.format);
+					return moment(this.value[0]).format(this.mergedOptions.format || this.format);
 				}
 
-				return moment(this.value[0]).format(this.options.format || this.format) + ' - ' + moment(this.value[1]).format(this.options.format || this.format);
+				return moment(this.value[0]).format(this.mergedOptions.format || this.format) + ' - ' + moment(this.value[1]).format(this.mergedOptions.format || this.format);
 			}
 
 			else {
-				return moment(this.value).format(this.options.format || this.format);
+				return moment(this.value).format(this.mergedOptions.format || this.format);
 			}
 		},
 		isRange() {
@@ -252,13 +273,13 @@ export default {
 			return moment(this.cursor_value[1]).format('YYYY');
 		},
 		minDate() {
-			return moment(this.minValue || this.options.min_date);
+			return moment(this.minValue || this.mergedOptions.min_date);
 		},
 		maxDate() {
-			return moment(this.maxValue || this.options.max_date);
+			return moment(this.maxValue || this.mergedOptions.max_date);
 		},
 		maxDateRange() {
-			return this.maxRange || this.options.max_range;
+			return this.maxRange || this.mergedOptions.max_range;
 		},
 		errorMessages() {
 			return uniq(this.error_messages);
@@ -285,6 +306,45 @@ export default {
 					}
 				}
 			);
+		},
+		mergedOptions() {
+			let options = merge({}, {
+				format : 'ddd, MMM D, YYYY',
+				timepicker : false,
+				timepicker_options : {},
+				presets : [
+					{
+						label : 'Today',
+						value : [moment().startOf('day').format(), moment().endOf('day').format()]
+					},
+					{
+						label : 'Yesterday',
+						value : [moment().subtract(1, 'day').startOf('day').format(), moment().subtract(1, 'day').endOf('day').format()]
+					},
+					{
+						label : '7 Days Ago',
+						value : [moment().subtract(1, 'week').startOf('day').format(), moment().subtract(1, 'week').endOf('day').format()]
+					},
+					{
+						label : 'Last 7 Days',
+						value : [moment().subtract(6, 'days').startOf('day').format(), moment().endOf('day').format()]
+					},
+					{
+						label : 'This Month',
+						value : [moment().startOf('month').format(), moment().endOf('month').format()]
+					},
+					{
+						label : 'Last Month',
+						value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
+					}
+				]
+			}, this.options);
+			
+			if (this.options.presets && this.options.presets.length > 0) {
+				options.presets = this.options.presets;
+			}
+
+			return options;
 		}
 	},
 	methods : {
@@ -398,7 +458,7 @@ export default {
 					this.current_cursor_index = 0;
 					this.current_selection_index = 0;
 				}
-				if (this.options.timepicker) {
+				if (this.mergedOptions.timepicker) {
 					this.resetTime(this.value);
 				}
 				this.resetCursors();
@@ -559,44 +619,10 @@ export default {
 
 		// Set the current range
 		setRange(selection) {
-			switch (selection) {
-				// Today
-				case 0:
-					this.setSelectionValue(moment().startOf('day').format(), moment().endOf('day').format());
-					this.resetCursors();
-					break;
-
-				// Yesterday
-				case 1:
-					this.setSelectionValue(moment().subtract(1, 'day').startOf('day').format(), moment().subtract(1, 'day').endOf('day').format());
-					this.resetCursors();
-					break;
-
-				// 7 Days Ago
-				case 2:
-					this.setSelectionValue(moment().subtract(1, 'week').startOf('day').format(), moment().subtract(1, 'week').endOf('day').format());
-					this.resetCursors();
-					break;
-
-				// Last 7 Days
-				case 3:
-					this.setSelectionValue(moment().subtract(6, 'days').startOf('day').format(), moment().endOf('day').format());
-					this.resetCursors();
-					break;
-
-				// This Month
-				case 4:
-					this.setSelectionValue(moment().startOf('month').format(), moment().endOf('month').format());
-					this.resetCursors();
-					break;
-
-				// Last Month
-				case 5:
-					this.setSelectionValue(moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format());
-					this.resetCursors();
-					break;
-
-			}
+			console.log(this.mergedOptions.presets, selection, this.mergedOptions.presets[selection]);
+			this.setSelectionValue(this.mergedOptions.presets[selection].value[0], this.mergedOptions.presets[selection].value[1]);
+			this.resetTime(this.mergedOptions.presets[selection].value);
+			this.resetCursors();
 		},
 
 		resetTime(value) {
@@ -730,7 +756,7 @@ export default {
 					moment(this.selection_value[0]).format('YYYY-MM-DD'),
 					moment(this.selection_value[1]).format('YYYY-MM-DD')
 				];
-				if (this.options.timepicker) {
+				if (this.mergedOptions.timepicker) {
 					output_value = [
 						moment(output_value[0] + ' ' + this.time_value[0]).format(),
 						moment(output_value[1] + ' ' + this.time_value[1]).format()
@@ -744,7 +770,7 @@ export default {
 			}
 			else {
 				output_value = moment(this.selection_value[0]).format('YYYY-MM-DD');
-				if (this.options.timepicker) {
+				if (this.mergedOptions.timepicker) {
 					output_value = moment(output_value + ' ' + this.time_value[0]).format();
 				}
 			}
@@ -775,7 +801,7 @@ export default {
 		}
 
 		// Set the time value
-		if (this.options.timepicker) {
+		if (this.mergedOptions.timepicker) {
 			this.resetTime(initial_value);
 		}
 	},
