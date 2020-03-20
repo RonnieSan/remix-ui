@@ -92,7 +92,10 @@ export default {
 				return new Promise((resolve, reject) => {
 					this.$nextTick(() => {
 						Promise.all(this.rules.map((rule) => {
-							return rule(this.local_value);
+							if (typeof rule === 'function') {
+								return rule(this.local_value);
+							}
+							return 'Error while trying to validate this field';
 						}))
 							.then((errors) => {
 								// Set the errors

@@ -619,7 +619,6 @@ export default {
 
 		// Set the current range
 		setRange(selection) {
-			console.log(this.mergedOptions.presets, selection, this.mergedOptions.presets[selection]);
 			this.setSelectionValue(this.mergedOptions.presets[selection].value[0], this.mergedOptions.presets[selection].value[1]);
 			this.resetTime(this.mergedOptions.presets[selection].value);
 			this.resetCursors();
