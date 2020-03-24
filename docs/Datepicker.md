@@ -15,6 +15,7 @@ The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or 
 * **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
 * **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
 * **options.max_range** : NUMBER - The maximum range length in days the user can select.
+* **options.reset_time** : BOOLEAN - Set false to keep current time when selecting new dates.
 * **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
 
 ## Usage

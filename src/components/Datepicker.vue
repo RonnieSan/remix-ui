@@ -312,6 +312,7 @@ export default {
 				format : 'ddd, MMM D, YYYY',
 				timepicker : false,
 				timepicker_options : {},
+				reset_time : true,
 				presets : [
 					{
 						label : 'Today',
@@ -678,6 +679,10 @@ export default {
 					this.error_messages = without(this.error_messages, start_error_msg);
 					this.inputHandler(moment(start), 0);
 				}
+
+				if (this.mergedOptions.timepicker && this.mergedOptions.reset_time) {
+					this.$set(this.time_value, 0, '00:00:00');
+				}
 			}
 
 			if (end) {
@@ -691,6 +696,10 @@ export default {
 				else {
 					this.error_messages = without(this.error_messages, end_error_msg);
 					this.inputHandler(moment(end), 1);
+				}
+
+				if (this.mergedOptions.timepicker && this.mergedOptions.reset_time) {
+					this.$set(this.time_value, 1, '23:59:59');
 				}
 			}
 
@@ -712,6 +721,10 @@ export default {
 					}
 					else {
 						this.error_messages = without(this.error_messages, range_error_msg);
+					}
+
+					if (this.options.timepicker && this.options.reset_time) {
+						this.resetTime();
 					}
 				});
 			}
@@ -833,6 +846,7 @@ The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or 
 * **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
 * **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
 * **options.max_range** : NUMBER - The maximum range length in days the user can select.
+* **options.reset_time** : BOOLEAN - Set false to keep current time when selecting new dates.
 * **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
 
 ## Usage
