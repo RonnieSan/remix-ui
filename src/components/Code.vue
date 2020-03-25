@@ -89,14 +89,20 @@ export default {
 		});
 
 		// Option defaults
-		this.settings.fontFamily          = this.options.fontFamily || 'Consolas';
-		this.settings.fontSize            = this.options.fontSize || 14;
 		this.settings.highlightActiveLine = this.options.highlightActiveLine || false;
 		this.settings.highlightGutterLine = this.options.highlightGutterLine || false;
 		this.settings.minLines            = this.options.minLines || 8;
 		this.settings.maxLines            = this.options.maxLines || Infinity;
 		this.settings.printMargin         = this.options.printMargin || false;
 		this.settings.tabSize             = this.options.tabSize || 2;
+
+		// Set fonts
+		if (this.options.fontFamily) {
+			this.settings.fontFamily = this.options.fontFamily;
+		}
+		if (this.options.fontSize) {
+			this.settings.fontSize = this.options.fontSize;
+		}
 
 		// Hide cursor
 		if (this.options.cursor === 'none' || this.options.cursor === false) {
