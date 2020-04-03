@@ -104,7 +104,7 @@ module.exports = (env) => {
 		},
 		plugins : [
 			new VueLoaderPlugin(),
-			// new CleanWebpackPlugin(['dist']),
+			new CleanWebpackPlugin(['dist']),
 			new LodashModuleReplacementPlugin({
 				caching     : true,
 				cloning     : true,

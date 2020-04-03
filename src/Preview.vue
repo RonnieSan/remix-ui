@@ -428,7 +428,7 @@
 
 							<h2>Tabs</h2>
 
-							<tabs :active-tab-id="tab_id" @change="(id) => {tab_id = id}">
+							<tabs :active-tab-id="tab_id">
 								<tab label="One" tab-id="one">
 									<div class="padded">
 										<p>Tab one is open.</p>

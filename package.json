@@ -1,6 +1,6 @@
 {
   "name": "remix-ui",
-  "version": "1.14.5",
+  "version": "1.14.6",
   "description": "A UI kit for VueJS",
   "main": "dist/index.js",
   "scripts": {
