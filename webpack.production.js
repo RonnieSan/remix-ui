@@ -113,7 +113,6 @@ module.exports = (env) => {
 				paths       : true,
 				shorthands  : true
 			}),
-			new webpack.NamedModulesPlugin(),
 			new BundleAnalyzerPlugin({
 				analyzermode : 'static',
 				openAnalyzer : true
