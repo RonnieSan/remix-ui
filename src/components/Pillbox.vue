@@ -109,11 +109,23 @@ export default {
 						vm.$emit('update:inputValue', vm.input_value);
 					},
 					keydown(event) {
-						vm.keydownHandler(event);
+						let use_default;
+						if (vm.$listeners.keydown) {
+							use_default = vm.$listeners.keydown(event);
+						}
+						if (use_default !== false) {
+							vm.keydownHandler(event);
+						}
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

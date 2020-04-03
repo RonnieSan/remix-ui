@@ -58,13 +58,6 @@ export default {
 		};
 	},
 	computed : {
-		listeners() {
-			const vm = this;
-			return Object.assign(
-				{},
-				this.$listeners
-			);
-		},
 		settings() {
 			return Object.assign({
 				min       : 0,

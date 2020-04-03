@@ -184,7 +184,6 @@
 											name="code"
 											id="code"
 											v-model="code_value"
-											:options="{fontFamily : 'Courier New'}"
 											max-height="300px"
 										/>
 									</div>
@@ -357,6 +356,7 @@
 											name="slider"
 											v-model="slider_value"
 											:options="slider_options"
+											allow-same
 										/>
 									</div>
 								</div>
@@ -491,12 +491,12 @@ export default {
 			multi_text_value : [],
 			multi_select_value : [],
 			slider_value : [
-				1,
-				8
+				25,
+				75
 			],
 			slider_options : {
-				min       : 1,
-				max       : 8,
+				min       : 0,
+				max       : 100,
 				increment : 1,
 				formatter : false,
 				snap      : true

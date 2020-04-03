@@ -81,7 +81,13 @@ export default {
 						vm.validate();
 					},
 					keydown(event) {
-						vm.shortcut(event);
+						let use_default;
+						if (vm.$listeners.keydown) {
+							use_default = vm.$listeners.keydown(event);
+						}
+						if (use_default !== false) {
+							vm.shortcut(event);
+						}
 					}
 				}
 			);
@@ -92,19 +98,35 @@ export default {
 			this.$emit('input', event.target.value);
 		},
 		shortcut(event) {
+			let ta = event.target;
 			switch (event.key) {
 
 				// Tab
 				case 'Tab':
 					event.preventDefault();
-					this.doCommand(event, '\t');
+					let new_cursor_position;
+					if (event.shiftKey) {
+						new_cursor_position = ta.selectionStart - '\t'.length;
+						if (ta.value.substring(new_cursor_position, ta.selectionStart) === '\t') {
+							ta.value = ta.value.substring(0, new_cursor_position) + ta.value.substring(ta.selectionStart, ta.value.length);
+							ta.selectionStart = new_cursor_position;
+							ta.selectionEnd   = new_cursor_position;
+						}
+					}
+					else {
+						new_cursor_position = ta.selectionStart + '\t'.length;
+						ta.value = ta.value.substring(0, ta.selectionStart) + '\t' + ta.value.substring(ta.selectionStart, ta.value.length);
+						ta.selectionStart = new_cursor_position;
+						ta.selectionEnd   = new_cursor_position;
+					}
+					ta.focus();
 					break;
 
 				// Ctrl + f
-				case 'F':
+				case 'f':
 					if (event.ctrlKey && this.mode === 'compact') {
 						event.preventDefault();
-						this.mode = 'fullscreen';
+						vm.mode = 'fullscreen';
 					}
 					break;
 			}

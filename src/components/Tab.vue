@@ -34,12 +34,18 @@ export default {
 			let vm = this;
 			return Object.assign(
 				{},
+				this.$listeners,
 				{
 					click(event) {
-						vm.tab_group.selectTab(vm);
+						let use_default;
+						if (vm.$listeners.click) {
+							use_default = vm.$listeners.click(event);
+						}
+						if (use_default !== false) {
+							vm.tab_group.selectTab(vm);
+						}
 					}
-				},
-				vm.$listeners
+				}
 			);
 		}
 	},

@@ -291,18 +291,36 @@ export default {
 				this.$listeners,
 				{
 					click(event) {
-						vm.openCalendar(event);
+						let use_default;
+						if (vm.$listeners.click) {
+							use_default = vm.$listeners.click(event);
+						}
+						if (use_default !== false) {
+							vm.openCalendar(event);
+						}
 					},
 					keydown(event) {
-						vm.keydownHandler(event);
+						let use_default;
+						if (vm.$listeners.keydown) {
+							use_default = vm.$listeners.keydown(event);
+						}
+						if (use_default !== false) {
+							vm.keydownHandler(event);
+						}
 					},
 					input(event) {
 						vm.dirty = true;
 						vm.validate();
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

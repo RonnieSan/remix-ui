@@ -22,8 +22,7 @@
 				name="files"
 				:disabled="disabled"
 				:accept="accept"
-				v-on="$listeners"
-				@change="select($event)"
+				v-on="listeners"
 			/>
 		</form>
 	</div>
@@ -65,6 +64,28 @@ export default {
 				return 'loading';
 			}
 			return 'dots-horizontal';
+		},
+		listeners() {
+			let vm = this;
+			return Object.assign(
+				{},
+				this.$listeners,
+				{
+					change(event) {
+						let use_default;
+						if (vm.$listeners.change) {
+							use_default = vm.$listeners.change(event);
+						}
+						if (use_default !== false) {
+							vm.select(event);
+						}
+					},
+					input(event) {
+						vm.dirty = true;
+						vm.validate();
+					}
+				}
+			);
 		}
 	},
 	methods : {

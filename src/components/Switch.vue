@@ -56,11 +56,23 @@ export default {
 				this.$listeners,
 				{
 					change(event) {
-						vm.dirty = true;
+						let use_default;
+						if (vm.$listeners.change) {
+							use_default = vm.$listeners.change(event);
+						}
+						if (use_default !== false) {
+							vm.dirty = true;
+						}
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

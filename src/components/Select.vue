@@ -71,8 +71,14 @@ export default {
 						vm.validate();
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

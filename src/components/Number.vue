@@ -49,14 +49,20 @@ export default {
 				{},
 				this.$listeners,
 				{
-					input: function(event) {
+					input(event) {
 						vm.dirty = true;
 						vm.$emit('input', event.target.value);
 						vm.validate();
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

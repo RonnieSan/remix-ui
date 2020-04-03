@@ -70,21 +70,34 @@ export default {
 			let vm = this;
 			return Object.assign(
 				{},
-				vm.$listeners,
+				this.$listeners,
 				{
 					input(event) {
 						vm.dirty = true;
+						vm.validate();
 					},
 					keyup(event) {
-						if (event.key === 'Tab') {
-							setTimeout(() => {
-								vm.$refs.input.select();
-							});
+						let use_default;
+						if (vm.$listeners.keyup) {
+							use_default = vm.$listeners.keyup(event);
+						}
+						if (use_default !== false) {
+							if (event.key === 'Tab') {
+								setTimeout(() => {
+									vm.$refs.input.select();
+								});
+							}
 						}
 					},
 					blur(event) {
-						vm.touched = true;
-						vm.validate();
+						let use_default;
+						if (vm.$listeners.blur) {
+							use_default = vm.$listeners.blur(event);
+						}
+						if (use_default !== false) {
+							vm.touched = true;
+							vm.validate();
+						}
 					}
 				}
 			);

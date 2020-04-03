@@ -104,7 +104,13 @@ export default {
 						vm.inputHandler(event);
 					},
 					keypress(event) {
-						vm.keypressHandler(event);
+						let use_default;
+						if (vm.$listeners.keypress) {
+							use_default = vm.$listeners.keypress(event);
+						}
+						if (use_default !== false) {
+							vm.keypressHandler(event);
+						}
 					}
 				}
 			);
