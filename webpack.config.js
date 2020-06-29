@@ -11,6 +11,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+	devtool : 'source-map',
 	mode : 'development',
 	entry : './src/preview.js',
 	output : {
@@ -36,7 +37,25 @@ module.exports = {
 		rules : [
 			{
 				test : /\.js$/,
-				loader : 'babel-loader',
+				use : {
+					loader : 'babel-loader',
+					options : {
+						presets : [
+							[
+								'@babel/preset-env',
+								{
+									targets : {
+										chrome : '52',
+										ie : '11',
+										safari : '7'
+									}, 
+									useBuiltIns : 'usage',
+									corejs : 3
+								}
+							]
+						]
+					}
+				},
 				exclude : file => (/node_modules/.test(file) && !/\.vue\.js/.test(file)),
 				include : [
 					path.resolve(__dirname, 'src')

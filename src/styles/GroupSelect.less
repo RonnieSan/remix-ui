@@ -115,3 +115,11 @@
 		background-color: fade(@control-bkg-color, 90%);
 	}
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	/* IE10+ CSS styles go here */
+	.group-select-wrapper .group-column,
+	.group-select-wrapper .input-controls .control-buttons {
+		flex : 1 0 auto;	
+	}
+}

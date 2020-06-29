@@ -69,6 +69,13 @@ export const rules = {
 		};
 	},
 
+	// Convenience rule for allowing a boolean false
+	notNil(message) {
+		return this.required(message, {
+			allow_false : true
+		});
+	},
+
 	// The field has a minimum length required
 	minLength(min_length, message) {
 		return function(value) {

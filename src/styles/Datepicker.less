@@ -389,3 +389,15 @@
 		}
 	}
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	/* IE10+ CSS styles go here */
+	.datepicker input[type='text'],
+	.datepicker .display,
+	.datepicker .presets ul,
+	.datepicker .presets ul li,
+	.datepicker .calendar .calendar-body .day
+	.datepicker .time-inputs ::v-deep .timepicker {
+		flex: 1 0 auto;
+	}
+}

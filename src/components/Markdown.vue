@@ -38,10 +38,8 @@
 import formField from '../mixins/formField';
 import Icon from './Icon';
 import MarkdownIt from 'markdown-it';
-import MarkdownItAttrs from 'markdown-it-attrs';
 
 const markdown = new MarkdownIt();
-markdown.use(MarkdownItAttrs);
 
 export default {
 	props : {
