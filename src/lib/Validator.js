@@ -166,7 +166,7 @@ export default class Validator {
 	// Add a new field to the validator
 	addField(field_validator) {
 		const id = uniqueId();
-		this.fields[id] = (field_validator);
+		this.fields[id] = field_validator;
 		return id;
 	}
 
@@ -177,8 +177,8 @@ export default class Validator {
 
 	// Check validity of all fields
 	isValid() {
-		return every(keys(this.fields, (name) => {
-			return (this.fields[name].errors.length === 0);
+		return every(keys(this.fields, (id) => {
+			return (this.fields[id].errors.length === 0);
 		}));
 	}
 
@@ -192,12 +192,12 @@ export default class Validator {
 	// Run validation on all fields
 	validate(group_name) {
 		let field_validations = [];
-		forIn(this.fields, (field, name) => {
+		forIn(this.fields, (field, id) => {
 			if (group_name && field.group === group_name) {
-				field_validations.push(field.validate(true));
+				field_validations.push(field.validate());
 			}
 			else {
-				field_validations.push(field.validate(true));
+				field_validations.push(field.validate());
 			}
 		});
 

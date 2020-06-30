@@ -120,7 +120,7 @@ export default {
 	},
 	created() {
 		// Add a reference to this field on the validator
-		this.id = this.validator.addField(this, this.group);
+		this.id = this.validator.addField(this);
 	},
 	beforeDestroy() {
 		if (this.id) {

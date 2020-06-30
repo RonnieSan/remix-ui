@@ -44,8 +44,8 @@ export default {
 	},
 	methods : {
 		// Run the validator
-		validate() {
-			return this.validator.validate()
+		validate(group_name) {
+			return this.validator.validate(group_name)
 				.then((is_valid) => {
 					this.errors = [];
 					return true;
