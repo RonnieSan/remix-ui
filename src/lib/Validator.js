@@ -165,7 +165,7 @@ export default class Validator {
 
 	// Add a new field to the validator
 	addField(field_validator) {
-		const id = uniqueId();
+		const id = uniqueId('field_');
 		this.fields[id] = field_validator;
 		return id;
 	}
