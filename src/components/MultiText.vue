@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import uuid from 'uuid';
+import { uuid } from 'uuidv4';
 import formField from '../mixins/formField';
 import { isEqual, map, merge } from 'lodash-es';
 import Sortable from 'sortablejs';
@@ -123,7 +123,7 @@ export default {
 			if (!isEqual(new_value, map(this.local_value, 'value'))) {
 				this.local_value = new_value.map((item, index) => {
 					return {
-						key   : uuid.v4(),
+						key   : uuid(),
 						value : item
 					};
 				});
@@ -137,7 +137,7 @@ export default {
 		addKeys(value) {
 			let new_value = value.map((item, index) => {
 				return {
-					key   : uuid.v4(),
+					key   : uuid(),
 					value : item
 				};
 			});
@@ -145,7 +145,7 @@ export default {
 		},
 		addItem() {
 			if (!this.disabled) {
-				let key = uuid.v4();
+				let key = uuid();
 				this.local_value.push({
 					key   : key,
 					value : ''
