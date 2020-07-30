@@ -24,7 +24,8 @@ export default {
 		disabled : {
 			type : Boolean,
 			default : false
-		}
+		},
+		tabClass : String
 	},
 	data() {
 		return {
@@ -56,9 +57,6 @@ export default {
 	},
 	created() {
 		this.tab_group.addTab(this);
-	},
-	mounted() {
-		this.class_name = this.$el.className.replace('tab-content', '').trim();
 	},
 	beforeDestroy() {
 		this.tab_group.removeTab(this.tabId);

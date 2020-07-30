@@ -4,7 +4,7 @@
 			<div class="tab-row">
 				<div
 					v-for="tab in tabs"
-					:class="['tab', {'active' : active_tab_id === tab.tabId, 'disabled' : tab.disabled}, tab.class_name]"
+					:class="['tab', {'active' : active_tab_id === tab.tabId, 'disabled' : tab.disabled}, tab.tabClass]"
 					v-on="tab.listeners"
 				>
 					<div class="label" v-html="tab.label"></div>
