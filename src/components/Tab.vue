@@ -1,6 +1,6 @@
 <template>
 	<div
-		v-if="tab_group.active_tab_id === tabId"
+		v-if="tab_group.active_tab_id === tabId && !noContent"
 		class="tab-content"
 	>
 		<slot v-bind="self"></slot>
@@ -21,11 +21,15 @@ export default {
 			type : String,
 			required : true
 		},
+		tabClass : String,
 		disabled : {
 			type : Boolean,
 			default : false
 		},
-		tabClass : String
+		noContent : {
+			type : Boolean,
+			default : false
+		}
 	},
 	data() {
 		return {

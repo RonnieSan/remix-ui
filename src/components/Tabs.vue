@@ -43,7 +43,7 @@ export default {
 			this.tabs.push(tab);
 		},
 		selectTab(tab) {
-			if (!tab.disabled) {
+			if (!tab.disabled && !tab.noContent) {
 				this.active_tab_id = tab.tabId;
 				this.$emit('change', this.active_tab_id);
 				this.$nextTick(() => {

@@ -439,9 +439,10 @@
 										<p>Tab two is open.</p>
 									</div>
 								</tab>
-								<tab label="Disabled" tab-id="three" disabled>
+								<tab label="Button" tab-id="button" no-content @click="toggleDisabledTab()"/>
+								<tab :label="tab_disabled ? 'Disabled' : 'Enabled'" tab-id="three" :disabled="tab_disabled">
 									<div class="padded">
-										<p>This tab is disabled</p>
+										<p>This tab is {{tab_disabled ? 'disabled' : 'enabled'}}.</p>
 									</div>
 								</tab>
 							</tabs>
@@ -558,6 +559,7 @@ export default {
 				{target : '#three', label : 'Three'}
 			],
 			tab_id : 'one',
+			tab_disabled : true,
 			is_loading : false
 		};
 	},
@@ -641,6 +643,18 @@ export default {
 						this.$toast.error('You selected CANCEL.');
 					}
 				});
+		},
+
+		toggleDisabledTab() {
+			this.tab_disabled = !this.tab_disabled;
+			this.$nextTick(() => {
+				if (this.tab_disabled) {
+					this.$toast.error('The fourth tab has been disabled.');
+				}
+				else {
+					this.$toast.success('The fourth tab is now enabled.');
+				}
+			});
 		},
 
 		buttonLoader() {
