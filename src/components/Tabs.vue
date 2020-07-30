@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs">
+	<div :class="['tabs', classProp]">
 		<div class="tab-bar">
 			<div class="tab-row">
 				<div
