@@ -429,7 +429,7 @@
 							<h2>Tabs</h2>
 
 							<tabs class="classic" :active-tab-id="tab_id">
-								<tab label="One" tab-id="one">
+								<tab class="one-off" label="One" tab-id="one">
 									<div class="padded">
 										<p>Tab one is open.</p>
 									</div>

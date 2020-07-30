@@ -26,6 +26,11 @@ export default {
 			default : false
 		}
 	},
+	data() {
+		return {
+			class_name : null
+		};
+	},
 	computed : {
 		self() {
 			return this;
@@ -51,6 +56,9 @@ export default {
 	},
 	created() {
 		this.tab_group.addTab(this);
+	},
+	mounted() {
+		this.class_name = this.$el.className.replace('tab-content', '').trim();
 	},
 	beforeDestroy() {
 		this.tab_group.removeTab(this.tabId);
