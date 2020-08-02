@@ -149,7 +149,7 @@ export const rules = {
 	}
 };
 
-export default class Validator {
+class Validator {
 	constructor(options = {}) {
 		// Create a container for the fields
 		this.fields = {};
@@ -213,4 +213,11 @@ export default class Validator {
 				}
 			});
 	}
-}
+};
+
+// Apply rules as static methods on the validator
+forIn(rules, (rule, name) => {
+	Validator[name] = rule;
+});
+
+export default Validator;

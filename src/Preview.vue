@@ -14,6 +14,21 @@
 						<column>
 							<h1>Remix UI Components</h1>
 							<hr>
+							<h2>Layout Components</h2>
+							<grid>
+								<row class="example">
+									<column>Column</column>
+									<column>Column</column>
+									<column>Column</column>
+								</row>
+								<row class="example">
+									<column>Column</column>
+									<column>Column</column>
+									<column>Column</column>
+								</row>
+							</grid>
+
+							<hr>
 							<h2>Form Components</h2>
 							
 							<div class="control-group">
@@ -681,6 +696,20 @@ export default {
 
 #wrapper {
 	padding: 50px 0;
+}
+
+.example {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	> div {
+		background-color: @gray-25;
+		flex: 1 0;
+		height: 200px;
+		min-width: 150px;
+		padding: 10px 15px;
+	}
 }
 
 .control-group {

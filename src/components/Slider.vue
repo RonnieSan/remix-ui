@@ -31,6 +31,7 @@
 <script>
 import { debounce, isEqual } from 'lodash-es';
 import formField from '../mixins/formField';
+import ResizeSensor from '../lib/ResizeSensor';
 
 export default {
 	props : {
@@ -54,7 +55,8 @@ export default {
 			max_tooltip_left    : 0,
 			merged_tooltip_left : '50%',
 			merged_tooltip      : false,
-			selected_handle     : null
+			selected_handle     : null,
+			resize_sensor       : null
 		};
 	},
 	computed : {
@@ -346,7 +348,7 @@ export default {
 		this.selected_handle = this.$refs.min;
 		window.addEventListener('mouseup', this.mouseupHandler);
 		window.addEventListener('touchend', this.mouseupHandler);
-		window.addEventListener('resize', this.resizeHandler);
+		this.resize_sensor = new ResizeSensor(this.$el, this.resizeHandler);
 		this.$nextTick(() => {
 			this.setHandlePosition();
 		});
@@ -355,6 +357,7 @@ export default {
 		window.removeEventListener('mouseup', this.mouseupHandler);
 		window.removeEventListener('touchend', this.mouseupHandler);
 		window.removeEventListener('resize', this.resizeHandler);
+		this.resize_sensor.detach();
 	}
 };
 </script>

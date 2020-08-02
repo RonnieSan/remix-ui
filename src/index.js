@@ -37,10 +37,11 @@ import rValidator from './components/Validator';
 import Icon from './components/Icon';
 
 // Import layout elements
-import Spacer from './components/Spacer';
-import Column from './components/Column';
-import Row from './components/Row';
 import Grid from './components/Grid';
+import Row from './components/Row';
+import Column from './components/Column';
+import Gutter from './components/Gutter';
+import Spacer from './components/Spacer';
 
 // Import utilities
 import Autocomplete from './components/Autocomplete';
@@ -51,7 +52,7 @@ import Tabs from './components/Tabs';
 // Import libraries
 import Msg from './lib/Msg';
 import Toast from './lib/Toast';
-import Validator from './lib/Validator';
+import Validator, { rules } from './lib/Validator';
 
 // Export components
 const modules = {
@@ -83,11 +84,12 @@ const modules = {
 	rToggle,
 	rValidation,
 	rValidator,
+	Icon,
 	Grid,
 	Row,
 	Column,
+	Gutter,
 	Spacer,
-	Icon,
 	Autocomplete,
 	Modal,
 	Tab,
@@ -124,18 +126,20 @@ export {
 	rToggle,
 	rValidation,
 	rValidator,
+	Icon,
 	Grid,
 	Row,
 	Column,
+	Gutter,
 	Spacer,
-	Icon,
 	Autocomplete,
 	Modal,
 	Tab,
 	Tabs,
 	Msg,
 	Toast,
-	Validator
+	Validator,
+	rules
 };
 
 // Export the package
@@ -203,10 +207,11 @@ export default {
 
 			Vue.component('icon', Icon);
 			
-			Vue.component('spacer', Spacer);
-			Vue.component('column', Column);
-			Vue.component('row', Row);
 			Vue.component('grid', Grid);
+			Vue.component('row', Row);
+			Vue.component('column', Column);
+			Vue.component('gutter', Gutter);
+			Vue.component('spacer', Spacer);
 			
 			Vue.component('autocomplete', Autocomplete);
 			Vue.component('modal', Modal);
