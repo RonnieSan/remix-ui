@@ -1,6 +1,6 @@
 {
   "name": "remix-ui",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "A UI kit for VueJS",
   "main": "dist/index.js",
   "scripts": {
@@ -12,10 +12,10 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
-    "@mdi/font": "^5.4.55",
+    "@mdi/font": "^5.5.55",
     "autoprefixer": "^8.6.5",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -44,7 +44,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.0",
+    "@babel/runtime": "^7.11.2",
     "brace": "^0.11.1",
     "core-js": "^3.6.5",
     "css-element-queries": "^1.2.3",
@@ -55,10 +55,10 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "postcss-flexbox": "^1.0.3",
-    "remix-css": "^1.2.0",
-    "remix-css-theme-default": "^0.1.6",
+    "remix-css": "^1.4.1",
+    "remix-css-theme-default": "^1.0.1",
     "sortablejs": "^1.10.2",
-    "uuidv4": "^6.2.1",
+    "uuidv4": "^6.2.2",
     "v-money": "^0.8.0",
     "vue": "^2.6.11",
     "vue-clickaway": "^2.1.0",

@@ -33,6 +33,11 @@
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		width: 100%;
 
+		&:focus {
+			box-shadow: 0;
+			outline: 0;
+		}
+
 		.handle {
 			cursor: ns-resize;
 			text-align: center;

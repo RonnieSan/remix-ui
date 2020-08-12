@@ -2,6 +2,8 @@
 	<div
 		:class="['multi-select-wrapper', {'disabled' : disabled}]"
 		v-on-clickaway="closeList"
+		tabindex="0"
+		@keydown="keypressHandler"
 	>
 		<div class="display" @click="toggleList">
 			<span v-if="value.length === 0" class="none-selected">{{placeholder}}</span>
@@ -187,6 +189,23 @@ export default {
 		selectNone() {
 			this.local_value = [];
 			this.$emit('input', this.local_value);
+		},
+		keypressHandler(event) {
+			let key = event.keyCode || event.which;
+			if (!this.is_open && key === 32) {
+				event.preventDefault();
+				this.is_open = true;
+
+				this.$nextTick(() => {
+					this.$refs.list.querySelector('input').focus();
+				});
+			}
+			if (this.is_open && key === 27) {
+				event.preventDefault();
+				this.is_open = false;
+
+				this.$el.focus();
+			}
 		}
 	},
 	components : {

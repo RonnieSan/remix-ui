@@ -14,21 +14,6 @@
 						<column>
 							<h1>Remix UI Components</h1>
 							<hr>
-							<h2>Layout Components</h2>
-							<grid>
-								<row class="example">
-									<column>Column</column>
-									<column>Column</column>
-									<column>Column</column>
-								</row>
-								<row class="example">
-									<column>Column</column>
-									<column>Column</column>
-									<column>Column</column>
-								</row>
-							</grid>
-
-							<hr>
 							<h2>Form Components</h2>
 							
 							<div class="control-group">

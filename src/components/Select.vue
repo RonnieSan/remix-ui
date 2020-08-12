@@ -2,7 +2,7 @@
 	<div :class="['select-wrapper', {'disabled' : disabled}]">
 		<select
 			ref="input"
-			:class="{'default' : model === ''}"
+			:class="{'empty' : model === emptyValue}"
 			:name="name"
 			v-model="selected_option"
 			v-on="listeners"

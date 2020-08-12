@@ -36,7 +36,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="input-row add" @click="addItem">
+		<div
+			class="input-row add"
+			tabindex="0"
+			@click="addItem"
+			@keypress="keypressHandler"
+		>
 			<div class="input-box">{{addText}}</div>
 			<div class="button icon add">
 				<svg viewBox="0 0 24 24">
@@ -167,6 +172,13 @@ export default {
 		},
 		sortItems(values) {
 			this.$emit('input', values);
+		},
+		keypressHandler(event) {
+			let key = event.keyCode || event.which;
+			if (key === 32) {
+				event.preventDefault();
+				this.addItem();
+			}
 		}
 	},
 	directives : {

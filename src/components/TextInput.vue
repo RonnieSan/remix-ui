@@ -127,6 +127,9 @@ export default {
 		focus() {
 			this.$refs.input.focus();
 		},
+		select() {
+			this.$refs.input.select();
+		},
 		inputHandler(event, value) {
 			if (event) {
 				value = event.target.value;

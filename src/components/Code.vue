@@ -137,6 +137,14 @@ export default {
 			});
 		}
 
+		// Set focus and blur listeners
+		if (this.$listeners.focus) {
+			this.editor.on('focus', this.$listeners.focus);
+		}
+		if (this.$listeners.blur) {
+			this.editor.on('blur', this.$listeners.blur);
+		}
+
 	}
 };
 </script>

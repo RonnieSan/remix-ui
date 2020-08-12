@@ -1,5 +1,5 @@
 <template>
-	<form ref="form" :method="method" :action="action" @submit.prevent="submitHandler" novalidate>
+	<form ref="form" :method="method" :action="action" @submit.prevent="submitHandler" :autocomplete="autocomplete" novalidate>
 		<slot></slot>
 	</form>
 </template>
@@ -16,6 +16,7 @@ export default {
 	props : {
 		action : String,
 		method : String,
+		autocomplete : String,
 		validator: {
 			type: Object,
 			default () {
