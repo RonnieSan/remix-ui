@@ -367,7 +367,7 @@
 								<div class="controls">
 									<div class="field fit">
 										<label class="control-label">Button:</label><br />
-										<r-button @click="tab_id = 'two'">No Action {{tab_id}}</r-button>
+										<r-button>No Action</r-button>
 									</div>
 									<div class="field fit">
 										<label class="control-label">Button with Icon:</label><br />
