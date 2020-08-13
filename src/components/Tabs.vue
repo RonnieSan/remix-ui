@@ -4,7 +4,8 @@
 			<div class="tab-row">
 				<div
 					v-for="tab in tabs"
-					:class="['tab', {'active' : active_tab_id === tab.tabId, 'disabled' : tab.disabled}, tab.tabClass]"
+					:key="tab.tabId"
+					:class="['tab', {'active' : activeTabId === tab.tabId, 'disabled' : tab.disabled}, tab.tabClass]"
 					v-on="tab.listeners"
 				>
 					<div class="label" v-html="tab.label"></div>
@@ -27,15 +28,25 @@ export default {
 	props : {
 		activeTabId : String
 	},
+	model : {
+		prop  : 'activeTabId',
+		event : 'change'
+	},
 	data() {
 		return {
-			tabs : [],
-			active_tab_id : this.activeTabId
+			tabs : []
 		};
 	},
 	watch : {
-		activeTabId(new_value) {
-			this.active_tab_id = new_value;
+		activeTabId : {
+			handler(new_value, old_value) {
+				let new_tab = this.tabs.find(tab => (tab.tabId === new_value));
+				let old_tab = this.tabs.find(tab => (tab.tabId === old_value));
+				if (new_value !== old_value) {
+					this.selectTab(new_tab);
+				}
+			},
+			immediate : true
 		}
 	},
 	methods : {
@@ -43,11 +54,12 @@ export default {
 			this.tabs.push(tab);
 		},
 		selectTab(tab) {
-			if (!tab.disabled && !tab.noContent) {
-				this.active_tab_id = tab.tabId;
-				this.$emit('change', this.active_tab_id);
+			if (tab && !tab.disabled && !tab.noContent) {
+				this.$emit('change', tab.tabId);
 				this.$nextTick(() => {
-					tab.$emit('open');
+					if (tab.$emit) {
+						tab.$emit('open');
+					}
 				});
 			}
 			else {
@@ -58,14 +70,6 @@ export default {
 			this.tabs = this.tabs.filter((tab) => {
 				return (tab.tabId !== tab_id);
 			});
-		}
-	},
-	mounted() {
-		let default_tab = this.tabs.find((tab) => {
-			return tab.tabId === this.activeTabId;
-		});
-		if (default_tab) {
-			this.selectTab(default_tab);
 		}
 	}
 };

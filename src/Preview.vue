@@ -367,7 +367,7 @@
 								<div class="controls">
 									<div class="field fit">
 										<label class="control-label">Button:</label><br />
-										<r-button>No Action</r-button>
+										<r-button @click="tab_id = 'two'">No Action {{tab_id}}</r-button>
 									</div>
 									<div class="field fit">
 										<label class="control-label">Button with Icon:</label><br />
@@ -428,7 +428,7 @@
 
 							<h2>Tabs</h2>
 
-							<tabs class="classic" :active-tab-id="tab_id">
+							<tabs class="classic" :active-tab-id="tab_id" v-model="tab_id">
 								<tab tab-class="one-off" label="One" tab-id="one">
 									<div class="padded">
 										<p>Tab one is open.</p>
