@@ -226,14 +226,14 @@ export default {
 
 				// Extract the parsed value
 				value = value.map((item) => {
-					let parsed_value = item.value;
 					try {
+						let parsed_value = item.value;
 						parsed_value = JSON.parse(item.value);
+						return parsed_value;
 					}
 					catch (err) {
-						// Do nothing
+						return item;
 					}
-					return parsed_value;
 				});
 				this.$emit('input', value);
 			});

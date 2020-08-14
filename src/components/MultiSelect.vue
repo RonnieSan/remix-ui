@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { some } from 'lodash';
+import { flatten, some } from 'lodash';
 import Checklist from './Checklist';
 import formField from '../mixins/formField';
 import { mixin as clickaway } from 'vue-clickaway';
@@ -124,6 +124,30 @@ export default {
 		local_value(new_value) {
 			this.dirty = true;
 			this.$emit('input', new_value);
+		},
+		options : {
+			handler(new_value, old_value) {
+				let options = new_value.filter((group) => {
+					return Array.isArray(group);
+				});
+				if (options.length > 0) {
+					options = flatten(options);
+				}
+				else {
+					options = new_value;
+				}
+				options = options.map((option) => {
+					if (option instanceof Object) {
+						return option.value;
+					}
+					return option;
+				});
+
+				this.local_value = this.local_value.filter((value) => {
+					return options.indexOf(value) > -1;
+				});
+			},
+			deep : true
 		}
 	},
 	methods : {

@@ -1,14 +1,14 @@
 <template>
 	<div :class="['checklist', {'disabled' : disabled}]">
-		<div class="option" v-for="(option, index) in options">
+		<div class="option" v-for="(option, index) in optionList">
 			<r-checkbox
 				:ref="'input_' + index"
+				v-model="localModel"
 				:name="name"
+				:value="option.value"
 				:disabled="disabled"
-				:model="local_value"
-				:value="(option.value !== undefined) ? option.value : option"
 				v-on="listeners"
-			><span v-html="(option.label !== undefined) ? option.label : option"/></r-checkbox>
+			><span v-html="option.label"/></r-checkbox>
 		</div>
 	</div>
 </template>
@@ -18,6 +18,9 @@ import rCheckbox from './Checkbox';
 import formField from '../mixins/formField';
 
 export default {
+	components : {
+		rCheckbox
+	},
 	props : {
 		model : {
 			type : Array,
@@ -32,16 +35,19 @@ export default {
 		},
 		disabled : Boolean
 	},
-	data() {
-		return {
-			local_value : this.model
-		};
-	},
 	model : {
 		prop  : 'model',
 		event : 'change'
 	},
 	computed : {
+		localModel : {
+			get() {
+				return this.model;
+			},
+			set(new_value) {
+				this.$emit('change', new_value);
+			}
+		},
 		listeners() {
 			let vm = this;
 			return Object.assign(
@@ -54,8 +60,8 @@ export default {
 							use_default = vm.$listeners.change(event);
 						}
 						if (use_default !== false) {
+							vm.$emit('change', event);
 							vm.dirty = true;
-							vm.changeHandler(event);
 							vm.validate();
 						}
 					},
@@ -71,26 +77,28 @@ export default {
 					}
 				}
 			);
+		},
+		optionList() {
+			return this.options.map((option) => {
+				if (option instanceof Object) {
+					return option;
+				}
+				else {
+					return {
+						label : option,
+						value : option
+					};
+				}
+			});
 		}
 	},
 	watch : {
-		model : {
-			handler(new_value) {
-				if (new_value !== this.local_value) {
-					this.local_value = new_value;
-				}
-			},
-			deep : true
+		optionList(new_value, old_value) {
+			let option_values = new_value.map(option => option.value);
+			this.localModel = this.localModel.filter((value) => {
+				return option_values.indexOf(value) > -1;
+			});
 		}
-	},
-	methods : {
-		changeHandler(value) {
-			this.local_value = value;
-			this.$emit('change', this.local_value);
-		}
-	},
-	components : {
-		rCheckbox
 	},
 	mixins : [
 		formField

@@ -3,9 +3,9 @@
 		<span class="radio">
 			<input type="radio"
 				ref="input"
+				v-model="localModel"
 				:name="name"
 				:value="value"
-				:checked="is_checked"
 				:disabled="disabled"
 				v-on="listeners"
 			>
@@ -20,13 +20,22 @@ import formField from '../mixins/formField';
 export default {
 	props : {
 		model    : [String, Boolean, Number, Object],
-		name     : String,
 		value    : [String, Boolean, Number, Object],
+		name     : String,
 		disabled : Boolean
 	},
+	model : {
+		prop  : 'model',
+		event : 'change'
+	},
 	computed : {
-		is_checked() {
-			return this.model === this.value;
+		localModel : {
+			get() {
+				return this.model;
+			},
+			set(new_value) {
+				this.$emit('change', new_value);
+			}
 		},
 		listeners() {
 			let vm = this;
@@ -58,10 +67,6 @@ export default {
 				}
 			);
 		}
-	},
-	model : {
-		prop  : 'model',
-		event : 'change'
 	},
 	mixins : [
 		formField

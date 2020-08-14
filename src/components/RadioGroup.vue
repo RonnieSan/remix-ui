@@ -1,14 +1,13 @@
 <template>
 	<div :class="['radio-group', {'disabled' : disabled}]" tabindex="-1">
-		<div class="option" v-for="(option, index) in options">
+		<div class="option" v-for="(option, index) in optionList" :key="index">
 			<r-radio
 				ref="input"
+				v-model="localValue"
 				:name="name"
-				:value="(option.value !== undefined) ? option.value : option"
-				:model="value"
+				:value="option.value"
 				:disabled="disabled"
-				@change="changeHandler"
-			><span v-html="(option.label !== undefined) ? option.label : option"/></r-radio>
+			><span v-html="option.label"/></r-radio>
 		</div>
 	</div>
 </template>
@@ -18,16 +17,14 @@ import rRadio from './Radio';
 import formField from '../mixins/formField';
 
 export default {
-	data() {
-		return {
-			local_value : this.value
-		};
+	components : {
+		rRadio
 	},
 	props : {
-		name : String,
 		value : {
 			type : [String, Number, Boolean, Object]
 		},
+		name : String,
 		options : {
 			type : Array,
 			default() {
@@ -36,23 +33,42 @@ export default {
 		},
 		disabled : Boolean
 	},
-	watch : {
-		'value' : {
-			handler(new_value, old_value) {
-				if (new_value !== old_value) {
-					this.local_value = this.value;
-				}
+	computed : {
+		localValue : {
+			get() {
+				return this.value;
+			},
+			set(new_value) {
+				this.$emit('input', new_value);
+				this.validate();
 			}
+		},
+		optionList() {
+			return this.options.map((option) => {
+				if (option instanceof Object) {
+					return option;
+				}
+				else {
+					return {
+						label : option,
+						value : option
+					};
+				}
+			});
 		}
 	},
-	methods : {
-		changeHandler(value) {
-			this.$emit('input', value);
-			this.validate();
+	watch : {
+		optionList : {
+			handler(new_value) {
+				let matched_option = new_value.find((option) => {
+					return option.value === this.value;
+				});
+				if (!matched_option) {
+					this.localValue = null;
+				}
+			},
+			deep : true
 		}
-	},
-	components : {
-		rRadio
 	},
 	mixins : [
 		formField

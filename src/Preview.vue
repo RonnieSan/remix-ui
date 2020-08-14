@@ -256,6 +256,7 @@
 										/>
 									</div>
 								</div>
+								<r-button @click="multiselect_options = new_options">Change Options</r-button>
 								<div class="model-value"><pre>Value: {{multi_select_value}}</pre></div>
 							</div>
 
@@ -523,6 +524,13 @@ export default {
 				'Orange',
 				'Purple',
 				'Blue',
+				'Green',
+				'Yellow',
+				'Indigo',
+				'Cyan',
+				'Magenta'
+			],
+			new_options : [
 				'Green',
 				'Yellow',
 				'Indigo',

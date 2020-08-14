@@ -116,6 +116,18 @@ export default {
 				this.selected_option = new_value;
 				this.changeHandler();
 			}
+		},
+		optionList : {
+			handler(new_value) {
+				let matched_option = new_value.find((option) => {
+					return option.value === this.selected_option;
+				});
+				if (!matched_option) {
+					this.selected_option = this.emptyValue;
+					this.changeHandler();
+				}
+			},
+			deep : true
 		}
 	},
 	model : {
