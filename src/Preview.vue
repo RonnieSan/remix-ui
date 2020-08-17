@@ -15,6 +15,12 @@
 							<h1>Remix UI Components</h1>
 							<hr>
 							<h2>Form Components</h2>
+
+							<p id="intro_block" class="remix-content">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Curabitur blandit tempus porttitor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+
+							<p id="second_block">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Curabitur blandit tempus porttitor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+
+							<p id="third_block" class="remix-content">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Curabitur blandit tempus porttitor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
 							
 							<div class="control-group">
 								<label class="control-label"><span class="text-color-red">*</span> Text Input with Validation:</label>
@@ -209,10 +215,12 @@
 								<div class="controls">
 									<div class="field">
 										<r-template-editor
-											template-src="http://www.ronniesan.com"
+											v-model="template_editor_value"
+											template-src="http://localhost:3010"
 										/>
 									</div>
 								</div>
+								<div class="model-value"><pre>Value: {{template_editor_value}}</pre></div>
 							</div>
 
 							<div class="control-group">
@@ -256,7 +264,6 @@
 										/>
 									</div>
 								</div>
-								<r-button @click="multiselect_options = new_options">Change Options</r-button>
 								<div class="model-value"><pre>Value: {{multi_select_value}}</pre></div>
 							</div>
 
@@ -511,6 +518,7 @@ export default {
 				{label : 'Maybe', value : 'undecided'}
 			],
 			markdown_value : '',
+			template_editor_value : {},
 			form_data : {
 				name : 'Fermegatroid Skittle',
 				contact : {

@@ -42,8 +42,41 @@ export default {
 			touched     : false,
 			editor      : null,
 			local_value : null,
-			settings    : {}
+			ready       : false
 		};
+	},
+	computed : {
+		settings() {
+			let settings = {};
+
+			if (this.ready) {
+				// Trigger
+			}
+
+			// Option defaults
+			settings.highlightActiveLine = this.options.highlightActiveLine || false;
+			settings.highlightGutterLine = this.options.highlightGutterLine || false;
+			settings.minLines            = this.options.minLines || 8;
+			settings.maxLines            = this.options.maxLines || Infinity;
+			settings.printMargin         = this.options.printMargin || false;
+			settings.tabSize             = this.options.tabSize || 2;
+
+			// Set fonts
+			if (this.options.fontFamily) {
+				settings.fontFamily = this.options.fontFamily;
+			}
+			if (this.options.fontSize) {
+				settings.fontSize = this.options.fontSize;
+			}
+
+			// Hide cursor
+			if (this.options.cursor === 'none' || this.options.cursor === false) {
+				this.editor.renderer.$cursorLayer.element.style.display = 'none';
+				delete settings.cursor;
+			}
+
+			return settings;
+		}
 	},
 	watch : {
 		value(new_value) {
@@ -58,14 +91,18 @@ export default {
 				this.editor.setValue(this.value, 1);
 			}
 		},
-		options() {
-			// Add mode and theme paths
-			if (this.options.mode !== this.settings.mode) {
-				this.editor.getSession().setMode(`ace/mode/${this.options.mode}`);
-			}
-			if (this.options.theme !== this.settings.theme) {
-				this.editor.setTheme(`ace/theme/${this.options.theme}`);
-			}
+		settings : {
+			handler(new_value) {
+				if (this.editor) {
+					// Set mode and theme
+					this.editor.getSession().setMode(`ace/mode/${this.options.mode || 'json'}`);
+					this.editor.setTheme(`ace/theme/${this.options.theme || 'sqlserver'}`);
+
+					// Load settings
+					this.editor.setOptions(new_value);
+				}
+			},
+			deep : true
 		}
 	},
 	mixins : [
@@ -87,35 +124,6 @@ export default {
 				session.setAnnotations(b);
 			}
 		});
-
-		// Option defaults
-		this.settings.highlightActiveLine = this.options.highlightActiveLine || false;
-		this.settings.highlightGutterLine = this.options.highlightGutterLine || false;
-		this.settings.minLines            = this.options.minLines || 8;
-		this.settings.maxLines            = this.options.maxLines || Infinity;
-		this.settings.printMargin         = this.options.printMargin || false;
-		this.settings.tabSize             = this.options.tabSize || 2;
-
-		// Set fonts
-		if (this.options.fontFamily) {
-			this.settings.fontFamily = this.options.fontFamily;
-		}
-		if (this.options.fontSize) {
-			this.settings.fontSize = this.options.fontSize;
-		}
-
-		// Hide cursor
-		if (this.options.cursor === 'none' || this.options.cursor === false) {
-			this.editor.renderer.$cursorLayer.element.style.display = 'none';
-			delete this.settings.cursor;
-		}
-
-		// Set mode and theme
-		this.editor.getSession().setMode(`ace/mode/${this.options.mode || 'json'}`);
-		this.editor.setTheme(`ace/theme/${this.options.theme || 'sqlserver'}`);
-
-		// Load settings
-		this.editor.setOptions(this.settings);
 
 		// Set model value
 		// Use slot content if no value is found
@@ -145,6 +153,7 @@ export default {
 			this.editor.on('blur', this.$listeners.blur);
 		}
 
+		this.ready = true;
 	}
 };
 </script>

@@ -185,7 +185,7 @@ class Validator {
 	// Reset the errors on all the fields
 	reset() {
 		forIn(this.fields, (field) => {
-			field.errors = [];
+			field.reset();
 		});
 	}
 

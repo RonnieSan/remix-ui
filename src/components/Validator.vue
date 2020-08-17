@@ -54,6 +54,11 @@ export default {
 					this.errors = err;
 					return false;
 				});
+		},
+
+		// Reset errors on all the fields
+		reset() {
+			this.validator.reset();
 		}
 	}
 };

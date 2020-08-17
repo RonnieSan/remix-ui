@@ -86,6 +86,11 @@ export default {
 		}
 	},
 	methods : {
+		// Reset all errors on the validator
+		reset() {
+			this.errors = [];
+		},
+
 		// Validate the field
 		validate() {
 			if (!this.disabled) {
