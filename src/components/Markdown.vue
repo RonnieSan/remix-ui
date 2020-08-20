@@ -124,7 +124,7 @@ export default {
 				case 'f':
 					if (event.ctrlKey && this.mode === 'compact') {
 						event.preventDefault();
-						vm.mode = 'fullscreen';
+						this.mode = 'fullscreen';
 					}
 					break;
 			}
