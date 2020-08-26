@@ -1,9 +1,9 @@
 <template>
 	<div
-		:class="['input-wrapper', 'currency', {'disabled' : disabled}]"
+		:class="['r-currency', 'control-border', 'focusable', {disabled}]"
 	>
 		<slot name="left">
-			<div v-if="symbol" class="helper">{{symbol}}</div>
+			<div v-if="symbol" class="control-helper">{{symbol}}</div>
 		</slot>
 		<input
 			type="tel"
@@ -76,17 +76,15 @@ export default {
 						vm.dirty = true;
 						vm.validate();
 					},
-					keyup(event) {
+					focus(event) {
 						let use_default;
-						if (vm.$listeners.keyup) {
-							use_default = vm.$listeners.keyup(event);
+						if (vm.$listeners.focus) {
+							use_default = vm.$listeners.focus(event);
 						}
 						if (use_default !== false) {
-							if (event.key === 'Tab') {
-								setTimeout(() => {
-									vm.$refs.input.select();
-								});
-							}
+							setTimeout(() => {
+								vm.$refs.input.select();
+							}, 10);
 						}
 					},
 					blur(event) {

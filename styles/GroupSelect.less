@@ -3,14 +3,11 @@
 // ----------------------------------------------------------------------
 
 @black: #000;
-@control-bkg-color: #FFF;
-@control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #4285F9;
 @control-height: 2.5em;
 @control-icon-color: #333;
 @control-padding: 0.625em;
-@control-radius: 3px;
 @font-size: 16px;
 @gray-35: #A6A6A6;
 @popup-layer: 400;
@@ -22,7 +19,7 @@
 // Import themes
 @import (optional, reference) '~theme';
 
-.group-select-wrapper {
+.r-group-select {
 	align-items: stretch;
 	cursor: default;
 	display: inline-flex;
@@ -45,7 +42,7 @@
 	.group-column {
 		flex-direction: column;
 		display: flex;
-		flex: 1 0 0;
+		flex: 1 0;
 
 		.group-column-header {
 			font-size: 0.875em;
@@ -55,9 +52,6 @@
 		}
 
 		.list-group {
-			background-color: @control-bkg-color;
-			border: @control-border-stroke solid @control-border-color;
-			border-radius: @control-radius;
 			min-height: @control-height * 6;
 			height: 100%;
 			overflow-y: auto;
@@ -101,7 +95,7 @@
 			align-items: center;
 			display: flex;
 			flex-direction: column;
-			flex: 1 0 0;
+			flex: 1 0;
 			justify-content: center;
 			min-height: @control-height * 5;	
 		}
@@ -113,13 +107,5 @@
 
 	.sortable-chosen {
 		background-color: fade(@control-bkg-color, 90%);
-	}
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	/* IE10+ CSS styles go here */
-	.group-select-wrapper .group-column,
-	.group-select-wrapper .input-controls .control-buttons {
-		flex : 1 0 auto;	
 	}
 }

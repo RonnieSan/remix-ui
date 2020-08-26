@@ -33,40 +33,18 @@
 	transform: translateY(-5px);
 }
 
-.datepicker {
+.r-datepicker {
 	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
 	font-size: 1em;
 	position: relative;
+	vertical-align: middle;
+	width: 100%;
 
-	.input-wrapper {
-		border-radius: @control-radius;
-		background-color: #FFF;
-		border: @control-border-stroke solid @control-border-color;
-		display: inline-flex;
-		overflow: hidden;
-		vertical-align: middle;
-		width: 100%;
-
-		.helper {
-			background-color: @control-helper-bkg-color;
-			color: @control-helper-color;
-			flex: 0 0 auto;
-			height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-			text-align: center;
-			width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-
-			svg {
-				height: 60%;
-				margin: 20%;
-				width: 60%;
-			}
-		}
-	}
-
-	input[type='text'] {
-		background-color: @control-bkg-color;
+	> input[type='text'] {
 		border: 0;
-		flex: 1 0 0;
+		flex: 1 0;
 		font-size: 1em;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 @control-padding;
@@ -78,7 +56,7 @@
 		color: #A6A6A6;
 	}
 
-	input {
+	> input {
 		cursor: pointer;
 		opacity: 0;
 		padding: 0;
@@ -86,8 +64,14 @@
 		width: ~"calc(100% - (@{control-border-stroke} * 2))";
 	}
 
+	.control-helper svg {
+		height: calc(@control-height * 0.6);
+		margin: 20%;
+		width: calc(@control-height * 0.6);
+	}
+
 	.display {
-		flex: 1 0 0;
+		flex: 1 0;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 10px;
@@ -140,7 +124,7 @@
 		ul {
 			display: flex;
 			flex-direction: column;
-			flex: 1 0 0;
+			flex: 1 0;
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
@@ -148,7 +132,7 @@
 			li {
 				border-top: 1px solid #F2F2F2;
 				display: flex;
-				flex: 1 0 0;
+				flex: 1 0;
 				flex-direction: column;
 				font-size: 0.875em;
 				justify-content: center;
@@ -266,7 +250,7 @@
 			.day {
 				border-radius: @control-radius;
 				cursor: pointer;
-				flex: 1 0 0;
+				flex: 1 0;
 				text-align: center;
 
 				&:hover {
@@ -350,41 +334,43 @@
 	}
 
 	.time-inputs {
+		align-items: center;
+		background-color: transparent;
 		display: flex;
 		flex-direction: row;
+		
+		.r-timepicker {
+			background-color: transparent;
+			border: 0;
+			flex: 1 0;
+			width: auto;
 
-		& ::v-deep {
-			.timepicker {
-				flex: 1 0 0;
-
-				& .inputs {
-					margin : 0 auto;
-				}
-
-				& .input-wrapper {
-					border: 0;
-					border-top: 1px solid @gray-05;
-					border-radius: 0;
-				}
+			&:focus {
+				box-shadow: none;
+				outline: 0;
 			}
 
-			.timepicker-presets {
-				border-top: 1px solid @gray-05;
-				flex: 0 0 auto;
-				padding: 0 0.25em;
+			.inputs {
+				justify-content: center;
+			}
+		}
 
-				.button {
-					background-color: @control-color;
-					border-radius: @control-radius;
-					color: @white;
-					display: inline-block;
-					font-size: 1em;
-					height: 2em;
-					line-height: 2em;
-					margin: 0.25em 0;
-					text-align: center;
-					width: 2em;
-				}
+		.timepicker-presets {
+			border-top: 1px solid @gray-05;
+			flex: 0 0 auto;
+			padding: 0 0.25em;
+
+			.button {
+				background-color: @control-color;
+				border-radius: @control-radius;
+				color: @white;
+				display: inline-block;
+				font-size: 1em;
+				height: 2em;
+				line-height: 2em;
+				margin: 0.25em 0;
+				text-align: center;
+				width: 2em;
 			}
 		}
 	}

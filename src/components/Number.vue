@@ -1,5 +1,5 @@
 <template>
-	<div :class="['input-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-number', 'control-border', 'focusable', {disabled}]">
 		<slot name="left"></slot>
 		<input
 			ref="input"
@@ -24,22 +24,13 @@ export default {
 		},
 		disabled : Boolean
 	},
-	data() {
-		return {
-			focused : false
-		};
-	},
 	computed : {
 		localValue : {
 			get() {
 				return this.value;
 			},
-			set(value) {
+			set(new_value) {
 				this.dirty = true;
-				if (value === '') {
-					value = 0;
-				}
-				this.$emit('input', value);
 			}
 		},
 		listeners() {
@@ -51,8 +42,10 @@ export default {
 				{
 					input(event) {
 						vm.dirty = true;
-						vm.$emit('input', event.target.value);
-						vm.validate();
+						if (event.target.value !== '') {
+							vm.$emit('input', event.target.value);
+							vm.validate();
+						}
 					},
 					blur(event) {
 						let use_default;
@@ -73,7 +66,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Number.less';
-</style>

@@ -1,11 +1,12 @@
 <template>
-	<div class="switch-wrapper">
+	<div :class="['r-switch', 'control-border', 'focusable', {disabled}]">
 		<span v-for="option in options" :class="['option', {'selected' : local_value === getValue(option)}]">
 			<input
 				type="radio"
 				:name="name"
 				v-model="local_value"
 				:value="getValue(option)"
+				:disabled="disabled"
 			/>
 			<span class="label">{{getLabel(option)}}</span>
 		</span>
@@ -27,6 +28,7 @@ export default {
 				]
 			}
 		},
+		disabled : Boolean,
 		value : {
 			type : [String, Boolean, Number, Object]
 		}

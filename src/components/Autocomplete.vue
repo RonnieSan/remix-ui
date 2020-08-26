@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="autocomplete-wrapper"
+		class="remix autocomplete"
 		@keydown="keydownHandler"
 		@keypress="update_filters = true;"
 		@input="androidInputHandler"

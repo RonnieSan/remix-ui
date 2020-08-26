@@ -3,40 +3,30 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
 @control-border-color: #CCC;
-@control-border-stroke: 4px;
+@control-border-stroke: 1px;
 @control-color: #2196F3;
-@control-focus: {
-	box-shadow: 0 0 0 3px fade(black, 10%);
-};
 @control-padding: 0.625em;
-@control-radius: 3px;
-@gray-50: #808080;
 @switch-size: 2.5em;
+@gray-50: #808080;
 
 // Import themes
 @import (optional, reference) '~theme';
 
-.switch-wrapper {
-	background-color: @control-bkg-color;
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
-	display: inline-block;
+.r-switch {
+	display: inline-flex;
+	flex-direction: row;
 	height: @switch-size;
 	overflow: hidden;
 	padding: 0;
 	vertical-align: middle;
 	white-space: nowrap;
 
-	&:focus-within {
-		@control-focus();
-	}
-
 	.option {
 		border-left: 1px solid @control-border-color;
 		color: @control-border-color;
 		display: inline-block;
+		flex: 0 0 auto;
 		height: 100%;
 		line-height: ~'calc(@{switch-size} - (@{control-border-stroke} * 1.5))';
 		padding: 0 (@switch-size * 0.5);
@@ -64,6 +54,17 @@
 			position: absolute;
 			top: 0;
 			width: 100%;
+		}
+	}
+
+	&.disabled .option {
+		&:hover {
+			color: @control-border-color;
+		}
+
+		&.selected {
+			background-color: fade(@gray-50, 25%);
+			color: @white;
 		}
 	}
 }

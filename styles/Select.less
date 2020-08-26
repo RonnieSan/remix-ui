@@ -3,22 +3,17 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-height: 2.5em;
 @control-icon-color: #333;
 @control-padding: 0.625em;
-@control-radius: 3px;
 
 // Import themes
 @import (optional, reference) '~theme';
 
-.select-wrapper {
+.r-select {
 	align-items: center;
-	background-color: @control-bkg-color;
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
 	display: inline-block;
 	height: @control-height;
 	overflow: hidden;
@@ -30,16 +25,23 @@
 		appearance: none;
 		background-color: transparent;
 		border: 0;
+		bottom: 0;
 		font-size: 1em;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		left: 0;
 		padding: 0 calc(@control-height - (@control-border-stroke * 2)) 0 @control-padding;
 		position: absolute;
 		top: 0;
 		width: 100%;
 		z-index: 1;
+		
+		&.empty {
+			opacity: 0.35;
+		}
 	}
 
+	// Arrow Icon
 	&::after {
 		@icon-color: replace(@control-icon-color, '#', '%23');
 		border-left: 1px solid fade(@control-border-color, 50%);
@@ -56,18 +58,18 @@
 	}
 	
 	select:focus {
-		box-shadow: 0;
+		box-shadow: none;
 		outline: 0;
 	}
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
 	/* IE10+ CSS styles go here */
-	.select-wrapper::after {
+	.r-select::after {
 		display: none;
 	}
 
-	.select-wrapper select {
+	.r-select select {
 		padding: 0 0 0 @control-padding;
 	}
 }

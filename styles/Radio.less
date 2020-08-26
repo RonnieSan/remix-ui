@@ -3,50 +3,51 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
 @control-border-stroke: 1px;
-@control-border-color: #CCC;
 @control-color: #2196F3;
 @control-height: 2.5em;
 
 // Import custom variables
 @import (optional, reference) '~theme';
 
+input[type="radio"] {
+	border: 0;
+
+	&:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+}
+
 // Radios and Checkboxes
-.radio-wrapper {
-	align-items: flex-start;
+.r-radio {
+	align-items: center;
 	cursor: pointer;
 	display: inline-flex;
+	flex-direction: row;
 	font-size: 1em;
-	line-height: calc(@control-height * 0.6);
-	padding: calc(@control-height * 0.2) 0;
-	position: relative;
+	height: @control-height;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-tap-highlight-color: transparent;
 	
 	input[type='radio'] {
 		appearance: none;
-		background-color: @control-bkg-color;
-		border: @control-border-stroke solid @control-border-color;
+		border-radius: 50%;
 		cursor: pointer;
-		font-size: 1em;
 		height: calc(@control-height * 0.6);
-		margin: 0 0.5em 0 0;
+		margin-right: 0.5em;
 		padding: 0;
 		transition: border 100ms ease-out;
 		vertical-align: middle;
 		width: ~"calc(@{control-height} * 0.6)";
 
-		&:focus {
-			outline: none;
-		}
-	}
-
-	input[type='radio'] {
-		border-radius: 50%;
-
 		&:checked {
 			border: ~"calc(@{control-height} * 0.2)" solid @control-color;
 		}
+	}
+
+	.radio-label {
+		display: block;
+		padding-top: @control-border-stroke;
 	}
 }

@@ -1,10 +1,10 @@
 <template>
-	<div :class="['group-select-wrapper', {'disabled' : disabled}]" tabindex="-1">
+	<div :class="['r-group-select', {disabled}]" tabindex="-1">
 		<div class="active group-column">
 			<div class="group-column-header">{{activeHeader}}</div>
 			<ul
 				v-sortable="mergedSortableOptions"
-				class="list-group active"
+				class="list-group active control-border"
 				:style="{maxHeight : maxHeight}"
 			>
 				<li
@@ -31,7 +31,7 @@
 			<div class="group-column-header">{{inactiveHeader}}</div>
 			<ul
 				v-sortable="mergedSortableOptions"
-				class="list-group inactive"
+				class="list-group inactive control-border"
 				:style="{maxHeight : maxHeight}"
 			>
 				<li
@@ -299,9 +299,10 @@ export default {
 	directives : {
 		sortable : {
 			bind(el, binding, vnode) {
-				let options = merge({}, binding.value, {
+				let settings = merge({}, binding.value, {
 					group : 'items',
 					multiDrag : true,
+					animation : 200,
 					selectedClass : 'selected',
 					onSelect(event) {
 						let id = 'active';
@@ -417,7 +418,7 @@ export default {
 					}
 				});
 
-				vnode.sortable = Sortable.create(el, options);
+				vnode.sortable = Sortable.create(el, settings);
 			}
 		}
 	}

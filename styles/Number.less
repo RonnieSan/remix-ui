@@ -1,0 +1,41 @@
+// ----------------------------------------------------------------------
+// NUMBER STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-stroke: 1px;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import custom variables
+@import (optional, reference) '~theme';
+
+.r-number {
+	display: inline-flex;
+	flex-direction: row;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100%;
+	
+	input[type='number'] {
+		appearance: none;
+		border: 0;
+		flex: 1 0;
+		font-family: @font-mono;
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		padding: 0 @control-padding;
+		text-align: right;
+
+		&::-webkit-inner-spin-button, 
+		&::-webkit-outer-spin-button { 
+			appearance: none;
+			margin: 0;
+		}
+	}
+
+	input:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+}

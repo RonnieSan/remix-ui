@@ -3,8 +3,6 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
-@control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #2196F3;
 @control-height: 2.5em;
@@ -14,10 +12,9 @@
 // Import themes
 @import (optional, reference) '~theme';
 
-.pillbox-wrapper {
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
+.r-pillbox {
 	display: inline-flex;
+	flex-direction: row;
 	font-size: 1em;
 	overflow: hidden;
 	vertical-align: middle;
@@ -26,7 +23,7 @@
 	.inner {
 		background-color: @control-bkg-color;
 		display: flex;
-		flex: 1 0 100%;
+		flex: 1 0;
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
@@ -49,7 +46,7 @@
 		}
 
 		.pillbox-value {
-			flex: 1 0 0;
+			flex: 1 0;
 		}
 
 		.remove-btn {
@@ -70,7 +67,7 @@
 	}
 
 	.input {
-		flex: 1 0 0;
+		flex: 1 0;
 		font-size: 1em;
 		min-width: 150px;
 		transition: color 500ms ease-out;
@@ -88,13 +85,5 @@
 			box-shadow: 0;
 			outline: 0;
 		}
-	}
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	/* IE10+ CSS styles go here */
-	.pillbox-wrapper .item .pillbox-value,
-	.pillbox-wrapper .input {
-		flex: 1 0;
 	}
 }

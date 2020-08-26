@@ -1,5 +1,5 @@
 <template>
-	<div :class="['pillbox-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-pillbox', 'control-border', 'focusable', {disabled}]">
 		<div class="inner">
 			<div v-for="(item_value, index) in propValue" :class="['item', {'selected' : index === selected_item}]">
 				<span class="pillbox-value">{{item_value.label || item_value}}</span>

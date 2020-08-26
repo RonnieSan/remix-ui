@@ -127,28 +127,26 @@ const Toast = Vue.extend({
 });
 
 // Export the toaster
-export default {
-	init : function(options) {
-		let settings = Object.assign({
-			parent : 'body',
-			timeout : 3000
-		}, options);
+export default function(options) {
+	let settings = Object.assign({
+		parent : 'body',
+		timeout : 3000
+	}, options);
 
-		// Create the #toast element and append to the DOM
-		let toast = document.querySelector('#toast');
-		if (!toast) {
-			toast = document.createElement('div');
-			toast.id = 'toast';
-			document.querySelector(settings.parent).appendChild(toast);
-		}
-
-		// Create an instance of the toast component
-		const toaster = new Toast();
-		toaster.$options.timeout = settings.timeout;
-
-		// Mount the toast component to the DOM
-		toaster.$mount('#toast');
-
-		return toaster;
+	// Create the #toast element and append to the DOM
+	let toast = document.querySelector('#toast');
+	if (!toast) {
+		toast = document.createElement('div');
+		toast.id = 'toast';
+		document.querySelector(settings.parent).appendChild(toast);
 	}
+
+	// Create an instance of the toast component
+	const toaster = new Toast();
+	toaster.$options.timeout = settings.timeout;
+
+	// Mount the toast component to the DOM
+	toaster.$mount('#toast');
+
+	return toaster;
 };

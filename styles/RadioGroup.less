@@ -8,12 +8,14 @@
 // Import theme
 @import (optional, reference) '~theme';
 
-.radio-group {
-	display: flex;
+.r-radio-group {
+	display: inline-flex;
+	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: flex-start;
 
 	&:focus {
+		box-shadow: none;
 		outline: 0;
 	}
 

@@ -12,7 +12,7 @@ import rChecklist from './components/Checklist';
 import rCode from './components/Code';
 import rCurrency from './components/Currency';
 import rDatepicker from './components/Datepicker';
-import rFileInput from './components/FileInput';
+import rFile from './components/FileInput';
 import rGroupSelect from './components/GroupSelect';
 import rMarkdown from './components/Markdown';
 import rMultiSelect from './components/MultiSelect';
@@ -55,14 +55,14 @@ import Toast from './lib/Toast';
 import Validator, { rules } from './lib/Validator';
 
 // Export components
-const modules = {
+export const modules = {
 	rButton,
 	rCheckbox,
 	rChecklist,
 	rCode,
 	rCurrency,
 	rDatepicker,
-	rFileInput,
+	rFile,
 	rForm,
 	rFormBuilder,
 	rGroupSelect,
@@ -99,60 +99,101 @@ const modules = {
 	Validator
 };
 
-export {
-	rButton,
-	rCheckbox,
-	rChecklist,
-	rCode,
-	rCurrency,
-	rDatepicker,
-	rFileInput,
-	rForm,
-	rGroupSelect,
-	rMarkdown,
-	rMultiSelect,
-	rMultiText,
-	rNumber,
-	rPassword,
-	rPillbox,
-	rRadio,
-	rRadioGroup,
-	rSelect,
-	rSlider,
-	rSwitch,
-	rText,
-	rTextarea,
-	rTimepicker,
-	rToggle,
-	rValidation,
-	rValidator,
-	Icon,
-	Grid,
-	Row,
-	Column,
-	Gutter,
-	Spacer,
-	Autocomplete,
-	Modal,
-	Tab,
-	Tabs,
-	Msg,
-	Toast,
-	Validator,
-	rules
-};
-
 // Export the package
 export default {
 	// Vue plugin installation
 	install(Vue, components) {
 
-		// Install specific components
+		// Loop through components and replace
+		let selected = [];
 		if (components) {
 			components.forEach((component) => {
+				switch (component) {
+					case 'core':
+						selected.push(
+							'rButton',
+							'rCheckbox',
+							'rChecklist',
+							'rFileInput',
+							'rForm',
+							'rNumber',
+							'rPassword',
+							'rRadio',
+							'rRadioGroup',
+							'rSelect',
+							'rText',
+							'rTextarea'
+						);
+						break;
+					case 'extended':
+						selected.push(
+							'rCode',
+							'rCurrency',
+							'rDatepicker',
+							'rFormBuilder',
+							'rGroupSelect',
+							'rMultiSelect',
+							'rMultiText',
+							'rPillbox',
+							'rSlider',
+							'rSwitch',
+							'rTimepicker',
+							'rToggle'
+						);
+						break;
+					case 'content':
+						selected.push(
+							'rMarkdown',
+							'rTemplateEditor'
+						);
+						break;
+					case 'layout':
+						selected.push(
+							'Icon',
+							'Grid',
+							'Row',
+							'Column',
+							'Gutter',
+							'Spacer'
+						);
+						break;
+					case 'ui':
+						selected.push(
+							'Modal',
+							'Tab',
+							'Tabs'
+						);
+						break;
+					case 'validation':
+						selected.push(
+							'rValidation',
+							'rValidator'
+						);
+						break;
+					default:
+						selected.push(component);
+						break;
+				}
+			});
+
+			// Make the selected array unique
+			selected = selected.filter((component, index, arr) => {
+				return array.indexOf(component) === index;
+			});
+		}
+		
+		// Install all the components
+		else {
+			selected = Object.keys(modules);
+		}
+
+		// Install specific components
+		if (selected.length) {
+			selected.forEach((component) => {
 				if (component !== 'Msg'
 					&& component !== 'Toast'
-					&& component !== 'Validator') {
+					&& component !== 'Validator'
+				) {
 					if (modules[component]) {
 						Vue.component(component, modules[component]);
 					}
@@ -160,67 +201,7 @@ export default {
 						Vue.component('r' + component, modules['r' + component]);
 					}
 				}
-				else {
-					switch(component) {
-						case 'Msg':
-							Vue.prototype.$msg   = Msg.init();
-							break;
-						case 'Toast':
-							Vue.prototype.$toast = Toast.init();
-							break;
-						case 'Validator':
-							Vue.prototype.$validator = Validator;
-							break;
-					}
-				}
 			});
-		}
-		else {
-			Vue.component('rForm', rForm);
-			Vue.component('rFormBuilder', rFormBuilder);
-			Vue.component('rButton', rButton);
-			Vue.component('rCheckbox', rCheckbox);
-			Vue.component('rChecklist', rChecklist);
-			Vue.component('rCode', rCode);
-			Vue.component('rCurrency', rCurrency);
-			Vue.component('rDatepicker', rDatepicker);
-			Vue.component('rFile', rFileInput);
-			Vue.component('rGroupSelect', rGroupSelect);
-			Vue.component('rMarkdown', rMarkdown);
-			Vue.component('rMultiSelect', rMultiSelect);
-			Vue.component('rMultiText', rMultiText);
-			Vue.component('rNumber', rNumber);
-			Vue.component('rPassword', rPassword);
-			Vue.component('rPillbox', rPillbox);
-			Vue.component('rRadio', rRadio);
-			Vue.component('rRadioGroup', rRadioGroup);
-			Vue.component('rSelect', rSelect);
-			Vue.component('rSlider', rSlider);
-			Vue.component('rSwitch', rSwitch);
-			Vue.component('rTemplateEditor', rTemplateEditor);
-			Vue.component('rText', rText);
-			Vue.component('rTextarea', rTextarea);
-			Vue.component('rTimepicker', rTimepicker);
-			Vue.component('rToggle', rToggle);
-			Vue.component('rValidation', rValidation);
-			Vue.component('rValidator', rValidator);
-
-			Vue.component('icon', Icon);
-			
-			Vue.component('grid', Grid);
-			Vue.component('row', Row);
-			Vue.component('column', Column);
-			Vue.component('gutter', Gutter);
-			Vue.component('spacer', Spacer);
-			
-			Vue.component('autocomplete', Autocomplete);
-			Vue.component('modal', Modal);
-			Vue.component('tab', Tab);
-			Vue.component('tabs', Tabs);
-
-			Vue.prototype.$msg       = Msg.init();
-			Vue.prototype.$toast     = Toast.init();
-			Vue.prototype.$Validator = Validator;
 		}
 	}
 };

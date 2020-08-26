@@ -1,8 +1,9 @@
 <template>
 	<label
-		:class="['checkbox-wrapper', {'disabled' : disabled}]"
+		:class="['r-checkbox', {disabled}]"
 	>
 		<input
+			class="control-border focusable"
 			type="checkbox"
 			ref="input"
 			:name="name"

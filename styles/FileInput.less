@@ -23,16 +23,16 @@
 	}
 }
 
-.file-wrapper {
-	border-radius: @control-radius;
-	border: @control-border-stroke solid @control-border-color;
-	display: inline-block;
+.r-file {
+	display: inline-flex;
+	flex-direction: row;
 	overflow: hidden;
 	position: relative;
 	width: 100%;
 
 	.inner {
 		display: flex;
+		flex: 1 0;
 		flex-direction: row;
 	}
 

@@ -1,5 +1,5 @@
 <template>
-	<div class="input-box">
+	<div class="text-input">
 		<input
 			v-if="!mask"
 			ref="input"

@@ -1,15 +1,15 @@
 <template>
-	<label :class="['radio-wrapper', {'disabled' : disabled}]">
-		<span class="radio">
-			<input type="radio"
-				ref="input"
-				v-model="localModel"
-				:name="name"
-				:value="value"
-				:disabled="disabled"
-				v-on="listeners"
-			>
-		</span>
+	<label :class="['r-radio', {disabled}]">
+		<input
+			class="control-border focusable"
+			type="radio"
+			ref="input"
+			v-model="localModel"
+			:name="name"
+			:value="value"
+			:disabled="disabled"
+			v-on="listeners"
+		>
 		<slot></slot>
 	</label>
 </template>

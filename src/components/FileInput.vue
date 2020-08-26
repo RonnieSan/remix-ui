@@ -1,5 +1,6 @@
 <template>
-	<div :class="['file-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-file', 'control-border', 'focusable', {disabled}]">
+		<slot name="left"></slot>
 		<div class="inner">
 			<slot>
 				<input type="text"
@@ -9,6 +10,7 @@
 					:name="name"
 					:disabled="disabled"
 					:placeholder="placeholder"
+					@keypress="keypressHandler"
 				/>
 				<div class="button">
 					<icon :class="{'spin' : status === 'uploading'}" :type="icon" size="24"/>
@@ -114,6 +116,14 @@ export default {
 		// Append data to the form data
 		appendData(name, data, file) {
 			this.form_data.append(name, data, file);
+		},
+
+		// Intercept keypresses
+		keypressHandler(event) {
+			event.preventDefault();
+			if (event.key === ' ' || event.key === 'Enter') {
+				this.$refs.uploader.click();
+			}
 		}
 
 	},

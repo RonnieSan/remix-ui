@@ -1,5 +1,5 @@
 <template>
-	<button :class="[$attrs.class, {disabled, loading}]" :type="type" :disabled="disabled || loading" @click="$emit('click')">
+	<button :class="['r-button', 'focusable', $attrs.class, {disabled, loading}]" :type="type" :disabled="disabled || loading" @click="$emit('click')">
 		<span v-if="icon || loading" class="icon">
 			<icon v-if="!loading" :type="icon" :size="iconSize"/>
 			<icon v-else type="loading" :size="iconSize"/>

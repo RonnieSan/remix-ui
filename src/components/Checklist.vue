@@ -1,5 +1,5 @@
 <template>
-	<div :class="['checklist', {'disabled' : disabled}]">
+	<div :class="['r-checklist', {disabled}]">
 		<div class="option" v-for="(option, index) in optionList">
 			<r-checkbox
 				:ref="'input_' + index"

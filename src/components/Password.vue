@@ -1,30 +1,46 @@
 <template>
-	<div :class="['input-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-password', 'control-border', 'focusable', {disabled}]">
 		<slot name="left"></slot>
-		<input type="password"
+		<input
+			:type="preview_type"
 			ref="input"
-			:name="name"
-			:autocomplete="autocomplete"
-			:disabled="disabled"
-			:placeholder="placeholder"
-			:value="value"
+			v-bind="$props"
 			v-on="listeners"
 		>
+		<div v-if="preview" class="preview" @click="togglePreview()">
+			<icon :type="previewIcon"/>
+		</div>
 		<slot name="right"></slot>
 	</div>
 </template>
 
 <script>
+import Icon from './Icon';
 import formField from '../mixins/formField';
 
 export default {
+	components : {
+		Icon
+	},
 	props : {
+		preview : Boolean,
 		autocomplete : String,
 		disabled : Boolean,
 		placeholder : String,
 		value : String
 	},
+	data() {
+		return {
+			preview_type : 'password'
+		};
+	},
 	computed : {
+		previewIcon() {
+			if (this.preview_type === 'password') {
+				return 'eye-off';
+			}
+			return 'eye';
+		},
 		listeners() {
 			let vm = this;
 			return Object.assign(
@@ -51,6 +67,14 @@ export default {
 		}
 	},
 	methods : {
+		togglePreview() {
+			if (this.preview_type === 'password') {
+				this.preview_type = 'text';
+			}
+			else {
+				this.preview_type = 'password';
+			}
+		},
 		inputHandler(value) {
 			this.dirty = true;
 			this.$emit('input', value);
@@ -61,7 +85,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Password.less';
-</style>

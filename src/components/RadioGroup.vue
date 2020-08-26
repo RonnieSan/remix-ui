@@ -1,5 +1,5 @@
 <template>
-	<div :class="['radio-group', {'disabled' : disabled}]" tabindex="-1">
+	<div :class="['r-radio-group', {disabled}]" tabindex="-1">
 		<div class="option" v-for="(option, index) in optionList" :key="index">
 			<r-radio
 				ref="input"
@@ -7,7 +7,7 @@
 				:name="name"
 				:value="option.value"
 				:disabled="disabled"
-			><span v-html="option.label"/></r-radio>
+			><span class="radio-label" v-html="option.label"/></r-radio>
 		</div>
 	</div>
 </template>

@@ -1,75 +1,70 @@
 <template>
-	<div :class="['timepicker', {'disabled' : disabled}]">
-		<div
-			class="input-wrapper"
-			tabindex="-1"
-		>
-			<slot name="left"></slot>
-			<div class="inputs">
-				<input
-					ref="hour_input"
-					type="text"
-					name="hour"
-					maxlength="2"
-					placeholder="--"
-					autocomplete="off"
-					:disabled="disabled"
-					v-model="hour"
-					@focus="$refs.hour_input.select()"
-					@keypress="setHour($event, $event.key)"
-					@keydown="keydownHandler($event, 'hour')"
-					@blur="setHour($event)"
-				>
+	<div :class="['r-timepicker', 'control-border', 'focusable', {disabled}]" tabindex="-1">
+		<slot name="left"></slot>
+		<div class="inputs">
+			<input
+				ref="hour_input"
+				type="text"
+				name="hour"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="hour"
+				@focus="$refs.hour_input.select()"
+				@keypress="setHour($event, $event.key)"
+				@keydown="keydownHandler($event, 'hour')"
+				@blur="setHour($event)"
+			>
+			<span class="separator fit"></span>
+			<input
+				ref="minute_input"
+				type="text"
+				name="minute"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="minute"
+				@focus="$refs.minute_input.select()"
+				@keypress="setMinute($event, $event.key)"
+				@keydown="keydownHandler($event, 'minute')"
+				@blur="setMinute($event)"
+			>
+			<template v-if="internal_options.seconds">
 				<span class="separator fit"></span>
 				<input
-					ref="minute_input"
+					class="fit"
+					ref="second_input"
 					type="text"
-					name="minute"
+					name="seconds"
 					maxlength="2"
 					placeholder="--"
 					autocomplete="off"
 					:disabled="disabled"
-					v-model="minute"
-					@focus="$refs.minute_input.select()"
-					@keypress="setMinute($event, $event.key)"
-					@keydown="keydownHandler($event, 'minute')"
-					@blur="setMinute($event)"
+					v-model="second"
+					@focus="$refs.second_input.select()"
+					@keypress="setSecond($event, $event.key)"
+					@keydown="keydownHandler($event, 'second')"
+					@blur="setSecond($event)"
 				>
-				<template v-if="internal_options.seconds">
-					<span class="separator fit"></span>
-					<input
-						class="fit"
-						ref="second_input"
-						type="text"
-						name="seconds"
-						maxlength="2"
-						placeholder="--"
-						autocomplete="off"
-						:disabled="disabled"
-						v-model="second"
-						@focus="$refs.second_input.select()"
-						@keypress="setSecond($event, $event.key)"
-						@keydown="keydownHandler($event, 'second')"
-						@blur="setSecond($event)"
-					>
-				</template>
-				<input
-					v-if="!options.military"
-					ref="period_input"
-					type="text"
-					name="period"
-					maxlength="2"
-					placeholder="--"
-					autocomplete="off"
-					:disabled="disabled"
-					v-model="period"
-					@focus="$refs.period_input.select()"
-					@keypress.prevent="setPeriod"
-					@keydown="keydownHandler($event, 'period')"
-				>
-			</div>
-			<slot name="right"></slot>
+			</template>
+			<input
+				v-if="!options.military"
+				ref="period_input"
+				type="text"
+				name="period"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="period"
+				@focus="$refs.period_input.select()"
+				@keypress.prevent="setPeriod"
+				@keydown="keydownHandler($event, 'period')"
+			>
 		</div>
+		<slot name="right"></slot>
 	</div>
 </template>
 

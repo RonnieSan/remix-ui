@@ -1,15 +1,10 @@
 <template>
 	<div
-		:class="['multi-select-wrapper', {'disabled' : disabled}]"
+		:class="['r-multi-select', 'control-border', 'focusable', {disabled}]"
 		v-on-clickaway="closeList"
 		tabindex="0"
 		@keydown="keypressHandler"
 	>
-		<div class="display" @click="toggleList">
-			<span v-if="value.length === 0" class="none-selected">{{placeholder}}</span>
-			<span v-else-if="typeof template === 'function'" class="selected-items" v-html="template(value)"/>
-			<span v-else="" class="selected-items">{{value.length}} Selected</span>
-		</div>
 		<transition name="dropfade">
 			<div
 				v-show="is_open"
@@ -22,15 +17,21 @@
 				</div>
 				<template v-for="(options_group, index) in wrappedOptions">
 					<r-checklist
+						class="stacked"
 						v-if="Array.isArray(options_group)"
-						:key="index" 
 						v-model="local_value"
+						:key="index"
 						:options="options_group"
 					/>
 					<div v-else class="subtitle">{{options_group}}</div>
 				</template>
 			</div>
 		</transition>
+		<div class="display" @click="toggleList">
+			<span v-if="value.length === 0" class="none-selected">{{placeholder}}</span>
+			<span v-else-if="typeof template === 'function'" class="selected-items" v-html="template(value)"/>
+			<span v-else="" class="selected-items">{{value.length}} Selected</span>
+		</div>
 	</div>
 </template>
 

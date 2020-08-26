@@ -1,7 +1,7 @@
 <template>
 	<div
 		:style="{maxHeight}"
-		:class="['code-wrapper', {'disabled' : disabled}]"
+		:class="['r-code', 'control-border', 'focusable', {disabled}]"
 		@focusout="touched = true; $emit('validate')"
 	>
 		<slot name="panel"></slot>
@@ -23,7 +23,7 @@ export default {
 			type : String,
 			required : true
 		},
-		options : {
+		settings : {
 			type : Object,
 			default() {
 				return {
@@ -46,7 +46,7 @@ export default {
 		};
 	},
 	computed : {
-		settings() {
+		parsedSettings() {
 			let settings = {};
 
 			if (this.ready) {
@@ -54,23 +54,23 @@ export default {
 			}
 
 			// Option defaults
-			settings.highlightActiveLine = this.options.highlightActiveLine || false;
-			settings.highlightGutterLine = this.options.highlightGutterLine || false;
-			settings.minLines            = this.options.minLines || 8;
-			settings.maxLines            = this.options.maxLines || Infinity;
-			settings.printMargin         = this.options.printMargin || false;
-			settings.tabSize             = this.options.tabSize || 2;
+			settings.highlightActiveLine = this.settings.highlightActiveLine || false;
+			settings.highlightGutterLine = this.settings.highlightGutterLine || false;
+			settings.minLines            = this.settings.minLines || 8;
+			settings.maxLines            = this.settings.maxLines || Infinity;
+			settings.printMargin         = this.settings.printMargin || false;
+			settings.tabSize             = this.settings.tabSize || 2;
 
 			// Set fonts
-			if (this.options.fontFamily) {
-				settings.fontFamily = this.options.fontFamily;
+			if (this.settings.fontFamily) {
+				settings.fontFamily = this.settings.fontFamily;
 			}
-			if (this.options.fontSize) {
-				settings.fontSize = this.options.fontSize;
+			if (this.settings.fontSize) {
+				settings.fontSize = this.settings.fontSize;
 			}
 
 			// Hide cursor
-			if (this.options.cursor === 'none' || this.options.cursor === false) {
+			if (this.settings.cursor === 'none' || this.settings.cursor === false) {
 				this.editor.renderer.$cursorLayer.element.style.display = 'none';
 				delete settings.cursor;
 			}
@@ -91,12 +91,12 @@ export default {
 				this.editor.setValue(this.value, 1);
 			}
 		},
-		settings : {
+		parsedSettings : {
 			handler(new_value) {
 				if (this.editor) {
 					// Set mode and theme
-					this.editor.getSession().setMode(`ace/mode/${this.options.mode || 'json'}`);
-					this.editor.setTheme(`ace/theme/${this.options.theme || 'sqlserver'}`);
+					this.editor.getSession().setMode(`ace/mode/${this.settings.mode || 'json'}`);
+					this.editor.setTheme(`ace/theme/${this.settings.theme || 'sqlserver'}`);
 
 					// Load settings
 					this.editor.setOptions(new_value);
@@ -169,9 +169,9 @@ A code input based off of Ace Editor.
 ## Props
 * **v-model** : STRING
 * **id** : STRING (Required) - A unique ID for the field that Ace Editor binds to.
-* **options** : OBJECT - An object containing option settings for the Ace Editor instance. Any [options from Ace Editor](https://ace.c9.io/#nav=api) can be passed in.
-* **options.mode** : STRING - The name of the mode/language you want to use in the editor. You will need to import the code from the `brace/mode` folder (see below).
-* **options.theme** : STRING - The name of the theme you want to use to color the code. You will need to import the code from the `brace/theme` folder (see below).
+* **settings** : OBJECT - An object containing option settings for the Ace Editor instance. Any [options from Ace Editor](https://ace.c9.io/#nav=api) can be passed in.
+* **settings.mode** : STRING - The name of the mode/language you want to use in the editor. You will need to import the code from the `brace/mode` folder (see below).
+* **settings.theme** : STRING - The name of the theme you want to use to color the code. You will need to import the code from the `brace/theme` folder (see below).
 * **max-height** : STRING - The maximum height as a string to allow the editor to grow to.
 
 ## Usage

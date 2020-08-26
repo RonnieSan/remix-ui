@@ -1,0 +1,62 @@
+// ----------------------------------------------------------------------
+// AUTOCOMPLETE STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-stroke: 1px;
+@control-border-color: #CCC;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@control-radius: 3px;
+
+// Import theme
+@import (optional, reference) '~theme';
+
+.r-timepicker {
+	align-items: center;
+	display: inline-flex;
+	flex-direction: row;
+	height: @control-height;
+	justify-content: space-between;
+	line-height: @control-height;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100%;
+
+	&:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+
+	.disabled {
+		background-color: #E5E5E5;
+	}
+
+	input[type='text'] {
+		background-color: transparent;
+		border: 0;
+		padding: 0 (@control-padding / 2);
+	}
+
+	input[disabled='disabled'] {
+		color: #A6A6A6;
+	}
+
+	.inputs {
+		align-items: center;
+		display: flex;
+		flex: 1 0;
+		flex-direction: row;
+
+		.separator {
+			&::before {
+				content: ':';
+			}
+		}
+
+		input {
+			flex: 0 0 @control-height;
+			text-align: center;
+		}
+	}
+}

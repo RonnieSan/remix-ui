@@ -43,9 +43,9 @@ const Msg = Vue.extend({
 			}
 
 			return new Promise((resolve, reject) => {
-				this.title   = options.title || false;
-				this.message = options.message;
-				this.accept  = options.accept || 'OK';
+				this.title     = options.title || false;
+				this.message   = options.message;
+				this.accept    = options.confirm || options.accept || 'OK';
 				this.max_width = options.width || '400px';
 				this.$refs.msg.open()
 					.then(() => {
@@ -72,7 +72,7 @@ const Msg = Vue.extend({
 			return new Promise((resolve, reject) => {
 				this.title     = options.title || false;
 				this.message   = options.message || options.prompt;
-				this.accept    = options.accept || 'OK';
+				this.accept    = options.confirm || options.accept || 'OK';
 				this.decline   = options.decline || 'Cancel';
 				this.max_width = options.width || '400px';
 				this.$refs.msg.open()
@@ -110,24 +110,20 @@ const Msg = Vue.extend({
 	}
 });
 
-
-// Export the msg
-export default {
-	init : function() {
-		// Create the #msg element and append to the DOM
-		let el = document.getElementById('msg');
-		if (!el) {
-			el = document.createElement('div');
-			el.id = 'msg';
-			document.body.appendChild(el);
-		}
-
-		// Create an instance of the msg component
-		const msg = new Msg();
-
-		// Mount the msg component to the DOM
-		msg.$mount(el);
-
-		return msg;
+export default function() {
+	// Create the #msg element and append to the DOM
+	let el = document.getElementById('msg');
+	if (!el) {
+		el = document.createElement('div');
+		el.id = 'msg';
+		document.body.appendChild(el);
 	}
+
+	// Create an instance of the msg component
+	const msg = new Msg();
+
+	// Mount the msg component to the DOM
+	msg.$mount(el);
+
+	return msg;
 };

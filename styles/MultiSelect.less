@@ -3,8 +3,6 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-bkg-color: #FFF;
-@control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-color: #4285F9;
 @control-height: 2.5em;
@@ -27,13 +25,12 @@
 	transform: translateY(-5px);
 }
 
-.multi-select-wrapper {
+.r-multi-select {
 	align-items: center;
-	background-color: @control-bkg-color;
-	border-radius: @control-radius;
-	border: @control-border-stroke solid @control-border-color;
 	cursor: default;
-	display: inline-block;
+	display: inline-flex;
+	flex-direction: row;
+	font-size: 1em;
 	height: @control-height;
 	position: relative;
 	user-select: none;
@@ -46,16 +43,11 @@
 	}
 
 	.display {
-		flex: 1 0 0;
-		font-size: 1em;
+		flex: 1 0;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		left: 0;
 		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		padding: 0 @control-padding;
-		position: absolute;
-		top: 0;
 		width: 100%;
-		z-index: 1;
 	}
 
 	&::after {
@@ -66,12 +58,8 @@
 		font-size: 1em;
 		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		position: absolute;
-		right: 0;
 		text-align: center;
-		top: 0;
 		width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-		z-index: 0;
 	}
 
 	.list {
@@ -101,24 +89,13 @@
 			flex-direction: column;
 		}
 
-		/deep/ .option {
+		.option {
 			margin: 0;
 			padding: 0 @control-padding;
 
 			&:hover {
 				background-color: tint(@control-color, 90%);
 			}
-
-			.checkbox-wrapper {
-				width: 100%;
-			}
 		}
-	}
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	/* IE10+ CSS styles go here */
-	.multi-select-wrapper .display {
-		flex: 1 0;
 	}
 }

@@ -3,24 +3,19 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@body-font: 'Roboto', Arial, Helvetica, Sans-serif;
-@control-bkg-color: #FFF;
-@control-border-color: #CCC;
 @control-border-stroke: 1px;
 @control-height: 2.5em;
 @control-padding: 0.625em;
-@control-radius: 3px;
+@font: 'Roboto', Arial, Helvetica, Sans-serif;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
 @font-size: 16px;
 @font-size-small: 0.875em;
 @line-height: 1.5em;
-@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
 
 // Import themes
 @import (optional, reference) '~theme';
 
-.textarea-wrapper {
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
+.r-textarea {
 	display: inline-block;
 	overflow: hidden;
 	position: relative;
@@ -35,7 +30,7 @@
 		width: 100%;
 
 		pre {
-			font-family: @body-font;
+			font-family: @font;
 			font-size: @font-size;
 			line-height: @line-height;
 			white-space: pre-line;
@@ -43,10 +38,9 @@
 	}
 
 	textarea {
-		background-color: @control-bkg-color;
 		border: 0;
 		bottom: 0;
-		font-family: @body-font;
+		font-family: @font;
 		font-size: @font-size;
 		left: 0;
 		line-height: 1.5em;
@@ -60,7 +54,7 @@
 		z-index: 1;
 
 		&:focus {
-			box-shadow: 0;
+			box-shadow: none;
 			outline: 0;
 		}
 	}
@@ -69,13 +63,13 @@
 		overflow-x: hidden;
 
 		.mirror pre {
-			font-family: @mono-font;
+			font-family: @font-mono;
 			font-size: @font-size-small;
 			white-space: pre;
 		}
 
 		textarea {
-			font-family: @mono-font;
+			font-family: @font-mono;
 			font-size: @font-size-small;
 			min-width: 100%;
 			white-space: pre;

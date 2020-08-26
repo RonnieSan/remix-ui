@@ -38,6 +38,10 @@ export default {
 					this.field_validator.validate();
 				}
 			}
+		},
+		reset() {
+			this.dirty   = false;
+			this.touched = false;
 		}
 	}
 };

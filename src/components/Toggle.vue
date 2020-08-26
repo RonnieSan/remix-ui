@@ -1,5 +1,5 @@
 <template>
-	<label class="toggle-wrapper">
+	<label class="r-toggle">
 		<span class="toggle">
 			<input type="checkbox"
 				ref="input"
@@ -10,7 +10,7 @@
 				:false-value="falseValue"
 				v-on="listeners"
 			>
-			<span class="handle"></span>
+			<span class="handle focusable"></span>
 		</span>
 		<span class="toggle-label"><slot><span v-if="isChecked">{{trueLabel}}</span><span v-else>{{falseLabel}}</span></slot></span>
 	</label>

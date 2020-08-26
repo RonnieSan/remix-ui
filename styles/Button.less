@@ -3,7 +3,8 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@body-font: 'Roboto', Arial, Helvetica, Sans-serif;
+@font: 'Roboto', Arial, Helvetica, Sans-serif;
+@control-button-text-color: #FFF;
 @control-height: 2.5em;
 @control-radius: 3px;
 @color-primary: #2993F7;
@@ -25,19 +26,25 @@
 }
 
 button {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.r-button {
 	align-items: center;
 	appearance: none;
 	background-color: @color-primary;
 	border-radius: @control-radius;
-	border: 0;
-	color: #FFF;
+	color: @control-button-text-color;
 	cursor: pointer;
-	display: inline-block;
+	display: inline-flex;
+	flex-direction: row;
 	font-size: 1em;
 	height: @control-height;
-	margin: 0;
-	padding: 0;
+	line-height: @control-height;
 	white-space: nowrap;
+	vertical-align: middle;
 
 	&:hover {
 		background-color: lighten(@color-primary, 5%);
@@ -48,9 +55,8 @@ button {
 	}
 
 	&:focus {
-		box-shadow: 0;
+		box-shadow: none;
 		outline: 0;
-		@control-focus();
 	}
 
 	&.disabled {
@@ -58,23 +64,23 @@ button {
 		cursor: not-allowed;
 	}
 
-	&.toolbar {
-		background-color: @gray-05;
-		color: @gray-80;
-	}
-	
-	&.icon .label {
-		display: none;
-	}
-
 	.icon {
 		background-color: fade(#000, 10%);
-		display: inline-block;
+		flex: 1 0 auto;
 		height: @control-height;
 		line-height: @control-height;
 		text-align: center;
-		vertical-align: middle;
 		width: @control-height;
+	}
+	
+	&.icon {
+		.icon {
+			background-color: transparent;
+		}
+
+		.label {
+			display: none;
+		}
 	}
 
 	&.loading {
@@ -86,8 +92,9 @@ button {
 	}
 	
 	.label {
-		display: inline-block;
-		font-family: @body-font;
+		display: block;
+		flex: 1 0;
+		font-family: @font;
 		padding: 0 1em;
 		vertical-align: middle;
 		white-space: nowrap;

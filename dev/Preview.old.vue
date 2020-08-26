@@ -420,16 +420,16 @@
 							<div class="control-group">
 								<div class="controls">
 									<div class="field fit">
-										<r-button class="bkg-color-green" icon="check" @click="$toast.success('Something successful happened.')">Success</r-button>
+										<r-button class="bkg-color-green" icon="check" @click="Toast.success('Something successful happened.')">Success</r-button>
 									</div>
 									<div class="field fit">
-										<r-button class="bkg-color-red" icon="alert-octagon" @click="$toast.error('Something went wrong.')">Error</r-button>
+										<r-button class="bkg-color-red" icon="alert-octagon" @click="Toast.error('Something went wrong.')">Error</r-button>
 									</div>
 									<div class="field fit">
-										<r-button class="bkg-color-yellow" icon="alert" @click="$toast.warning('Be careful!')">Warning</r-button>
+										<r-button class="bkg-color-yellow" icon="alert" @click="Toast.warning('Be careful!')">Warning</r-button>
 									</div>
 									<div class="field fit">
-										<r-button icon="information" @click="$toast.info('A toast message was fired.')">Info</r-button>
+										<r-button icon="information" @click="Toast.info('A toast message was fired.')">Info</r-button>
 									</div>
 								</div>
 							</div>
@@ -465,10 +465,17 @@
 
 <script>
 import Validator, { rules } from './lib/Validator';
+import MsgLib from './lib/Msg';
+import ToastLib from './lib/Toast';
+
+const Msg   = new MsgLib();
+const Toast = new ToastLib();
 
 export default {
 	data() {
 		return {
+			Msg,
+			Toast,
 			rules,
 			validator : new Validator(),
 			text_value : '',
@@ -640,23 +647,23 @@ export default {
 	},
 	methods : {
 		triggerAlert() {
-			this.$msg.alert({
+			Msg.alert({
 				title : 'Something Was Clicked!',
 				message :  'OMG! Someone clicked something!'
 			});
 		},
 
 		triggerConfirm() {
-			this.$msg.confirm({
+			Msg.confirm({
 				title : 'Make a Choice',
 				message :  'Are you sure you want to cancel?'
 			})
 				.then((accepted) => {
 					if (accepted) {
-						this.$toast.success('You selected OK.');
+						Toast.success('You selected OK.');
 					}
 					else {
-						this.$toast.error('You selected CANCEL.');
+						Toast.error('You selected CANCEL.');
 					}
 				});
 		},
@@ -665,10 +672,10 @@ export default {
 			this.tab_disabled = !this.tab_disabled;
 			this.$nextTick(() => {
 				if (this.tab_disabled) {
-					this.$toast.error('The fourth tab has been disabled.');
+					Toast.error('The fourth tab has been disabled.');
 				}
 				else {
-					this.$toast.success('The fourth tab is now enabled.');
+					Toast.success('The fourth tab is now enabled.');
 				}
 			});
 		},
