@@ -16,26 +16,28 @@
 							<hr>
 							<h2>Layout Components</h2>
 
-							<grid class="layout">
-								<row>
-									<column>.column</column>
-									<column>.column</column>
-									<column>.column</column>
-									<column>.column</column>
-								</row>
-								<row>
-									<column class="span-2">.column.span-2</column>
-									<column>.column</column>
-									<column>.column</column>
-								</row>
-								<row>
-									<column class="span-3">.column.span-3</column>
-									<column>.column</column>
-								</row>
-								<row>
-									<column class="span-4">.column.span-4</column>
-								</row>
-							</grid>
+							<div class="layout">
+								<grid gutter="10px">
+									<row>
+										<column>.column</column>
+										<column>.column</column>
+										<column>.column</column>
+										<column>.column</column>
+									</row>
+									<row>
+										<column span="2">.column.span-2</column>
+										<column>.column</column>
+										<column>.column</column>
+									</row>
+									<row>
+										<column span="3">.column.span-3</column>
+										<column>.column</column>
+									</row>
+									<row>
+										<column span="4">.column.span-4</column>
+									</row>
+								</grid>
+							</div>
 
 							<hr>
 							<h2>Form Components</h2>
@@ -365,6 +367,15 @@
 									</div>
 								</div>
 
+								<!-- FORM BUILDER -->
+								<r-form-builder :config.sync="formBuilderConfig"/>
+								<div class="model-value"><pre>Value: {{form_builder_value}}</pre></div>
+
+							</fieldset>
+
+							<fieldset>
+								<legend>Date/Time Components</legend>
+
 								<!-- DATE PICKER -->
 								<div class="control-group">
 									<div class="inner">
@@ -400,6 +411,11 @@
 									</div>
 								</div>
 
+							</fieldset>
+
+							<fieldset>
+								<legend>Content Components</legend>
+
 								<!-- CODE EDITOR -->
 								<div class="control-group">
 									<div class="inner">
@@ -417,15 +433,6 @@
 										</div>
 									</div>
 								</div>
-
-								<!-- FORM BUILDER -->
-								<r-form-builder :config.sync="formBuilderConfig"/>
-								<div class="model-value"><pre>Value: {{form_builder_value}}</pre></div>
-
-							</fieldset>
-
-							<fieldset>
-								<legend>Content Components</legend>
 
 								<!-- MARKDOWN EDITOR -->
 								<div class="control-group">
@@ -689,12 +696,6 @@ export default {
 				'No',
 				'Maybe'
 			],
-			date_value : [
-				moment().startOf('day').format(),
-				moment().endOf('day').format()
-			],
-			time_value : '12:00:00',
-			code_value : {},
 			form_builder_value : {
 				name : 'Harry Potter',
 				contact : {
@@ -703,7 +704,15 @@ export default {
 				gender : 'male'
 			},
 
+			// DATETIME COMPONENTS
+			date_value : [
+				moment().startOf('day').format(),
+				moment().endOf('day').format()
+			],
+			time_value : '12:00:00',
+
 			// CONTENT COMPONENTS
+			code_value : {},
 			markdown_value : '',
 
 			// VALIDATION COMPONENTS
@@ -729,24 +738,6 @@ export default {
 		};
 	},
 	computed : {
-		codeValue : {
-			get() {
-				try {
-					return JSON.stringify(this.code_value, null, 4);
-				}
-				catch (err) {
-					return this.code_value;
-				}
-			},
-			set(new_value) {
-				try {
-					this.code_value = JSON.parse(new_value);
-				}
-				catch (err) {
-					// Don't save it
-				}
-			}
-		},
 		formBuilderConfig : {
 			get : function() {
 				return [
@@ -802,6 +793,24 @@ export default {
 			},
 			set : function(new_value) {
 				this.form_builder_value = new_value;
+			}
+		},
+		codeValue : {
+			get() {
+				try {
+					return JSON.stringify(this.code_value, null, 4);
+				}
+				catch (err) {
+					return this.code_value;
+				}
+			},
+			set(new_value) {
+				try {
+					this.code_value = JSON.parse(new_value);
+				}
+				catch (err) {
+					// Don't save it
+				}
 			}
 		}
 	},
@@ -870,13 +879,7 @@ export default {
 </script>
 
 <style lang="less">
-@import (css) '~@mdi/font/css/materialdesignicons.min.css';
-@import '~@styles/Layout.less';
-@import '~@styles/Core.less';
-@import '~@styles/Extended.less';
-@import '~@styles/Content.less';
-@import '~@styles/Validation.less';
-@import '~@styles/UI.less';
+@import '~@styles/All.less';
 @import './theme.less';
 
 @full-width: 720px;

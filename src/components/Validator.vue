@@ -2,7 +2,7 @@
 	<div>
 		<slot name="errors" v-bind="self">
 			<ul v-if="errors.length > 0" class="validation-errors">
-				<template v-if="showAllErrors">
+				<template v-if="showErrors">
 					<li v-for="error in errors">{{error}}</li>
 				</template>
 				<template v-else>
@@ -30,7 +30,7 @@ export default {
 				return new Validator();
 			}
 		},
-		showAllErrors : Boolean
+		showErrors : Boolean
 	},
 	data() {
 		return {

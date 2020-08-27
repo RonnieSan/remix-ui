@@ -33,18 +33,15 @@ import rToggle from './components/Toggle';
 import rValidation from './components/Validation';
 import rValidator from './components/Validator';
 
-// Import Icons
-import Icon from './components/Icon';
-
 // Import layout elements
 import Grid from './components/Grid';
 import Row from './components/Row';
 import Column from './components/Column';
 import Gutter from './components/Gutter';
-import Spacer from './components/Spacer';
 
-// Import utilities
+// Import UI elements
 import Autocomplete from './components/Autocomplete';
+import Icon from './components/Icon';
 import Modal from './components/Modal';
 import Tab from './components/Tab';
 import Tabs from './components/Tabs';
@@ -52,7 +49,7 @@ import Tabs from './components/Tabs';
 // Import libraries
 import Msg from './lib/Msg';
 import Toast from './lib/Toast';
-import Validator, { rules } from './lib/Validator';
+import Validator, { rules as ValidationRules } from './lib/Validator';
 
 // Export components
 export const modules = {
@@ -89,14 +86,14 @@ export const modules = {
 	Row,
 	Column,
 	Gutter,
-	Spacer,
 	Autocomplete,
 	Modal,
 	Tab,
 	Tabs,
 	Msg,
 	Toast,
-	Validator
+	Validator,
+	ValidationRules
 };
 
 // Export the package
@@ -109,12 +106,22 @@ export default {
 		if (components) {
 			components.forEach((component) => {
 				switch (component) {
-					case 'core':
+					case 'layout':
+					case 'Layout':
+						selected.push(
+							'Grid',
+							'Row',
+							'Column',
+							'Gutter'
+						);
+						break;
+					case 'form':
+					case 'Form':
 						selected.push(
 							'rButton',
 							'rCheckbox',
 							'rChecklist',
-							'rFileInput',
+							'rFile',
 							'rForm',
 							'rNumber',
 							'rPassword',
@@ -126,10 +133,11 @@ export default {
 						);
 						break;
 					case 'extended':
+					case 'Extended':
+					case 'extendedform':
+					case 'ExtendedForm':
 						selected.push(
-							'rCode',
 							'rCurrency',
-							'rDatepicker',
 							'rFormBuilder',
 							'rGroupSelect',
 							'rMultiSelect',
@@ -137,35 +145,36 @@ export default {
 							'rPillbox',
 							'rSlider',
 							'rSwitch',
-							'rTimepicker',
 							'rToggle'
 						);
 						break;
 					case 'content':
+					case 'Content':
 						selected.push(
+							'rCode',
 							'rMarkdown',
 							'rTemplateEditor'
 						);
 						break;
-					case 'layout':
+					case 'datetime':
+					case 'DateTime':
 						selected.push(
-							'Icon',
-							'Grid',
-							'Row',
-							'Column',
-							'Gutter',
-							'Spacer'
+							'rDatepicker',
+							'rTimepicker'
 						);
 						break;
 					case 'ui':
+					case 'UI':
 						selected.push(
 							'Autocomplete',
+							'Icon',
 							'Modal',
 							'Tab',
 							'Tabs'
 						);
 						break;
 					case 'validation':
+					case 'Validation':
 						selected.push(
 							'rValidation',
 							'rValidator'

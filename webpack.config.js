@@ -25,7 +25,7 @@ module.exports = {
 			'vue$' : path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js'),
 			'@' : path.resolve(__dirname, 'src'),
 			'@styles' : path.resolve(__dirname, 'styles'),
-			'theme' : path.resolve(__dirname, 'dev/theme.less')
+			'remix-ui-theme' : path.resolve(__dirname, 'dev/theme.less')
 		}
 	},
 	devServer : {
