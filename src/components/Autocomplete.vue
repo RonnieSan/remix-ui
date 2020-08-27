@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="remix autocomplete"
+		class="autocomplete"
 		@keydown="keydownHandler"
 		@keypress="update_filters = true;"
 		@input="androidInputHandler"
@@ -16,7 +16,7 @@
 				@mouseout="selected_index = -1"
 			>{{option.label || option}}</div>
 		</div>
-		<div class="autocomplete-loading autocomplete-options" v-else-if="loading_data">
+		<div class="autocomplete-loading autocomplete-options control-border" v-else-if="loading_data">
 			<div class="option">Loading...</div>
 		</div>
 	</div>

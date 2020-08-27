@@ -15,14 +15,12 @@
 @line-height: 1.5em;
 @mobile-width: 320px;
 @mobile-window-max: 767px;
-@mono-font: 'Droid Mono Sans', Consolas, 'Courier New', System;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
 
 // Import themes
 @import (optional, reference) '~theme';
 
-.markdown-wrapper {
-	border: @control-border-stroke solid @control-border-color;
-	border-radius: @control-radius;
+.r-markdown {
 	display: inline-flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -30,25 +28,21 @@
 	vertical-align: top;
 	width: 100%;
 
-	&.focused {
-		box-shadow: 0 0 0 3px fade(#000, 10%);
-		outline: none;
-	}
-
 	.editor {
 		.input {
 			background-color: #FFF;
 			border: none;
-			display: none;
+			height: 0;
 			max-width: 100%;
-			min-height: @control-height * 4;
-			overflow: hidden;
+			overflow-x: hidden;
+			overflow-y: visible;
 			position: relative;
 			vertical-align: top;
 			width: 100%;
 
 			&.active {
-				display: block;
+				height: auto;
+				min-height: @control-height * 4;
 			}
 
 			.mirror {
@@ -59,10 +53,10 @@
 				width: 100%;
 
 				pre {
-					font-family: @mono-font;
+					font-family: @font-mono;
 					font-size: @font-size-small;
 					line-height: @line-height;
-					white-space: pre-line;
+					white-space: break-spaces;
 				}
 			}
 
@@ -70,7 +64,7 @@
 				background-color: transparent;
 				border: 0;
 				bottom: 0;
-				font-family: @mono-font;
+				font-family: @font-mono;
 				font-size: @font-size-small;
 				left: 0;
 				line-height: @line-height;
@@ -85,8 +79,8 @@
 				z-index: 1;
 
 				&:focus {
-					border: 0;
-					outline: none;
+					border: none;
+					outline: 0;
 				}
 			}
 
@@ -120,6 +114,7 @@
 
 	&.fullscreen {
 		background-color: #FFF;
+		border: 0;
 		bottom: 0;
 		left: 0;
 		max-height: 100vh !important;
@@ -156,7 +151,7 @@
 
 			.input, .output {
 				display: block;
-				flex: 1 0 0;
+				flex: 1 0;
 				height: 100%;
 			}
 
@@ -171,37 +166,38 @@
 		background-color: #F2F2F2;
 		border-bottom: 1px solid fade(@control-border-color, 50%);
 		display: flex;
-		flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		flex-direction: row;
+		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
 		justify-content: space-between;
 
-		.tools,
+		.tools {
+			flex: 1 0;
+		}
+
 		.utils {
-			display: flex;
 			flex: 0 0 auto;
+
+			.btn {
+				border-left: 1px solid fade(@control-border-color, 50%);
+			}
 		}
 
 		.btn {
-			border-right: 1px solid fade(@control-border-color, 50%);
 			cursor: pointer;
-			float: left;
-			height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
-			line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+			display: inline-block;
+			height: calc(@control-height - (@control-border-stroke * 2));
+			line-height: calc(@control-height - (@control-border-stroke * 2));
 			text-align: center;
 			vertical-align: middle;
+			width: ;
 
 			&.active {
 				background-color: #FFF;
 			}
 
 			&.icon {
-				min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+				min-width: calc(@control-height - (@control-border-stroke * 2));
 				padding: 0;
-			}
-
-			&.right {
-				border-left: 1px solid fade(@control-border-color, 50%);
-				border-right: none;
-				float: right;
 			}
 
 			&.compact {
@@ -212,13 +208,5 @@
 				color: @control-color;
 			}
 		}
-	}
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	/* IE10+ CSS styles go here */
-	.markdown-wrapper.fullscreen .editor .input,
-	.markdown-wrapper.fullscreen .editor .output {
-		flex: 1 0;
 	}
 }

@@ -159,6 +159,7 @@ export default {
 						break;
 					case 'ui':
 						selected.push(
+							'Autocomplete',
 							'Modal',
 							'Tab',
 							'Tabs'

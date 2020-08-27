@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------
 
 // Default values
+@control-bkg-color: #FFF;
 @control-border-stroke: 1px;
 @control-border-color: #CCC;
 @control-height: 2.5em;
@@ -17,24 +18,22 @@
 	background-color: #F2F2F2;
 }
 
-// Import themes
-@import (optional, reference) 'theme.less';
-
-.autocomplete-wrapper {
+.autocomplete {
 	position: relative;
 
 	.autocomplete-options {
-		background-color: #FFF;
+		background-color: @control-bkg-color;
 		border: @control-border-stroke solid @control-border-color;
 		border-radius: @control-radius;
 		box-shadow: 2px 2px 0 0 fade(#000, 10%);
-		left: ~"calc(@{control-border-stroke} * 2)";
+		left: calc(@control-border-stroke * 2);
 		min-width: 250px;
 		position: absolute;
-		top: ~"calc(100% - @{control-border-stroke} * 2)";
+		top: calc(100% - @control-border-stroke * 2);
+		width: calc(100% - @control-border-stroke * 4);
 		z-index: @popup-layer;
 
-		.option {
+		> .option {
 			border-top: @control-border-stroke solid tint(@control-border-color, 50%);
 			cursor: default;
 			height: @control-height;

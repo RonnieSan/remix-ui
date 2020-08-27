@@ -20,11 +20,25 @@
 }
 
 .tab-bar {
+	.tab-row {
+		display: flex;
+	}
+
+	.tab {
+		cursor: default;
+		flex: 0 0 auto;
+
+		&.disabled {
+			cursor: not-allowed;
+		}
+	}
+}
+
+.tabs.styled .tab-bar {
 	border-bottom: @tab-border-stroke solid @tab-border-color;
 
 	.tab-row {
-		display: flex;
-		margin: 0 ~"calc(-@{tab-spacing} / 2)";
+		margin: 0 calc(-@tab-spacing / 2);
 	}
 
 	.tab {
@@ -32,8 +46,6 @@
 		border: @tab-border-stroke solid @tab-border-color;
 		border-radius: @tab-radius @tab-radius 0 0;
 		color: tint(@tab-color, 65%);
-		cursor: pointer;
-		flex: 0 0 auto;
 		height: @tab-height;
 		line-height: @tab-height;
 		margin: 0 ~"calc(@{tab-spacing} / 2)" -1px;

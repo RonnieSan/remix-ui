@@ -1,5 +1,5 @@
 <template>
-	<button :class="['r-button', 'focusable', $attrs.class, {disabled, loading}]" :type="type" :disabled="disabled || loading" @click="$emit('click')">
+	<button :class="['r-button', 'focusable', $attrs.class, {disabled, loading}]" :type="type" :disabled="disabled || loading" @click="emitClick">
 		<span v-if="icon || loading" class="icon">
 			<icon v-if="!loading" :type="icon" :size="iconSize"/>
 			<icon v-else type="loading" :size="iconSize"/>
@@ -11,6 +11,9 @@
 import Icon from './Icon';
 
 export default {
+	components : {
+		Icon
+	},
 	props : {
 		type : {
 			type : String,
@@ -32,8 +35,13 @@ export default {
 			type : Boolean
 		}
 	},
-	components : {
-		Icon
+	methods : {
+		emitClick(event) {
+			event.preventDefault();
+			if (!this.loading) {
+				this.$emit('click');
+			}
+		}
 	}
 };
 </script>

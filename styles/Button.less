@@ -84,10 +84,18 @@ button {
 	}
 
 	&.loading {
-		cursor: not-allowed;
+		cursor: wait;
 
 		.mdi::before {
 			animation: spin 750ms linear infinite;
+		}
+
+		&:hover {
+			background-color: @color-primary;
+		}
+
+		&:active {
+			background-color: @color-primary;
 		}
 	}
 	

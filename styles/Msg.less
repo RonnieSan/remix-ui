@@ -6,7 +6,7 @@
 @font-size: 16px;
 @line-height: 1.5em;
 @msg-radius: 5px;
-@msg-padding: 0.625em;
+@msg-padding: 1em;
 
 @import (optional, reference) '~theme';
 
@@ -14,8 +14,8 @@
 	font-size: @font-size;
 
 	.modal-window {
-		border: 2px solid #FFF;
 		border-radius: @msg-radius;
+		box-shadow: 0 1px 5px fade(#000, 50%);
 		overflow: hidden;
 	}
 

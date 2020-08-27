@@ -1,6 +1,6 @@
 <template>
 	<div :class="['column', $attrs.class]" :style="style">
-		<slot/>
+		<div class="inner-column"><slot/></div>
 	</div>
 </template>
 
@@ -50,10 +50,6 @@ export default {
 	}
 };
 </script>
-
-<style lang="less">
-@import (optional) '~remix-ui-styles/Layout.less';
-</style>
 
 <docs>
 # Column

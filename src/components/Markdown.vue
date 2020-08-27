@@ -1,13 +1,16 @@
 <template>
 	<div
-		:class="['markdown-wrapper', mode, {'disabled' : disabled}]"
+		:class="['r-markdown', 'control-border', 'focusable', mode, {disabled}]"
 		:style="{maxHeight}"
 	>
 		<div class="toolbar">
-			<div class="tools"></div>
+			<div class="tools">
+				<!-- <div class="btn icon"><icon type="format-bold" size="24"/></div>
+				<div class="btn icon"><icon type="format-italic" size="24"/></div> -->
+			</div>
 			<div class="utils">
-				<div class="btn right icon fullscreen" @click="togglePreview()"><icon :type="preview" size="18"/></div>
 				<!-- <div class="btn right icon"><icon type="help-circle" size="18"/></div> -->
+				<div class="btn right icon fullscreen" @click="togglePreview()"><icon :type="preview" size="18"/></div>
 				<div class="btn right icon fullscreen" @click="mode = 'fullscreen'"><icon type="fullscreen" size="24"/></div>
 				<div class="btn right icon compact" @click="mode = 'compact'"><icon type="fullscreen-exit" size="24"/></div>
 			</div>
@@ -56,7 +59,6 @@ export default {
 	},
 	data() {
 		return {
-			input   : this.value,
 			edit    : true,
 			focused : false,
 			mode    : 'compact',
@@ -64,6 +66,9 @@ export default {
 		};
 	},
 	computed : {
+		input() {
+			return this.value;
+		},
 		output() {
 			return markdown.render(this.value);
 		},
@@ -124,19 +129,39 @@ export default {
 				case 'f':
 					if (event.ctrlKey && this.mode === 'compact') {
 						event.preventDefault();
-						this.mode = 'fullscreen';
+						this.toggleMode(event)
+					}
+					break;
+
+				case 'm':
+					if (event.ctrlKey) {
+						this.togglePreview(event);
+					}
+					break;
+
+				case 'Escape':
+					if (this.mode === 'fullscreen') {
+						this.toggleMode(event);
 					}
 					break;
 			}
 		},
 		togglePreview() {
 			this.edit = !this.edit;
-			this.preview = (this.edit ? 'eye-off' : 'eye');
+			this.$nextTick(() => {
+				this.preview = (this.edit ? 'eye-off' : 'eye');
+			});
 		},
-		switchToCompact(event) {
-			if (this.mode === 'fullscreen' && event.which === 27) {
+		toggleMode(event) {
+			if (this.mode === 'fullscreen') {
 				this.mode = 'compact';
 				this.$refs.input.focus();
+				document.getElementsByTagName('html')[0].style.overflow = null;
+			}
+			else {
+				this.mode = 'fullscreen';
+				this.$refs.input.focus();
+				document.getElementsByTagName('html')[0].style.overflow = 'hidden';
 			}
 		}
 	},
@@ -146,11 +171,8 @@ export default {
 	components : {
 		Icon
 	},
-	mounted() {
-		window.addEventListener('keydown', this.switchToCompact);
-	},
-	beforeDstroy() {
-		window.removeEventListener('keydown', this.switchToCompact);
+	beforeDestroy() {
+		window.removeEventListener('keydown', this.toggleMode);
 	}
 };
 </script>

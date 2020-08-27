@@ -4,13 +4,23 @@
 
 // Default values
 @font-size-small: 0.875em;
+@red: #DD2C01;
 
 // Import themes
 @import (optional, reference) '~theme';
 
+label.required {
+	&::before {
+		color: @red;
+		content: '*';
+		margin-right: 0.25em;
+	}
+}
+
 .validation-errors {
 	border: 0;
-	font-size: 100%;
+	color: @red;
+	font-size: 1rem;
 	font: inherit;
 	list-style: none;
 	margin: 0.25em 0 0;

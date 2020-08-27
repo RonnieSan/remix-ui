@@ -12,27 +12,27 @@
 	@gutter: (@gutter-size / 2);
 	margin: -@gutter 0;
 
-	.row {
+	> .row {
 		margin: @gutter -@gutter;
-	}
+		
+		> .column {
+			margin: 0 @gutter;
 
-	.column {
-		margin: 0 @gutter;
+			&.span-2 {
+				flex: 2 0 @gutter-size;
+			}
 
-		&.span-2 {
-			flex: 2 0 @gutter-size;
-		}
+			&.span-3 {
+				flex: 3 0 (@gutter-size * 2);
+			}
 
-		&.span-3 {
-			flex: 3 0 (@gutter-size * 2);
-		}
+			&.span-4 {
+				flex: 4 0 (@gutter-size * 3);
+			}
 
-		&.span-4 {
-			flex: 4 0 (@gutter-size * 3);
-		}
-
-		&.span-5 {
-			flex: 5 0 (@gutter-size * 4);
+			&.span-5 {
+				flex: 5 0 (@gutter-size * 4);
+			}
 		}
 	}
 }
@@ -104,12 +104,5 @@
 
 	&.no-gutter {
 		.gutter-size(0);
-	}
-}
-
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	/* IE10+ CSS styles go here */
-	.column {
-		flex: 1 0;
 	}
 }

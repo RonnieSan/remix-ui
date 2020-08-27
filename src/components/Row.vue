@@ -7,7 +7,3 @@
 <script>
 export default {};
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Layout.less';
-</style>

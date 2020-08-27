@@ -336,6 +336,7 @@
 	.time-inputs {
 		align-items: center;
 		background-color: transparent;
+		border-top: 1px solid @gray-05;
 		display: flex;
 		flex-direction: row;
 		
@@ -345,9 +346,10 @@
 			flex: 1 0;
 			width: auto;
 
-			&:focus {
-				box-shadow: none;
-				outline: 0;
+			&:focus,
+			&:focus-within {
+				box-shadow: none !important;
+				outline: 0 !important;
 			}
 
 			.inputs {
@@ -356,7 +358,6 @@
 		}
 
 		.timepicker-presets {
-			border-top: 1px solid @gray-05;
 			flex: 0 0 auto;
 			padding: 0 0.25em;
 
