@@ -6,7 +6,7 @@ Remix UI provides some basic layout components that help you create responsive l
 Wrapping rows and columns in the grid component will apply the `@gutter-width` style to child components. Setting the `gutter` prop will override the values.
 
 ### Props
-**gutter** String - The height/width of the gutters
+* **gutter** `String` - The height/width of the gutters
 
 ### Usage
 Using the brid component below will automatically apply the default gutter spacing to the first level of child row and column components.
@@ -38,9 +38,9 @@ The row component is a flex-row container that will switch to a flex-column at l
 The `column` component should be nested inside a `row` component. Columns will stack at lower resolutions (mobile). In order to keep consistent column widths, the column slot has a nested `.inner-column` div that adiitional styles should be applied to. The `column` component can also be passed additional props.
 
 ### Props
-**span** String - The number of units for the column to span. A column with span 2 next to a column with span 3 will take up 40% of the available space.
-**maxWidth** String - The maximum width the column should have
-**minWidth** String - The minimum width a column should have
+* **span** `String` - The number of units for the column to span. A column with span 2 next to a column with span 3 will take up 40% of the available space.
+* **maxWidth** `String` - The maximum width the column should have
+* **minWidth** `String` - The minimum width a column should have
 
 ### Usage
 ```html
@@ -54,5 +54,5 @@ The `column` component should be nested inside a `row` component. Columns will s
 The `gutter` component is used to create custom gutter widths between `column` components or `row` components. `gutter` components that are placed between columns will switch to vertical gutters when the window width changes.
 
 ### Props
-**size** String - The height/width of the gutter
-**static** Boolean - If set to `true`, the gutter will not collapse when the width changes
+* **size** `String` - The height/width of the gutter
+* **static** `Boolean` - If set to `true`, the gutter will not collapse when the width changes
