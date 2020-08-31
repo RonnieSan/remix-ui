@@ -23,10 +23,10 @@ export default {
 		Icon
 	},
 	props : {
-		preview : Boolean,
 		autocomplete : String,
 		disabled : Boolean,
 		placeholder : String,
+		preview : Boolean,
 		value : String
 	},
 	data() {

@@ -1,8 +1,9 @@
 # Form Validation
 
-Remix provides form validation functionality using several different methods as explained below:
+Remix provides form validation functionality using several different methods as explained below...
 
-## Validating an rForm Component
+---
+## Assigning a Validator to a rForm Component
 The `rForm` component can be assigned an instance of a `validator`. When applying a validator to a form, the following is true...
 * When the form is submitted, the validator's `validate` method is triggered
 * If validation passes, the form's `v-on:submit` event will trigger
@@ -44,7 +45,7 @@ export default {
 }
 </script>
 ```
-
+---
 ## Assigning a Validator to Every rValidation Component
 It is entirely possible to create validated form inputs that are not within a form. Simply assign a validator directly to the `rValidation` components. You can then validate all rules that are assigned to the validator using the validators `validate` method.
 
@@ -88,7 +89,7 @@ export default {
 }
 </script>
 ```
-
+---
 ## Wrapping rValidation Components in a rValidator Component
 Instead of assigning the validator to every `rValidation` component, you can wrap fields in an `rValidator` component to automatically pass the validator. This is also useful if you want to show all errors in the same spot.
 
@@ -133,3 +134,6 @@ export default {
 }
 </script>
 ```
+---
+## Validation Rules
+Coming soon...

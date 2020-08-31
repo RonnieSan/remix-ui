@@ -4,7 +4,7 @@
 			<r-radio
 				ref="input"
 				v-model="localValue"
-				:name="name"
+				:name="fieldName"
 				:value="option.value"
 				:disabled="disabled"
 			><span class="radio-label" v-html="option.label"/></r-radio>
@@ -55,6 +55,19 @@ export default {
 					};
 				}
 			});
+		},
+		fieldName() {
+			if (this.name) {
+				return this.name;
+			}
+			else {
+				let name       = '';
+				let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				for (let n = 0; n < 8; n++) {
+				  name += characters.charAt(Math.floor(Math.random() * characters.length));
+				}
+				return name;
+			}
 		}
 	},
 	watch : {

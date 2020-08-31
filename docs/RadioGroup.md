@@ -1,9 +1,9 @@
-# Checklist
-A list of checkbox values that modify an array passed into the v-model attribute.
+# RadioGroup
+A list of radio buttons
 
 ## Props
 * **disabled** : BOOLEAN - Set to `true` to disable all checkboxes in the list
-* **name** : STRING - The name of the form input
+* **name** : STRING - The name of the form input (one will be generated if not set)
 * **options** : ARRAY - An array of values for each list item
 
 ## Usage
@@ -11,10 +11,10 @@ A list of checkbox values that modify an array passed into the v-model attribute
 <template>
   <div>
     <!-- SIMPLE OPTIONS -->
-    <r-checklist v-model="favorite_colors" :options="primary_colors"/>
+    <r-radio-group v-model="favorite_colors" :options="primary_colors"/>
 
     <!-- DIFFERENT LABEL AND VALUE -->
-    <r-checklist v-model="favorite_colors" :options="secondary_colors"/>
+    <r-radio-group v-model="favorite_colors" :options="secondary_colors"/>
   </div>
 </template>
 

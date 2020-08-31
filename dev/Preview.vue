@@ -8,7 +8,7 @@
 			</div>
 		</modal>
 		<div class="container">
-			<r-form>
+			<r-form action="test">
 				<grid>
 					<row>
 						<column>
@@ -174,7 +174,6 @@
 										<div class="controls">
 											<div class="field">
 												<r-radio-group
-													name="radio_buttons"
 													v-model="radio_group_value"
 													:options="radio_group_options"
 												/>
@@ -355,7 +354,6 @@
 										<div class="controls">
 											<div class="field">
 												<r-switch
-													name="switch"
 													v-model="switch_value"
 													:options="switch_options"
 												/>

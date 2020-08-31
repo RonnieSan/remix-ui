@@ -7,7 +7,6 @@ Remix UI uses LessCSS for styles. You may need to add the LessCSS loader to your
 {
     module : {
         rules : [
-            ...,
             {
                 test : /\.less$/,
                 loader : [
@@ -31,7 +30,7 @@ Remix UI uses LessCSS for styles. You may need to add the LessCSS loader to your
                         }
                     }
                 ]
-            },
+            }
         ]
     }
 }
@@ -49,12 +48,17 @@ If you're using a theme file for the styles, you can reference it in your Webpac
 }
 ```
 
-Then you just include any of the styles you want to use in your component. The `~` in the path will resolve to the node_modules folder.
+Then you just include any of the styles you want to use in your component. If you're using the Webpack resolver, the `~` in the path will resolve to the `node_modules` folder.
 ```html
+<!-- In a Component -->
 <style lang="less">
 @import '~remix-ui/styles/Form.less';
 </style>
 ```
+```js
+// In the entry file or another .less file
+@import '~remix-ui/styles/Form.less';
+````
 
 ## Remix CSS Styles
 It is highly recommended that you use the `remix-css` npm package along side Remix UI. Remix CSS requires a well-thought out structure when creating a web page that provides excellent responsiveness as well as some utility styles to make development much quicker. For more information on Remix CSS, please visit the [Remix CSS GitHub Repo](https://github.com/RonnieSan/remix-css).

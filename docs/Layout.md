@@ -6,12 +6,12 @@ Remix UI provides some basic layout components that help you create responsive l
 Wrapping rows and columns in the grid component will apply the `@gutter-width` style to child components. Setting the `gutter` prop will override the values.
 
 ### Props
-**gutter** String - The height/width of the gutters
+* **gutter** : STRING - The height/width of the gutters
 
 ### Usage
 Using the brid component below will automatically apply the default gutter spacing to the first level of child row and column components.
 ```html
-<grid>
+<grid gutter="10px">
     <row>
         <column>First Column</column>
         <column>Second Column</column>
@@ -22,7 +22,7 @@ Using the brid component below will automatically apply the default gutter spaci
     </row>
 </grid>
 ```
-
+---
 ## Row
 The row component is a flex-row container that will switch to a flex-column at lower resolutions (mobile). The row component will inherit the gutter of the closest `grid` component surrounding it. The row component may also be used outside of the grid component.
 
@@ -33,14 +33,14 @@ The row component is a flex-row container that will switch to a flex-column at l
     <column>Second Column</column>
 </row>
 ```
-
+---
 ## Column
 The `column` component should be nested inside a `row` component. Columns will stack at lower resolutions (mobile). In order to keep consistent column widths, the column slot has a nested `.inner-column` div that adiitional styles should be applied to. The `column` component can also be passed additional props.
 
 ### Props
-**span** String - The number of units for the column to span. A column with span 2 next to a column with span 3 will take up 40% of the available space.
-**maxWidth** String - The maximum width the column should have
-**minWidth** String - The minimum width a column should have
+* **span** : STRING - The number of units for the column to span. A column with span 2 next to a column with span 3 will take up 40% of the available space.
+* **maxWidth** : STRING - The maximum width the column should have
+* **minWidth** : STRING - The minimum width a column should have
 
 ### Usage
 ```html
@@ -49,10 +49,21 @@ The `column` component should be nested inside a `row` component. Columns will s
     <column min-width="320px">This column will stack if it tries to get smaller than 320px</column>
 </row>
 ```
-
+---
 ## Gutter
 The `gutter` component is used to create custom gutter widths between `column` components or `row` components. `gutter` components that are placed between columns will switch to vertical gutters when the window width changes.
 
 ### Props
-**size** String - The height/width of the gutter
-**static** Boolean - If set to `true`, the gutter will not collapse when the width changes
+* **size** : STRING - The height/width of the gutter
+* **static** : BOOLEAN - If set to `true`, the gutter will not collapse when the width changes
+
+### Usage
+```html
+<row>
+    <column>This is a column</column>
+    <gutter size="20px"/>
+    <column>This is a column</column>
+    <gutter size="50px"/>
+    <column>This is a column</column>
+</row>
+```

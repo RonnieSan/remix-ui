@@ -11,28 +11,30 @@ A custom checkbox component with added convenience options and functionality.
 * **value** : [STRING, NUMBER, OBJECT] - If the v-model is an array, the value that will be added to the array when the box is checked
 
 ## Usage
-In the template...
-```html
-<!-- As a boolean value -->
-<r-checkbox name="terms" v-model="boolean_value">I agree to the terms and conditions</r-checkbox>
+```vue
+<template>
+	<div>
+		<!-- BOOLEAN VALUE -->
+		<r-checkbox v-model="boolean_value">I agree to the terms and conditions</r-checkbox>
 
-<!-- As a string value -->
-<r-checkbox name="terms" v-model="string_value" true-value="Yes" false-value="No">I agree to the terms and conditions</r-checkbox>
+		<!-- STRING VALUE -->
+		<r-checkbox v-model="string_value" true-value="Yes" false-value="No">I agree to the terms and conditions</r-checkbox>
 
-<!-- As an array value -->
-<r-checkbox name="terms" v-model="array_value" value="Agreed to terms">I agree to the terms and conditions</r-checkbox>
-<r-checkbox name="terms" v-model="array_value" value="Did not agree to terms">I DO NOT agree to the terms and conditions</r-checkbox>
-```
+		<!-- ARRAY VALUE -->
+		<r-checkbox v-model="array_value" value="Agreed to terms">I agree to the terms and conditions</r-checkbox>
+		<r-checkbox v-model="array_value" value="Opted in to email">I would like to receive news and offers via email</r-checkbox>
+	</div>
+</template>
 
-In the script...
-```js
-{
-  data() {
-    return {
-      boolean_value : false,
-      string_value : 'No',
-      array_value : []
-    };
-  }
+<script>
+export default {
+	data() {
+		return {
+			boolean_value : false,
+			string_value : 'No',
+			array_value : []
+		}
+	}
 }
+</script>
 ```

@@ -67,36 +67,3 @@ export default {
 	]
 };
 </script>
-
-<docs>
-# Text Input
-A basic form text input with optional parameters to give it extra functionality.
-
-## Props
-**allowed** String - Characters that are allowed in the value
-**autocomplete** String - A boolean string that is passed to the input that will allow browser autocomplete
-**disabled** Boolean - If `true`, the field will be disabled
-**filter** Function - A function that is passed a single value argument that transforms the value of the field
-**mask** String - A masking string (ala vue-the-mask) that transforms the value of the field
-**outputMask** Boolean - Set to true if you want additional characters in the mask to be added to the value
-**placeholder** String - The placeholder text for the field
-**type** String - The type of inpuit field to use
-
-## Usage
-
-Basic Usage
-```html
-<r-text
-	v-model="text_value"
->
-```
-
-Masked Input (Phone Number)
-```html
-<r-text
-	v-model="text_value"
-	mask="(###) ###-####"
->
-// Output Value: ##########
-```
-</docs>

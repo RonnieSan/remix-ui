@@ -2,13 +2,12 @@
 	* [Installation](/)
 	* [Styling](Styles.md)
 * **Layout Components**
-	* [Overview][Layout.md]
+	* [Overview](Layout.md)
 * **Form Components**
 	* [rForm](Form.md)
-	* [rText][Text.md]
-	* [rPassword][Password.md]
-	* [rNumber][Number.md]
-	* [rButton](Button.md)
+	* [rText](Text.md)
+	* [rPassword](Password.md)
+	* [rNumber](Number.md)
 	* [rSelect](Select.md)
 	* [rTextarea](Textarea.md)
 	* [rCheckbox](Checkbox.md)
@@ -33,7 +32,7 @@
 	* [rCode](Code.md)
 	* [rMarkdown](Markdown.md)
 * **Form Validation**
-	* [Overview][FormValidation.md]
+	* [Overview](FormValidation.md)
 	* [rValidator](Vaidator.md)
 	* [rValidation](Validation.md)
 * **UI Components**

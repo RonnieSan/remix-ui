@@ -2,12 +2,12 @@
 A set of form and UI components for VueJS.
 
 ## Installation
-1. Install via NPM.
+Install via NPM.
 ```bash
 npm install remix-ui
 ```
 
-2. Import and use Remix UI in your VueJS application in the main `app.js` file.
+Import and use Remix UI in your VueJS application in the main entry file.
 ```js
 // Import the library as a dependency
 import RemixUI from 'remix-ui';
@@ -22,9 +22,9 @@ const app = new Vue({
 });
 ```
 
-You can choose which components you want to use in your app. You can either use a single component name, or select a group of components.
+All components will be installed if you omit the second argument. Or you can choose which components you want to use in your app. You can either use a single component name, or select a group of components.
 ```js
-Vue.use(RemixUI, ['form', 'extended', 'layout', 'markdown']);
+Vue.use(RemixUI, ['Form', 'rCurrency', 'rPillBox', 'Layout', 'rMarkdown']);
 ```
 
 The following component groups can be selected:
@@ -34,7 +34,6 @@ The following component groups can be selected:
 * Row
 * Column
 * Gutter
-* Spacer
 
 **Form** - Basic form components
 * rForm
@@ -58,15 +57,17 @@ The following component groups can be selected:
 * rSlider
 * rToggle
 * rSwitch
-* rDatepicker
-* rTimepicker
-* rCode
 * rFormBuilder
 
 **Content** - Content editing components
+* rCode
 * rMarkdown
 * rWysiwyg (Not complete)
 * rTemplateEditor (Not complete)
+
+**DateTime** - Date and time components
+* rDatepicker
+* rTimepicker
 
 **Validation** - Validation components
 * rValidation
