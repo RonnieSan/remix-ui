@@ -1,44 +1,43 @@
-# DatePicker
-A date-picker field for single dates or ranges.
+# rDatePicker
+The `rDatePicker` field is a useful component for picking a single date or a date range with the option for time-specificity.
 
 ## Value
-The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or an array containing 2 ISO8601-formatted dates for a range.
+* **STRING, ARRAY** - The value should be an **ISO8601-formatted date** (YYYY-MM-DD) for a single date or an array containing 2 ISO8601-formatted dates for a range.
 
 ## Props
-* **min-value** : STRING - An ISO8601 date that the user cannot select a date below.
-* **max-value** : STRING - An ISO8601 date that the user cannot select a date above.
-* **max-range** : NUMBER - The maximum range length in days the user can select.
-* **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
-* **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
-* **options** : OBJECT - Options for the datepicker.
-* **options.timepicker** : BOOLEAN - Set to true to use a timepicker.
-* **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
-* **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
-* **options.max_range** : NUMBER - The maximum range length in days the user can select.
-* **options.reset_time** : BOOLEAN - Set false to keep current time when selecting new dates.
-* **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
+* **disabled** : BOOLEAN - Set to `true` to disable interactions with the field
+* **settings** : OBJECT - settings for the datepicker
+* **settings.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values)
+* **settings.min_date** : STRING - An ISO8601 date that the user cannot select a date below
+* **settings.max_date** : STRING - An ISO8601 date that the user cannot select a date above
+* **settings.max_range** : NUMBER - The maximum range length in days the user can select
+* **settings.reset_time** : BOOLEAN - Set `false` to keep current time when selecting new dates
+* **settings.timepicker** : BOOLEAN - Set to `true` to use a timepicker
+* **settings.timepicker_settings** : OBJECT - Settings to pass the embedded timepickers ([see rTimepicker documentation](Timepicker.md))
 
 ## Usage
-In the template...
-```html
-<r-datepicker
-  v-model="datepicker_value"
-  min-value="1980-01-01"
-  max-value="2020-12-31"
-  format="ddd, MMM D, YYYY"
-/>
+```vue
+<template>
+  <div>
+    <r-datepicker
+      v-model="datepicker_value"
+      min-value="1980-01-01"
+      max-value="2020-12-31"
+      format="ddd, MMM D, YYYY"
+    />
 
-<r-datepicker
-  v-model="datepicker_range_value"
-  min-value="1980-01-01"
-  max-value="2020-12-31"
-  format="MM/DD/YYYY"
-/>
-```
+    <r-datepicker
+      v-model="datepicker_range_value"
+      min-value="1980-01-01"
+      max-value="2020-12-31"
+      format="MM/DD/YYYY"
+    />
 
-In the script...
-```js
-{
+  </div>
+</template>
+
+<script>
+export default {
   data() {
     return {
       datepicker_value : '2019-05-13',
@@ -46,4 +45,5 @@ In the script...
     };
   }
 }
+</script>
 ```

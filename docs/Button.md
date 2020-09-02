@@ -1,4 +1,4 @@
-# Button
+# rButton
 A form button with options for styling and interaction states.
 
 ## Slots

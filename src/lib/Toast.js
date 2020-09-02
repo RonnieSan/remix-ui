@@ -20,7 +20,7 @@ const Toast = Vue.extend({
 				'<div v-if="message.icon" class="type-icon"><icon :type="icon(message)" size="24"/></div>' +
 				'<div class="content">' +
 					'<div v-if="message.title" class="title">{{message.title}}</div>' +
-					'{{message.content}}' +
+					'<div v-html="message.content"></div>' +
 				'</div>' +
 				'<div class="close" @click="remove(message.id)"><icon type="close" size="24"/></div>' +
 			'</div>' +

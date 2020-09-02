@@ -1,9 +1,8 @@
 <template>
 	<div
 		:class="['r-markdown', 'control-border', 'focusable', mode, {disabled}]"
-		:style="{maxHeight}"
 	>
-		<div class="toolbar">
+		<div ref="toolbar" class="toolbar">
 			<div class="tools">
 				<!-- <div class="btn icon"><icon type="format-bold" size="24"/></div>
 				<div class="btn icon"><icon type="format-italic" size="24"/></div> -->
@@ -16,10 +15,7 @@
 			</div>
 		</div>
 		<div class="editor">
-			<div :class="['input', {'active' : edit}]">
-				<div class="mirror">
-					<pre>{{input}}<br/>&nbsp;</pre>
-				</div>
+			<div :class="['input', {'active' : edit}]" :style="maxHeightStyle">
 				<textarea
 					ref="input"
 					wrap="soft"
@@ -29,8 +25,11 @@
 					:disabled="disabled"
 					v-on="listeners"
 				></textarea>
+				<div v-if="mode === 'compact'" class="mirror">
+					<pre>{{input}}<br/>&nbsp;</pre>
+				</div>
 			</div>
-			<div :class="['output', {'active' : !edit}]">
+			<div :class="['output', {'active' : !edit}]" :style="maxHeightStyle">
 				<div class="markdown" v-html="output"></div>
 			</div>
 		</div>
@@ -71,6 +70,14 @@ export default {
 		},
 		output() {
 			return markdown.render(this.value);
+		},
+		maxHeightStyle() {
+			if (this.mode === 'compact') {
+				return {
+					maxHeight : this.maxHeight
+				};
+			}
+			return null;
 		},
 		listeners() {
 			let vm = this;
@@ -176,7 +183,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Markdown.less';
-</style>

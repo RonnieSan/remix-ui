@@ -1,6 +1,9 @@
 # rText
 The `rText` component is a basic text input form control with added functionality.
 
+## Value
+* **STRING** - The `v-model` accepts a string
+
 ## Props
 * **allowed** : STRING - A string of characters that are allowed in the field value
 * **autocomplete** : STRING ( on | off ) - The native attribute passed down to the input
@@ -11,13 +14,43 @@ The `rText` component is a basic text input form control with added functionalit
 * **placeholder** : STRING - The placeholder text passed to the native input element
 * **type** : STRING ( text | number | password | tel | etc ) - The input type to use for this text field. You should generally stick to `text` or `tel`.
 
+## Slots
+If using Remix UI styles, the class `.control-helper` will style content in the slots appropriately.
+* **left** - The left slot will insert data before the text input, but inside the control border
+* **left** - The left slot will insert data after the text input, but inside the control border
+
 ## Usage
-```html
-<!-- BASIC USAGE -->
-<r-text
-  name="first_name"
-  v-model="first_name"
-/>
+```vue
+<template>
+  <div>
+    <!-- BASIC USAGE -->
+    <r-text
+      name="first_name"
+      v-model="first_name"
+    />
+
+    <!-- USING SLOTS -->
+    <r-text
+      name="email"
+      v-model="email"
+    >
+      <div class="control-helper" slot="left">
+        <icon type="email" size="24px"/>
+      </div>
+    </r-text>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      first_name : '',
+      email : ''
+    }
+  }
+}
+</script>
 ```
 
 ## Masking Values
@@ -34,16 +67,36 @@ Text masks can come in handy when you expect a specific format for text such as 
 ```
 
 #### Mask Example
-```html
-<!-- PHONE NUMBER -->
-<r-text
-  name="phone_number"
-  v-model="phone_number"
-  mask="(###) ###-####"
-  output-mask
-/>
-<!-- no outputMask : 8885551212 -->
-<!-- outputMask : (888) 555-1212 -->
+```vue
+<template>
+  <div>
+    <!-- WITHOUT MASK -->
+    <r-text
+      name="phone_number_without_mask"
+      v-model="phone_number_without_mask"
+      mask="(###) ###-####"
+    />
+
+    <!-- WITH MASK -->
+    <r-text
+      name="phone_number_with_mask"
+      v-model="phone_number_with_mask"
+      mask="(###) ###-####"
+      output-mask
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      phone_number_without_mask : '6195551212',
+      phone_number_with_mask : '(619) 555-1212'
+    }
+  }
+}
+</script>
 ```
 
 ## Filters

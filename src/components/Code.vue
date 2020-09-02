@@ -19,10 +19,6 @@ import formField from '../mixins/formField';
 
 export default {
 	props : {
-		id : {
-			type : String,
-			required : true
-		},
 		settings : {
 			type : Object,
 			default() {
@@ -46,7 +42,20 @@ export default {
 		};
 	},
 	computed : {
-		parsedSettings() {
+		id() {
+			if (this.name) {
+				return this.name;
+			}
+			else {
+				let name       = '';
+				let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				for (let n = 0; n < 8; n++) {
+				  name += characters.charAt(Math.floor(Math.random() * characters.length));
+				}
+				return name;
+			}
+		},
+		mergedSettings() {
 			let settings = {};
 
 			if (this.ready) {
@@ -91,7 +100,7 @@ export default {
 				this.editor.setValue(this.value, 1);
 			}
 		},
-		parsedSettings : {
+		mergedSettings : {
 			handler(new_value) {
 				if (this.editor) {
 					// Set mode and theme
@@ -157,45 +166,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Code.less';
-</style>
-
-<docs>
-# Code
-A code input based off of Ace Editor.
-
-## Props
-* **v-model** : STRING
-* **id** : STRING (Required) - A unique ID for the field that Ace Editor binds to.
-* **settings** : OBJECT - An object containing option settings for the Ace Editor instance. Any [options from Ace Editor](https://ace.c9.io/#nav=api) can be passed in.
-* **settings.mode** : STRING - The name of the mode/language you want to use in the editor. You will need to import the code from the `brace/mode` folder (see below).
-* **settings.theme** : STRING - The name of the theme you want to use to color the code. You will need to import the code from the `brace/theme` folder (see below).
-* **max-height** : STRING - The maximum height as a string to allow the editor to grow to.
-
-## Usage
-In the template...
-```html
-<r-code id="my_code_editor" v-model="code_editor_value" :options="code_editor_options" max-height="600px"/>
-```
-
-In the script...
-```js
-import 'brace/mode/python';
-import 'brace/theme/cobalt';
-
-{
-	data() {
-		return {
-			code_editor_value : '{"hello" : "world"}',
-			code_editor_options : {
-				fontFamily : 'Consolas',
-				mode : 'python',
-				theme : 'cobalt'
-			}
-		};
-	}
-}
-```
-</docs>

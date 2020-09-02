@@ -1,14 +1,17 @@
-# Checkbox
+# rCheckbox
 A custom checkbox component with added convenience options and functionality.
 
-## Slots
-* **default** : The label to display next to the checkbox
+## Value
+* **BOOLEAN, STRING, NUMBER** - The `v-model` accepts any value when used in conjuction with the `true-value` and `false-value` props. The default value is BOOLEAN.
 
 ## Props
 * **name** : STRING - The name of the field that will be placed on the input
 * **true-value** : [STRING, NUMBER, OBJECT] - If the v-model is not an array, the value the model will be set to when the box is checked
 * **false-value** : [STRING, NUMBER, OBJECT] - If the v-model is not an array, the value the model will be set to when the box is NOT checked
 * **value** : [STRING, NUMBER, OBJECT] - If the v-model is an array, the value that will be added to the array when the box is checked
+
+## Slots
+* **default** : The label to display next to the checkbox
 
 ## Usage
 ```vue

@@ -1,4 +1,4 @@
-<template>
+  <template>
 	<label class="r-toggle">
 		<span class="toggle">
 			<input type="checkbox"
@@ -24,7 +24,6 @@ export default {
 	props : {
 		falseLabel : String,
 		falseValue : {},
-		label : String,
 		model : {},
 		name : String,
 		trueLabel : String,
@@ -136,7 +135,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Toggle.less';
-</style>

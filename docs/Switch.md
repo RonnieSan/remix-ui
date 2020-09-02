@@ -1,5 +1,5 @@
-# rRadioGroup
-A `rRadioGroup` component creates a list of radio buttons.
+# rSwitch
+The `rSwitch` component is an alternate style of radio button.
 
 ## Value
 * **STRING, NUMBER, OBJECT, BOOLEAN, NULL** - The `v-model` accepts any value
@@ -14,10 +14,10 @@ A `rRadioGroup` component creates a list of radio buttons.
 <template>
   <div>
     <!-- SIMPLE OPTIONS -->
-    <r-radio-group v-model="favorite_colors" :options="primary_colors"/>
+    <r-switch v-model="favorite_colors" :options="primary_colors"/>
 
     <!-- DIFFERENT LABEL AND VALUE -->
-    <r-radio-group v-model="favorite_colors" :options="secondary_colors"/>
+    <r-switch v-model="favorite_colors" :options="secondary_colors"/>
   </div>
 </template>
 

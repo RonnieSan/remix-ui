@@ -1,12 +1,9 @@
 <template>
 	<div>
 		<slot name="errors" v-bind="self">
-			<ul v-if="errors.length > 0" class="validation-errors">
-				<template v-if="showErrors">
+			<ul v-if="showErrors && errors.length" class="validation-errors">
+				<template>
 					<li v-for="error in errors">{{error}}</li>
-				</template>
-				<template v-else>
-					<li>{{errors[0]}}</li>
 				</template>
 			</ul>
 		</slot>
@@ -32,28 +29,18 @@ export default {
 		},
 		showErrors : Boolean
 	},
-	data() {
-		return {
-			errors : []
-		};
-	},
 	computed : {
 		self() {
 			return this;
+		},
+		errors() {
+			return this.validator.errors || [];
 		}
 	},
 	methods : {
 		// Run the validator
 		validate(group_name) {
-			return this.validator.validate(group_name)
-				.then((is_valid) => {
-					this.errors = [];
-					return true;
-				})
-				.catch((err) => {
-					this.errors = err;
-					return false;
-				});
+			return this.validator.validate(group_name);
 		},
 
 		// Reset errors on all the fields

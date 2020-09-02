@@ -21,8 +21,7 @@
 @import (optional, reference) '~remix-ui-theme';
 
 .r-markdown {
-	display: inline-flex;
-	flex-direction: column;
+	display: inline-block;
 	overflow: hidden;
 	position: relative;
 	vertical-align: top;
@@ -34,30 +33,14 @@
 			border: none;
 			height: 0;
 			max-width: 100%;
-			overflow-x: hidden;
-			overflow-y: visible;
+			overflow: hidden;
 			position: relative;
 			vertical-align: top;
 			width: 100%;
 
 			&.active {
-				height: auto;
+				height: 100%;
 				min-height: @control-height * 4;
-			}
-
-			.mirror {
-				opacity: 0;
-				padding: @control-padding;
-				padding-right: 1.5em;
-				vertical-align: middle;
-				width: 100%;
-
-				pre {
-					font-family: @font-mono;
-					font-size: @font-size-small;
-					line-height: @line-height;
-					white-space: break-spaces;
-				}
 			}
 
 			textarea {
@@ -66,6 +49,7 @@
 				bottom: 0;
 				font-family: @font-mono;
 				font-size: @font-size-small;
+				height: 100%;
 				left: 0;
 				line-height: @line-height;
 				padding: @control-padding;
@@ -81,6 +65,21 @@
 				&:focus {
 					border: none;
 					outline: 0;
+				}
+			}
+
+			.mirror {
+				opacity: 0;
+				padding: @control-padding;
+				padding-right: 1.5em;
+				vertical-align: middle;
+				width: 100%;
+
+				pre {
+					font-family: @font-mono;
+					font-size: @font-size-small;
+					line-height: @line-height;
+					white-space: break-spaces;
 				}
 			}
 
@@ -102,6 +101,7 @@
 
 			&.active {
 				display: block;
+				height: 100%;
 			}
 
 			.markdown {
@@ -167,7 +167,7 @@
 		border-bottom: 1px solid fade(@control-border-color, 50%);
 		display: flex;
 		flex-direction: row;
-		flex: 0 0 calc(@control-height - (@control-border-stroke * 2));
+		height: calc(@control-height - (@control-border-stroke * 2));
 		justify-content: space-between;
 
 		.tools {

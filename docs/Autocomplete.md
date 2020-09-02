@@ -1,29 +1,33 @@
-# Auto-Complete
-The auto-complete component should be used in tandem with another form element like a text input. The auto-complete element should wrap the element where the values will be input.
+# Autocomplete
+The `autoomplete` component makes a list of pre-determined values available on text inputs.
 
 ## Props
 * **type** : STRING - The the data type of the value ['string' or 'object']
-* **options** : ARRAY - An array of values to use as auto-complete settings
+* **options** : ARRAY, FUNCTION - An array of values to use as auto-complete settings. A function may be used to return options asynchronously.
 * **settings** : OBJECT - Custom settings for the auto-complete component
 * **settings.min_length** : NUMBER - The minimum number of characters input before getting possible values
 
-## Usage
-In the template...
-```html
-<r-autocomplete
-  v-model="autocomplete_value"
-  :options="autocomplete_options"
->
-  <r-text
-    name="autocomplete_text"
-    v-model="autocomplete_value"
-  />
-</r-autocomplete>
-```
+## Slots
+* **default** - The default slot contains the input the autocomplete will apply to.
 
-In the script...
-```js
-{
+## Usage
+```vue
+<template>
+  <div>
+    <autocomplete
+      v-model="autocomplete_value"
+      :options="autocomplete_options"
+    >
+      <r-text
+        name="autocomplete_text"
+        v-model="autocomplete_value"
+      />
+    </r-autocomplete>
+  </div>
+</template>
+
+<script>
+export default {
   data() {
     return {
       autocomplete_options : [
@@ -36,6 +40,7 @@ In the script...
     };
   }
 }
+</script>
 ```
 
 Async options using promises...

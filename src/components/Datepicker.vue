@@ -74,7 +74,7 @@
 							<timepicker
 								name="timepicker_start"
 								v-model="time_value[0]"
-								:options="mergedSettings.timepicker_options"
+								:options="mergedSettings.timepicker_settings"
 							/>
 							<div class="timepicker-presets">
 								<div class="button" @click="setTime(0, 'start')">
@@ -136,7 +136,7 @@
 							<timepicker
 								name="timepicker_start"
 								v-model="time_value[1]"
-								:options="mergedSettings.timepicker_options"
+								:options="mergedSettings.timepicker_settings"
 							/>
 							<div class="timepicker-presets">
 								<div class="button" @click="setTime(1, 'start')">
@@ -181,20 +181,13 @@ export default {
 			type : [String, Array],
 			required : true
 		},
-		minValue : String,
-		maxValue : String,
-		maxRange : Number,
-		format : {
-			type : String,
-			default : 'ddd, MMM D, YYYY'
-		},
 		settings : {
 			type : Object,
 			default() {
 				return {
 					format : 'ddd, MMM D, YYYY',
 					timepicker : false,
-					timepicker_options : {},
+					timepicker_settings : {},
 					presets : [
 						{
 							label : 'Today',
@@ -243,14 +236,14 @@ export default {
 		displayValue() {
 			if (this.isRange) {
 				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
-					return moment(this.value[0]).format(this.mergedSettings.format || this.format);
+					return moment(this.value[0]).format(this.mergedSettings.format);
 				}
 
-				return moment(this.value[0]).format(this.mergedSettings.format || this.format) + ' - ' + moment(this.value[1]).format(this.mergedSettings.format || this.format);
+				return moment(this.value[0]).format(this.mergedSettings.format) + ' - ' + moment(this.value[1]).format(this.mergedSettings.format);
 			}
 
 			else {
-				return moment(this.value).format(this.mergedSettings.format || this.format);
+				return moment(this.value).format(this.mergedSettings.format);
 			}
 		},
 		isRange() {
@@ -269,13 +262,13 @@ export default {
 			return moment(this.cursor_value[1]).format('YYYY');
 		},
 		minDate() {
-			return moment(this.minValue || this.mergedSettings.min_date);
+			return moment(this.mergedSettings.min_date);
 		},
 		maxDate() {
-			return moment(this.maxValue || this.mergedSettings.max_date);
+			return moment(this.mergedSettings.max_date);
 		},
 		maxDateRange() {
-			return this.maxRange || this.mergedSettings.max_range;
+			return this.mergedSettings.max_range;
 		},
 		errorMessages() {
 			return uniq(this.error_messages);
@@ -325,7 +318,7 @@ export default {
 			let options = merge({}, {
 				format : 'ddd, MMM D, YYYY',
 				timepicker : false,
-				timepicker_options : {},
+				timepicker_settings : {},
 				reset_time : true,
 				presets : [
 					{
@@ -422,10 +415,10 @@ export default {
 
 		// Check if the date is selectable
 		isSelectable(date, index) {
-			if (this.minValue && date.isBefore(this.minValue)) {
+			if (this.mergedSettings.min_date && date.isBefore(this.mergedSettings.min_date)) {
 				return false;
 			}
-			if (this.maxValue && date.isAfter(this.maxValue)) {
+			if (this.mergedSettings.max_date && date.isAfter(this.mergedSettings.max_date)) {
 				return false;
 			}
 			return true;
@@ -684,10 +677,10 @@ export default {
 			if (start) {
 				let start_date = moment(start);
 				let start_error_msg = 'The start date you are trying to select is not allowed. Selecting the earliest possible start date.';
-				if (this.minValue && start_date < this.minDate) {
+				if (this.mergedSettings.min_date && start_date < this.minDate) {
 					this.error_messages.push(start_error_msg);
 					this.inputHandler(this.minDate, 0);
-					start = this.minValue;
+					start = this.mergedSettings.min_date;
 				}
 				else {
 					this.error_messages = without(this.error_messages, start_error_msg);
@@ -702,10 +695,10 @@ export default {
 			if (end) {
 				let end_date = moment(end);
 				let end_error_msg = 'The end date you are trying to select is not allowed. Selecting the latest possible start date.';
-				if (this.maxValue && end_date > this.maxDate) {
+				if (this.mergedSettings.max_date && end_date > this.maxDate) {
 					this.error_messages.push(end_error_msg);
 					this.inputHandler(this.maxDate, 1);
-					end = this.maxValue;
+					end = this.mergedSettings.max_date;
 				}
 				else {
 					this.error_messages = without(this.error_messages, end_error_msg);
@@ -837,59 +830,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Datepicker.less';
-</style>
-
-<docs>
-# DatePicker
-A date-picker field for single dates or ranges.
-
-## Value
-The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or an array containing 2 ISO8601-formatted dates for a range.
-
-## Props
-* **min-value** : STRING - An ISO8601 date that the user cannot select a date below.
-* **max-value** : STRING - An ISO8601 date that the user cannot select a date above.
-* **max-range** : NUMBER - The maximum range length in days the user can select.
-* **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
-* **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
-* **options** : OBJECT - Options for the datepicker.
-* **options.timepicker** : BOOLEAN - Set to true to use a timepicker.
-* **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
-* **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
-* **options.max_range** : NUMBER - The maximum range length in days the user can select.
-* **options.reset_time** : BOOLEAN - Set false to keep current time when selecting new dates.
-* **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
-
-## Usage
-In the template...
-```html
-<r-datepicker
-	v-model="datepicker_value"
-	min-value="1980-01-01"
-	max-value="2020-12-31"
-	format="ddd, MMM D, YYYY"
-/>
-
-<r-datepicker
-	v-model="datepicker_range_value"
-	min-value="1980-01-01"
-	max-value="2020-12-31"
-	format="MM/DD/YYYY"
-/>
-```
-
-In the script...
-```js
-{
-	data() {
-		return {
-			datepicker_value : '2019-05-13',
-			datepicker_range_value : ['2019-05-11', '2019-05-13']
-		};
-	}
-}
-```
-</docs>

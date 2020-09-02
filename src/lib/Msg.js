@@ -33,20 +33,20 @@ const Msg = Vue.extend({
 	'</modal>',
 	methods : {
 		// Open an alert box with a message
-		alert(options) {
+		alert(settings) {
 			this.type = 'alert';
 
-			if (typeof options === 'string') {
-				options = {
-					message : options
+			if (typeof settings === 'string') {
+				settings = {
+					message : settings
 				};
 			}
 
 			return new Promise((resolve, reject) => {
-				this.title     = options.title || false;
-				this.message   = options.message;
-				this.accept    = options.confirm || options.accept || 'OK';
-				this.max_width = options.width || '400px';
+				this.title     = settings.title || false;
+				this.message   = settings.message;
+				this.accept    = settings.confirm || settings.accept || 'OK';
+				this.max_width = settings.width || '400px';
 				this.$refs.msg.open()
 					.then(() => {
 						this.$refs.accept_btn.focus();
@@ -60,21 +60,21 @@ const Msg = Vue.extend({
 		},
 
 		// Open a confirmation modal
-		confirm(options) {
+		confirm(settings) {
 			this.type = 'confirm';
 
-			if (typeof options === 'string') {
-				options = {
-					message : options
+			if (typeof settings === 'string') {
+				settings = {
+					message : settings
 				};
 			}
 
 			return new Promise((resolve, reject) => {
-				this.title     = options.title || false;
-				this.message   = options.message || options.prompt;
-				this.accept    = options.confirm || options.accept || 'OK';
-				this.decline   = options.decline || 'Cancel';
-				this.max_width = options.width || '400px';
+				this.title     = settings.title || false;
+				this.message   = settings.message || settings.prompt;
+				this.accept    = settings.confirm || settings.accept || 'OK';
+				this.decline   = settings.decline || 'Cancel';
+				this.max_width = settings.width || '400px';
 				this.$refs.msg.open()
 					.then(() => {
 						this.$refs.cancel_btn.focus();

@@ -1,5 +1,8 @@
-# File Input
+# rFile
 A component for creating a more user-friendly file select input.
+
+## Value
+* **STRING** - The `v-model` accepts a string that represents the path to the file
 
 ## Props
 * **accept** : STRING - The mime-type string for acceptable file types. Default is '*/*'.
@@ -32,6 +35,11 @@ In the template...
 
 <script>
 export default {
+  data() {
+    return {
+      file_value : ''
+    }
+  },
   methods : {
     getFile(params) {
       const file = params.data.get('my_file');

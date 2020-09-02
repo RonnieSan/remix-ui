@@ -1,6 +1,9 @@
 # rSelect
 The `rSelect` component works just like the native select element but with added functionality. The value support all data types.
 
+## Value
+* **STRING, NUMBER, OBJECT, BOOLEAN, NULL** - The `v-model` accepts a any type of value
+
 ## Props
 * **alloweEmpty** : BOOLEAN - Set to `true` to allow an empty value to be selected
 * **disabled** : BOOLEAN - Set to `true` to disable the input

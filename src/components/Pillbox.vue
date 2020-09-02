@@ -53,7 +53,7 @@ export default {
 		},
 		commit : {
 			type : [Array, String],
-			default : function() {
+			default() {
 				return [
 					'Enter',
 					' ',
@@ -217,7 +217,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Pillbox.less';
-</style>

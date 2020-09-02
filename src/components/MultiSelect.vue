@@ -242,7 +242,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/MultiSelect.less';
-</style>

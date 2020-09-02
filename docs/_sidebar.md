@@ -33,7 +33,7 @@
 	* [rMarkdown](Markdown.md)
 * **Form Validation**
 	* [Overview](FormValidation.md)
-	* [rValidator](Vaidator.md)
+	* [rValidator](Validator.md)
 	* [rValidation](Validation.md)
 * **UI Components**
 	* [Auto-Complete](Autocomplete.md)

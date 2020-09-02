@@ -1,5 +1,8 @@
-# Checklist
+# rChecklist
 A list of checkbox values that modify an array passed into the v-model attribute.
+
+## Value
+* **ARRAY** - The `v-model` accept and ARRAY of values. The values can be any data type.
 
 ## Props
 * **disabled** : BOOLEAN - Set to `true` to disable all checkboxes in the list

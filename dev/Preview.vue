@@ -421,13 +421,12 @@
 										<div class="controls">
 											<div class="field">
 												<r-code
-													id="code_editor"
-													v-model="codeValue"
+													v-model="code_value"
 												/>
 											</div>
 										</div>
 										<div class="model-value">
-											<pre>Value: {{codeValue}}</pre>
+											<pre>Value: {{code_value}}</pre>
 										</div>
 									</div>
 								</div>
@@ -440,6 +439,7 @@
 											<div class="field">
 												<r-markdown
 													v-model="markdown_value"
+													max-height="300px"
 												/>
 											</div>
 										</div>
@@ -537,6 +537,17 @@
 															v-model="custom_validation_value"
 														/>
 													</r-validation>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- VALIDATE TRIGGER -->
+									<div class="control-group">
+										<div class="inner">
+											<div class="controls">
+												<div class="field">
+													<r-button icon="check" @click="validator.validate()">Validate Fields</r-button>
 												</div>
 											</div>
 										</div>
@@ -710,7 +721,7 @@ export default {
 			time_value : '12:00:00',
 
 			// CONTENT COMPONENTS
-			code_value : {},
+			code_value : '',
 			markdown_value : '',
 
 			// VALIDATION COMPONENTS
@@ -791,24 +802,6 @@ export default {
 			},
 			set : function(new_value) {
 				this.form_builder_value = new_value;
-			}
-		},
-		codeValue : {
-			get() {
-				try {
-					return JSON.stringify(this.code_value, null, 4);
-				}
-				catch (err) {
-					return this.code_value;
-				}
-			},
-			set(new_value) {
-				try {
-					this.code_value = JSON.parse(new_value);
-				}
-				catch (err) {
-					// Don't save it
-				}
 			}
 		}
 	},

@@ -158,7 +158,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/TextInput.less';
-</style>

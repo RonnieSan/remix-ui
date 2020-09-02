@@ -7,6 +7,9 @@ A custom form component that adds a little extra functionality. The native form 
 * **method** : STRING ( GET | POST ) - The form method that is passed to the native form element
 * **validator** : VALIDATOR - An instance of the Remix UI validator
 
+## Slots
+* **default** - All form content should be contained in the default slot
+
 ## Events
 * **submit** : FUNCTION(form) - Triggered when the form is submitted and is passed the native form object. If a validator is attached to the `rForm` component, this will only trigger if validation is successful.
 * **error** : FUNCTION(errors) - Triggered only if the `rForm` component has a validator assigned and it returns errors on submit. The function is passed the array of errors that were returned.
