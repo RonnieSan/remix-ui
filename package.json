@@ -57,7 +57,7 @@
     "postcss-flexbox": "^1.0.3",
     "remix-css": "^2.0.0",
     "sortablejs": "^1.10.2",
-    "uuidv4": "^6.2.2",
+    "uuid": "^8.3.0",
     "v-money": "^0.8.0",
     "vue": "^2.6.12",
     "vue-clickaway": "^2.1.0",

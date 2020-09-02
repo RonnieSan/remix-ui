@@ -22,7 +22,6 @@
 					:allowed="allowed"
 					:filter="filter"
 					:mask="mask"
-					:number="number"
 					:outputMask="outputMask"
 					:placeholder="placeholder"
 					:disabled="disabled"
@@ -53,7 +52,7 @@
 </template>
 
 <script>
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import formField from '../mixins/formField';
 import { isEqual, map, merge } from 'lodash-es';
 import Sortable from 'sortablejs';
@@ -123,7 +122,7 @@ export default {
 			if (!isEqual(new_value, map(this.local_value, 'value'))) {
 				this.local_value = new_value.map((item, index) => {
 					return {
-						key   : uuid(),
+						key   : uuidv4(),
 						value : item
 					};
 				});
@@ -137,7 +136,7 @@ export default {
 		addKeys(value) {
 			let new_value = value.map((item, index) => {
 				return {
-					key   : uuid(),
+					key   : uuidv4(),
 					value : item
 				};
 			});
@@ -145,7 +144,7 @@ export default {
 		},
 		addItem() {
 			if (!this.disabled) {
-				let key = uuid();
+				let key = uuidv4();
 				this.local_value.push({
 					key   : key,
 					value : ''
