@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import Validator from '../lib/Validator';
-
 export default {
 	provide () {
 		return {
@@ -17,12 +15,7 @@ export default {
 		action : String,
 		method : String,
 		autocomplete : String,
-		validator: {
-			type: Validator,
-			default () {
-				return new Validator();
-			}
-		}
+		validator : Object
 	},
 	methods : {
 		// Submit the form
