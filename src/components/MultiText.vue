@@ -66,8 +66,7 @@ export default {
 			default : 'Add Item'
 		},
 		allowed : {
-			type : [String, Boolean],
-			default : false
+			type : String
 		},
 		filter : {
 			type: Function,
@@ -78,10 +77,6 @@ export default {
 		mask : {
 			type : [String, Boolean],
 			default : false
-		},
-		number : {
-			type : Boolean,
-			default: false
 		},
 		outputMask : {
 			type : Boolean,
