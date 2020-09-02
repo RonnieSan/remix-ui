@@ -41,6 +41,7 @@ export default {
 				event.preventDefault();
 			}
 			else {
+				this.$emit('click');
 				return true;
 			}
 		}
