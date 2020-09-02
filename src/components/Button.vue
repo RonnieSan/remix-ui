@@ -37,9 +37,11 @@ export default {
 	},
 	methods : {
 		emitClick(event) {
-			event.preventDefault();
-			if (!this.loading) {
-				this.$emit('click');
+			if (this.loading) {
+				event.preventDefault();
+			}
+			else {
+				return true;
 			}
 		}
 	}

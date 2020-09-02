@@ -202,23 +202,27 @@
 									</div>
 								</div>
 
-								<!-- BUTTONS -->
-								<div class="control-group">
-									<div class="inner">
-										<label class="control-label">Buttons:</label>
-										<div class="controls">
-											<div class="field fit">
-												<r-button>Button</r-button>
-											</div>
-											<div class="field fit">
-												<r-button type="submit" :loading="is_loading" icon="check" @click="buttonLoader()">Submit</r-button>
-											</div>
-											<div class="field fit">
-												<r-button class="icon" icon="close"/>
+								<r-form name="test" @submit="buttonLoader">
+
+									<!-- BUTTONS -->
+									<div class="control-group">
+										<div class="inner">
+											<label class="control-label">Buttons:</label>
+											<div class="controls">
+												<div class="field fit">
+													<r-button>Button</r-button>
+												</div>
+												<div class="field fit">
+													<r-button type="submit" :loading="is_loading" icon="check">Submit</r-button>
+												</div>
+												<div class="field fit">
+													<r-button class="icon" icon="close"/>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+
+								</r-form>
 			
 							</fieldset>
 

@@ -18,7 +18,7 @@ export default {
 		method : String,
 		autocomplete : String,
 		validator: {
-			type: Object,
+			type: Validator,
 			default () {
 				return new Validator();
 			}
