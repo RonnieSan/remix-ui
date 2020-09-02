@@ -1,5 +1,5 @@
 <template>
-	<div class="input-box">
+	<div class="text-input">
 		<input
 			v-if="!mask"
 			ref="input"
@@ -38,25 +38,15 @@ export default {
 		};
 	},
 	props : {
-		allowed : {
-			type : [String, Boolean],
-			default : false
-		},
-		disabled : {
-			type : Boolean,
-			default : false
-		},
+		allowed : String,
+		disabled : Boolean,
 		filter : Function,
 		mask : {
 			type : [String, Boolean],
 			default : false
 		},
 		name : String,
-		number : Boolean,
-		outputMask : {
-			type : Boolean,
-			default : false
-		},
+		outputMask : Boolean,
 		placeholder : String,
 		type : String,
 		value : [String, Number]
@@ -168,7 +158,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/TextInput.less';
-</style>

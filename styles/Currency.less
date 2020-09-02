@@ -1,0 +1,41 @@
+// ----------------------------------------------------------------------
+// CURRENCY STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-bkg-color: #FFF;
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-height: 2.5em;
+@control-helper-bkg-color: #E5E5E5;
+@control-helper-color: #000;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+.r-currency {
+	display: inline-flex;
+	flex-direction: row;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100%;
+	
+	input[type='tel'] {
+		border: 0;
+		flex: 1 0;
+		font-family: @font-mono;
+		font-size: 1em;
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		padding: 0 @control-padding;
+		text-align: right;
+		width: 100%;
+	}
+
+	input:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+}

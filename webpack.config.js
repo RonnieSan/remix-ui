@@ -13,7 +13,7 @@ const webpack = require('webpack');
 module.exports = {
 	devtool : 'source-map',
 	mode : 'development',
-	entry : './src/preview.js',
+	entry : './dev/preview.js',
 	output : {
 		filename : '[name].js',
 		path : path.resolve(__dirname, 'dist'),
@@ -24,8 +24,8 @@ module.exports = {
 		alias : {
 			'vue$' : path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js'),
 			'@' : path.resolve(__dirname, 'src'),
-			'theme' : path.resolve(__dirname, 'node_modules/remix-css-theme-default'),
-			'remix-ui-styles' : path.resolve(__dirname, 'src/styles')
+			'@styles' : path.resolve(__dirname, 'styles'),
+			'remix-ui-theme' : path.resolve(__dirname, 'dev/theme.less')
 		}
 	},
 	devServer : {
@@ -120,7 +120,7 @@ module.exports = {
 	plugins : [
 		new VueLoaderPlugin(),
 		new HTMLWebpackPlugin({
-			template : './src/preview.html'
+			template : './dev/preview.html'
 		}),
 		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin(),

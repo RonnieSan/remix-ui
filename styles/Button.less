@@ -1,0 +1,110 @@
+// ----------------------------------------------------------------------
+// BUTTON STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@font: 'Roboto', Arial, Helvetica, Sans-serif;
+@control-button-text-color: #FFF;
+@control-height: 2.5em;
+@control-radius: 3px;
+@color-primary: #2993F7;
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(#000, 10%);
+};
+@gray-05: #F2F2F2;
+@gray-80: #333;
+
+@import (optional, reference) '~remix-ui-theme';
+
+@keyframes spin {
+    from {
+    	transform: rotate(0deg);
+    }
+    to {
+    	transform: rotate(360deg);
+    }
+}
+
+button {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.r-button {
+	align-items: center;
+	appearance: none;
+	background-color: @color-primary;
+	border-radius: @control-radius;
+	color: @control-button-text-color;
+	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
+	font-size: 1em;
+	height: @control-height;
+	line-height: @control-height;
+	white-space: nowrap;
+	vertical-align: middle;
+
+	&:hover {
+		background-color: lighten(@color-primary, 5%);
+	}
+
+	&:active {
+		background-color: darken(@color-primary, 5%);
+	}
+
+	&:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+
+	&.disabled {
+		background-color: #CCC;
+		cursor: not-allowed;
+	}
+
+	.icon {
+		background-color: fade(#000, 10%);
+		flex: 1 0 auto;
+		height: @control-height;
+		line-height: @control-height;
+		text-align: center;
+		width: @control-height;
+	}
+	
+	&.icon {
+		.icon {
+			background-color: transparent;
+		}
+
+		.label {
+			display: none;
+		}
+	}
+
+	&.loading {
+		cursor: wait;
+
+		.mdi::before {
+			animation: spin 750ms linear infinite;
+		}
+
+		&:hover {
+			background-color: @color-primary;
+		}
+
+		&:active {
+			background-color: @color-primary;
+		}
+	}
+	
+	.label {
+		display: block;
+		flex: 1 0;
+		font-family: @font;
+		padding: 0 1em;
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+}

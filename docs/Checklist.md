@@ -1,28 +1,43 @@
-# Checklist
+# rChecklist
 A list of checkbox values that modify an array passed into the v-model attribute.
 
+## Value
+* **ARRAY** - The `v-model` accept and ARRAY of values. The values can be any data type.
+
 ## Props
+* **disabled** : BOOLEAN - Set to `true` to disable all checkboxes in the list
 * **name** : STRING - The name of the form input
-* **options** : ARRAY - An array of objects with a `label` and `value` property that will act as the label and value of each item in the list
+* **options** : ARRAY - An array of values for each list item
 
 ## Usage
-In the template...
-```html
-<r-checklist name="my_checklist" v-model="checklist_value" :options="checklist_options"/>
-```
+```vue
+<template>
+  <div>
+    <!-- SIMPLE OPTIONS -->
+    <r-checklist v-model="favorite_colors" :options="primary_colors"/>
 
-In the script...
-```js
-{
+    <!-- DIFFERENT LABEL AND VALUE -->
+    <r-checklist v-model="favorite_colors" :options="secondary_colors"/>
+  </div>
+</template>
+
+<script>
+export default {
   data() {
     return {
-      checklist_value : [],
-      checklist_options : [
-        {label : 'Red', value : '#FF0000'},
-        {label : 'Green', value : '#00FF00'},
-        {label : 'Blue', value : '#0000FF'}
+      favorite_colors : [],
+      simple_color_options : [
+        'Red',
+        'Yellow',
+        'Blue'
+      ],
+      array_value : [
+        { label : 'Green', value : '#00FF00' },
+        { label : 'Orange', value : '#FF9900' },
+        { label : 'Purple', value : '#9900FF' }
       ]
-    };
+    }
   }
 }
+</script>
 ```

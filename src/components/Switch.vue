@@ -1,11 +1,12 @@
 <template>
-	<div class="switch-wrapper">
+	<div :class="['r-switch', 'control-border', 'focusable', {disabled}]">
 		<span v-for="option in options" :class="['option', {'selected' : local_value === getValue(option)}]">
 			<input
 				type="radio"
-				:name="name"
+				:name="fieldName"
 				v-model="local_value"
 				:value="getValue(option)"
+				:disabled="disabled"
 			/>
 			<span class="label">{{getLabel(option)}}</span>
 		</span>
@@ -27,6 +28,8 @@ export default {
 				]
 			}
 		},
+		name : String,
+		disabled : Boolean,
 		value : {
 			type : [String, Boolean, Number, Object]
 		}
@@ -49,6 +52,19 @@ export default {
 		}
 	},
 	computed : {
+		fieldName() {
+			if (this.name) {
+				return this.name;
+			}
+			else {
+				let name       = '';
+				let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				for (let n = 0; n < 8; n++) {
+				  name += characters.charAt(Math.floor(Math.random() * characters.length));
+				}
+				return name;
+			}
+		},
 		listeners() {
 			let vm = this;
 			return Object.assign(
@@ -97,7 +113,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Switch.less';
-</style>

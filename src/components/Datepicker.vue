@@ -1,171 +1,167 @@
 <template>
-	<div :class="['datepicker', {'disabled' : disabled}]">
-		<div
-			class="input-wrapper"
-		>
-			<input type="text"
-				ref="input"
-				:name="name"
-				:value="value"
-				:placeholder="value"
-				:disabled="disabled"
-				v-on="listeners"
-				autocomplete="off"
-			/>
-			<div class="display">{{displayValue}}</div>
-			<div class="helper"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
-			<transition name="dropfade">
-				<div
-					class="calendar-wrapper" v-if="is_open"
-					v-on-clickaway="closeCalendar"
-					:style="{'top' : popup_top, 'bottom' : popup_bottom}"
-				>
-					<div class="flex-h">
-						<div class="presets" v-if="isRange">
-							<h2>Presets</h2>
-							<ul>
-								<li v-for="(preset, index) in mergedOptions.presets" @click="setRange(index)">{{preset.label}}</li>
-							</ul>
-							<div class="button-wrapper">
-								<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
-							</div>
-						</div>
-						<div class="calendar start">
-							<div class="calendar-header">
-								<div class="month">
-									<div class="btn prev-year" @click="prev('year', 0)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
-									</div>
-									<div class="btn prev-month" @click="prev('month', 0)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 8 12 13 7"></polyline></svg>
-									</div>
-									<div class="current-month" @click="resetMonth(0)"><strong>{{startMonth}} {{startYear}}</strong></div>
-									<div class="btn next-month" @click="next('month', 0)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 16 12 11 7"></polyline></svg>
-									</div>
-									<div class="btn next-year" @click="next('year', 0)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
-									</div>
-								</div>
-								<div class="days-of-week">
-									<div>Su</div>
-									<div>Mo</div>
-									<div>Tu</div>
-									<div>We</div>
-									<div>Th</div>
-									<div>Fr</div>
-									<div>Sa</div>
-								</div>
-							</div>
-							<div class="calendar-body">
-								<div v-for="week in weeks(0)" class="week">
-									<div v-for="date in week" :class="{
-											'day' : true,
-											'dim' : !isInCurrentMonth(date.month, 0),
-											'not-selectable' : !isSelectable(date.moment, 0),
-											'selected' : isSelected(date.moment, 0),
-											'highlight' : isHighlighted(date.moment, 0),
-											'in-range' : isInRange(date.moment),
-											'not-in-max-range' : !isInMaxRange(date.moment, 0),
-											'range-start' : isRangeStart(date.moment),
-											'range-end' : isRangeEnd(date.moment)
-										}"
-										@click="setSelectionValue(date.moment, null, $event)">{{date.day}}</div>
-								</div>
-							</div>
-							<div v-if="mergedOptions.timepicker" class="time-inputs">
-								<Timepicker
-									name="timepicker_start"
-									v-model="time_value[0]"
-									:options="mergedOptions.timepicker_options"
-								/>
-								<div class="timepicker-presets">
-									<div class="button" @click="setTime(0, 'start')">
-										<icon type="arrow-collapse-left"/>
-									</div>
-									<div class="button" @click="setTime(0, 'now')">
-										<icon type="clock-outline"/>
-									</div>
-									<div class="button" @click="setTime(0, 'end')">
-										<icon type="arrow-collapse-right"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="calendar end" v-if="isRange">
-							<div class="calendar-header">
-								<div class="month">
-									<div class="btn prev-year" @click="prev('year', 1)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
-									</div>
-									<div class="btn prev-month" @click="prev('month', 1)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 8 12 13 7"></polyline></svg>
-									</div>
-									<div class="current-month" @click="resetMonth(1)"><strong>{{endMonth}} {{endYear}}</strong></div>
-									<div class="btn next-month" @click="next('month', 1)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 16 12 11 7"></polyline></svg>
-									</div>
-									<div class="btn next-year" @click="next('year', 1)">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
-									</div>
-								</div>
-								<div class="days-of-week">
-									<div>Su</div>
-									<div>Mo</div>
-									<div>Tu</div>
-									<div>We</div>
-									<div>Th</div>
-									<div>Fr</div>
-									<div>Sa</div>
-								</div>
-							</div>
-							<div class="calendar-body">
-								<div v-for="week in weeks(1)" class="week">
-									<div v-for="date in week" :class="{
-											'day' : true,
-											'dim' : !isInCurrentMonth(date.month, 1),
-											'not-selectable' : !isSelectable(date.moment, 1),
-											'selected' : isSelected(date.moment, 1),
-											'highlight' : isHighlighted(date.moment, 1),
-											'in-range' : isInRange(date.moment),
-											'not-in-max-range' : !isInMaxRange(date.moment, 1),
-											'range-start' : isRangeStart(date.moment),
-											'range-end' : isRangeEnd(date.moment)
-										}"
-										@click="setSelectionValue(null, date.moment, $event)">{{date.day}}</div>
-								</div>
-							</div>
-							<div v-if="mergedOptions.timepicker" class="time-inputs">
-								<Timepicker
-									name="timepicker_start"
-									v-model="time_value[1]"
-									:options="mergedOptions.timepicker_options"
-								/>
-								<div class="timepicker-presets">
-									<div class="button" @click="setTime(1, 'start')">
-										<icon type="arrow-collapse-left"/>
-									</div>
-									<div class="button" @click="setTime(1, 'now')">
-										<icon type="clock-outline"/>
-									</div>
-									<div class="button" @click="setTime(1, 'end')">
-										<icon type="arrow-collapse-right"/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div v-if="errorMessages.length > 0" class="errors">
+	<div :class="['r-datepicker', 'control-border', 'focusable', {disabled}]">
+		<input type="text"
+			ref="input"
+			:name="name"
+			:value="value"
+			:placeholder="value"
+			:disabled="disabled"
+			v-on="listeners"
+			autocomplete="off"
+		/>
+		<div class="display">{{displayValue}}</div>
+		<div class="control-helper"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
+		<transition name="dropfade">
+			<div
+				class="calendar-wrapper" v-if="is_open"
+				v-on-clickaway="closeCalendar"
+				:style="{'top' : popup_top, 'bottom' : popup_bottom}"
+			>
+				<div class="flex-h">
+					<div class="presets" v-if="isRange">
+						<h2>Presets</h2>
 						<ul>
-							<li v-for="(msg, index) in errorMessages" key="index">{{msg}}</li>
+							<li v-for="(preset, index) in mergedSettings.presets" @click="setRange(index)">{{preset.label}}</li>
 						</ul>
+						<div class="button-wrapper">
+							<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
+						</div>
 					</div>
-					<div v-if="!isRange" class="button-wrapper single-date-apply">
-						<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
+					<div class="calendar start">
+						<div class="calendar-header">
+							<div class="month">
+								<div class="btn prev-year" @click="prev('year', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+								</div>
+								<div class="btn prev-month" @click="prev('month', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 8 12 13 7"></polyline></svg>
+								</div>
+								<div class="current-month" @click="resetMonth(0)"><strong>{{startMonth}} {{startYear}}</strong></div>
+								<div class="btn next-month" @click="next('month', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 16 12 11 7"></polyline></svg>
+								</div>
+								<div class="btn next-year" @click="next('year', 0)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+								</div>
+							</div>
+							<div class="days-of-week">
+								<div>Su</div>
+								<div>Mo</div>
+								<div>Tu</div>
+								<div>We</div>
+								<div>Th</div>
+								<div>Fr</div>
+								<div>Sa</div>
+							</div>
+						</div>
+						<div class="calendar-body">
+							<div v-for="week in weeks(0)" class="week">
+								<div v-for="date in week" :class="{
+										'day' : true,
+										'dim' : !isInCurrentMonth(date.month, 0),
+										'not-selectable' : !isSelectable(date.moment, 0),
+										'selected' : isSelected(date.moment, 0),
+										'highlight' : isHighlighted(date.moment, 0),
+										'in-range' : isInRange(date.moment),
+										'not-in-max-range' : !isInMaxRange(date.moment, 0),
+										'range-start' : isRangeStart(date.moment),
+										'range-end' : isRangeEnd(date.moment)
+									}"
+									@click="setSelectionValue(date.moment, null, $event)">{{date.day}}</div>
+							</div>
+						</div>
+						<div v-if="mergedSettings.timepicker" class="time-inputs">
+							<timepicker
+								name="timepicker_start"
+								v-model="time_value[0]"
+								:options="mergedSettings.timepicker_settings"
+							/>
+							<div class="timepicker-presets">
+								<div class="button" @click="setTime(0, 'start')">
+									<icon type="arrow-collapse-left"/>
+								</div>
+								<div class="button" @click="setTime(0, 'now')">
+									<icon type="clock-outline"/>
+								</div>
+								<div class="button" @click="setTime(0, 'end')">
+									<icon type="arrow-collapse-right"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="calendar end" v-if="isRange">
+						<div class="calendar-header">
+							<div class="month">
+								<div class="btn prev-year" @click="prev('year', 1)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+								</div>
+								<div class="btn prev-month" @click="prev('month', 1)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 8 12 13 7"></polyline></svg>
+								</div>
+								<div class="current-month" @click="resetMonth(1)"><strong>{{endMonth}} {{endYear}}</strong></div>
+								<div class="btn next-month" @click="next('month', 1)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 16 12 11 7"></polyline></svg>
+								</div>
+								<div class="btn next-year" @click="next('year', 1)">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+								</div>
+							</div>
+							<div class="days-of-week">
+								<div>Su</div>
+								<div>Mo</div>
+								<div>Tu</div>
+								<div>We</div>
+								<div>Th</div>
+								<div>Fr</div>
+								<div>Sa</div>
+							</div>
+						</div>
+						<div class="calendar-body">
+							<div v-for="week in weeks(1)" class="week">
+								<div v-for="date in week" :class="{
+										'day' : true,
+										'dim' : !isInCurrentMonth(date.month, 1),
+										'not-selectable' : !isSelectable(date.moment, 1),
+										'selected' : isSelected(date.moment, 1),
+										'highlight' : isHighlighted(date.moment, 1),
+										'in-range' : isInRange(date.moment),
+										'not-in-max-range' : !isInMaxRange(date.moment, 1),
+										'range-start' : isRangeStart(date.moment),
+										'range-end' : isRangeEnd(date.moment)
+									}"
+									@click="setSelectionValue(null, date.moment, $event)">{{date.day}}</div>
+							</div>
+						</div>
+						<div v-if="mergedSettings.timepicker" class="time-inputs">
+							<timepicker
+								name="timepicker_start"
+								v-model="time_value[1]"
+								:options="mergedSettings.timepicker_settings"
+							/>
+							<div class="timepicker-presets">
+								<div class="button" @click="setTime(1, 'start')">
+									<icon type="arrow-collapse-left"/>
+								</div>
+								<div class="button" @click="setTime(1, 'now')">
+									<icon type="clock-outline"/>
+								</div>
+								<div class="button" @click="setTime(1, 'end')">
+									<icon type="arrow-collapse-right"/>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</transition>
-		</div>
+				<div v-if="errorMessages.length > 0" class="errors">
+					<ul>
+						<li v-for="(msg, index) in errorMessages" key="index">{{msg}}</li>
+					</ul>
+				</div>
+				<div v-if="!isRange" class="button-wrapper single-date-apply">
+					<button type="button" @click.stop="applyHandler()"><span class="label">Apply</span></button>
+				</div>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -173,32 +169,25 @@
 import formField from '../mixins/formField';
 import moment from 'moment-timezone';
 import { mixin as clickaway } from 'vue-clickaway';
-import Timepicker from './Timepicker';
+import timepicker from './Timepicker';
 import { merge, uniq, without } from 'lodash';
 
 export default {
 	components : {
-		Timepicker
+		timepicker
 	},
 	props : {
 		value : {
 			type : [String, Array],
 			required : true
 		},
-		minValue : String,
-		maxValue : String,
-		maxRange : Number,
-		format : {
-			type : String,
-			default : 'ddd, MMM D, YYYY'
-		},
-		options : {
+		settings : {
 			type : Object,
 			default() {
 				return {
 					format : 'ddd, MMM D, YYYY',
 					timepicker : false,
-					timepicker_options : {},
+					timepicker_settings : {},
 					presets : [
 						{
 							label : 'Today',
@@ -247,14 +236,14 @@ export default {
 		displayValue() {
 			if (this.isRange) {
 				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
-					return moment(this.value[0]).format(this.mergedOptions.format || this.format);
+					return moment(this.value[0]).format(this.mergedSettings.format);
 				}
 
-				return moment(this.value[0]).format(this.mergedOptions.format || this.format) + ' - ' + moment(this.value[1]).format(this.mergedOptions.format || this.format);
+				return moment(this.value[0]).format(this.mergedSettings.format) + ' - ' + moment(this.value[1]).format(this.mergedSettings.format);
 			}
 
 			else {
-				return moment(this.value).format(this.mergedOptions.format || this.format);
+				return moment(this.value).format(this.mergedSettings.format);
 			}
 		},
 		isRange() {
@@ -273,13 +262,13 @@ export default {
 			return moment(this.cursor_value[1]).format('YYYY');
 		},
 		minDate() {
-			return moment(this.minValue || this.mergedOptions.min_date);
+			return moment(this.mergedSettings.min_date);
 		},
 		maxDate() {
-			return moment(this.maxValue || this.mergedOptions.max_date);
+			return moment(this.mergedSettings.max_date);
 		},
 		maxDateRange() {
-			return this.maxRange || this.mergedOptions.max_range;
+			return this.mergedSettings.max_range;
 		},
 		errorMessages() {
 			return uniq(this.error_messages);
@@ -325,11 +314,11 @@ export default {
 				}
 			);
 		},
-		mergedOptions() {
+		mergedSettings() {
 			let options = merge({}, {
 				format : 'ddd, MMM D, YYYY',
 				timepicker : false,
-				timepicker_options : {},
+				timepicker_settings : {},
 				reset_time : true,
 				presets : [
 					{
@@ -357,10 +346,10 @@ export default {
 						value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
 					}
 				]
-			}, this.options);
+			}, this.settings);
 			
-			if (this.options.presets && this.options.presets.length > 0) {
-				options.presets = this.options.presets;
+			if (this.settings.presets && this.settings.presets.length > 0) {
+				options.presets = this.settings.presets;
 			}
 
 			return options;
@@ -426,10 +415,10 @@ export default {
 
 		// Check if the date is selectable
 		isSelectable(date, index) {
-			if (this.minValue && date.isBefore(this.minValue)) {
+			if (this.mergedSettings.min_date && date.isBefore(this.mergedSettings.min_date)) {
 				return false;
 			}
-			if (this.maxValue && date.isAfter(this.maxValue)) {
+			if (this.mergedSettings.max_date && date.isAfter(this.mergedSettings.max_date)) {
 				return false;
 			}
 			return true;
@@ -477,7 +466,7 @@ export default {
 					this.current_cursor_index = 0;
 					this.current_selection_index = 0;
 				}
-				if (this.mergedOptions.timepicker) {
+				if (this.mergedSettings.timepicker) {
 					this.resetTime(this.value);
 				}
 				this.resetCursors();
@@ -638,8 +627,8 @@ export default {
 
 		// Set the current range
 		setRange(selection) {
-			this.setSelectionValue(this.mergedOptions.presets[selection].value[0], this.mergedOptions.presets[selection].value[1]);
-			this.resetTime(this.mergedOptions.presets[selection].value);
+			this.setSelectionValue(this.mergedSettings.presets[selection].value[0], this.mergedSettings.presets[selection].value[1]);
+			this.resetTime(this.mergedSettings.presets[selection].value);
 			this.resetCursors();
 		},
 
@@ -688,17 +677,17 @@ export default {
 			if (start) {
 				let start_date = moment(start);
 				let start_error_msg = 'The start date you are trying to select is not allowed. Selecting the earliest possible start date.';
-				if (this.minValue && start_date < this.minDate) {
+				if (this.mergedSettings.min_date && start_date < this.minDate) {
 					this.error_messages.push(start_error_msg);
 					this.inputHandler(this.minDate, 0);
-					start = this.minValue;
+					start = this.mergedSettings.min_date;
 				}
 				else {
 					this.error_messages = without(this.error_messages, start_error_msg);
 					this.inputHandler(moment(start), 0);
 				}
 
-				if (this.mergedOptions.timepicker && this.mergedOptions.reset_time) {
+				if (this.mergedSettings.timepicker && this.mergedSettings.reset_time) {
 					this.$set(this.time_value, 0, '00:00:00');
 				}
 			}
@@ -706,17 +695,17 @@ export default {
 			if (end) {
 				let end_date = moment(end);
 				let end_error_msg = 'The end date you are trying to select is not allowed. Selecting the latest possible start date.';
-				if (this.maxValue && end_date > this.maxDate) {
+				if (this.mergedSettings.max_date && end_date > this.maxDate) {
 					this.error_messages.push(end_error_msg);
 					this.inputHandler(this.maxDate, 1);
-					end = this.maxValue;
+					end = this.mergedSettings.max_date;
 				}
 				else {
 					this.error_messages = without(this.error_messages, end_error_msg);
 					this.inputHandler(moment(end), 1);
 				}
 
-				if (this.mergedOptions.timepicker && this.mergedOptions.reset_time) {
+				if (this.mergedSettings.timepicker && this.mergedSettings.reset_time) {
 					this.$set(this.time_value, 1, '23:59:59');
 				}
 			}
@@ -741,7 +730,7 @@ export default {
 						this.error_messages = without(this.error_messages, range_error_msg);
 					}
 
-					if (this.options.timepicker && this.options.reset_time) {
+					if (this.settings.timepicker && this.settings.reset_time) {
 						this.resetTime();
 					}
 				});
@@ -786,7 +775,7 @@ export default {
 					moment(this.selection_value[0]).format('YYYY-MM-DD'),
 					moment(this.selection_value[1]).format('YYYY-MM-DD')
 				];
-				if (this.mergedOptions.timepicker) {
+				if (this.mergedSettings.timepicker) {
 					output_value = [
 						moment(output_value[0] + ' ' + this.time_value[0]).format(),
 						moment(output_value[1] + ' ' + this.time_value[1]).format()
@@ -800,7 +789,7 @@ export default {
 			}
 			else {
 				output_value = moment(this.selection_value[0]).format('YYYY-MM-DD');
-				if (this.mergedOptions.timepicker) {
+				if (this.mergedSettings.timepicker) {
 					output_value = moment(output_value + ' ' + this.time_value[0]).format();
 				}
 			}
@@ -831,7 +820,7 @@ export default {
 		}
 
 		// Set the time value
-		if (this.mergedOptions.timepicker) {
+		if (this.mergedSettings.timepicker) {
 			this.resetTime(initial_value);
 		}
 	},
@@ -841,59 +830,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Datepicker.less';
-</style>
-
-<docs>
-# DatePicker
-A date-picker field for single dates or ranges.
-
-## Value
-The value should be an ISO8601-formatted date (YYYY-MM-DD) for a single date or an array containing 2 ISO8601-formatted dates for a range.
-
-## Props
-* **min-value** : STRING - An ISO8601 date that the user cannot select a date below.
-* **max-value** : STRING - An ISO8601 date that the user cannot select a date above.
-* **max-range** : NUMBER - The maximum range length in days the user can select.
-* **disabled** : BOOLEAN - Set to `true` to disable interactions with the field.
-* **format** : STRING - The format to display the date as in the field (see momentjs.com for possible values) (deprecated).
-* **options** : OBJECT - Options for the datepicker.
-* **options.timepicker** : BOOLEAN - Set to true to use a timepicker.
-* **options.min_date** : STRING - An ISO8601 date that the user cannot select a date below.
-* **options.max_date** : STRING - An ISO8601 date that the user cannot select a date above.
-* **options.max_range** : NUMBER - The maximum range length in days the user can select.
-* **options.reset_time** : BOOLEAN - Set false to keep current time when selecting new dates.
-* **options.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values).
-
-## Usage
-In the template...
-```html
-<r-datepicker
-	v-model="datepicker_value"
-	min-value="1980-01-01"
-	max-value="2020-12-31"
-	format="ddd, MMM D, YYYY"
-/>
-
-<r-datepicker
-	v-model="datepicker_range_value"
-	min-value="1980-01-01"
-	max-value="2020-12-31"
-	format="MM/DD/YYYY"
-/>
-```
-
-In the script...
-```js
-{
-	data() {
-		return {
-			datepicker_value : '2019-05-13',
-			datepicker_range_value : ['2019-05-11', '2019-05-13']
-		};
-	}
-}
-```
-</docs>

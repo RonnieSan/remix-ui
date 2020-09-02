@@ -1,7 +1,7 @@
 <template>
 	<div
 		:style="{maxHeight}"
-		class="textarea-wrapper"
+		:class="['r-textarea', 'control-border', 'focusable', {disabled}]"
 	>
 		<div class="mirror">
 			<pre>{{value}}
@@ -11,6 +11,7 @@
 			ref="input"
 			:name="name"
 			:value="value"
+			:disabled="disabled"
 			v-on="listeners"
 		></textarea>
 	</div>
@@ -26,9 +27,10 @@ export default {
 		};
 	},
 	props : {
+		disabled : Boolean,
 		maxHeight : {
 			type : String,
-			default : '500px'
+			default : '20em'
 		},
 		value : String
 	},
@@ -63,7 +65,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Textarea.less';
-</style>

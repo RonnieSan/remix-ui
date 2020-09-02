@@ -152,6 +152,7 @@ export const rules = {
 class Validator {
 	constructor(options = {}) {
 		// Create a container for the fields
+		this.errors = [];
 		this.fields = {};
 		this.force_validate = false;
 
@@ -184,6 +185,7 @@ class Validator {
 
 	// Reset the errors on all the fields
 	reset() {
+		this.errors = [];
 		forIn(this.fields, (field) => {
 			field.reset();
 		});
@@ -191,6 +193,7 @@ class Validator {
 
 	// Run validation on all fields
 	validate(group_name) {
+		this.errors = [];
 		let field_validations = [];
 		forIn(this.fields, (field, id) => {
 			if (group_name && field.group === group_name) {
@@ -204,8 +207,8 @@ class Validator {
 		return Promise.all(field_validations)
 			.then((errors) => {
 				errors = compact(flatten(errors));
-
 				if (errors.length > 0) {
+					this.errors = errors;
 					throw new Error(errors);
 				}
 				else {

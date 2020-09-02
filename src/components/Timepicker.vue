@@ -1,87 +1,82 @@
 <template>
-	<div :class="['timepicker', {'disabled' : disabled}]">
-		<div
-			class="input-wrapper"
-			tabindex="-1"
-		>
-			<slot name="left"></slot>
-			<div class="inputs">
-				<input
-					ref="hour_input"
-					type="text"
-					name="hour"
-					maxlength="2"
-					placeholder="--"
-					autocomplete="off"
-					:disabled="disabled"
-					v-model="hour"
-					@focus="$refs.hour_input.select()"
-					@keypress="setHour($event, $event.key)"
-					@keydown="keydownHandler($event, 'hour')"
-					@blur="setHour($event)"
-				>
+	<div :class="['r-timepicker', 'control-border', 'focusable', {disabled}]" tabindex="-1">
+		<slot name="left"></slot>
+		<div class="inputs">
+			<input
+				ref="hour_input"
+				type="text"
+				name="hour"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="hour"
+				@focus="$refs.hour_input.select()"
+				@keypress="setHour($event, $event.key)"
+				@keydown="keydownHandler($event, 'hour')"
+				@blur="setHour($event)"
+			>
+			<span class="separator fit"></span>
+			<input
+				ref="minute_input"
+				type="text"
+				name="minute"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="minute"
+				@focus="$refs.minute_input.select()"
+				@keypress="setMinute($event, $event.key)"
+				@keydown="keydownHandler($event, 'minute')"
+				@blur="setMinute($event)"
+			>
+			<template v-if="mergedSettings.seconds">
 				<span class="separator fit"></span>
 				<input
-					ref="minute_input"
+					class="fit"
+					ref="second_input"
 					type="text"
-					name="minute"
+					name="seconds"
 					maxlength="2"
 					placeholder="--"
 					autocomplete="off"
 					:disabled="disabled"
-					v-model="minute"
-					@focus="$refs.minute_input.select()"
-					@keypress="setMinute($event, $event.key)"
-					@keydown="keydownHandler($event, 'minute')"
-					@blur="setMinute($event)"
+					v-model="second"
+					@focus="$refs.second_input.select()"
+					@keypress="setSecond($event, $event.key)"
+					@keydown="keydownHandler($event, 'second')"
+					@blur="setSecond($event)"
 				>
-				<template v-if="internal_options.seconds">
-					<span class="separator fit"></span>
-					<input
-						class="fit"
-						ref="second_input"
-						type="text"
-						name="seconds"
-						maxlength="2"
-						placeholder="--"
-						autocomplete="off"
-						:disabled="disabled"
-						v-model="second"
-						@focus="$refs.second_input.select()"
-						@keypress="setSecond($event, $event.key)"
-						@keydown="keydownHandler($event, 'second')"
-						@blur="setSecond($event)"
-					>
-				</template>
-				<input
-					v-if="!options.military"
-					ref="period_input"
-					type="text"
-					name="period"
-					maxlength="2"
-					placeholder="--"
-					autocomplete="off"
-					:disabled="disabled"
-					v-model="period"
-					@focus="$refs.period_input.select()"
-					@keypress.prevent="setPeriod"
-					@keydown="keydownHandler($event, 'period')"
-				>
-			</div>
-			<slot name="right"></slot>
+			</template>
+			<input
+				v-if="!mergedSettings.military"
+				ref="period_input"
+				type="text"
+				name="period"
+				maxlength="2"
+				placeholder="--"
+				autocomplete="off"
+				:disabled="disabled"
+				v-model="period"
+				@focus="$refs.period_input.select()"
+				@keypress.prevent="setPeriod"
+				@keydown="keydownHandler($event, 'period')"
+			>
 		</div>
+		<slot name="right"></slot>
 	</div>
 </template>
 
 <script>
-import { debounce, padStart } from 'lodash';
+import { debounce, defaultsDeep, padStart } from 'lodash';
 
 export default {
 	props : {
 		value : {
 			type : String
 		},
-		options : {
+		settings : {
 			type : Object,
 			default() {
 				return {};
@@ -97,15 +92,19 @@ export default {
 			hour : '',
 			minute : '',
 			second : '',
-			period : 'AM',
-			internal_options : Object.assign({
-				hour_interval : 1,									// The interval of hours you are allowed to set
-				minute_interval : 1,								// The interval of minutes you are allowed to set
-				second_interval : 1,								// The interval of seconds you are allowed to set
-				military : false,									// Use 24-hour clock
-				seconds : false										// Show seconds
-			}, this.options)
+			period : 'AM'
 		};
+	},
+	computed : {
+		mergedSettings() {
+			return defaultsDeep({}, this.settings, {
+				hour_interval : 1,		// The interval of hours you are allowed to set
+				minute_interval : 1,	// The interval of minutes you are allowed to set
+				second_interval : 1,	// The interval of seconds you are allowed to set
+				military : false,		// Use 24-hour clock
+				seconds : false			// Show seconds
+			});
+		}
 	},
 	watch : {
 		value(new_value, old_value) {
@@ -124,7 +123,7 @@ export default {
 						this.period = (this.period === 'AM' ? 'PM' : 'AM');
 					}
 					else {
-						this[field] = +this[field] + this.internal_options[field + '_interval'];
+						this[field] = +this[field] + this.mergedSettings[field + '_interval'];
 					}
 					break;
 				case 'ArrowDown':
@@ -132,7 +131,7 @@ export default {
 						this.period = (this.period === 'AM' ? 'PM' : 'AM');
 					}
 					else {
-						this[field] = +this[field] - this.internal_options[field + '_interval'];
+						this[field] = +this[field] - this.mergedSettings[field + '_interval'];
 					}
 					break;
 			}
@@ -141,7 +140,7 @@ export default {
 				// Readjust the time
 
 				// HOURS
-				if (this.internal_options.military) {
+				if (this.mergedSettings.military) {
 					if (this.hour >= 24) {
 						this.hour = '01';
 					}
@@ -203,7 +202,7 @@ export default {
 				let new_int_value = parseInt(new_string_value, 10);
 				
 				// Check for time format
-				if (!this.internal_options.military) {
+				if (!this.mergedSettings.military) {
 					// Check if the first number if greater than 1
 					if (this.hour.length !== 1
 						&& parseInt(key, 10) > 1) {
@@ -237,7 +236,7 @@ export default {
 				if (new_string_value.length === 2) {
 					// Set the hour according to the interval
 					let int_val = parseInt(new_string_value, 10);
-					this.hour = padStart((Math.round(int_val / this.internal_options.hour_interval) * this.internal_options.hour_interval).toString(), 2, '0');
+					this.hour = padStart((Math.round(int_val / this.mergedSettings.hour_interval) * this.mergedSettings.hour_interval).toString(), 2, '0');
 
 					this.$nextTick(() => {
 						this.setValue();
@@ -253,7 +252,7 @@ export default {
 
 				// Set the hour according to the interval
 				let int_val = parseInt(this.hour, 10);
-				this.hour = padStart((Math.round(int_val / this.internal_options.hour_interval) * this.internal_options.hour_interval).toString(), 2, '0');
+				this.hour = padStart((Math.round(int_val / this.mergedSettings.hour_interval) * this.mergedSettings.hour_interval).toString(), 2, '0');
 
 				this.$nextTick(() => {
 					this.setValue();
@@ -293,11 +292,11 @@ export default {
 				if (new_string_value.length === 2) {
 					// Set the minute according to the interval
 					let int_val = parseInt(new_string_value, 10);
-					this.minute = padStart((Math.round(int_val / this.internal_options.minute_interval) * this.internal_options.minute_interval).toString(), 2, '0');
+					this.minute = padStart((Math.round(int_val / this.mergedSettings.minute_interval) * this.mergedSettings.minute_interval).toString(), 2, '0');
 
 					this.$nextTick(() => {
 						this.setValue();
-						if (this.internal_options.seconds) {
+						if (this.mergedSettings.seconds) {
 							this.$refs.second_input.focus();
 						}
 						else {
@@ -314,7 +313,7 @@ export default {
 
 				// Set the minute according to the interval
 				let int_val = parseInt(this.minute, 10);
-				this.minute = padStart((Math.round(int_val / this.internal_options.minute_interval) * this.internal_options.minute_interval).toString(), 2, '0');
+				this.minute = padStart((Math.round(int_val / this.mergedSettings.minute_interval) * this.mergedSettings.minute_interval).toString(), 2, '0');
 
 				this.$nextTick(() => {
 					this.setValue();
@@ -353,11 +352,11 @@ export default {
 				if (new_string_value.length === 2) {
 					// Set the second according to the interval
 					let int_val = parseInt(new_string_value, 10);
-					this.second = padStart((Math.round(int_val / this.internal_options.second_interval) * this.internal_options.second_interval).toString(), 2, '0');
+					this.second = padStart((Math.round(int_val / this.mergedSettings.second_interval) * this.mergedSettings.second_interval).toString(), 2, '0');
 
 					this.$nextTick(() => {
 						this.setValue();
-						if (!this.internal_options.military) {
+						if (!this.mergedSettings.military) {
 							this.$refs.period_input.focus();
 						}
 					});
@@ -371,7 +370,7 @@ export default {
 
 				// Set the second according to the interval
 				let int_val = parseInt(this.second, 10);
-				this.second = padStart((Math.round(int_val / this.internal_options.second_interval) * this.internal_options.second_interval).toString(), 2, '0');
+				this.second = padStart((Math.round(int_val / this.mergedSettings.second_interval) * this.mergedSettings.second_interval).toString(), 2, '0');
 
 				this.$nextTick(() => {
 					this.setValue();
@@ -394,7 +393,7 @@ export default {
 		setValue : debounce(function() {
 			if (this.hour.length === 2 && this.minute.length === 2 && this.second.length === 2) {
 				let hour = this.hour;
-				if (!this.internal_options.military) {
+				if (!this.mergedSettings.military) {
 					if (this.period === 'PM') {
 						if (this.hour !== '12') {
 							hour = padStart((parseInt(hour, 10) + 12).toString(), 2, '0');
@@ -408,7 +407,7 @@ export default {
 				}
 				let minute = this.minute;
 				let second = this.second || '00';
-				if (!this.options.seconds) {
+				if (!this.mergedSettings.seconds) {
 					second = '00';
 				}
 				let value = [hour, minute, second].join(':');
@@ -436,7 +435,7 @@ export default {
 				minute = minute % 60;
 			}
 
-			if (this.internal_options.military) {
+			if (this.mergedSettings.military) {
 				if (hour > 23) {
 					hour = hour % 24;
 				}
@@ -464,7 +463,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Timepicker.less';
-</style>

@@ -20,7 +20,7 @@ const Toast = Vue.extend({
 				'<div v-if="message.icon" class="type-icon"><icon :type="icon(message)" size="24"/></div>' +
 				'<div class="content">' +
 					'<div v-if="message.title" class="title">{{message.title}}</div>' +
-					'{{message.content}}' +
+					'<div v-html="message.content"></div>' +
 				'</div>' +
 				'<div class="close" @click="remove(message.id)"><icon type="close" size="24"/></div>' +
 			'</div>' +
@@ -127,28 +127,26 @@ const Toast = Vue.extend({
 });
 
 // Export the toaster
-export default {
-	init : function(options) {
-		let settings = Object.assign({
-			parent : 'body',
-			timeout : 3000
-		}, options);
+export default function(options) {
+	let settings = Object.assign({
+		parent : 'body',
+		timeout : 3000
+	}, options);
 
-		// Create the #toast element and append to the DOM
-		let toast = document.querySelector('#toast');
-		if (!toast) {
-			toast = document.createElement('div');
-			toast.id = 'toast';
-			document.querySelector(settings.parent).appendChild(toast);
-		}
-
-		// Create an instance of the toast component
-		const toaster = new Toast();
-		toaster.$options.timeout = settings.timeout;
-
-		// Mount the toast component to the DOM
-		toaster.$mount('#toast');
-
-		return toaster;
+	// Create the #toast element and append to the DOM
+	let toast = document.querySelector('#toast');
+	if (!toast) {
+		toast = document.createElement('div');
+		toast.id = 'toast';
+		document.querySelector(settings.parent).appendChild(toast);
 	}
+
+	// Create an instance of the toast component
+	const toaster = new Toast();
+	toaster.$options.timeout = settings.timeout;
+
+	// Mount the toast component to the DOM
+	toaster.$mount('#toast');
+
+	return toaster;
 };

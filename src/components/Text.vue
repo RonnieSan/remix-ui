@@ -1,22 +1,11 @@
 <template>
 	<div
-		tabindex="-1"
-		class="input-wrapper"
+		:class="['r-text', 'control-border', 'focusable', {disabled}]"
 	>
 		<slot name="left"></slot>
 		<text-input
 			ref="input"
-			:allowed="allowed"
-			:autocomplete="autocomplete"
-			:disabled="disabled"
-			:filter="filter"
-			:mask="mask"
-			:name="name"
-			:number="number"
-			:output-mask="outputMask"
-			:placeholder="placeholder"
-			:type="type"
-			:value="value"
+			v-bind="$props"
 			v-on="listeners"
 		/>
 		<slot name="right"></slot>
@@ -28,28 +17,19 @@ import TextInput from './TextInput';
 import formField from '../mixins/formField';
 
 export default {
+	components : {
+		TextInput
+	},
 	props : {
 		allowed : String,
 		autocomplete : String,
-		disabled : {
-			type : Boolean,
-			default : false
-		},
+		disabled : Boolean,
 		filter : Function,
 		mask : String,
-		number : Boolean,
-		outputMask : {
-			type : Boolean,
-			default : false
-		},
+		outputMask : Boolean,
 		placeholder : String,
 		type : String,
 		value : [String, Number]
-	},
-	data() {
-		return {
-			focused : false
-		};
 	},
 	computed : {
 		listeners() {
@@ -84,13 +64,6 @@ export default {
 	},
 	mixins : [
 		formField
-	],
-	components : {
-		TextInput
-	}
+	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Text.less';
-</style>

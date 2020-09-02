@@ -1,22 +1,21 @@
 <template>
 	<div
-		:class="['markdown-wrapper', mode, {'disabled' : disabled}]"
-		:style="{maxHeight}"
+		:class="['r-markdown', 'control-border', 'focusable', mode, {disabled}]"
 	>
-		<div class="toolbar">
-			<div class="tools"></div>
+		<div ref="toolbar" class="toolbar">
+			<div class="tools">
+				<!-- <div class="btn icon"><icon type="format-bold" size="24"/></div>
+				<div class="btn icon"><icon type="format-italic" size="24"/></div> -->
+			</div>
 			<div class="utils">
-				<div class="btn right icon fullscreen" @click="togglePreview()"><icon :type="preview" size="18"/></div>
 				<!-- <div class="btn right icon"><icon type="help-circle" size="18"/></div> -->
+				<div class="btn right icon fullscreen" @click="togglePreview()"><icon :type="preview" size="18"/></div>
 				<div class="btn right icon fullscreen" @click="mode = 'fullscreen'"><icon type="fullscreen" size="24"/></div>
 				<div class="btn right icon compact" @click="mode = 'compact'"><icon type="fullscreen-exit" size="24"/></div>
 			</div>
 		</div>
 		<div class="editor">
-			<div :class="['input', {'active' : edit}]">
-				<div class="mirror">
-					<pre>{{input}}<br/>&nbsp;</pre>
-				</div>
+			<div :class="['input', {'active' : edit}]" :style="maxHeightStyle">
 				<textarea
 					ref="input"
 					wrap="soft"
@@ -26,8 +25,11 @@
 					:disabled="disabled"
 					v-on="listeners"
 				></textarea>
+				<div v-if="mode === 'compact'" class="mirror">
+					<pre>{{input}}<br/>&nbsp;</pre>
+				</div>
 			</div>
-			<div :class="['output', {'active' : !edit}]">
+			<div :class="['output', {'active' : !edit}]" :style="maxHeightStyle">
 				<div class="markdown" v-html="output"></div>
 			</div>
 		</div>
@@ -56,7 +58,6 @@ export default {
 	},
 	data() {
 		return {
-			input   : this.value,
 			edit    : true,
 			focused : false,
 			mode    : 'compact',
@@ -64,8 +65,19 @@ export default {
 		};
 	},
 	computed : {
+		input() {
+			return this.value;
+		},
 		output() {
 			return markdown.render(this.value);
+		},
+		maxHeightStyle() {
+			if (this.mode === 'compact') {
+				return {
+					maxHeight : this.maxHeight
+				};
+			}
+			return null;
 		},
 		listeners() {
 			let vm = this;
@@ -124,19 +136,39 @@ export default {
 				case 'f':
 					if (event.ctrlKey && this.mode === 'compact') {
 						event.preventDefault();
-						this.mode = 'fullscreen';
+						this.toggleMode(event)
+					}
+					break;
+
+				case 'm':
+					if (event.ctrlKey) {
+						this.togglePreview(event);
+					}
+					break;
+
+				case 'Escape':
+					if (this.mode === 'fullscreen') {
+						this.toggleMode(event);
 					}
 					break;
 			}
 		},
 		togglePreview() {
 			this.edit = !this.edit;
-			this.preview = (this.edit ? 'eye-off' : 'eye');
+			this.$nextTick(() => {
+				this.preview = (this.edit ? 'eye-off' : 'eye');
+			});
 		},
-		switchToCompact(event) {
-			if (this.mode === 'fullscreen' && event.which === 27) {
+		toggleMode(event) {
+			if (this.mode === 'fullscreen') {
 				this.mode = 'compact';
 				this.$refs.input.focus();
+				document.getElementsByTagName('html')[0].style.overflow = null;
+			}
+			else {
+				this.mode = 'fullscreen';
+				this.$refs.input.focus();
+				document.getElementsByTagName('html')[0].style.overflow = 'hidden';
 			}
 		}
 	},
@@ -146,15 +178,8 @@ export default {
 	components : {
 		Icon
 	},
-	mounted() {
-		window.addEventListener('keydown', this.switchToCompact);
-	},
-	beforeDstroy() {
-		window.removeEventListener('keydown', this.switchToCompact);
+	beforeDestroy() {
+		window.removeEventListener('keydown', this.toggleMode);
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Markdown.less';
-</style>

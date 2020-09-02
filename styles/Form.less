@@ -1,0 +1,32 @@
+// ----------------------------------------------------------------------
+// CORE FORM COMPONENT STYLES
+// ----------------------------------------------------------------------
+
+@control-height: 2.5em;
+@control-helper-bkg-color: #E5E5E5;
+@control-helper-color: #000;
+
+// Import custom variables
+@import (optional, reference) '~remix-ui-theme';
+
+@import './Button.less';
+@import './Checkbox.less';
+@import './Checklist.less';
+@import './FileInput.less';
+@import './Number.less';
+@import './Password.less';
+@import './Radio.less';
+@import './RadioGroup.less';
+@import './Select.less';
+@import './Text.less';
+@import './Textarea.less';
+@import './TextInput.less';
+
+.control-helper {
+	background-color: @control-helper-bkg-color;
+	flex: 0 0 auto;
+	height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+	line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+	min-width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+	text-align: center;
+}

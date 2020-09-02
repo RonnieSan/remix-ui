@@ -74,19 +74,6 @@ module.exports = (env) => {
 					loader : 'vue-loader'
 				},
 				{
-					resourceQuery : /blockType=docs/,
-					loader : [
-						{
-							loader : 'file-loader',
-							options: {
-								name : '[name].md',
-								outputPath : '../docs/'
-							}
-						},
-						require.resolve('./docs-loader.js')
-					]
-				},
-				{
 					test : /\.less$/,
 					loader : [
 						'vue-style-loader',

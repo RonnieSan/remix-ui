@@ -1,0 +1,95 @@
+// ----------------------------------------------------------------------
+// TOGGLE STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-stroke: 1px;
+@control-color: #2196F3;
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(black, 10%);
+};
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@toggle-size: 1.5em;
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+.r-toggle {
+	align-items: center;
+	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
+	font-size: 1em;
+	height: @control-height;
+	line-height: @toggle-size;
+	vertical-align: middle;
+	width: 100%;
+
+	&:focus-within .handle {
+		@control-focus();
+	}
+
+	.toggle {
+		display: inline-block;
+		flex: 0 0 @toggle-size * 2;
+		height: @toggle-size;
+		position: relative;
+		vertical-align: middle;
+		width: @toggle-size * 2;
+
+		&::before {
+			background-color: #D8D8D8;
+			border-radius: @toggle-size / 4;
+			content: '';
+			height: @toggle-size / 3;
+			left: @toggle-size / 2;
+			overflow: hidden;
+			position: absolute;
+			top: @toggle-size / 3;
+			width: @toggle-size;
+			z-index: 10;
+		}
+
+		input {
+			cursor:  pointer;
+			height: @toggle-size;
+			left: 0;
+			margin: 0;
+			opacity: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+			width: @toggle-size * 2;
+			z-index: 30;
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		input:checked + .handle {
+			transition: all 100ms ease-out;
+			background-color: @control-color;
+			left: @toggle-size;
+		}
+	}
+
+	.handle {
+		background-color: #A6A6A6;
+		border-radius: @toggle-size / 2;
+		display: block;
+		height: @toggle-size;
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition: all 100ms ease-out;
+		width: @toggle-size;
+		z-index: 20;
+	}
+
+	.toggle-label {
+		margin-left: @control-padding;
+		padding-top: @control-border-stroke;
+	}
+}

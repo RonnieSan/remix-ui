@@ -1,5 +1,5 @@
 <template>
-	<div :class="['pillbox-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-pillbox', 'control-border', 'focusable', {disabled}]">
 		<div class="inner">
 			<div v-for="(item_value, index) in propValue" :class="['item', {'selected' : index === selected_item}]">
 				<span class="pillbox-value">{{item_value.label || item_value}}</span>
@@ -18,7 +18,6 @@
 					:allowed="allowed"
 					:filter="filter"
 					:mask="mask"
-					:number="number"
 					:outputMask="outputMask"
 					v-on="listeners"
 					:disabled="disabled"
@@ -37,33 +36,12 @@ import TextInput from './TextInput';
 
 export default {
 	props : {
-		allowed : {
-			type : [String, Boolean],
-			default : false
-		},
-		filter : {
-			type: Function,
-			default : (value) => {
-				return value;
-			}
-		},
-		mask : {
-			type : [String, Boolean],
-			default : false
-		},
-		number : {
-			type : Boolean,
-			default: false
-		},
+		allowed : String,
+		filter : Function,
+		mask : String,
 		options : Array,
-		outputMask : {
-			type : Boolean,
-			default : false
-		},
-		placeholder : {
-			type : String,
-			default : ''
-		},
+		outputMask : Boolean,
+		placeholder : String,
 		type : {
 			type : String,
 			default : 'text'
@@ -75,7 +53,7 @@ export default {
 		},
 		commit : {
 			type : [Array, String],
-			default : function() {
+			default() {
 				return [
 					'Enter',
 					' ',
@@ -158,10 +136,6 @@ export default {
 			}
 			if (value && !includes(this.propValue, value)) {
 				if (value.length > 0) {
-					if (this.number === 'true') {
-						value = Number(value);
-					}
-
 					let matched = true;
 					if (this.pattern) {
 						let pattern = new RegExp(this.pattern);
@@ -243,7 +217,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Pillbox.less';
-</style>

@@ -1,0 +1,43 @@
+// ----------------------------------------------------------------------
+// COMMON TEXT INPUT STYLES
+// Shared by elements with text inputs
+// ----------------------------------------------------------------------
+
+// Default values
+@control-padding: 0.625em;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+input[type='text'],
+input[type='number'],
+input[type='password'],
+input[type='tel'],
+input[type='email'] {
+	background-color: transparent;
+	border: 0;
+}
+
+.text-input {
+	flex: 1 0;
+	height: 100%;
+	
+	input:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+
+	input[type='text'],
+	input[type='number'],
+	input[type='password'],
+	input[type='tel'],
+	input[type='email'] {
+		flex: 1 0;
+		padding: 0 @control-padding;
+	}
+
+	input[type='number'] {
+		font-family: @font-mono;
+	}
+}

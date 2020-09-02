@@ -1,13 +1,13 @@
 <template>
-	<div :class="['radio-group', {'disabled' : disabled}]" tabindex="-1">
+	<div :class="['r-radio-group', {disabled}]" tabindex="-1">
 		<div class="option" v-for="(option, index) in optionList" :key="index">
 			<r-radio
 				ref="input"
 				v-model="localValue"
-				:name="name"
+				:name="fieldName"
 				:value="option.value"
 				:disabled="disabled"
-			><span v-html="option.label"/></r-radio>
+			><span class="radio-label" v-html="option.label"/></r-radio>
 		</div>
 	</div>
 </template>
@@ -55,6 +55,19 @@ export default {
 					};
 				}
 			});
+		},
+		fieldName() {
+			if (this.name) {
+				return this.name;
+			}
+			else {
+				let name       = '';
+				let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				for (let n = 0; n < 8; n++) {
+				  name += characters.charAt(Math.floor(Math.random() * characters.length));
+				}
+				return name;
+			}
 		}
 	},
 	watch : {
@@ -75,7 +88,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/RadioGroup.less';
-</style>

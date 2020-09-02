@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="['multi-text-wrapper', {'disabled' : disabled}]"
+		:class="['r-multi-text', 'control-border', 'focusable', {disabled}]"
 		@focusout="touched = true; validate();"
 	>
 		<div class="sortable" v-sortable="options">
@@ -42,7 +42,7 @@
 			@click="addItem"
 			@keypress="keypressHandler"
 		>
-			<div class="input-box">{{addText}}</div>
+			<div class="text-input">{{addText}}</div>
 			<div class="button icon add">
 				<svg viewBox="0 0 24 24">
 				    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
@@ -204,7 +204,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/MultiText.less';
-</style>

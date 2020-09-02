@@ -1,0 +1,70 @@
+// ----------------------------------------------------------------------
+// TOGGLE STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-color: #2196F3;
+@control-padding: 0.625em;
+@switch-size: 2.5em;
+@gray-50: #808080;
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+.r-switch {
+	display: inline-flex;
+	flex-direction: row;
+	height: @switch-size;
+	overflow: hidden;
+	padding: 0;
+	vertical-align: middle;
+	white-space: nowrap;
+
+	.option {
+		border-left: 1px solid @control-border-color;
+		color: @control-border-color;
+		display: inline-block;
+		flex: 0 0 auto;
+		height: 100%;
+		line-height: ~'calc(@{switch-size} - (@{control-border-stroke} * 1.5))';
+		padding: 0 (@switch-size * 0.5);
+		position: relative;
+
+		&:hover {
+			color: @gray-50;
+		}
+
+		&:first-child {
+			border-left: 0;
+		}
+
+		&.selected {
+			background-color: @control-color;
+			color: @white;
+		}
+
+		input {
+			border: 0;
+			height: 100%;
+			left: 0;
+			margin: 0;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+
+	&.disabled .option {
+		&:hover {
+			color: @control-border-color;
+		}
+
+		&.selected {
+			background-color: fade(@gray-50, 25%);
+			color: @white;
+		}
+	}
+}

@@ -1,5 +1,5 @@
 <template>
-	<div class="slider-wrapper" @focusout="touched = true">
+	<div class="r-slider" @focusout="touched = true">
 		<div v-if="isRange" ref="merged_tooltip" :class="['tooltip', 'merged', {'invisible' : !merged_tooltip}]" :style="{'left' : merged_tooltip_left}">{{tooltipRange}}</div>
 		<div
 			ref="min"
@@ -36,7 +36,7 @@ import ResizeSensor from '../lib/ResizeSensor';
 export default {
 	props : {
 		value : [String, Number, Array],
-		options : {
+		settings : {
 			type : Object,
 			default : function() {
 				return {};
@@ -60,14 +60,14 @@ export default {
 		};
 	},
 	computed : {
-		settings() {
+		parsedSettings() {
 			return Object.assign({
 				min       : 0,
 				max       : 100,
 				increment : 1,
 				formatter : false,
 				snap      : false
-			}, this.options);
+			}, this.settings);
 		},
 		isRange() {
 			return Array.isArray(this.value);
@@ -77,8 +77,8 @@ export default {
 			if (this.isRange) {
 				value = this.local_value[0];
 			}
-			if (this.settings.formatter) {
-				return this.settings.formatter(value, 0);
+			if (this.parsedSettings.formatter) {
+				return this.parsedSettings.formatter(value, 0);
 			}
 			return value;
 		},
@@ -87,8 +87,8 @@ export default {
 			if (this.isRange) {
 				value = this.local_value[1];
 			}
-			if (this.settings.formatter) {
-				return this.settings.formatter(value, 1);
+			if (this.parsedSettings.formatter) {
+				return this.parsedSettings.formatter(value, 1);
 			}
 			return value;
 		},
@@ -101,7 +101,7 @@ export default {
 			}
 		},
 		segmentSize() {
-			return ((this.container.width - this.selected_handle.offsetWidth) / ((this.settings.max - this.settings.min) / this.settings.increment));
+			return ((this.container.width - this.selected_handle.offsetWidth) / ((this.parsedSettings.max - this.parsedSettings.min) / this.parsedSettings.increment));
 		}
 	},
 	watch : {
@@ -162,7 +162,7 @@ export default {
 			// Get the value
 			let value = this.getValue(position);
 
-			if (this.settings.snap) {
+			if (this.parsedSettings.snap) {
 				position = this.getValuePosition(value);
 			}
 
@@ -196,17 +196,17 @@ export default {
 				case 37:
 				case 40:
 					event.preventDefault();
-					let min = this.settings.min;
+					let min = this.parsedSettings.min;
 					if (this.isRange) {
-						min = (index === 0 ? this.settings.min : this.local_value[0]);
-						value = this.local_value[index] - this.settings.increment;
+						min = (index === 0 ? this.parsedSettings.min : this.local_value[0]);
+						value = this.local_value[index] - this.parsedSettings.increment;
 						if (value >= min) {
 							this.$set(this.local_value, index, value);
 							updated = true;
 						}
 					}
 					else {
-						value = this.local_value - this.settings.increment;
+						value = this.local_value - this.parsedSettings.increment;
 						if (value >= min) {
 							this.local_value = value;
 							updated = true;
@@ -218,17 +218,17 @@ export default {
 				case 38:
 				case 39:
 					event.preventDefault();
-					let max = this.settings.max;
+					let max = this.parsedSettings.max;
 					if (this.isRange) {
-						max = (index === 1 ? this.settings.max : this.local_value[1]);
-						value = this.local_value[index] + this.settings.increment;
+						max = (index === 1 ? this.parsedSettings.max : this.local_value[1]);
+						value = this.local_value[index] + this.parsedSettings.increment;
 						if (value <= max) {
 							this.$set(this.local_value, index, value);
 							updated = true;
 						}
 					}
 					else {
-						value = this.local_value + this.settings.increment;
+						value = this.local_value + this.parsedSettings.increment;
 						if (value <= max) {
 							this.local_value = value;
 							updated = true;
@@ -243,10 +243,10 @@ export default {
 			}
 		},
 		getValuePosition(value) {
-			return ((value - this.settings.min) / this.settings.increment) * this.segmentSize;
+			return ((value - this.parsedSettings.min) / this.parsedSettings.increment) * this.segmentSize;
 		},
 		getValue(position) {
-			return this.settings.min + (Math.round(position / this.segmentSize) * this.settings.increment);
+			return this.parsedSettings.min + (Math.round(position / this.segmentSize) * this.parsedSettings.increment);
 		},
 		setHandlePosition(handle, position) {
 			// Set the position of the handles
@@ -321,7 +321,7 @@ export default {
 			}
 			else {
 				selection.style.left  = 0;
-				selection.style.right = (this.container.width - this.maxPosition()) + 'px';
+				selection.style.right = (this.container.width - this.minPosition() - this.$refs.min.offsetWidth) + 'px';
 			}
 		},
 		resizeHandler() {
@@ -361,7 +361,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Slider.less';
-</style>

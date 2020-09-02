@@ -1,13 +1,13 @@
 # Remix UI
-A set of UI components for VueJS.
+A set of form and UI components for VueJS.
 
 ## Installation
-1. Install via NPM.
+Install via NPM.
 ```bash
 npm install remix-ui
 ```
 
-2. Import and use Remix UI in your VueJS application in the main `app.js` file.
+Import and use Remix UI in your VueJS application in the main entry file.
 ```js
 // Import the library as a dependency
 import RemixUI from 'remix-ui';
@@ -22,77 +22,103 @@ const app = new Vue({
 });
 ```
 
-### Using Remix UI Styles with Webpack
-In order to use the styling included with Remix UI, you'll need to create an alias to the styles in your webpack config.
+All components will be installed if you omit the second argument. Or you can choose which components you want to use in your app. You can either use a single component name, or select a group of components.
 ```js
+Vue.use(RemixUI, ['Form', 'rCurrency', 'rPillBox', 'Layout', 'rMarkdown']);
+```
+
+The following component groups can be selected:
+
+**Layout** - Layout components
+* Grid
+* Row
+* Column
+* Gutter
+
+**Form** - Basic form components
+* rForm
+* rText
+* rPassword
+* rNumber
+* rSelect
+* rTextarea
+* rCheckbox
+* rChecklist
+* rRadioGroup
+* rFile
+* rButton
+
+**Extended** - Extended form components
+* rCurrency
+* rMultiText
+* rMultiSelect
+* rPillbox
+* rGroupSelect
+* rSlider
+* rToggle
+* rSwitch
+* rFormBuilder
+
+**Content** - Content editing components
+* rCode
+* rMarkdown
+* rWysiwyg (Not complete)
+* rTemplateEditor (Not complete)
+
+**DateTime** - Date and time components
+* rDatepicker
+* rTimepicker
+
+**Validation** - Validation components
+* rValidation
+* rValidator
+
+**UI** - UI components
+* Autocomplete
+* Icon
+* Modal
+* Tab
+* Tabs
+
+## Validation Library
+The validation library is used in conjuction with the rForm, rValidator, and rValidation components when adding validation to your form fields. A validator should be instantiated when needed.
+```js
+// Import the validator
+import { Validator } from 'remix-ui';
+
+// Create a new instance in the component data
 {
-    resolve : {
-        alias : {
-            'remix-ui-styles' : path.resolve(__dirname, 'node_modules/remix-ui/src/styles')
+    data() {
+        return {
+            my_validator : new Validator()
+        };
+    }
+}
+```
+
+Use it in the template...
+```html
+<r-validator :validator="my_validator">...</r-validator>
+```
+
+
+## Msg and Toast Libraries
+Installing the Msg and Toast libraries should happen separately so they can be used throughout the application.
+
+```js
+// Import the libraries
+import { Msg, Toast } from 'remix-ui';
+
+// Add a reference to all vue components
+Vue.prototype.$msg = new Msg();
+Vue.prototype.$toast = new Toast();
+
+// Use it in the component
+{
+    methods : {
+        alertSomething() {
+            this.$msg.alert('This is an alert message');
         }
     }
 }
 ```
-
-## Components
-Remix UI is basically a collection of components you can use when building out a website. The majority of components are form-related, but there are a handful of layout components. Below is a list of each component in alphabetical order.
-
-### Auto-Complete
-The auto-complete component should be used in tandem with another form element like a text input. The auto-complete element should wrap the element where the values will be input.
-
-##### Props
-* **type** : STRING - The the data type of the value ['string' or 'object']
-* **options** : ARRAY - An array of values to use as auto-complete settings
-* **settings** : OBJECT - Custom settings for the auto-complete component
-* **settings.min_length** : NUMBER - The minimum number of characters input before getting possible values
-
-##### Usage
-In the template...
-```html
-<r-autocomplete
-    v-model="autocomplete_value"
-    :options="autocomplete_options"
->
-    <r-text
-        name="autocomplete_text"
-        v-model="autocomplete_value"
-    />
-</r-autocomplete>
-```
-
-In the script...
-```js
-{
-    data() {
-        return {
-            autocomplete_options : [
-                'Red',
-                'Purple',
-                'Blue',
-                'Green',
-                'Yellow'
-            ]
-        };
-    }
-}
-```
-
-Async options using promises...
-```js
-{
-    data() {
-        return {
-            autocomplete_options : (value) => {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        resolve(['Foo', 'Bar']);
-                    }, 2000);
-                });
-            }
-        };
-    }
-}
-```
-
-### Button
-The button component provides convinent options for styling a button.

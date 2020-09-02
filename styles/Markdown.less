@@ -1,0 +1,212 @@
+// ----------------------------------------------------------------------
+// MARKDOWN STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-color: #CCC;
+@control-border-stroke: 1px;
+@control-color: #2196F3;
+@control-height: 2.5em;
+@control-padding: 0.625em;
+@control-radius: 3px;
+@font-size: 16px;
+@font-size-small: 0.875em;
+@fullscreen-layer: 500;
+@line-height: 1.5em;
+@mobile-width: 320px;
+@mobile-window-max: 767px;
+@font-mono: 'Droid Mono Sans', Consolas, 'Courier New', System;
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+.r-markdown {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	vertical-align: top;
+	width: 100%;
+
+	.editor {
+		.input {
+			background-color: #FFF;
+			border: none;
+			height: 0;
+			max-width: 100%;
+			overflow: hidden;
+			position: relative;
+			vertical-align: top;
+			width: 100%;
+
+			&.active {
+				height: 100%;
+				min-height: @control-height * 4;
+			}
+
+			textarea {
+				background-color: transparent;
+				border: 0;
+				bottom: 0;
+				font-family: @font-mono;
+				font-size: @font-size-small;
+				height: 100%;
+				left: 0;
+				line-height: @line-height;
+				padding: @control-padding;
+				position: absolute;
+				resize: none;
+				right: 0;
+				top: 0;
+				vertical-align: middle;
+				white-space: pre-line;
+				width: 100%;
+				z-index: 1;
+
+				&:focus {
+					border: none;
+					outline: 0;
+				}
+			}
+
+			.mirror {
+				opacity: 0;
+				padding: @control-padding;
+				padding-right: 1.5em;
+				vertical-align: middle;
+				width: 100%;
+
+				pre {
+					font-family: @font-mono;
+					font-size: @font-size-small;
+					line-height: @line-height;
+					white-space: break-spaces;
+				}
+			}
+
+			@media screen and (max-width: @mobile-window-max) {
+				width: @mobile-width;
+			};
+		}
+
+		.output {
+			background-color: #FFF;
+			border: none;
+			display: none;
+			min-height: @control-height * 4;
+			overflow: hidden;
+			overflow-y: scroll;
+			position: relative;
+			vertical-align: top;
+			width: 100%;
+
+			&.active {
+				display: block;
+				height: 100%;
+			}
+
+			.markdown {
+				min-height: @control-height * 4;
+				padding: 20px;
+				width: 100%;
+			}
+		}
+	}
+
+	&.fullscreen {
+		background-color: #FFF;
+		border: 0;
+		bottom: 0;
+		left: 0;
+		max-height: 100vh !important;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: @fullscreen-layer;
+
+		.toolbar {
+			div.btn {
+				&.mode {
+					display: none;
+				}
+
+				&.compact {
+					display: block;
+				}
+
+				&.fullscreen {
+					display: none;
+				}
+			}
+		}
+
+		.editor {
+			bottom: 0;
+			display: flex;
+			flex-direction: row;
+			left: 0;
+			overflow-y: scroll;
+			position: absolute;
+			right: 0;
+			top: @control-height;
+
+			.input, .output {
+				display: block;
+				flex: 1 0;
+				height: 100%;
+			}
+
+			.output {
+				border-left: 1px solid fade(@control-border-color, 50%);
+				overflow-y: auto;
+			}
+		}
+	}
+
+	.toolbar {
+		background-color: #F2F2F2;
+		border-bottom: 1px solid fade(@control-border-color, 50%);
+		display: flex;
+		flex-direction: row;
+		height: calc(@control-height - (@control-border-stroke * 2));
+		justify-content: space-between;
+
+		.tools {
+			flex: 1 0;
+		}
+
+		.utils {
+			flex: 0 0 auto;
+
+			.btn {
+				border-left: 1px solid fade(@control-border-color, 50%);
+			}
+		}
+
+		.btn {
+			cursor: pointer;
+			display: inline-block;
+			height: calc(@control-height - (@control-border-stroke * 2));
+			line-height: calc(@control-height - (@control-border-stroke * 2));
+			text-align: center;
+			vertical-align: middle;
+			width: ;
+
+			&.active {
+				background-color: #FFF;
+			}
+
+			&.icon {
+				min-width: calc(@control-height - (@control-border-stroke * 2));
+				padding: 0;
+			}
+
+			&.compact {
+				display: none;
+			}
+
+			&:hover {
+				color: @control-color;
+			}
+		}
+	}
+}

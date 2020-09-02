@@ -36,9 +36,9 @@ export default {
 		value : {
 			required : true
 		},
-		label : String,
 		disabled : Boolean,
 		group : {
+			type : String,
 			default : null
 		},
 		validator : {
@@ -135,7 +135,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Validation.less';
-</style>

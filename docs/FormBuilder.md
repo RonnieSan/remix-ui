@@ -1,5 +1,5 @@
-# Form Builder
-The form builder component creates form based on a JSON configuration passed into it.
+# rFormBuilder
+The `rFormBuilder` component creates form based on a JSON configuration passed into it.
 
 ## Props
 * **config** : ARRAY - An array containing a collection of fieldsets, controls, and fields. See below for formatting.
@@ -7,8 +7,8 @@ The form builder component creates form based on a JSON configuration passed int
 **Note: When creating the config object, use a computed value that returns the config object on get and sets local properties on set. When the config values change on form input, the computed `set()` function will be passed an object containing the new values using the model names as keys.**
 
 ## Config Format
-```json
-// config
+```js
+// Config
 [
   [Object FieldSet]
 ]
@@ -115,19 +115,19 @@ The form builder component creates form based on a JSON configuration passed int
 ```
 
 ## Usage
+```vue
+<template>
+  <div>
+    <r-form-builder :config="formBuilderConfig"/>
+  </div>
+</template>
 
-In the template
-```html
-<r-form-builder :config="formBuilderConfig"/>
-```
-
-In the script...
-```js
-{
+<script>
+export default {
   data() {
     return {
       form_data : {
-        name : 'Fermegatroid Skittle',
+        name : 'John Smith',
         phone : '6195551212',
         gender : 'male'
       }
@@ -193,4 +193,5 @@ In the script...
     }
   }
 }
+</script>
 ```

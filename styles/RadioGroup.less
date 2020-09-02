@@ -1,0 +1,39 @@
+// ----------------------------------------------------------------------
+// RADIO GROUP STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@mobile-window-max: 767px;
+
+// Import theme
+@import (optional, reference) '~remix-ui-theme';
+
+.r-radio-group {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+
+	&:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+
+	&.stacked {
+		flex-flow: column nowrap;
+	}
+
+	> .option {
+		flex: 0 0 auto;
+		margin-right: 2em;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	@media screen and (max-width: @mobile-window-max) {
+		flex-direction: column;
+		margin-right: 0;
+	}
+}

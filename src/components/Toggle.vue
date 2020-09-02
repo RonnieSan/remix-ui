@@ -1,5 +1,5 @@
-<template>
-	<label class="toggle-wrapper">
+  <template>
+	<label class="r-toggle">
 		<span class="toggle">
 			<input type="checkbox"
 				ref="input"
@@ -10,7 +10,7 @@
 				:false-value="falseValue"
 				v-on="listeners"
 			>
-			<span class="handle"></span>
+			<span class="handle focusable"></span>
 		</span>
 		<span class="toggle-label"><slot><span v-if="isChecked">{{trueLabel}}</span><span v-else>{{falseLabel}}</span></slot></span>
 	</label>
@@ -24,7 +24,6 @@ export default {
 	props : {
 		falseLabel : String,
 		falseValue : {},
-		label : String,
 		model : {},
 		name : String,
 		trueLabel : String,
@@ -136,7 +135,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Toggle.less';
-</style>

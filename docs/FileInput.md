@@ -1,5 +1,8 @@
-# File Input
+# rFile
 A component for creating a more user-friendly file select input.
+
+## Value
+* **STRING** - The `v-model` accepts a string that represents the path to the file
 
 ## Props
 * **accept** : STRING - The mime-type string for acceptable file types. Default is '*/*'.
@@ -9,23 +12,34 @@ A component for creating a more user-friendly file select input.
 * **disabled** : BOOLEAN - Set to true to disable interactions with the field.
 
 ## Events
-* **select** : FUNCTION - A function that is passed an object with 2 properties--`data` is a FormData object with the selected file(s) and `name` is the filename. You can retrieve the file using `arguments[0].data.get(<name_value>)`.
+* **select** : FUNCTION - An event handling function with a single argument `params`. The `params` argument has 2 properties:
+  * `data` is a FormData object with the selected file(s)
+  * `name` is the filename
+
+  You can retrieve the file using `params.data.get(<name_value>)` -- *see the example below*
 
 ## Usage
 In the template...
-```html
-<r-file
-  name="my_file"
-  v-model="file_value"
-  accept="image/*"
-  placeholder="Select an image file..."
-  @select="getFile"
-/>
-```
+```vue
+<template>
+  <div>
+    <r-file
+      name="my_file"
+      v-model="file_value"
+      accept="image/*"
+      placeholder="Select an image file..."
+      @select="getFile"
+    />
+  </div>
+</template>
 
-In the script...
-```javascript
-{
+<script>
+export default {
+  data() {
+    return {
+      file_value : ''
+    }
+  },
   methods : {
     getFile(params) {
       const file = params.data.get('my_file');
@@ -33,4 +47,5 @@ In the script...
     }
   }
 }
+</script>
 ```

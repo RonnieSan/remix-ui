@@ -1,5 +1,5 @@
 <template>
-	<div :class="['select-wrapper', {'disabled' : disabled}]">
+	<div :class="['r-select', 'control-border', 'focusable', {disabled}]">
 		<select
 			ref="input"
 			:class="{'empty' : model === emptyValue}"
@@ -150,7 +150,3 @@ export default {
 	]
 };
 </script>
-
-<style lang="less" scoped>
-@import (optional) '~remix-ui-styles/Select.less';
-</style>

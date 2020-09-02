@@ -1,0 +1,53 @@
+// ----------------------------------------------------------------------
+// RADIO STYLES
+// ----------------------------------------------------------------------
+
+// Default values
+@control-border-stroke: 1px;
+@control-color: #2196F3;
+@control-height: 2.5em;
+
+// Import custom variables
+@import (optional, reference) '~remix-ui-theme';
+
+input[type="radio"] {
+	border: 0;
+
+	&:focus {
+		box-shadow: none;
+		outline: 0;
+	}
+}
+
+// Radios and Checkboxes
+.r-radio {
+	align-items: center;
+	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
+	font-size: 1em;
+	height: @control-height;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	
+	input[type='radio'] {
+		appearance: none;
+		border-radius: 50%;
+		cursor: pointer;
+		height: calc(@control-height * 0.6);
+		margin-right: 0.5em;
+		padding: 0;
+		transition: border 100ms ease-out;
+		vertical-align: middle;
+		width: ~"calc(@{control-height} * 0.6)";
+
+		&:checked {
+			border: ~"calc(@{control-height} * 0.2)" solid @control-color;
+		}
+	}
+
+	.radio-label {
+		display: block;
+		padding-top: @control-border-stroke;
+	}
+}
