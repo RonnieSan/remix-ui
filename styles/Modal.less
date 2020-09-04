@@ -4,6 +4,9 @@
 
 // Default values
 @modal-easing: ease-out;
+@modal-layer: 600;
+@modal-overlay-color: #000;
+@modal-overlay-opacity: 0.65;
 @modal-radius: 5px;
 @modal-speed: 250ms;
 
@@ -11,14 +14,38 @@
 @import (optional, reference) '~remix-ui-theme';
 
 @keyframes spin {
-
 	0% {
 		transform: rotate(0deg);
 	}
 	100% {
 		transform: rotate(360deg);
 	}
+}
 
+#modal-layer {
+	display: none;
+	height: 100vh;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: @modal-layer;
+}
+
+#modal-overlay {
+	background-color: @modal-overlay-color;
+	height: 100vh;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	top: 0;
+	transition: opacity 200ms ease-out;
+	width: 100vw;
+	z-index: 0;
+
+	&.open {
+		opacity: @modal-overlay-opacity;
+	}
 }
 
 .modal-container {
@@ -70,7 +97,7 @@
 		height: 100%;
 		width: 100%;
 
-		/deep/ iframe {
+		::v-deep iframe {
 			opacity: 0;
 			transition: all @modal-speed @modal-easing;
 			vertical-align: baseline;
