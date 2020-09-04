@@ -5,7 +5,7 @@
 // Default values
 @color-primary: #2993F7;
 @control-button-text-color: #FFF;
-@control-color: @color-primary;
+@control-button-color: @color-primary;
 @control-height: 2.5em;
 @control-radius: 3px;
 @control-focus: {
@@ -35,7 +35,7 @@ button {
 .r-button {
 	align-items: center;
 	appearance: none;
-	background-color: @control-color;
+	background-color: @control-button-color;
 	border-radius: @control-radius;
 	color: @control-button-text-color;
 	cursor: pointer;
@@ -48,11 +48,11 @@ button {
 	vertical-align: middle;
 
 	&:hover {
-		background-color: lighten(@color-primary, 5%);
+		background-color: lighten(@control-button-color, 5%);
 	}
 
 	&:active {
-		background-color: darken(@color-primary, 5%);
+		background-color: darken(@control-button-color, 5%);
 	}
 
 	&:focus {
@@ -92,11 +92,11 @@ button {
 		}
 
 		&:hover {
-			background-color: @control-color;
+			background-color: @control-button-color;
 		}
 
 		&:active {
-			background-color: @control-color;
+			background-color: @control-button-color;
 		}
 	}
 	

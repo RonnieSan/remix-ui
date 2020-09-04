@@ -1,6 +1,6 @@
 {
   "name": "remix-ui",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "description": "A UI kit for VueJS",
   "main": "dist/index.js",
   "scripts": {
@@ -55,7 +55,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "postcss-flexbox": "^1.0.3",
-    "remix-css": "^2.0.0",
+    "remix-css": "^2.0.1",
     "sortablejs": "^1.10.2",
     "uuid": "^8.3.0",
     "v-money": "^0.8.0",
