@@ -89,3 +89,6 @@ Msg.confirm({
 		}
 	});
 ```
+
+## Styles
+The styles for the modal component should be imported when using the Msg library.

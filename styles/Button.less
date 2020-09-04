@@ -3,14 +3,15 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@font: 'Roboto', Arial, Helvetica, Sans-serif;
+@color-primary: #2993F7;
 @control-button-text-color: #FFF;
+@control-color: @color-primary;
 @control-height: 2.5em;
 @control-radius: 3px;
-@color-primary: #2993F7;
 @control-focus: {
 	box-shadow: 0 0 0 3px fade(#000, 10%);
 };
+@font: 'Roboto', Arial, Helvetica, Sans-serif;
 @gray-05: #F2F2F2;
 @gray-80: #333;
 
@@ -34,7 +35,7 @@ button {
 .r-button {
 	align-items: center;
 	appearance: none;
-	background-color: @color-primary;
+	background-color: @control-color;
 	border-radius: @control-radius;
 	color: @control-button-text-color;
 	cursor: pointer;
@@ -91,11 +92,11 @@ button {
 		}
 
 		&:hover {
-			background-color: @color-primary;
+			background-color: @control-color;
 		}
 
 		&:active {
-			background-color: @color-primary;
+			background-color: @control-color;
 		}
 	}
 	
