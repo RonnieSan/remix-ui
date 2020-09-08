@@ -8,6 +8,7 @@
 			:value="localValue"
 			:placeholder="placeholder"
 			:disabled="disabled"
+			:autocomplete="autocomplete"
 			v-on="listeners"
 		/>
 		<input
@@ -18,6 +19,7 @@
 			:type="inputType"
 			:placeholder="placeholder"
 			:disabled="disabled"
+			:autocomplete="autocomplete"
 			v-on="listeners"
 			v-mask="maskConfig"
 		/>
@@ -39,6 +41,7 @@ export default {
 	},
 	props : {
 		allowed : String,
+		autocomplete : String,
 		disabled : Boolean,
 		filter : Function,
 		mask : {

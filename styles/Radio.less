@@ -4,7 +4,7 @@
 
 // Default values
 @control-border-stroke: 1px;
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-height: 2.5em;
 
 // Import custom variables
@@ -42,7 +42,7 @@ input[type="radio"] {
 		width: ~"calc(@{control-height} * 0.6)";
 
 		&:checked {
-			border: ~"calc(@{control-height} * 0.2)" solid @control-color;
+			border: ~"calc(@{control-height} * 0.2)" solid @control-accent-color;
 		}
 	}
 

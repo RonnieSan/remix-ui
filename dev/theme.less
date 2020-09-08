@@ -4,31 +4,40 @@
 // Author: RonnieSan
 // ----------------------------------------------------------------------
 
+// The theme name for use as a selector
+@theme: remix-default;
+
 // ----------------------------------------------------------------------
 // WINDOW SNAPPING
 // Snap thresholds and sizes
 // Width should be smaller than both min and max
 
 // Full
+// Viewport will be device-width
+// Site content is not 
 @full-window-min: 1921px;
-@full-width: 100%;
+@full-width: 1600px;
 
 // Desktop
+// Viewport will be 1680px
 @desktop-window-max: 1920px;
 @desktop-window-min: 1680px;
 @desktop-width: 1600px;
 
 // Laptop
+// Viewport will be 1280px
 @laptop-window-max: 1679px;
 @laptop-window-min: 1280px;
 @laptop-width: 1200px;
 
 // Tablet
+// Viewport will be 768px
 @tablet-window-max: 1279px;
 @tablet-window-min: 768px;
 @tablet-width: 720px;
 
 // Mobile
+// Viewport will be 360px
 @mobile-window-max: 767px;
 @mobile-width: 320px;
 
@@ -142,7 +151,7 @@
 @modal-layer: 600;					// Layer for modal boxes
 @notification-layer: 700;			// Layer for notifications
 
-@gutter-size: 10px;					// Default width/height of gutters for grids
+@gutter-size: 20px;					// Default width/height of gutters for grids
 @content-padding: 1em;				// The padding around nested .padded elements
 
 // END LAYOUT ELEMENTS
@@ -152,23 +161,23 @@
 // TEXT ELEMENTS
 
 // Import fonts
-@import (css) 'https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,700';
+@import (css) 'https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,700|Montserrat:400,700';
 
 // Font stacks
 @font: 'Roboto', Arial, Helvetica, Sans-serif;
-@font-alt: 'Roboto', Arial, Helvetica, Sans-serif;
+@font-alt: 'Montserrat', Arial, Helvetica, Sans-serif;
 @font-serif: Georgia, Cambria, 'Times New Roman', Serif;
 @font-mono: 'Roboto Mono', Menlo, 'Droid Sans Mono', Courier, System;
 
 // Font sizes
-@font-size: 16px;
-@font-size-small: 0.875em;
-@font-size-large: 1.25em;
-@font-size-h1: 3em;
-@font-size-h2: 2em;
-@font-size-h3: 1.5em;
-@font-size-h4: 1.125em;
-@line-height: 1.5em;
+@font-size: 18px;									// The default font size
+@font-size-small: 0.875em;							// A smaller font size
+@font-size-large: 1.25em;							// A larger font size
+@font-size-h1: 3em;									// The size for H1 headings
+@font-size-h2: 2em;									// The size for H2 headings
+@font-size-h3: 1.5em;								// The size for H3 headings
+@font-size-h4: 1.125em;								// The size for H4 headings
+@line-height: 1.5em;								// The default line height
 
 // END TEXT ELEMENTS
 // ----------------------------------------------------------------------
@@ -179,20 +188,23 @@
 @control-height: 2.5em;								// The height of input elements
 @control-size: 1.875em;								// The size of control elements
 @control-icon-size: 1.25em;							// The size of the form icons
-@control-icon-color: @gray-80;						// The color of icons
+@control-icon-color: @gray-80;						// The color of icons in form controls (select)
 @control-label-offset: 120px;						// The width of a left-floated label
 
+@control-accent-color: @color-primary;				// The accent color of form elements
 @control-bkg-color: @white;							// The background color of inputs
 @control-border-color: @gray-20;					// The color of the stroke around form elements
-@control-border-stroke: 2px;						// The thickness of the stroke around form elements
-@control-button-color: @color-primary;				// The accent color of form elements
+@control-border-stroke: 1px;						// The thickness of the stroke around form elements
+@control-button-color: @color-primary;				// The background color of button elements
 @control-button-text-color: @white;					// The color of the text for buttons
-@control-color: @color-primary;						// The accent color of form elements
+@control-color: @control-accent-color;
 @control-gutter: 0.3125em;							// The space between field elements in a control group
-@control-padding: 0.625em;							// The padding value for form elements
-@control-radius: 3px;								// The corner radius of boxed form elements
 @control-helper-bkg-color: @gray-10;				// The color behind helpers
 @control-helper-color: @black;						// The color of the content in a helper
+@control-padding: 0.625em;							// The padding value for form elements
+@control-placeholder-color: @gray-25;				// The color of placeholder text
+@control-radius: 3px;								// The corner radius of boxed form elements
+@control-text-color: @color-text;					// The color of the text in a form control
 
 // Focus styles
 @control-focus: {
@@ -213,7 +225,7 @@
 @table-head-border-color: @gray-70;					// Default border color for table head
 @table-head-bkg-color: @gray-65;					// Default header background color for tables
 @table-head-text-color: @white;						// Default header font color for tables
-@table-body-border-color: @gray-25;					// Default border color for table body
+@table-body-border-color: @gray-15;					// Default border color for table body
 @table-body-text-color: @color-text;				// Default font color for table body
 @table-radius: 5px;									// Default radius for rounded tables
 @table-row-color: @white;							// Default row background color for tables
@@ -228,12 +240,8 @@
 // ----------------------------------------------------------------------
 // STYLES
 
-// For people using the Webpack resolver
-@import (optional) '~remix-css/src/less/styles.less';
-
-// For people using the LessCSS resolver
-// Add `node_modules/remix-css/src/less/` to the paths option for the less-loader
-// @import (optional) 'styles.less';
+// Import the default stylesheets here
+@import '~remix-css/src/less/styles.less';
 
 // IMPORT OTHER THEME-SPECIFIC STYLESHEETS HERE
 

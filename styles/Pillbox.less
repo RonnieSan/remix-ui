@@ -4,7 +4,7 @@
 
 // Default values
 @control-border-stroke: 1px;
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-height: 2.5em;
 @control-padding: 0.625em;
 @control-radius: 3px;
@@ -29,7 +29,7 @@
 	}
 
 	.item {
-		background-color: @control-color;
+		background-color: @control-accent-color;
 		border-radius: @control-radius;
 		color: #FFF;
 		display: flex;
@@ -42,7 +42,7 @@
 		white-space: nowrap;
 
 		&.selected {
-			background-color: darken(@control-color, 15%);
+			background-color: darken(@control-accent-color, 15%);
 		}
 
 		.pillbox-value {

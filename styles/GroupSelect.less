@@ -4,7 +4,7 @@
 
 @black: #000;
 @control-border-stroke: 1px;
-@control-color: #4285F9;
+@control-accent-color: #4285F9;
 @control-height: 2.5em;
 @control-icon-color: #333;
 @control-padding: 0.625em;
@@ -69,15 +69,15 @@
 			padding: @control-padding;
 
 			&:hover {
-				background-color: tint(@control-color, 95%);
+				background-color: tint(@control-accent-color, 95%);
 			}
 		}
 
 		.selected {
-			background-color: tint(@control-color, 85%);
+			background-color: tint(@control-accent-color, 85%);
 
 			&:hover {
-				background-color: tint(@control-color, 85%);
+				background-color: tint(@control-accent-color, 85%);
 			}
 		}
 	}

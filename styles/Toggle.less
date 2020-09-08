@@ -4,7 +4,7 @@
 
 // Default values
 @control-border-stroke: 1px;
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-focus: {
 	box-shadow: 0 0 0 3px fade(black, 10%);
 };
@@ -70,7 +70,7 @@
 
 		input:checked + .handle {
 			transition: all 100ms ease-out;
-			background-color: @control-color;
+			background-color: @control-accent-color;
 			left: @toggle-size;
 		}
 	}

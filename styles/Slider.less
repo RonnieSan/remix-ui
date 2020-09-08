@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------
 
 // Default values
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-height: 2.5em;
 @control-layer: 300;
 @control-radius: 3px;
@@ -25,7 +25,7 @@
 	z-index: @control-layer;
 	
 	.handle {
-		background-color: @control-color;
+		background-color: @control-accent-color;
 		border-radius: 50%;
 		height: @slider-handle-size;
 		left: 0;
@@ -43,7 +43,7 @@
 		&::before {
 			border-left: 5px solid transparent;
 			border-right: 5px solid transparent;
-			border-top: 8px solid @control-color;
+			border-top: 8px solid @control-accent-color;
 			content: '';
 			display: block;
 			height: 0;
@@ -58,7 +58,7 @@
 	}
 
 	.tooltip {
-		background-color: @control-color;
+		background-color: @control-accent-color;
 		border-radius: @control-radius;
 		color: #FFF;
 		height: @control-height;
@@ -92,7 +92,7 @@
 		z-index: 0;
 
 		.selection {
-			background-color: tint(@control-color, 15%);
+			background-color: tint(@control-accent-color, 15%);
 			height: 100%;
 			position: absolute;
 		}

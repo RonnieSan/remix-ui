@@ -6,7 +6,7 @@
 @control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-height: 40px;
 @control-padding: 0.625em;
 @control-radius: 3px;
@@ -44,7 +44,7 @@
 	}
 
 	.button {
-		background-color: @control-color;
+		background-color: @control-accent-color;
 		color: #FFF;
 		flex: 0 0 ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 		font-size: 1em;
@@ -59,7 +59,7 @@
 	}
 
 	&:hover .button {
-		background-color: lighten(@control-color, 15%);
+		background-color: lighten(@control-accent-color, 15%);
 	}
 
 	form {

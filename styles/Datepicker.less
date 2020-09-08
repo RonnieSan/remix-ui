@@ -8,7 +8,7 @@
 @control-bkg-color: #FFF;
 @control-border-color: #CCC;
 @control-border-stroke: 1px;
-@control-color: #2196F3;
+@control-accent-color: #2196F3;
 @control-height: 2.5em;
 @control-helper-bkg-color: #E5E5E5;
 @control-helper-color: #000;
@@ -139,13 +139,13 @@
 				padding: 0 10px;
 
 				&:hover {
-					color: @control-color;
+					color: @control-accent-color;
 				}
 			}
 		}
 
 		button {
-			background-color: @control-color;
+			background-color: @control-accent-color;
 			border: 0;
 			border-radius: @control-radius;
 			color: #FFF;
@@ -161,11 +161,11 @@
 			}
 
 			&:hover {
-				background-color: lighten(@control-color, 15%);
+				background-color: lighten(@control-accent-color, 15%);
 			}
 
 			&:active {
-				background-color: darken(@control-color, 5%);
+				background-color: darken(@control-accent-color, 5%);
 			}
 
 			&:focus {
@@ -188,7 +188,7 @@
 		}
 
 		.calendar-header {
-			background-color: @control-color;
+			background-color: @control-accent-color;
 			color: #FFF;
 			padding: 5px 5px 0;
 			
@@ -211,7 +211,7 @@
 					}
 
 					&:hover {
-						background-color: darken(@control-color, 15%);
+						background-color: darken(@control-accent-color, 15%);
 					}
 				}
 
@@ -259,11 +259,11 @@
 
 				&.in-range {
 					border-radius: 0;
-					background-color: fade(@control-color, 35%);
+					background-color: fade(@control-accent-color, 35%);
 					color: #FFF;
 
 					&:hover {
-						background-color: fade(@control-color, 45%);
+						background-color: fade(@control-accent-color, 45%);
 					}
 				}
 
@@ -271,12 +271,12 @@
 					color: #CCC;
 
 					&.in-range {
-						color: fade(@control-color, 40%);
+						color: fade(@control-accent-color, 40%);
 					}
 				}
 
 				&.selected {
-					background-color: @control-color;
+					background-color: @control-accent-color;
 					color: #FFF !important;
 				}
 
@@ -362,7 +362,7 @@
 			padding: 0 0.25em;
 
 			.button {
-				background-color: @control-color;
+				background-color: @control-accent-color;
 				border-radius: @control-radius;
 				color: @white;
 				display: inline-block;
