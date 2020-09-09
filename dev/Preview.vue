@@ -52,8 +52,6 @@
 										<div class="controls">
 											<div class="field">
 												<r-text
-													autocomplete="no"
-													class="test"
 													v-model="text_value"
 												/>
 											</div>
@@ -883,11 +881,6 @@ export default {
 @desktop-width: 720px;
 @laptop-width: 720px;
 @font-mono: 'Roboto Mono', Menlo, 'Droid Sans Mono', Courier, System;
-
-.r-text.test {
-	border: 0;
-	border-radius: 0;
-}
 
 * {
 	box-sizing: border-box;
