@@ -47,10 +47,13 @@ const Msg = Vue.extend({
 				this.message   = settings.message;
 				this.accept    = settings.confirm || settings.accept || 'OK';
 				this.max_width = settings.width || '400px';
-				this.$refs.msg.open()
-					.then(() => {
-						this.$refs.accept_btn.focus();
-					});
+
+				this.$nextTick(() => {
+					this.$refs.msg.open()
+						.then(() => {
+							this.$refs.accept_btn.focus();
+						});
+				});
 
 				this.promise = {
 					resolve,
@@ -75,10 +78,13 @@ const Msg = Vue.extend({
 				this.accept    = settings.confirm || settings.accept || 'OK';
 				this.decline   = settings.decline || 'Cancel';
 				this.max_width = settings.width || '400px';
-				this.$refs.msg.open()
-					.then(() => {
-						this.$refs.cancel_btn.focus();
-					});
+
+				this.$nextTick(() => {
+					this.$refs.msg.open()
+						.then(() => {
+							this.$refs.cancel_btn.focus();
+						});
+				});
 
 				this.promise = {
 					resolve,
