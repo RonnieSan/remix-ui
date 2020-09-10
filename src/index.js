@@ -90,9 +90,6 @@ const modules = {
 	Modal,
 	Tab,
 	Tabs,
-	Msg,
-	Toast,
-	Validator,
 	ValidationRules
 };
 
@@ -244,16 +241,11 @@ export default {
 		// Install specific components
 		if (selected.length) {
 			selected.forEach((component) => {
-				if (component !== 'Msg'
-					&& component !== 'Toast'
-					&& component !== 'Validator'
-				) {
-					if (modules[component]) {
-						Vue.component(component, modules[component]);
-					}
-					else if (modules['r' + component]) {
-						Vue.component('r' + component, modules['r' + component]);
-					}
+				if (modules[component]) {
+					Vue.component(component, modules[component]);
+				}
+				else if (modules['r' + component]) {
+					Vue.component('r' + component, modules['r' + component]);
 				}
 			});
 		}

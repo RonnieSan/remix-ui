@@ -1,5 +1,5 @@
 <template>
-	<div :class="['modal-container', $attrs.class, {'open' : is_open}]" @click="clickContainer">
+	<div :class="['modal-container', {'open' : is_open}]" @click="clickContainer">
 		<div class="modal-window" :style="{maxWidth : maxWidth}">
 			<div class="modal-content">
 				<slot v-bind="self"></slot>
@@ -145,23 +145,21 @@ export default {
 			}
 		},
 		escPressed(event) {
+			let matches = (el, selector) => {
+				let p = Element.prototype;
+				let f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s) {
+					return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+				};
+				return f.call(el, selector);
+			};
+
 			if (this.closeOnEsc) {
 				let code = event.code;
-				if (code === 'Escape' && this.matches(this.modal, ':last-child') && this.is_open) {
+				if (code === 'Escape' && matches(this.modal, ':last-child') && this.is_open) {
 					this.close();
 				}
 			}
 		},
-		reset() {
-			this.parent.appendChild(this.modal);
-		},
-		matches(el, selector) {
-			let p = Element.prototype;
-			let f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s) {
-				return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
-			};
-			return f.call(el, selector);
-		}
 	},
 	beforeCreate() {
 		if (!document.querySelector('#modal-layer')) {
@@ -183,11 +181,11 @@ export default {
 	},
 	mounted() {
 		// Create references
-		this.parent    = this.$el.parentNode;
-		this.layer     = document.getElementById('modal-layer');
-		this.overlay   = document.getElementById('modal-overlay');
-		this.modal     = this.$el;
-		this.window    = this.$el.querySelector('.modal-window');
+		this.parent  = this.$el.parentNode;
+		this.layer   = document.getElementById('modal-layer');
+		this.overlay = document.getElementById('modal-overlay');
+		this.modal   = this.$el;
+		this.window  = this.$el.querySelector('.modal-window');
 
 		// Add layers if they don't exist
 		if (!this.layer) {
@@ -228,19 +226,16 @@ export default {
 	beforeDestroy() {
 		window.removeEventListener('keydown', this.escPressed);
 		let close_els = this.$el.querySelectorAll('.close-modal');
+		for (let n = 0; n < close_els.length; n++) {
+			close_els[n].removeEventListener('click', this.close);
+		}
 		if (this.is_open) {
 			this.close()
 				.then(() => {
-					for (let n = 0; n < close_els.length; n++) {
-						close_els[n].removeEventListener('click', this.close);
-					}
 					this.layer.removeChild(this.modal);
 				});
 		}
 		else {
-			for (let n = 0; n < close_els.length; n++) {
-				close_els[n].removeEventListener('click', this.close);
-			}
 			this.layer.removeChild(this.modal);
 		}
 	}

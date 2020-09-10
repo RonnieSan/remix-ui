@@ -14,18 +14,18 @@ const Toast = Vue.extend({
 			queue : []
 		};
 	},
-	template : '<div id="toast">' +
-		'<transition-group name="toast" tag="div">' +
-			'<div v-for="message in queue" :class="[\'message\', message.type]" :key="message.id">' +
-				'<div v-if="message.icon" class="type-icon"><icon :type="icon(message)" size="24"/></div>' +
-				'<div class="content">' +
-					'<div v-if="message.title" class="title">{{message.title}}</div>' +
-					'<div v-html="message.content"></div>' +
-				'</div>' +
-				'<div class="close" @click="remove(message.id)"><icon type="close" size="24"/></div>' +
-			'</div>' +
-		'</transition-group>' +
-	'</div>',
+	template : `<div id="toast">
+		<transition-group name="toast" tag="div">
+			<div v-for="message in queue" :class="['message', message.type]" :key="message.id">
+				<div v-if="message.icon" class="type-icon"><icon :type="icon(message)" size="24"/></div>
+				<div class="content">
+					<div v-if="message.title" class="title">{{message.title}}</div>
+					<div v-html="message.content"></div>
+				</div>
+				<div class="close" @click="remove(message.id)"><icon type="close" size="24"/></div>
+			</div>
+		</transition-group>
+	</div>`,
 	methods : {
 		// Return the correct icon
 		icon(message) {

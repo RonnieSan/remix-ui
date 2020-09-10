@@ -19,77 +19,67 @@ const Msg = Vue.extend({
 			promise   : null
 		};
 	},
-	template : '<modal ref="msg" :class="[\'msg\', type]" :close-on-esc="type === \'alert\'" :close-on-click="type === \'alert\'" :max-width="max_width">' +
-		'<section class="title-bar" v-if="title">{{title}}</section>' +
-		'<section class="message" v-html="message"></section>' +
-		'<section class="input">' +
-			'<button ref="cancel_btn" v-if="type === \'confirm\'" type="button" class="text" @click="closeMsg(false)">' +
-				'<span class="label">{{decline}}</span>' +
-			'</button>' +
-			'<button ref="accept_btn" type="button" @click="closeMsg(true)">' +
-				'<span class="label">{{accept}}</span>' +
-			'</button>' +
-		'</section>' +
-	'</modal>',
+	template : `<modal ref="msg" :class="['msg', type]" :close-on-esc="type === 'alert'" :close-on-click="type === 'alert'" :max-width="max_width">
+		<template v-slot="modal">
+			<section class="title-bar" v-if="title">{{title}}</section>
+			<section class="message" v-html="message"></section>
+			<section class="input">
+				<button ref="cancel_btn" v-if="type === 'confirm'" type="button" class="text" @click="closeMsg(false)">
+					<span class="label">{{decline}}</span>
+				</button>
+				<button ref="accept_btn" type="button" @click="closeMsg(true)">
+					<span class="label">{{accept}}</span>
+				</button>
+			</section>
+		</template>
+	</modal>`,
 	methods : {
 		// Open an alert box with a message
 		alert(settings) {
-			this.type = 'alert';
-
 			if (typeof settings === 'string') {
 				settings = {
 					message : settings
 				};
 			}
 
-			return new Promise((resolve, reject) => {
-				this.title     = settings.title || false;
-				this.message   = settings.message;
-				this.accept    = settings.confirm || settings.accept || 'OK';
-				this.max_width = settings.width || '400px';
+			this.type      = 'alert';
+			this.title     = settings.title || false;
+			this.message   = settings.message;
+			this.accept    = settings.confirm || settings.accept || 'OK';
+			this.max_width = settings.width || '400px';
 
-				this.$nextTick(() => {
-					this.$refs.msg.open()
-						.then(() => {
-							this.$refs.accept_btn.focus();
-						});
+			this.$refs.msg.open()
+				.then(() => {
+					this.$refs.accept_btn.focus();
 				});
 
-				this.promise = {
-					resolve,
-					reject
-				};
+			return new Promise((resolve, reject) => {
+				this.promise = { resolve, reject };
 			});
 		},
 
 		// Open a confirmation modal
 		confirm(settings) {
-			this.type = 'confirm';
-
 			if (typeof settings === 'string') {
 				settings = {
 					message : settings
 				};
 			}
+			
+			this.type      = 'confirm';
+			this.title     = settings.title || false;
+			this.message   = settings.message || settings.prompt;
+			this.accept    = settings.confirm || settings.accept || 'OK';
+			this.decline   = settings.decline || 'Cancel';
+			this.max_width = settings.width || '400px';
 
-			return new Promise((resolve, reject) => {
-				this.title     = settings.title || false;
-				this.message   = settings.message || settings.prompt;
-				this.accept    = settings.confirm || settings.accept || 'OK';
-				this.decline   = settings.decline || 'Cancel';
-				this.max_width = settings.width || '400px';
-
-				this.$nextTick(() => {
-					this.$refs.msg.open()
-						.then(() => {
-							this.$refs.cancel_btn.focus();
-						});
+			this.$refs.msg.open()
+				.then(() => {
+					this.$refs.cancel_btn.focus();
 				});
 
-				this.promise = {
-					resolve,
-					reject
-				};
+			return new Promise((resolve, reject) => {
+				this.promise = { resolve, reject };
 			});
 		},
 
@@ -112,7 +102,7 @@ const Msg = Vue.extend({
 		}
 	},
 	components : {
-		'modal' : Modal
+		Modal
 	}
 });
 

@@ -1,11 +1,13 @@
 <template>
 	<div id="wrapper">
 		<modal ref="first_modal" max-width="600px">
-			<div class="padded" slot-scope="modal">
-				<h2>My Modal</h2>
-				<p>Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-				<a href="javascript:void(0)" @click="triggerAlert()">Open Nested Modal</a> | <a href="javascript:void(0)" @click="modal.close()">Close Modal</a>
-			</div>
+			<template v-slot="modal">
+				<div class="padded">
+					<h2>My Modal</h2>
+					<p>Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+					<a href="javascript:void(0)" @click="triggerAlert()">Open Nested Modal</a> | <a href="javascript:void(0)" @click="modal.close()">Close Modal</a>
+				</div>
+			</template>
 		</modal>
 		<div class="container">
 			<r-form action="test">
