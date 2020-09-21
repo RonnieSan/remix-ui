@@ -4,10 +4,7 @@ The `Msg` library uses the modal component to quickly create styled alert and co
 ## Installation
 ```js
 // Import the library from Remix UI
-import { Msg as MsgLib } from 'remix-ui';
-
-// Create a new instance...
-const Msg = new MsgLib();
+import { Msg } from 'remix-ui';
 
 // Add it as a prototype if you wish...
 Vue.prototype.$msg = Msg;

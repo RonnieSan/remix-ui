@@ -106,13 +106,8 @@ const Msg = Vue.extend({
 	}
 });
 
-export default function() {
-	// Create an instance of the msg component
-	const msg = new Msg();
+// Create an instance of the msg component
+const msg = new Msg();
+msg.$mount();
 
-	// Append to the modal layer
-	msg.$mount();
-	document.getElementById('modal-layer').appendChild(msg.$el);
-
-	return msg;
-};
+export default msg;

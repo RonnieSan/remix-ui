@@ -9,11 +9,6 @@ import { uniqueId } from 'lodash-es';
 import Icon	from '../components/Icon';
 
 const Toast = Vue.extend({
-	data() {
-		return {
-			queue : []
-		};
-	},
 	template : `<div id="toast">
 		<transition-group name="toast" tag="div">
 			<div v-for="message in queue" :class="['message', message.type]" :key="message.id">
@@ -26,7 +21,21 @@ const Toast = Vue.extend({
 			</div>
 		</transition-group>
 	</div>`,
+	data() {
+		return {
+			queue : [],
+			timeout : 3000
+		};
+	},
 	methods : {
+		setDefaultTimeout(timeout) {
+			this.timeout = timeout;
+		},
+
+		setParent(parent_selector) {
+			document.querySelector(parent_selector).append(this.$el);
+		},
+
 		// Return the correct icon
 		icon(message) {
 			if (message.icon !== false) {
@@ -65,7 +74,7 @@ const Toast = Vue.extend({
 			});
 			setTimeout(() => {
 				this.remove(id);
-			}, params.timeout || this.$options.timeout);
+			}, params.timeout || this.timeout);
 		},
 
 		// Remove a toast message from the queue
@@ -126,27 +135,19 @@ const Toast = Vue.extend({
 	}
 });
 
+// Create the #toast element and append to the DOM
+let toast = document.getElementById('toast');
+if (!toast) {
+	toast = document.createElement('div');
+	toast.id = 'toast';
+	document.body.appendChild(toast);
+}
+
+// Create an instance of the toast component
+const toaster = new Toast();
+
+// Mount the toast component to the DOM
+toaster.$mount('#toast');
+
 // Export the toaster
-export default function(options) {
-	let settings = Object.assign({
-		parent : 'body',
-		timeout : 3000
-	}, options);
-
-	// Create the #toast element and append to the DOM
-	let toast = document.querySelector('#toast');
-	if (!toast) {
-		toast = document.createElement('div');
-		toast.id = 'toast';
-		document.querySelector(settings.parent).appendChild(toast);
-	}
-
-	// Create an instance of the toast component
-	const toaster = new Toast();
-	toaster.$options.timeout = settings.timeout;
-
-	// Mount the toast component to the DOM
-	toaster.$mount('#toast');
-
-	return toaster;
-};
+export default toaster;

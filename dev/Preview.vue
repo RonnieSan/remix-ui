@@ -633,18 +633,11 @@
 
 <script>
 import Validator, { rules } from '@/lib/Validator';
-import MsgLib from '@/lib/Msg';
-import ToastLib from '@/lib/Toast';
 import moment from 'moment-timezone';
-
-const Msg   = new MsgLib();
-const Toast = new ToastLib();
 
 export default {
 	data() {
 		return {
-			Msg,
-			Toast,
 			rules,
 			validator : new Validator(),
 
@@ -813,23 +806,23 @@ export default {
 	},
 	methods : {
 		triggerAlert() {
-			Msg.alert({
+			this.$msg.alert({
 				title : 'Something Was Clicked!',
 				message :  'OMG! Someone clicked something!'
 			});
 		},
 
 		triggerConfirm() {
-			Msg.confirm({
+			this.$msg.confirm({
 				title : 'Make a Choice',
 				message :  'Are you sure you want to cancel?'
 			})
 				.then((accepted) => {
 					if (accepted) {
-						Toast.success('You selected OK.');
+						this.$toast.success('You selected OK.');
 					}
 					else {
-						Toast.error('You selected CANCEL.');
+						this.$toast.error('You selected CANCEL.');
 					}
 				});
 		},
@@ -838,10 +831,10 @@ export default {
 			this.tab_disabled = !this.tab_disabled;
 			this.$nextTick(() => {
 				if (this.tab_disabled) {
-					Toast.error('The fourth tab has been disabled.');
+					this.$toast.error('The fourth tab has been disabled.');
 				}
 				else {
-					Toast.success('The fourth tab is now enabled.');
+					this.$toast.success('The fourth tab is now enabled.');
 				}
 			});
 		},

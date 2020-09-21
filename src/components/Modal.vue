@@ -162,16 +162,18 @@ export default {
 		},
 	},
 	beforeCreate() {
-		if (!document.querySelector('#modal-layer')) {
-			// Append a modal layer if it doesn't exist
-			let $modal_layer = document.createElement('div');
-			$modal_layer.id = 'modal-layer';
-			document.querySelector('body').appendChild($modal_layer);
+		let modal_layer = document.getElementById('modal-layer');
+		// Append a modal layer if it doesn't exist
+		
+		if (!modal_layer) {
+			modal_layer = document.createElement('div');
+			modal_layer.id = 'modal-layer';
+			document.body.appendChild(modal_layer);
 
-			// Append a modal overlay if it doesn't exist
-			let $modal_overlay = document.createElement('div');
-			$modal_overlay.id = 'modal-overlay';
-			$modal_layer.appendChild($modal_overlay);
+			// Append a modal overlay
+			const modal_overlay = document.createElement('div');
+			modal_overlay.id = 'modal-overlay';
+			modal_layer.appendChild(modal_overlay);
 		}
 	},
 	created() {
@@ -186,19 +188,6 @@ export default {
 		this.overlay = document.getElementById('modal-overlay');
 		this.modal   = this.$el;
 		this.window  = this.$el.querySelector('.modal-window');
-
-		// Add layers if they don't exist
-		if (!this.layer) {
-			this.layer = document.createElement('div');
-			this.layer.setAttribute('id', 'modal-layer');
-			document.body.append(this.layer);
-		}
-
-		if (!this.overlay) {
-			this.overlay = document.createElement('div');
-			this.overlay.setAttribute('id', 'modal-overlay');
-			this.layer.append(this.overlay);
-		}
 
 		// Prevent clicks on the window from propagating
 		this.window.addEventListener('click', (event) => {

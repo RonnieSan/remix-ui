@@ -4,10 +4,7 @@ The `Toast` library creates temporary popup messages on the fly.
 ## Installation
 ```js
 // Import the library from Remix UI
-import { Toast as ToastLib } from 'remix-ui';
-
-// Create a new instance...
-const Toast = new ToastLib();
+import { Toast } from 'remix-ui';
 
 // Add it as a prototype if you wish...
 Vue.prototype.$toast = Toast;
