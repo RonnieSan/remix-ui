@@ -221,11 +221,15 @@ export default {
 		if (this.is_open) {
 			this.close()
 				.then(() => {
-					this.layer.removeChild(this.modal);
+					if (this.modal.parentNode === this.layer) {
+						this.layer.removeChild(this.modal);
+					}
 				});
 		}
 		else {
-			this.layer.removeChild(this.modal);
+			if (this.modal.parentNode === this.layer) {
+				this.layer.removeChild(this.modal);
+			}
 		}
 	}
 };

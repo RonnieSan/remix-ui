@@ -20,18 +20,16 @@ const Msg = Vue.extend({
 		};
 	},
 	template : `<modal ref="msg" :class="['msg', type]" :close-on-esc="type === 'alert'" :close-on-click="type === 'alert'" :max-width="max_width">
-		<template v-slot="modal">
-			<section class="title-bar" v-if="title">{{title}}</section>
-			<section class="message" v-html="message"></section>
-			<section class="input">
-				<button ref="cancel_btn" v-if="type === 'confirm'" type="button" class="text" @click="closeMsg(false)">
-					<span class="label">{{decline}}</span>
-				</button>
-				<button ref="accept_btn" type="button" @click="closeMsg(true)">
-					<span class="label">{{accept}}</span>
-				</button>
-			</section>
-		</template>
+		<section class="title-bar" v-if="title">{{title}}</section>
+		<section class="message" v-html="message"></section>
+		<section class="input">
+			<button ref="cancel_btn" v-if="type === 'confirm'" type="button" class="text" @click="closeMsg(false)">
+				<span class="label">{{decline}}</span>
+			</button>
+			<button ref="accept_btn" type="button" @click="closeMsg(true)">
+				<span class="label">{{accept}}</span>
+			</button>
+		</section>
 	</modal>`,
 	methods : {
 		// Open an alert box with a message
@@ -48,10 +46,12 @@ const Msg = Vue.extend({
 			this.accept    = settings.confirm || settings.accept || 'OK';
 			this.max_width = settings.width || '400px';
 
-			this.$refs.msg.open()
-				.then(() => {
-					this.$refs.accept_btn.focus();
-				});
+			this.$nextTick(() => {
+				this.$refs.msg.open()
+					.then(() => {
+						this.$refs.accept_btn.focus();
+					});
+			});
 
 			return new Promise((resolve, reject) => {
 				this.promise = { resolve, reject };
@@ -73,10 +73,12 @@ const Msg = Vue.extend({
 			this.decline   = settings.decline || 'Cancel';
 			this.max_width = settings.width || '400px';
 
-			this.$refs.msg.open()
-				.then(() => {
-					this.$refs.cancel_btn.focus();
-				});
+			this.$nextTick(() => {
+				this.$refs.msg.open()
+					.then(() => {
+						this.$refs.cancel_btn.focus();
+					});
+			});
 
 			return new Promise((resolve, reject) => {
 				this.promise = { resolve, reject };
