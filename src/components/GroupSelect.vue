@@ -51,9 +51,7 @@
 <script>
 import rButton from './Button';
 import { clone, differenceWith, find, includes, isEqual, merge, pick, remove, some, sortBy, uniqWith } from 'lodash';
-import { Sortable, MultiDrag } from 'sortablejs';
-
-Sortable.mount(new MultiDrag());
+import Sortable from 'sortablejs';
 
 export default {
 	props : {

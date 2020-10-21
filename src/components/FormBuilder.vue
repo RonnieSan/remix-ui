@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { forIn, set } from 'lodash';
+import { forIn, has, isEqual, set } from 'lodash';
 
 export default {
 	props : {
@@ -87,22 +87,33 @@ export default {
 				let export_value = {};
 				forIn(new_value, (value, key) => {
 					set(export_value, key, value);
-				})
+				});
 				this.$emit('update:config', export_value);
 			},
 			deep : true
+		},
+		config : {
+			handler(new_value, old_value) {
+				if (!isEqual(new_value, old_value)) {
+					this.setValues(new_value);
+				}
+			},
+			deep : true,
+			immediate : true
 		}
 	},
-	mounted() {
-		let values = {}
-		this.config.forEach((group) => {
-			group.controls.forEach((control) => {
-				control.fields.forEach((field) => {
-					values[field.model] = field.value;
+	methods : {
+		setValues(config) {
+			config.forEach((group) => {
+				group.controls.forEach((control) => {
+					control.fields.forEach((field) => {
+						if (!has(this.values, field.model) || this.values[field.model] !== field.value) {
+							this.$set(this.values, field.model, field.value);
+						}
+					});
 				});
 			});
-		});
-		this.values = values;
+		}
 	}
 };
 </script>

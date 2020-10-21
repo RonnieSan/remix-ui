@@ -46,7 +46,7 @@ module.exports = {
 								{
 									targets : {
 										chrome : '52',
-										ie : '11',
+										ie : '11',	
 										safari : '7'
 									}, 
 									useBuiltIns : 'usage',
@@ -58,7 +58,8 @@ module.exports = {
 				},
 				exclude : file => (/node_modules/.test(file) && !/\.vue\.js/.test(file)),
 				include : [
-					path.resolve(__dirname, 'src')
+					path.resolve(__dirname, 'src'),
+					path.resolve(__dirname, 'dev')
 				]
 			},
 			{
