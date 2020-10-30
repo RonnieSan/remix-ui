@@ -1,6 +1,6 @@
 {
   "name": "remix-ui-lite",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "A UI kit for VueJS with IE11 and most IE10 compatibility",
   "main": "dist/index.js",
   "scripts": {
