@@ -106,8 +106,9 @@ export default {
 
 			// Emit the form data
 			this.$emit('select', {
-				data : this.form_data,
-				name : this.filename
+				data  : this.form_data,
+				files : event.target.files,
+				name  : this.filename
 			});
 		},
 
