@@ -25,20 +25,14 @@ export default {
 	},
 	computed : {
 		style() {
-			let unit;
-			
+			let gutter = (this.gutter || 0);
 			let output = {
 				flexGrow : 1,
-				flexShrink : 0
+				flexShrink : 0,
+				margin : `0 calc(${gutter} / 2)`
 			};
-
-			let gutter_number = parseFloat(this.gutter) || 0;
-			if (gutter_number) {
-				unit = this.gutter.replace(/[0-9\.]+/, '');
-				output.margin = `0 ${(gutter_number / 2) + unit}`;
-			}
 			if (this.span) {
-				output.flexBasis = gutter_number * (this.span - 1) + unit;
+				output.flexBasis =  `calc(${gutter} * ${this.span - 1})`;
 				output.flexGrow = this.span;
 			}
 

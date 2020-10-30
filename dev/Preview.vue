@@ -19,7 +19,7 @@
 							<h2>Layout Components</h2>
 
 							<div class="layout">
-								<grid gutter="20px">
+								<grid gutter="10px">
 									<row>
 										<column>.column</column>
 										<column>.column</column>
@@ -47,193 +47,417 @@
 							<fieldset>
 								<legend>Core Components</legend>
 
+								<!-- TEXT FIELD -->
 								<div class="control-group">
 									<div class="inner">
-										<label class="control-label">Text Input:</label>
+										<label class="control-label">Text:</label>
 										<div class="controls">
 											<div class="field">
 												<r-text
-													name="text"
 													v-model="text_value"
 												/>
 											</div>
 										</div>
-									</div>
-								</div>
-
-								<div class="control-group">
-									<div class="inner">
-										<label class="control-label">Textarea:</label>
-										<div class="controls">
-											<div class="field">
-												<r-textarea
-													name="textarea"
-													v-model="textarea_value"
-												/>
-											</div>
+										<div class="model-value">
+											<pre>Value: {{text_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- PASSWORD INPUT -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Password:</label>
 										<div class="controls">
 											<div class="field">
 												<r-password
-													name="password"
 													v-model="password_value"
+													preview
 												/>
 											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{password_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- NUMBER INPUT -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Number:</label>
 										<div class="controls">
 											<div class="field">
 												<r-number
-													name="number"
 													v-model.number="number_value"
 												/>
 											</div>
 										</div>
-									</div>
-								</div>
-
-								<div class="control-group">
-									<div class="inner">
-										<label class="control-label">Currency:</label>
-										<div class="controls">
-											<div class="field">
-												<r-currency
-													name="currency"
-													v-model.number="currency_value"
-												/>
-											</div>
+										<div class="model-value">
+											<pre>Value: {{number_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- SELECT -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Select:</label>
 										<div class="controls">
 											<div class="field">
 												<r-select
-													name="select"
 													v-model="select_value"
-													:options="options"
+													:options="select_options"
 												/>
 											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{select_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- TEXTAREA -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Textarea:</label>
+										<div class="controls">
+											<div class="field">
+												<r-textarea
+													v-model="textarea_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{textarea_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- CHECKBOX -->
+								<div class="control-group">
+									<div class="inner">
+										<div class="control-label">Checkbox:</div>
+										<div class="controls">
+											<div class="field">
+												<r-checkbox
+													v-model="checkbox_value"
+												>Checkbox Input</r-checkbox>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{checkbox_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- CHECKLIST -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Checklist:</label>
 										<div class="controls">
 											<div class="field">
 												<r-checklist
-													name="checklist"
 													v-model="checklist_value"
-													:options="options"
+													:options="checklist_options"
 												/>
 											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{checklist_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- RADIO GROUP -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Radio Group:</label>
 										<div class="controls">
 											<div class="field">
 												<r-radio-group
-													name="radio_group"
 													v-model="radio_group_value"
-													:options="options"
+													:options="radio_group_options"
 												/>
 											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{radio_group_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
+								<!-- FILE INPUT -->
 								<div class="control-group">
 									<div class="inner">
-										<label class="control-label">File Input:</label>
+										<label class="control-label">File:</label>
 										<div class="controls">
 											<div class="field">
 												<r-file
-													name="file"
 													v-model="file_value"
 												/>
 											</div>
 										</div>
+										<div class="model-value">
+											<pre>Value: {{file_value | toJSON}}</pre>
+										</div>
 									</div>
 								</div>
 
+								<r-form name="test" @submit="buttonLoader">
+
+									<!-- BUTTONS -->
+									<div class="control-group">
+										<div class="inner">
+											<label class="control-label">Buttons:</label>
+											<div class="controls">
+												<div class="field fit">
+													<r-button>Button</r-button>
+												</div>
+												<div class="field fit">
+													<r-button type="submit" :loading="is_loading" icon="check">Submit</r-button>
+												</div>
+												<div class="field fit">
+													<r-button class="icon" icon="close"/>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</r-form>
+			
+							</fieldset>
+
+							
+							<fieldset>
+								<legend>Extended Components</legend>
+
+								<!-- CURRENCY -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Currency:</label>
+										<div class="controls">
+											<div class="field">
+												<r-currency
+													v-model="currency_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{currency_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- MULTI-TEXT -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Multi-Text:</label>
+										<div class="controls">
+											<div class="field">
+												<r-multi-text
+													v-model="multitext_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{multitext_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- MULTI-SELECT -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Multi-Select:</label>
+										<div class="controls">
+											<div class="field">
+												<r-multi-select
+													v-model="multiselect_value"
+													:options="multiselect_options"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{multiselect_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- PILLBOX -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Pillbox:</label>
+										<div class="controls">
+											<div class="field">
+												<r-pillbox
+													v-model="pillbox_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{pillbox_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- GROUP SELECT -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Group Select:</label>
+										<div class="controls">
+											<div class="field">
+												<r-group-select
+													v-model="group_select_value"
+													:options="group_select_options"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{group_select_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- SLIDER -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Slider:</label>
 										<div class="controls">
 											<div class="field">
 												<r-slider
-													name="slider"
 													v-model="slider_value"
 												/>
 											</div>
 										</div>
+										<div class="model-value">
+											<pre>Value: {{slider_value}}</pre>
+										</div>
 									</div>
 								</div>
 
+								<!-- TOGGLE -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Toggle:</label>
 										<div class="controls">
 											<div class="field">
 												<r-toggle
-													name="toggle"
 													v-model="toggle_value"
 												>This is a toggle</r-toggle>
 											</div>
 										</div>
+										<div class="model-value">
+											<pre>Value: {{toggle_value}}</pre>
+										</div>
 									</div>
 								</div>
 
+								<!-- SWITCH -->
 								<div class="control-group">
 									<div class="inner">
 										<label class="control-label">Switch:</label>
 										<div class="controls">
 											<div class="field">
 												<r-switch
-													name="switch"
 													v-model="switch_value"
 													:options="switch_options"
 												/>
 											</div>
 										</div>
-									</div>
-								</div>
-
-								<div class="control-group">
-									<div class="inner">
-										<div class="controls">
-											<div class="field fit">
-												<r-button>A Button</r-button>
-											</div>
-											<div class="field fit">
-												<r-button icon="check">A Button with Icon</r-button>
-											</div>
+										<div class="model-value">
+											<pre>Value: {{switch_value | toJSON}}</pre>
 										</div>
 									</div>
 								</div>
 
 								<!-- FORM BUILDER -->
 								<r-form-builder :config.sync="formBuilderConfig"/>
+								<div class="model-value"><pre>Value: {{form_builder_value}}</pre></div>
+
+							</fieldset>
+
+							<fieldset>
+								<legend>Date/Time Components</legend>
+
+								<!-- DATE PICKER -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Date Picker:</label>
+										<div class="controls">
+											<div class="field">
+												<r-datepicker
+													v-model="date_value"
+													:settings="{timepicker : true}"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{date_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- TIME PICKER -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Time Picker:</label>
+										<div class="controls">
+											<div class="field">
+												<r-timepicker
+													v-model="time_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{time_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+							</fieldset>
+
+							<fieldset>
+								<legend>Content Components</legend>
+
+								<!-- CODE EDITOR -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Code Editor:</label>
+										<div class="controls">
+											<div class="field">
+												<r-code
+													v-model="code_value"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{code_value}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- MARKDOWN EDITOR -->
+								<div class="control-group">
+									<div class="inner">
+										<label class="control-label">Markdown:</label>
+										<div class="controls">
+											<div class="field">
+												<r-markdown
+													v-model="markdown_value"
+													max-height="300px"
+												/>
+											</div>
+										</div>
+										<div class="model-value">
+											<pre>Value: {{markdown_value | toJSON}}</pre>
+										</div>
+									</div>
+								</div>
+
+								<!-- WYSIWYG EDITOR -->
+
+								<!-- TEMPLATE EDITOR -->
 
 							</fieldset>
 
@@ -296,7 +520,7 @@
 														<r-checklist
 															class="stacked"
 															v-model="min_selected_value"
-															:options="options"
+															:options="group_select_options"
 														/>
 													</r-validation>
 												</div>
@@ -339,67 +563,65 @@
 
 							</fieldset>
 
-							<fieldset>
-								<legend>UI Components</legend>
+							<hr>
+							<h2>UI Components</h2>
 
-								<!-- AUTOCOMPLETE -->
-								<div class="control-group">
-									<div class="inner">
-										<label class="control-label">Autocomplete: (Planets)</label>
-										<div class="controls">
-											<div class="field">
-												<autocomplete
+							<!-- AUTOCOMPLETE -->
+							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Autocomplete: (Planets)</label>
+									<div class="controls">
+										<div class="field">
+											<autocomplete
+												v-model="autocomplete_value"
+												:options="autocomplete_options"
+											>
+												<r-text
 													v-model="autocomplete_value"
-													:options="autocomplete_options"
-												>
-													<r-text
-														v-model="autocomplete_value"
-													/>
-												</autocomplete>
-											</div>
+												/>
+											</autocomplete>
 										</div>
 									</div>
 								</div>
+							</div>
 
-								<!-- MODALS -->
-								<div class="control-group">
-									<div class="inner">
-										<label class="control-label">Modals and Message Windows:</label>
-										<div class="controls">
-											<div class="field fit">
-												<r-button icon="open-in-new" @click="$refs.first_modal.open()">Open Modal Window</r-button>
-											</div>
-											<div class="field fit">
-												<r-button icon="alert" @click="triggerAlert">Trigger Alert</r-button>
-											</div>
-											<div class="field fit">
-												<r-button icon="comment-question" @click="triggerConfirm">Trigger Confirm</r-button>
-											</div>
+							<!-- MODALS -->
+							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Modals and Message Windows:</label>
+									<div class="controls">
+										<div class="field fit">
+											<r-button icon="open-in-new" @click="$refs.first_modal.open()">Open Modal Window</r-button>
+										</div>
+										<div class="field fit">
+											<r-button icon="alert" @click="triggerAlert">Trigger Alert</r-button>
+										</div>
+										<div class="field fit">
+											<r-button icon="comment-question" @click="triggerConfirm">Trigger Confirm</r-button>
 										</div>
 									</div>
 								</div>
+							</div>
 
-								<!-- TABS -->
-								<tabs class="styled" v-model="tab_id">
-									<tab label="First" tab-id="first">
-										<h2>First Tab</h2>
-										<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus.</p>
-									</tab>
-									<tab label="Second" tab-id="second">
-										<h2>Second Tab</h2>
-										<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Etiam porta sem malesuada magna mollis euismod.</p>
-									</tab>
-									<tab label="Third" tab-id="third">
-										<h3>Third Tab</h3>
-										<p>Donec id elit non mi porta gravida at eget metus. Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla.</p>
-									</tab>
-									<tab label="Disabled" tab-id="disabled" disabled>
-										<h3>Disabled Tab</h3>
-										<p>This tab will never show</p>
-									</tab>
-								</tabs>
-
-							</fieldset>
+							<!-- TABS -->
+							<tabs class="styled" v-model="tab_id">
+								<tab label="First" tab-id="first">
+									<h2>First Tab</h2>
+									<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus.</p>
+								</tab>
+								<tab label="Second" tab-id="second">
+									<h2>Second Tab</h2>
+									<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Etiam porta sem malesuada magna mollis euismod.</p>
+								</tab>
+								<tab label="Third" tab-id="third">
+									<h3>Third Tab</h3>
+									<p>Donec id elit non mi porta gravida at eget metus. Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla.</p>
+								</tab>
+								<tab label="Disabled" tab-id="disabled" disabled>
+									<h3>Disabled Tab</h3>
+									<p>This tab will never show</p>
+								</tab>
+							</tabs>
 
 						</column>
 					</row>
@@ -411,28 +633,77 @@
 
 <script>
 import Validator, { rules } from '@/lib/Validator';
+import moment from 'moment-timezone';
 
 export default {
 	data() {
 		return {
-			show : false,
-
 			rules,
 			validator : new Validator(),
 
-			// COMPONENTS VALUES
+			// CORE COMPONENTS
 			text_value : '',
-			textarea_value : '',
 			password_value : '',
 			number_value : 0,
-			currency_value : 0,
 			select_value : null,
+			select_options : [
+				{ label : 'Vanilla', value : 'vanilla' },
+				{ label : 'Chocolate', value : 'chocolate' },
+				{ label : 'Strawberry', value : 'strawberry' }
+			],
+			textarea_value : '',
+			checkbox_value : false,
 			checklist_value : [],
+			checklist_options : [
+				{ label : 'Red', value : '#FF0000' },
+				{ label : 'Green', value : '#00FF00' },
+				{ label : 'Blue', value : '#0000FF' }
+			],
 			radio_group_value : null,
+			radio_group_options : [
+				{ label : 'Yellow', value : '#FFFF00' },
+				{ label : 'Cyan', value : '#00FFFF' },
+				{ label : 'Magenta', value : '#FF00FF' }
+			],
 			file_value : null,
+			is_loading : false,
+
+			// EXTENDED COMPONENTS
+			currency_value : 0,
+			multitext_value : [],
+			multiselect_value : [],
+			multiselect_options : [
+				'Primary',
+				[
+					{ label : 'Red', value : '#FF0000' },
+					{ label : 'Green', value : '#00FF00' },
+					{ label : 'Blue', value : '#0000FF' }
+				],
+				'Secondary',
+				[
+					{ label : 'Yellow', value : '#FFFF00' },
+					{ label : 'Cyan', value : '#00FFFF' },
+					{ label : 'Magenta', value : '#FF00FF' }
+				]
+			],
+			pillbox_value : [],
+			group_select_value : [],
+			group_select_options : [
+				{ label : 'Circle', value : 1 },
+				{ label : 'Heart', value : 2 },
+				{ label : 'Triangle', value : 3 },
+				{ label : 'Square', value : 4 },
+				{ label : 'Pentagon', value : 5 },
+				{ label : 'Hexagon', value : 6 }
+			],
 			slider_value : 50,
 			toggle_value : false,
-			switch_value : 'off',
+			switch_value : 'Yes',
+			switch_options : [
+				'Yes',
+				'No',
+				'Maybe'
+			],
 			form_builder_value : {
 				name : 'Harry Potter',
 				contact : {
@@ -441,23 +712,22 @@ export default {
 				gender : 'male'
 			},
 
+			// DATETIME COMPONENTS
+			date_value : [
+				moment().startOf('day').format(),
+				moment().endOf('day').format()
+			],
+			time_value : '12:00:00',
+
+			// CONTENT COMPONENTS
+			code_value : '',
+			markdown_value : '',
+
 			// VALIDATION COMPONENTS
 			required_text_value : '',
 			min_max_number_value : 0,
 			min_selected_value : [],
 			custom_validation_value : '',
-			
-			// OPTIONS
-			options : [
-				{label : 'Small', value : 'S'},
-				{label : 'Medium', value : 'M'},
-				{label : 'Large', value : 'L'},
-				{label : 'Extra Large', value : 'XL'}
-			],
-			switch_options : [
-				{label : 'Off', value : 'off'},
-				{label : 'On', value : 'on'}
-			],
 
 			// UI COMPONENTS
 			autocomplete_value : '',

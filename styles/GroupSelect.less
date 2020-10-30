@@ -1,0 +1,112 @@
+// ----------------------------------------------------------------------
+// GROUP SELECT STYLES
+// ----------------------------------------------------------------------
+
+@black: #000;
+@control-border-stroke: 1px;
+@control-accent-color: #4285F9;
+@control-height: 2.5em;
+@control-icon-color: #333;
+@control-padding: 0.625em;
+@font-size: 16px;
+@gray-35: #A6A6A6;
+@popup-layer: 400;
+
+@control-focus: {
+	box-shadow: 0 0 0 3px fade(@black, 10%);
+};
+
+// Import themes
+@import (optional, reference) '~remix-ui-theme';
+
+.r-group-select {
+	align-items: stretch;
+	cursor: default;
+	display: inline-flex;
+	flex-direction: row;
+	margin-bottom: 1em;
+	position: relative;
+	vertical-align: middle;
+	width: 100%;
+
+	&:focus,
+	&:focus-within {
+		box-shadow: none;
+		outline: 0;
+
+		.list-group {
+			@control-focus();
+		}
+	}
+
+	.group-column {
+		flex-direction: column;
+		display: flex;
+		flex: 1 0;
+
+		.group-column-header {
+			font-size: 0.875em;
+			font-weight: bold;
+			height: 1.5em;
+			text-transform: uppercase;
+		}
+
+		.list-group {
+			min-height: @control-height * 6;
+			height: 100%;
+			overflow-y: auto;
+		}
+
+		.inactive {
+			color: @gray-35;
+		}
+		
+		.list-group-item {
+			border-bottom: 1px solid tint(@control-border-color, 50%);
+			cursor: pointer;
+			height: @control-height;
+			list-style-type: none;
+			padding: @control-padding;
+
+			&:hover {
+				background-color: tint(@control-accent-color, 95%);
+			}
+		}
+
+		.selected {
+			background-color: tint(@control-accent-color, 85%);
+
+			&:hover {
+				background-color: tint(@control-accent-color, 85%);
+			}
+		}
+	}
+
+	.input-controls {
+		display: flex;
+		flex-direction: column;
+		flex: 0 0 auto;
+		padding: 0 5px;
+
+		.control-spacer {
+			flex: 0 0 1.5em;
+		}
+
+		.control-buttons {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			flex: 1 0;
+			justify-content: center;
+			min-height: @control-height * 5;	
+		}
+
+		button {
+			margin: 5px;
+		}
+	}
+
+	.sortable-chosen {
+		background-color: fade(@control-bkg-color, 90%);
+	}
+}

@@ -14,14 +14,8 @@ export default {
 	computed : {
 		style() {
 			if (this.gutter) {
-				let unit;
-				let gutter_number = parseFloat(this.gutter) || 0;
-				if (gutter_number) {
-					unit = this.gutter.replace(/[0-9\.]+/, '');
-				}
-
 				return {
-					'margin' : `${(gutter_number / 2) + unit} -${(gutter_number / 2) + unit}`
+					'margin' : `calc(${this.gutter} / 2) calc(-${this.gutter} / 2)`
 				};
 			}
 			return null;
