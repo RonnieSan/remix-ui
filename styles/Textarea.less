@@ -44,6 +44,7 @@
 		font-size: @font-size;
 		left: 0;
 		line-height: 1.5em;
+		height: 100%;
 		min-height: ~"calc((@{control-height} * 3) - (@{control-border-stroke} * 2))";
 		padding: (@control-padding * 0.75) @control-padding;
 		position: absolute;
@@ -56,24 +57,6 @@
 		&:focus {
 			box-shadow: none;
 			outline: 0;
-		}
-	}
-
-	&.code {
-		overflow-x: hidden;
-
-		.mirror pre {
-			font-family: @font-mono;
-			font-size: @font-size-small;
-			white-space: pre;
-		}
-
-		textarea {
-			font-family: @font-mono;
-			font-size: @font-size-small;
-			min-width: 100%;
-			white-space: pre;
-			width: auto;
 		}
 	}
 }

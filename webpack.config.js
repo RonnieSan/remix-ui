@@ -30,6 +30,7 @@ module.exports = {
 	},
 	devServer : {
 		contentBase : './dist',
+		public : 'remix-ui2.loca.lt',
 		hot : true,
 		port : 3010
 	},
