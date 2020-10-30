@@ -195,6 +195,7 @@
 											<div class="field">
 												<r-file
 													v-model="file_value"
+													@select="fileSelectHandler"
 												/>
 											</div>
 										</div>
@@ -623,6 +624,17 @@
 								</tab>
 							</tabs>
 
+							<gutter size="20px"/>
+
+							<fieldset>
+								<legend>Image Cropper</legend>
+								<r-image-cropper
+									:src="cropper_file"
+									:settings="cropper_settings"
+									@change="cropperChangeHandler"
+								/>
+							</fieldset>
+
 						</column>
 					</row>
 				</grid>
@@ -742,7 +754,15 @@ export default {
 				'Neptune',
 				'Pluto'
 			],
-			tab_id : 'first'
+
+			tab_id : 'first',
+			cropper_file : null,
+			cropper_settings : {
+				max_canvas_width : '680px',
+				stencil : {
+					aspectRatio: 1
+				}
+			}
 		};
 	},
 	computed : {
@@ -805,6 +825,9 @@ export default {
 		}
 	},
 	methods : {
+		fileSelectHandler(data) {
+			this.cropper_file = URL.createObjectURL(data.files[0]);
+		},
 		triggerAlert() {
 			this.$msg.alert({
 				title : 'Something Was Clicked!',
@@ -853,6 +876,9 @@ export default {
 				return 'You must enter the name of a Ninja Turtle';
 			}
 			return null;
+		},
+		cropperChangeHandler(coordinates) {
+			console.log(111, coordinates);
 		}
 	},
 	filters : {

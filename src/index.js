@@ -14,6 +14,7 @@ import rCurrency from './components/Currency';
 import rDatepicker from './components/Datepicker';
 import rFile from './components/FileInput';
 import rGroupSelect from './components/GroupSelect';
+import rImageCropper from './components/ImageCropper';
 import rMarkdown from './components/Markdown';
 import rMultiSelect from './components/MultiSelect';
 import rMultiText from './components/MultiText';
@@ -63,6 +64,7 @@ const modules = {
 	rForm,
 	rFormBuilder,
 	rGroupSelect,
+	rImageCropper,
 	rMarkdown,
 	rMultiSelect,
 	rMultiText,
@@ -104,6 +106,7 @@ export {
 	rForm,
 	rFormBuilder,
 	rGroupSelect,
+	rImageCropper,
 	rMarkdown,
 	rMultiSelect,
 	rMultiText,
@@ -181,6 +184,7 @@ export default {
 							'rCurrency',
 							'rFormBuilder',
 							'rGroupSelect',
+							'rImageCropper',
 							'rMultiSelect',
 							'rMultiText',
 							'rPillbox',
