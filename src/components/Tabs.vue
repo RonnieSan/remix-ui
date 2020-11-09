@@ -28,10 +28,6 @@ export default {
 	props : {
 		activeTabId : String
 	},
-	model : {
-		prop  : 'activeTabId',
-		event : 'change'
-	},
 	data() {
 		return {
 			tabs : []
@@ -45,8 +41,7 @@ export default {
 				if (new_value !== old_value) {
 					new_tab.selectTab();
 				}
-			},
-			immediate : true
+			}
 		}
 	},
 	methods : {
@@ -63,6 +58,10 @@ export default {
 				return (tab.tabId !== tab_id);
 			});
 		}
+	},
+	mounted() {
+		let selected_tab = this.tabs.find(tab => (tab.tabId === this.activeTabId));
+		selected_tab.selectTab()
 	}
 };
 </script>
