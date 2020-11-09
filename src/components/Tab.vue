@@ -52,11 +52,19 @@ export default {
 							use_default = vm.$listeners.click(event);
 						}
 						if (use_default !== false) {
-							vm.tab_group.selectTab(vm);
+							vm.selectTab(vm);
 						}
 					}
 				}
 			);
+		}
+	},
+	methods : {
+		selectTab() {
+			if (!this.disabled && !this.noContent) {
+				this.$emit('open');
+				this.tab_group.updateActiveTab(this.tabId);
+			}
 		}
 	},
 	created() {

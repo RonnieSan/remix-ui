@@ -43,7 +43,7 @@ export default {
 				let new_tab = this.tabs.find(tab => (tab.tabId === new_value));
 				let old_tab = this.tabs.find(tab => (tab.tabId === old_value));
 				if (new_value !== old_value) {
-					this.selectTab(new_tab);
+					new_tab.selectTab();
 				}
 			},
 			immediate : true
@@ -53,17 +53,9 @@ export default {
 		addTab(tab) {
 			this.tabs.push(tab);
 		},
-		selectTab(tab) {
-			if (tab && !tab.disabled && !tab.noContent) {
-				this.$emit('change', tab.tabId);
-				this.$nextTick(() => {
-					if (tab.$emit) {
-						tab.$emit('open');
-					}
-				});
-			}
-			else {
-				this.$emit('error');
+		updateActiveTab(tab_id) {
+			if (tab_id !== this.activeTabId) {
+				this.$emit('update:activeTabId', tab_id);
 			}
 		},
 		removeTab(tab_id) {
