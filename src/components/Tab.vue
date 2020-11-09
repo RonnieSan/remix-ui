@@ -61,7 +61,11 @@ export default {
 	},
 	methods : {
 		selectTab() {
-			if (!this.disabled && !this.noContent) {
+			if (
+				this.tab_group.activeTabId !== this.tabId
+				&& !this.disabled
+				&& !this.noContent
+			) {
 				this.$emit('open');
 				this.tab_group.updateActiveTab(this.tabId);
 			}
