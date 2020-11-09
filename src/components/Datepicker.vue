@@ -217,6 +217,42 @@ export default {
 				};
 			}
 		},
+		options : {
+			type : Object,
+			default() {
+				return {
+					format : 'ddd, MMM D, YYYY',
+					timepicker : false,
+					timepicker_settings : {},
+					presets : [
+						{
+							label : 'Today',
+							value : [moment().startOf('day').format(), moment().endOf('day').format()]
+						},
+						{
+							label : 'Yesterday',
+							value : [moment().subtract(1, 'day').startOf('day').format(), moment().subtract(1, 'day').endOf('day').format()]
+						},
+						{
+							label : '7 Days Ago',
+							value : [moment().subtract(1, 'week').startOf('day').format(), moment().subtract(1, 'week').endOf('day').format()]
+						},
+						{
+							label : 'Last 7 Days',
+							value : [moment().subtract(6, 'days').startOf('day').format(), moment().endOf('day').format()]
+						},
+						{
+							label : 'This Month',
+							value : [moment().startOf('month').format(), moment().endOf('month').format()]
+						},
+						{
+							label : 'Last Month',
+							value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
+						}
+					]
+				};
+			}
+		},
 		disabled : Boolean
 	},
 	data() {
@@ -346,10 +382,14 @@ export default {
 						value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
 					}
 				]
-			}, this.settings);
+			}, this.settings, this.options);
 			
 			if (this.settings.presets && this.settings.presets.length > 0) {
 				options.presets = this.settings.presets;
+			}
+
+			if (this.options.presets && this.options.presets.length > 0) {
+				options.presets = this.options.presets;
 			}
 
 			return options;
