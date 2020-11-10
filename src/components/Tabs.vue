@@ -37,11 +37,12 @@ export default {
 	watch : {
 		activeTabId : {
 			handler(new_value, old_value) {
-				let new_tab = this.tabs.find(tab => (tab.tabId === new_value));
-				let old_tab = this.tabs.find(tab => (tab.tabId === old_value));
 				if (new_value !== old_value) {
-					this.active_tab = new_value;
-					new_tab.emitOpen();
+					let new_tab = this.tabs.find(tab => (tab.tabId === new_value));
+					let old_tab = this.tabs.find(tab => (tab.tabId === old_value));
+					if (new_tab) {
+						new_tab.selectTab();
+					}
 				}
 			}
 		}
@@ -55,15 +56,18 @@ export default {
 				return (tab.tabId !== tab_id);
 			});
 		},
-		updateActiveTab(tab) {
-			if (tab.tabId !== this.active_tab) {
-				this.$emit('update:activeTabId', tab.tabId);
+		updateActiveTab(tab_id) {
+			if (this.active_tab !== tab_id) {
+				this.active_tab = tab_id;
+				this.$emit('update:activeTabId', tab_id);
 			}
 		}
 	},
 	mounted() {
 		let selected_tab = this.tabs.find(tab => (tab.tabId === this.activeTabId));
-		selected_tab.selectTab()
+		if (selected_tab) {
+			selected_tab.selectTab();
+		}
 	}
 };
 </script>

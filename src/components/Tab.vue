@@ -1,6 +1,6 @@
 <template>
 	<div
-		v-show="tab_group.active_tab === tabId && !noContent"
+		v-show="!noContent && (tab_group.active_tab === tabId)"
 		class="tab-content"
 	>
 		<slot v-bind="self"></slot>
@@ -58,12 +58,12 @@ export default {
 		selectTab() {
 			if (!this.disabled && !this.noContent) {
 				if (this.tab_group.active_tab !== this.tabId) {
-					this.tab_group.updateActiveTab(this);
+					this.tab_group.updateActiveTab(this.tabId);
+					this.$nextTick(() => {
+						this.$emit('open');
+					});
 				}
 			}
-		},
-		emitOpen() {
-			this.$emit('open');
 		}
 	},
 	created() {

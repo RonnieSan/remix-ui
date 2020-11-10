@@ -437,12 +437,12 @@
 							<h2>Tabs</h2>
 
 							<tabs class="classic" :active-tab-id.sync="tab_id">
-								<tab tab-class="one-off" label="One" tab-id="one" @open="testMethod()">
+								<tab tab-class="one-off" label="One" tab-id="one">
 									<div class="padded">
 										<p>Tab one is open.</p>
 									</div>
 								</tab>
-								<tab label="Two" tab-id="two">
+								<tab label="Two" tab-id="two" @open="testMethod()">
 									<div class="padded">
 										<p>Tab two is open.</p>
 									</div>
@@ -454,6 +454,8 @@
 									</div>
 								</tab>
 							</tabs>
+
+							<r-button @click="tab_id = 'two'">Trigger Second Tab</r-button>
 
 						</column>
 					</row>
