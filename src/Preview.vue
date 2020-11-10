@@ -455,8 +455,6 @@
 								</tab>
 							</tabs>
 
-							<button @click="tab_id = 'one'">Hello</button>
-
 						</column>
 					</row>
 				</grid>

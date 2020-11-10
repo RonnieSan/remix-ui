@@ -1,6 +1,6 @@
 <template>
 	<div
-		v-if="tab_group.active_tab === tabId && !noContent"
+		v-show="tab_group.active_tab === tabId && !noContent"
 		class="tab-content"
 	>
 		<slot v-bind="self"></slot>
