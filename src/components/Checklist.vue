@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { isEqual } from 'lodash';
 import rCheckbox from './Checkbox';
 import formField from '../mixins/formField';
 
@@ -33,7 +34,11 @@ export default {
 				return [];
 			}
 		},
-		disabled : Boolean
+		disabled : Boolean,
+		restrictValues : {
+			type : Boolean,
+			default : true
+		}
 	},
 	model : {
 		prop  : 'model',
@@ -42,10 +47,28 @@ export default {
 	computed : {
 		localModel : {
 			get() {
-				return this.model;
+				let filtered_value;
+				let new_value = this.model;
+				if (this.restrictValues) {
+					let option_values = this.optionList.map(option => option.value);
+					filtered_value = new_value.filter((value) => {
+						return option_values.indexOf(value) > -1;
+					});
+					if (!isEqual(new_value, filtered_value)) {
+						this.localModel = filtered_value;
+					}
+					else {
+						return new_value;
+					}
+				}
+				else {
+					return new_value;
+				}
 			},
 			set(new_value) {
-				this.$emit('change', new_value);
+				if (Array.isArray(new_value)) {
+					this.$emit('change', new_value);
+				}
 			}
 		},
 		listeners() {
@@ -95,9 +118,11 @@ export default {
 	watch : {
 		optionList(new_value, old_value) {
 			let option_values = new_value.map(option => option.value);
-			this.localModel = this.localModel.filter((value) => {
-				return option_values.indexOf(value) > -1;
-			});
+			if (this.restrictValues) {
+				this.localModel = this.localModel.filter((value) => {
+					return option_values.indexOf(value) > -1;
+				});
+			}
 		}
 	},
 	mixins : [
@@ -109,34 +134,3 @@ export default {
 <style lang="less" scoped>
 @import (optional) '~remix-ui-styles/Checklist.less';
 </style>
-
-<docs>
-# Checklist
-A list of checkbox values that modify an array passed into the v-model attribute.
-
-## Props
-* **name** : STRING - The name of the form input
-* **options** : ARRAY - An array of objects with a `label` and `value` property that will act as the label and value of each item in the list
-
-## Usage
-In the template...
-```html
-<r-checklist name="my_checklist" v-model="checklist_value" :options="checklist_options"/>
-```
-
-In the script...
-```js
-{
-	data() {
-		return {
-			checklist_value : [],
-			checklist_options : [
-				{label : 'Red', value : '#FF0000'},
-				{label : 'Green', value : '#00FF00'},
-				{label : 'Blue', value : '#0000FF'}
-			]
-		};
-	}
-}
-```
-</docs>

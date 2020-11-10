@@ -490,7 +490,7 @@ export default {
 				'Red',
 				'Orange'
 			],
-			checklist_value : [],
+			checklist_value : ['Chartreuse'],
 			radio_value : 'Yes',
 			radio_group_value : 'Red',
 			file_value : null,
