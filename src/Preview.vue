@@ -437,7 +437,7 @@
 							<h2>Tabs</h2>
 
 							<tabs class="classic" :active-tab-id.sync="tab_id">
-								<tab tab-class="one-off" label="One" tab-id="one">
+								<tab tab-class="one-off" label="One" tab-id="one" @open="testMethod()">
 									<div class="padded">
 										<p>Tab one is open.</p>
 									</div>
@@ -454,6 +454,8 @@
 									</div>
 								</tab>
 							</tabs>
+
+							<button @click="tab_id = 'one'">Hello</button>
 
 						</column>
 					</row>
@@ -679,6 +681,10 @@ export default {
 			setTimeout(() => {
 				this.is_loading = false;
 			}, 3000);
+		},
+
+		testMethod() {
+			console.log('Test method fired.');
 		}
 	}
 };

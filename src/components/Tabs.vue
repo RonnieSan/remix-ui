@@ -30,6 +30,7 @@ export default {
 	},
 	data() {
 		return {
+			active_tab : this.activeTabId,
 			tabs : []
 		};
 	},
@@ -39,7 +40,8 @@ export default {
 				let new_tab = this.tabs.find(tab => (tab.tabId === new_value));
 				let old_tab = this.tabs.find(tab => (tab.tabId === old_value));
 				if (new_value !== old_value) {
-					new_tab.selectTab();
+					this.active_tab = new_value;
+					new_tab.emitOpen();
 				}
 			}
 		}
@@ -48,15 +50,15 @@ export default {
 		addTab(tab) {
 			this.tabs.push(tab);
 		},
-		updateActiveTab(tab_id) {
-			if (tab_id !== this.activeTabId) {
-				this.$emit('update:activeTabId', tab_id);
-			}
-		},
 		removeTab(tab_id) {
 			this.tabs = this.tabs.filter((tab) => {
 				return (tab.tabId !== tab_id);
 			});
+		},
+		updateActiveTab(tab) {
+			if (tab.tabId !== this.active_tab) {
+				this.$emit('update:activeTabId', tab.tabId);
+			}
 		}
 	},
 	mounted() {
