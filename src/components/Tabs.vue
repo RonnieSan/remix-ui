@@ -30,7 +30,7 @@ export default {
 	},
 	data() {
 		return {
-			active_tab : this.activeTabId,
+			active_tab : null,
 			tabs : []
 		};
 	},
@@ -56,10 +56,13 @@ export default {
 				return (tab.tabId !== tab_id);
 			});
 		},
-		updateActiveTab(tab_id) {
-			if (this.active_tab !== tab_id) {
-				this.active_tab = tab_id;
-				this.$emit('update:activeTabId', tab_id);
+		updateActiveTab(tab) {
+			if (this.active_tab !== tab.tabId) {
+				this.active_tab = tab.tabId;
+				this.$emit('update:activeTabId', tab.tabId);
+				this.$nextTick(() => {
+					tab.$emit('open');
+				});
 			}
 		}
 	},

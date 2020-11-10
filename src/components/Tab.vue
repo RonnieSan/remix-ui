@@ -58,10 +58,7 @@ export default {
 		selectTab() {
 			if (!this.disabled && !this.noContent) {
 				if (this.tab_group.active_tab !== this.tabId) {
-					this.tab_group.updateActiveTab(this.tabId);
-					this.$nextTick(() => {
-						this.$emit('open');
-					});
+					this.tab_group.updateActiveTab(this);
 				}
 			}
 		}
