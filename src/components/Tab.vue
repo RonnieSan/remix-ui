@@ -3,7 +3,9 @@
 		v-show="!noContent && (tab_group.active_tab === tabId)"
 		class="tab-content"
 	>
-		<slot v-bind="self"></slot>
+		<template v-if="loadContent">
+			<slot v-bind="self"></slot>
+		</template>
 	</div>
 </template>
 
@@ -29,6 +31,10 @@ export default {
 		noContent : {
 			type : Boolean,
 			default : false
+		},
+		lazyLoad : {
+			type : Boolean,
+			default : true
 		}
 	},
 	computed : {
@@ -37,6 +43,12 @@ export default {
 		},
 		isActive() {
 			return this.tab_group.active_tab === this.tabId;
+		},
+		loadContent() {
+			if (!this.lazyLoad) {
+				return true;
+			}
+			return this.isActive;
 		},
 		listeners() {
 			let vm = this;
