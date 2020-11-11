@@ -35,6 +35,9 @@ export default {
 		self() {
 			return this;
 		},
+		isActive() {
+			return this.tab_group.active_tab === this.tabId;
+		},
 		listeners() {
 			let vm = this;
 			return Object.assign(
