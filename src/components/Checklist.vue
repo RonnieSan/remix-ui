@@ -37,7 +37,7 @@ export default {
 		disabled : Boolean,
 		restrictValues : {
 			type : Boolean,
-			default : true
+			default : false
 		}
 	},
 	model : {
