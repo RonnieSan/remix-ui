@@ -57,7 +57,8 @@ export default {
 						}
 						if (use_default !== false) {
 							vm.dirty = true;
-							vm.changeHandler(event.target.checked);
+							vm.changeHandler(event);
+							vm.validate();
 						}
 					},
 					keydown(event) {
@@ -85,7 +86,7 @@ export default {
 	},
 	model : {
 		prop  : 'model',
-		event : 'change'
+		event : 'update'
 	},
 	methods : {
 		keydownHandler(event) {
@@ -107,10 +108,15 @@ export default {
 
 			}
 		},
-		changeHandler(checked) {
+		changeHandler(event) {
+			let checked_value = event;
+			if (event.target) {
+				checked_value = event.target.checked
+			}
+
 			let new_value;
 			if (Array.isArray(this.model)) {
-				if (checked) {
+				if (checked_value) {
 					new_value = this.model.slice();
 					new_value.push(this.value);
 				}
@@ -120,15 +126,19 @@ export default {
 					});
 				}
 			}
-			else {
-				let trueValue  = this.trueValue || true;
-				let falseValue = this.falseValue || false;
-
-				new_value = (checked ? trueValue : falseValue);
+			else if (this.value || this.trueValue || this.falseValue) {
+				if (checked_value) {
+					new_value = this.trueValue || this.value;
+				}
+				else {
+					new_value = this.falseValue || null;
+				}
 			}
-
-			this.$emit('change', new_value);
-			this.validate();
+			else {
+				new_value = checked_value;
+			}
+			console.log(new_value);
+			this.$emit('update', new_value);
 		}
 	},
 	mixins : [

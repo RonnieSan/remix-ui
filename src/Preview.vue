@@ -683,8 +683,8 @@ export default {
 			}, 3000);
 		},
 
-		testMethod() {
-			console.log('Test method fired.');
+		testMethod(value) {
+			// console.log(value);
 		}
 	}
 };

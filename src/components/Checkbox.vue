@@ -31,7 +31,7 @@ export default {
 	],
 	model : {
 		prop  : 'model',
-		event : 'change'
+		event : 'input'
 	},
 	computed : {
 		checked() {
@@ -101,7 +101,7 @@ export default {
 			else {
 				new_value = event.target.checked;
 			}
-			this.$emit('change', new_value);
+			this.$emit('input', new_value);
 		}
 	},
 	mixins : [

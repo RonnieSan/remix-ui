@@ -42,7 +42,7 @@ export default {
 	},
 	model : {
 		prop  : 'model',
-		event : 'change'
+		event : 'update'
 	},
 	computed : {
 		localModel : {
@@ -67,7 +67,7 @@ export default {
 			},
 			set(new_value) {
 				if (Array.isArray(new_value)) {
-					this.$emit('change', new_value);
+					this.$emit('update', new_value);
 				}
 			}
 		},
@@ -83,7 +83,6 @@ export default {
 							use_default = vm.$listeners.change(event);
 						}
 						if (use_default !== false) {
-							vm.$emit('change', event);
 							vm.dirty = true;
 							vm.validate();
 						}
