@@ -281,6 +281,21 @@
 							</div>
 
 							<div class="control-group">
+								<div class="inner">
+									<label class="control-label">Checkbox:</label>
+									<div class="controls">
+										<div class="field">
+											<r-checkbox
+												name="checkbox"
+												v-model="checkbox_value"
+											>This is a Checkbox</r-checkbox>
+										</div>
+									</div>
+								</div>
+								<div class="model-value"><pre>Value: {{checkbox_value}}</pre></div>
+							</div>
+
+							<div class="control-group">
 								<label class="control-label">Checklist:</label>
 								<div class="controls">
 									<div class="field">
@@ -490,7 +505,8 @@ export default {
 				'Red',
 				'Orange'
 			],
-			checklist_value : ['Chartreuse'],
+			checklist_value : ['Extra Value'],
+			checkbox_value : false,
 			radio_value : 'Yes',
 			radio_group_value : 'Red',
 			file_value : null,

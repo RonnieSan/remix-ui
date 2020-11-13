@@ -6,11 +6,8 @@
 			type="checkbox"
 			ref="input"
 			:name="name"
+			v-model="localValue"
 			:disabled="disabled"
-			:checked="checked"
-			:value="value"
-			:true-value="trueValue"
-			:false-value="falseValue"
 			v-on="listeners"
 		>
 		<span class="checkbox-label"><slot>{{value}}</slot></span>
@@ -18,31 +15,51 @@
 </template>
 
 <script>
+import { isEqual } from 'lodash';
 import formField from '../mixins/formField';
 
 export default {
-	props : [
-		'disabled',
-		'falseValue',
-		'model',
-		'name',
-		'trueValue',
-		'value'
-	],
+	props : {
+		model : {
+			required : true
+		},
+		name : String,
+		value : {
+			required : false
+		},
+		trueValue : {
+			required : false
+		},
+		falseValue : {
+			required : false
+		},
+		disabled : {
+			type : Boolean,
+			default : false
+		}
+	},
 	model : {
 		prop  : 'model',
-		event : 'input'
+		event : 'update'
 	},
 	computed : {
-		checked() {
-			if (Array.isArray(this.model)) {
-				return (this.model.indexOf(this.value) >= 0);
-			}
-			else if (this.value || this.trueValue || this.falseValue) {
-				return (this.model === (this.trueValue || this.value));
-			}
-			else {
-				return this.model;
+		localValue : {
+			get() {
+				if (Array.isArray(this.model)) {
+					let matched = this.model.find((item) => {
+						return isEqual(item, this.value);
+					})
+					return !!matched;
+				}
+				else if (this.value || this.trueValue || this.falseValue) {
+					return (isEqual(this.model, this.trueValue) || isEqual(this.model, this.value));
+				}
+				else {
+					return this.model;
+				}
+			},
+			set(new_value) {
+				this.changeHandler(new_value);
 			}
 		},
 		listeners() {
@@ -58,7 +75,6 @@ export default {
 						}
 						if (use_default !== false) {
 							vm.dirty = true;
-							vm.changeHandler(event);
 							vm.validate();
 						}
 					},
@@ -77,21 +93,21 @@ export default {
 		}
 	},
 	methods : {
-		changeHandler(event) {
+		changeHandler(checked) {
 			let new_value;
 			if (Array.isArray(this.model)) {
-				if (event.target.checked) {
+				if (checked) {
 					new_value = this.model.slice();
 					new_value.push(this.value);
 				}
 				else {
 					new_value = this.model.filter((value) => {
-						return value !== this.value;
+						return !isEqual(value, this.value);
 					});
 				}
 			}
 			else if (this.value || this.trueValue || this.falseValue) {
-				if (event.target.checked) {
+				if (checked) {
 					new_value = this.trueValue || this.value;
 				}
 				else {
@@ -99,9 +115,9 @@ export default {
 				}
 			}
 			else {
-				new_value = event.target.checked;
+				new_value = checked;
 			}
-			this.$emit('input', new_value);
+			this.$emit('update', new_value);
 		}
 	},
 	mixins : [
