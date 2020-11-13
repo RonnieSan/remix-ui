@@ -12,15 +12,16 @@
 			<option :disabled="allowEmpty" :value="emptyValue">{{placeholder}}</option>
 			<template v-for="option in optionList">
 				<template v-if="isArray(option.value)">
-					<optgroup :label="option.label">
+					<optgroup :label="option.label" :key="option.label">
 					<option
 						v-for="child_option in option.value"
 						:value="child_option.value"
+						:key="child_option.label"
 					>{{child_option.label}}</option>
 					</optgroup>
 				</template>
 				<template v-else>
-					<option :value="option.value">{{option.label}}</option>
+					<option :value="option.value" :key="option.label">{{option.label}}</option>
 				</template>
 			</template>
 		</select>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import { isEqual } from 'lodash';
 import formField from '../mixins/formField';
 
 export default {
@@ -49,6 +51,10 @@ export default {
 			default : 'Select One'
 		},
 		disabled : Boolean
+	},
+	model : {
+		prop  : 'model',
+		event : 'change'
 	},
 	data() {
 		return {
@@ -112,7 +118,7 @@ export default {
 	},
 	watch : {
 		model(new_value) {
-			if (new_value !== this.selected_option) {
+			if (!isEqual(new_value, this.selected_option)) {
 				this.selected_option = new_value;
 				this.changeHandler();
 			}
@@ -120,7 +126,7 @@ export default {
 		optionList : {
 			handler(new_value) {
 				let matched_option = new_value.find((option) => {
-					return option.value === this.selected_option;
+					return isEqual(option.value, this.selected_option);
 				});
 				if (!matched_option) {
 					this.selected_option = this.emptyValue;
@@ -129,10 +135,6 @@ export default {
 			},
 			deep : true
 		}
-	},
-	model : {
-		prop  : 'model',
-		event : 'change'
 	},
 	methods : {
 		isArray(value) {

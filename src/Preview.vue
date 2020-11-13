@@ -684,7 +684,7 @@ export default {
 		},
 
 		testMethod(value) {
-			// console.log(value);
+			console.log(value);
 		}
 	}
 };
