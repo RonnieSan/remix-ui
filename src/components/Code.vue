@@ -41,7 +41,7 @@ export default {
 			dirty       : false,
 			touched     : false,
 			editor      : null,
-			local_value : null,
+			local_value : this.value,
 			ready       : false
 		};
 	},
@@ -79,16 +79,15 @@ export default {
 		}
 	},
 	watch : {
-		value(new_value) {
-			this.dirty = true;
-			this.$emit('input', this.value);
-
-			if (this.touched) {
-				this.$emit('validate');
-			}
-
-			if (this.local_value !== this.value) {
-				this.editor.setValue(this.value, 1);
+		value : {
+			handler(new_value, old_value) {
+				if (new_value !== this.local_value) {
+					this.dirty = true;
+					this.editor.setValue(new_value, 1);
+					if (this.touched) {
+						this.$emit('validate');
+					}
+				}
 			}
 		},
 		settings : {
@@ -127,12 +126,7 @@ export default {
 
 		// Set model value
 		// Use slot content if no value is found
-		if (!this.value || this.value === '') {
-			this.$emit('input', this.editor.getValue());
-		}
-		else {
-			this.editor.setValue(this.value, -1);
-		}
+		this.editor.setValue(this.local_value, 1);
 
 		if (this.disabled) {
 			this.editor.setReadOnly(true);
