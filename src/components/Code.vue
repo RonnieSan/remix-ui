@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { isNil } from 'lodash';
 import ace from 'brace';
 import 'brace/mode/json';
 import 'brace/theme/sqlserver';
@@ -126,6 +127,10 @@ export default {
 
 		// Set model value
 		// Use slot content if no value is found
+		let default_value = this.local_value;
+		if (isNil(default_value)) {
+			this.local_value = '';
+		}
 		this.editor.setValue(this.local_value, 1);
 
 		if (this.disabled) {
