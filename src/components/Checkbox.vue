@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { isEqual, isNil } from 'lodash';
+import { isEqual, isNil, isUndefined } from 'lodash';
 import formField from '../mixins/formField';
 
 export default {
@@ -48,11 +48,11 @@ export default {
 				if (Array.isArray(this.model)) {
 					let matched = this.model.find((item) => {
 						return isEqual(item, this.value);
-					})
+					});
 					return !isNil(matched);
 				}
 				else if (this.value || this.trueValue || this.falseValue) {
-					return (isEqual(this.model, this.trueValue) || isEqual(this.model, this.value));
+					return ((!isUndefined(this.trueValue) && isEqual(this.model, this.trueValue)) || (!isUndefined(this.value) && isEqual(this.model, this.value)));
 				}
 				else {
 					return this.model;
