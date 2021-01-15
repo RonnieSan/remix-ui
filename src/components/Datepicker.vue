@@ -813,6 +813,7 @@ export default {
 				this.$set(this.selection_value, index, date.format());
 				this.$set(this.cursor_value, index, date.format());
 			}
+			this.$refs.input.focus();
 		},
 
 		// Apply the selected dates

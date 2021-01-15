@@ -725,7 +725,7 @@ export default {
 			},
 
 			// DATETIME COMPONENTS
-			date_value : moment().format('YYYY-MM-DD'),
+			date_value : [],
 			time_value : '12:00:00',
 
 			// CONTENT COMPONENTS
