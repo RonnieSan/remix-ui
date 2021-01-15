@@ -847,11 +847,27 @@ export default {
 	mounted() {
 		// Set the default value if it's empty
 		let initial_value = this.value;
-		if (!initial_value || initial_value.length === 0) {
-			initial_value = [
-				moment().startOf('day').format(),
-				moment().endOf('day').format()
-			];
+		if (this.isRange) {
+			if (initial_value.length === 0) {
+				initial_value = [
+					moment().startOf('day').format(),
+					moment().endOf('day').format()
+				];
+			}
+		}
+		else {
+			if (!initial_value) {
+				initial_value = [
+					moment().startOf('day').format(),
+					moment().endOf('day').format()
+				];
+			}
+			else {
+				initial_value = [
+					moment(initial_value).startOf('day').format(),
+					moment(initial_value).endOf('day').format()
+				];
+			}
 		}
 
 		// Set the cursor and selection value

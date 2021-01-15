@@ -725,7 +725,7 @@ export default {
 			},
 
 			// DATETIME COMPONENTS
-			date_value : null,
+			date_value : '2020-07-01',
 			time_value : '12:00:00',
 
 			// CONTENT COMPONENTS
