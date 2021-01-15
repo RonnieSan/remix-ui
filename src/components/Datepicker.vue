@@ -784,6 +784,7 @@ export default {
 				this.closeCalendar();
 			}
 			this.$emit('input', output_value);
+			this.validate();
 		},
 
 		// Handle when a date is selected
@@ -841,6 +842,7 @@ export default {
 				}
 			}
 			this.$emit('input', output_value);
+			this.validate();
 			this.closeCalendar();
 		}
 	},
