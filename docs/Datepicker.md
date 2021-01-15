@@ -5,7 +5,9 @@ The `rDatePicker` field is a useful component for picking a single date or a dat
 * **STRING, ARRAY** - The value should be an **ISO8601-formatted date** (YYYY-MM-DD) for a single date or an array containing 2 ISO8601-formatted dates for a range.
 
 ## Props
+* **allowClear** : BOOLEAN - Set to `true` to allow the value to be cleared
 * **disabled** : BOOLEAN - Set to `true` to disable interactions with the field
+* **placeholder** : STRING - The placeholder value to show when no date is selected
 * **settings** : OBJECT - settings for the datepicker
 * **settings.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values)
 * **settings.min_date** : STRING - An ISO8601 date that the user cannot select a date below

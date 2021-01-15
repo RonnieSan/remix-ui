@@ -9,8 +9,11 @@
 			v-on="listeners"
 			autocomplete="off"
 		/>
-		<div class="display">{{displayValue}}</div>
-		<div class="control-helper"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
+		<div class="control-wrapper">
+			<div class="display" @click="openCalendar()">{{displayValue}}</div>
+			<div v-if="valueIsValid && !allowClear" class="clear-value" @click.stop="clearValue()"><icon type="close" size="24"/></div>
+			<div class="control-helper" @click="openCalendar()"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" /></svg></div>
+		</div>
 		<transition name="dropfade">
 			<div
 				class="calendar-wrapper" v-if="is_open"
@@ -178,8 +181,7 @@ export default {
 	},
 	props : {
 		value : {
-			type : [String, Array],
-			required : true
+			type : [String, Array]
 		},
 		settings : {
 			type : Object,
@@ -217,41 +219,13 @@ export default {
 				};
 			}
 		},
-		options : {
-			type : Object,
-			default() {
-				return {
-					format : 'ddd, MMM D, YYYY',
-					timepicker : false,
-					timepicker_settings : {},
-					presets : [
-						{
-							label : 'Today',
-							value : [moment().startOf('day').format(), moment().endOf('day').format()]
-						},
-						{
-							label : 'Yesterday',
-							value : [moment().subtract(1, 'day').startOf('day').format(), moment().subtract(1, 'day').endOf('day').format()]
-						},
-						{
-							label : '7 Days Ago',
-							value : [moment().subtract(1, 'week').startOf('day').format(), moment().subtract(1, 'week').endOf('day').format()]
-						},
-						{
-							label : 'Last 7 Days',
-							value : [moment().subtract(6, 'days').startOf('day').format(), moment().endOf('day').format()]
-						},
-						{
-							label : 'This Month',
-							value : [moment().startOf('month').format(), moment().endOf('month').format()]
-						},
-						{
-							label : 'Last Month',
-							value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
-						}
-					]
-				};
-			}
+		allowClear : {
+			type : Boolean,
+			default : false
+		},
+		placeholder : {
+			type : String,
+			default : 'Select Date'
 		},
 		disabled : Boolean
 	},
@@ -270,17 +244,33 @@ export default {
 	},
 	computed : {
 		displayValue() {
-			if (this.isRange) {
-				if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
-					return moment(this.value[0]).format(this.mergedSettings.format);
+			if (this.valueIsValid) {
+				if (this.isRange) {
+					if (moment(this.value[0]).format('YYYY-MM-DD') === moment(this.value[1]).format('YYYY-MM-DD')) {
+						return moment(this.value[0]).format(this.mergedSettings.format);
+					}
+					return moment(this.value[0]).format(this.mergedSettings.format) + ' - ' + moment(this.value[1]).format(this.mergedSettings.format);
 				}
-
-				return moment(this.value[0]).format(this.mergedSettings.format) + ' - ' + moment(this.value[1]).format(this.mergedSettings.format);
+				else {
+					return moment(this.value).format(this.mergedSettings.format);
+				}
 			}
-
 			else {
-				return moment(this.value).format(this.mergedSettings.format);
+				return this.placeholder;
 			}
+		},
+		valueIsValid() {
+			if (this.isRange) {
+				if (this.value[0] && this.value[1]) {
+					return (moment(this.value[0]).isValid() && moment(this.value[1]).isValid());
+				}
+			}
+			else {
+				if (this.value) {
+					return moment(this.value).isValid();
+				}
+			}
+			return false;
 		},
 		isRange() {
 			return Array.isArray(this.value);
@@ -382,14 +372,10 @@ export default {
 						value : [moment().subtract(1, 'month').startOf('month').format(), moment().subtract(1, 'month').endOf('month').format()]
 					}
 				]
-			}, this.settings, this.options);
+			}, this.settings);
 			
 			if (this.settings.presets && this.settings.presets.length > 0) {
 				options.presets = this.settings.presets;
-			}
-
-			if (this.options.presets && this.options.presets.length > 0) {
-				options.presets = this.options.presets;
 			}
 
 			return options;
@@ -500,6 +486,8 @@ export default {
 
 		// Open the calendar interface
 		openCalendar(event) {
+			this.$refs.input.focus();
+
 			this.error_messages = [];
 			if (!this.is_open) {
 				if (this.isRange) {
@@ -673,30 +661,32 @@ export default {
 		},
 
 		resetTime(value) {
-			if (this.isRange) {
-				// Get the start time from the value
-				if (value.length > 0 && value[0].length > 10) {
-					this.$set(this.time_value, 0, moment(value[0]).format('HH:mm:ss'));
-				}
-				else {
-					this.$set(this.time_value, 0, '00:00:00');
-				}
+			if (this.valueIsValid) {
+				if (this.isRange) {
+					// Get the start time from the value
+					if (value.length > 0 && value[0].length > 10) {
+						this.$set(this.time_value, 0, moment(value[0]).format('HH:mm:ss'));
+					}
+					else {
+						this.$set(this.time_value, 0, '00:00:00');
+					}
 
-				// Get the end time from the value
-				if (value.length > 0 && value[1].length > 10) {
-					this.$set(this.time_value, 1, moment(value[1]).format('HH:mm:ss'));
+					// Get the end time from the value
+					if (value.length > 0 && value[1].length > 10) {
+						this.$set(this.time_value, 1, moment(value[1]).format('HH:mm:ss'));
+					}
+					else {
+						this.$set(this.time_value, 1, '23:59:59');
+					}
 				}
 				else {
-					this.$set(this.time_value, 1, '23:59:59');
-				}
-			}
-			else {
-				// Get the time from the value
-				if (value.length > 10) {
-					this.$set(this.time_value, 0, moment(value).format('HH:mm:ss'));
-				}
-				else {
-					this.$set(this.time_value, 0, '00:00:00');
+					// Get the time from the value
+					if (value.length > 10) {
+						this.$set(this.time_value, 0, moment(value).format('HH:mm:ss'));
+					}
+					else {
+						this.$set(this.time_value, 0, '00:00:00');
+					}
 				}
 			}
 		},
@@ -707,8 +697,14 @@ export default {
 				this.cursor_value = this.selection_value.slice();
 			}
 			else {
-				this.$set(this.selection_value, 0, moment(this.value));
-				this.$set(this.cursor_value, 0, moment(this.value));
+				if (this.valueIsValid) {
+					this.$set(this.selection_value, 0, moment(this.value));
+					this.$set(this.cursor_value, 0, moment(this.value));
+				}
+				else {
+					this.$set(this.selection_value, 0, moment().startOf('day').format());
+					this.$set(this.cursor_value, 0, moment().startOf('day').format());
+				}
 			}
 		},
 
@@ -779,6 +775,17 @@ export default {
 			this.error_messages = uniq(this.error_messages);
 		},
 
+		clearValue() {
+			let output_value = null;
+			if (this.isRange) {
+				output_value = [];
+			}
+			if (this.is_open) {
+				this.closeCalendar();
+			}
+			this.$emit('input', output_value);
+		},
+
 		// Handle when a date is selected
 		inputHandler(date, index) {
 			this.dirty = true;
@@ -840,24 +847,15 @@ export default {
 	mounted() {
 		// Set the default value if it's empty
 		let initial_value = this.value;
-		if (this.isRange) {
-			if (initial_value.length === 0) {
-				initial_value = [
-					moment().startOf('day').format(),
-					moment().endOf('day').format()
-				];
-			}
-		}
-		else {
-			if (!this.value) {
-				initial_value = moment().startOf('day').format();
-			}
+		if (!initial_value || initial_value.length === 0) {
+			initial_value = [
+				moment().startOf('day').format(),
+				moment().endOf('day').format()
+			];
 		}
 
 		// Set the cursor and selection value
-		if (this.isRange) {
-			this.cursor_value = this.selection_value = initial_value;
-		}
+		this.cursor_value = this.selection_value = initial_value;
 
 		// Set the time value
 		if (this.mergedSettings.timepicker) {

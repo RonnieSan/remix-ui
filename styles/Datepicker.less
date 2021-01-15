@@ -35,8 +35,7 @@
 
 .r-datepicker {
 	cursor: pointer;
-	display: inline-flex;
-	flex-direction: row;
+	display: inline-block;
 	font-size: 1em;
 	position: relative;
 	vertical-align: middle;
@@ -60,8 +59,15 @@
 		cursor: pointer;
 		opacity: 0;
 		padding: 0;
-		position: absolute;
 		width: ~"calc(100% - (@{control-border-stroke} * 2))";
+	}
+
+	> .control-wrapper {
+		display: flex;
+		flex-direction: row;
+		position: absolute;
+		top: 0;
+		width: 100%;
 	}
 
 	.control-helper svg {
@@ -374,6 +380,12 @@
 				width: 2em;
 			}
 		}
+	}
+	.clear-value {
+		height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		line-height: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
+		text-align: center;
+		width: ~"calc(@{control-height} - (@{control-border-stroke} * 2))";
 	}
 }
 

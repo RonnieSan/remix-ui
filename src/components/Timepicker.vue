@@ -418,6 +418,9 @@ export default {
 			trailing : true
 		}),
 		setTimeValue(value) {
+			if (!value) {
+				value = '00:00:00';
+			}
 			let time_parts = value.split(':');
 			let hour   = parseInt(time_parts[0], 10);
 			let minute = parseInt(time_parts[1], 10);

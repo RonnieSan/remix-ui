@@ -725,10 +725,7 @@ export default {
 			},
 
 			// DATETIME COMPONENTS
-			date_value : [
-				moment().startOf('day').format(),
-				moment().endOf('day').format()
-			],
+			date_value : null,
 			time_value : '12:00:00',
 
 			// CONTENT COMPONENTS
