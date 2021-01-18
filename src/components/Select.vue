@@ -10,18 +10,18 @@
 			:disabled="disabled"
 		>
 			<option :disabled="allowEmpty" :value="emptyValue">{{placeholder}}</option>
-			<template v-for="option in optionList">
+			<template v-for="(option, index) in optionList">
 				<template v-if="isArray(option.value)">
-					<optgroup :label="option.label" :key="option.label">
+					<optgroup :label="option.label" :key="index">
 					<option
-						v-for="child_option in option.value"
+						v-for="(child_option, child_index) in option.value"
 						:value="child_option.value"
-						:key="child_option.label"
+						:key="index + '-' + child_index"
 					>{{child_option.label}}</option>
 					</optgroup>
 				</template>
 				<template v-else>
-					<option :value="option.value" :key="option.label">{{option.label}}</option>
+					<option :value="option.value" :key="index">{{option.label}}</option>
 				</template>
 			</template>
 		</select>
