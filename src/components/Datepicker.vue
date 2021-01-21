@@ -505,15 +505,22 @@ export default {
 			this.$nextTick(() => {
 				if (this.is_open) {
 					let input_box     = this.$el.getBoundingClientRect();
-					let window_height = window.innerHeight;
+					let parent_height = window.innerHeight;
+
+					if (this.mergedSettings.container_el) {
+						parent_height = this.$el.closest(this.mergedSettings.container_el).clientHeight;
+					}
 
 					// Calculate max list heights
-					let max_list_height_below = (window_height - input_box.bottom - 20);
-					let max_list_height_above = (window_height - (window_height - input_box.top) - 20);
+					let max_list_height_below = (parent_height - input_box.bottom - 20);
+					let max_list_height_above = (parent_height - (parent_height - input_box.top) - 20);
 					
 					// Choose where to display
 					let display_above = false;
 					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
+						display_above = true;
+					}
+					if (this.mergedSettings.popup_above) {
 						display_above = true;
 					}
 

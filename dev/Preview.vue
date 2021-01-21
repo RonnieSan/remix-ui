@@ -386,7 +386,7 @@
 									<div class="inner">
 										<label class="control-label">Date Picker:</label>
 										<div class="controls">
-											<div class="field">
+											<div class="field test-popup">
 												<r-datepicker
 													v-model="date_value"
 													:settings="{timepicker : true}"

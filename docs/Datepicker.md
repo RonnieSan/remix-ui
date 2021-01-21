@@ -10,6 +10,8 @@ The `rDatePicker` field is a useful component for picking a single date or a dat
 * **placeholder** : STRING - The placeholder value to show when no date is selected
 * **settings** : OBJECT - settings for the datepicker
 * **settings.format** : STRING - The format to display the date as in the field (see momentjs.com for possible values)
+* **settings.container_el** : STRING - A CSS selector of the closest container element to determine if the popup should appear above or below the input
+* **settings.popup_above** : BOOLEAN - Force the calendar to popup above the input
 * **settings.min_date** : STRING - An ISO8601 date that the user cannot select a date below
 * **settings.max_date** : STRING - An ISO8601 date that the user cannot select a date above
 * **settings.max_range** : NUMBER - The maximum range length in days the user can select
