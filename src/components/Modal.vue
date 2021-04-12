@@ -134,7 +134,9 @@ export default {
 				document.documentElement.classList.remove('no-scroll');
 
 				// Restore focus
-				self.last_focus.focus();
+				if (self.last_focus) {
+					self.last_focus.focus();
+				}
 
 				self.is_open = false;
 			});
