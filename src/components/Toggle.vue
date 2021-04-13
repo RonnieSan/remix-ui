@@ -137,7 +137,6 @@ export default {
 			else {
 				new_value = checked_value;
 			}
-			console.log(new_value);
 			this.$emit('update', new_value);
 		}
 	},
