@@ -486,54 +486,56 @@ export default {
 
 		// Open the calendar interface
 		openCalendar(event) {
-			this.$refs.input.focus();
+			if (!this.disabled) {
+				this.$refs.input.focus();
 
-			this.error_messages = [];
-			if (!this.is_open) {
-				if (this.isRange) {
-					this.current_cursor_index = 0;
-					this.current_selection_index = 0;
+				this.error_messages = [];
+				if (!this.is_open) {
+					if (this.isRange) {
+						this.current_cursor_index = 0;
+						this.current_selection_index = 0;
+					}
+					if (this.mergedSettings.timepicker) {
+						this.resetTime(this.value);
+					}
+					this.resetCursors();
+					this.is_open = true;
 				}
-				if (this.mergedSettings.timepicker) {
-					this.resetTime(this.value);
-				}
-				this.resetCursors();
-				this.is_open = true;
+
+				// Set the dropdown size
+				this.$nextTick(() => {
+					if (this.is_open) {
+						let input_box     = this.$el.getBoundingClientRect();
+						let parent_height = window.innerHeight;
+
+						if (this.mergedSettings.container_el) {
+							parent_height = this.$el.closest(this.mergedSettings.container_el).clientHeight;
+						}
+
+						// Calculate max list heights
+						let max_list_height_below = (parent_height - input_box.bottom - 20);
+						let max_list_height_above = (parent_height - (parent_height - input_box.top) - 20);
+						
+						// Choose where to display
+						let display_above = false;
+						if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
+							display_above = true;
+						}
+						if (this.mergedSettings.popup_above) {
+							display_above = true;
+						}
+
+						if (display_above) {
+							this.popup_bottom = (input_box.height - 5 + 'px');
+							this.popup_top = null;
+						}
+						else {
+							this.popup_bottom = null;
+							this.popup_top = (input_box.height - 5 + 'px');
+						}
+					}
+				});
 			}
-
-			// Set the dropdown size
-			this.$nextTick(() => {
-				if (this.is_open) {
-					let input_box     = this.$el.getBoundingClientRect();
-					let parent_height = window.innerHeight;
-
-					if (this.mergedSettings.container_el) {
-						parent_height = this.$el.closest(this.mergedSettings.container_el).clientHeight;
-					}
-
-					// Calculate max list heights
-					let max_list_height_below = (parent_height - input_box.bottom - 20);
-					let max_list_height_above = (parent_height - (parent_height - input_box.top) - 20);
-					
-					// Choose where to display
-					let display_above = false;
-					if ((max_list_height_below < 200) && (max_list_height_above > max_list_height_below)) {
-						display_above = true;
-					}
-					if (this.mergedSettings.popup_above) {
-						display_above = true;
-					}
-
-					if (display_above) {
-						this.popup_bottom = (input_box.height - 5 + 'px');
-						this.popup_top = null;
-					}
-					else {
-						this.popup_bottom = null;
-						this.popup_top = (input_box.height - 5 + 'px');
-					}
-				}
-			});
 		},
 
 		// Set the time on one of the pickers

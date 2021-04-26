@@ -14,6 +14,7 @@
 @control-helper-color: #000;
 @control-padding: 0.625em;
 @control-radius: 3px;
+@gray-35: #CCC;
 @popup-layer: 400;
 @red: #FF4136;
 @mobile-window-max: 767px;
@@ -83,6 +84,14 @@
 		padding: 0 10px;
 		text-overflow: ellipsis;
 		overflow: hidden;
+	}
+
+	&.disabled {
+		cursor: not-allowed;
+		
+		.display {
+			color: @gray-35;
+		}
 	}
 
 	.calendar-wrapper {

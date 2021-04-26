@@ -389,7 +389,7 @@
 											<div class="field test-popup">
 												<r-datepicker
 													v-model="date_value"
-													:settings="{timepicker : true}"
+													:settings="datepicker_settings"
 												/>
 											</div>
 										</div>
@@ -727,6 +727,9 @@ export default {
 			// DATETIME COMPONENTS
 			date_value : [],
 			time_value : '12:00:00',
+			datepicker_settings : {
+				timepicker : true
+			},
 
 			// CONTENT COMPONENTS
 			code_value : '',
