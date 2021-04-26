@@ -1,5 +1,5 @@
 <template>
-	<div :class="['modal-container', {'open' : is_open}]" @click="clickContainer">
+	<div :class="['modal-container', {'open' : is_open}]" @click="clickContainer($event)">
 		<div class="modal-window" :style="{maxWidth : maxWidth}">
 			<div class="modal-content">
 				<slot v-bind="self"></slot>
@@ -139,9 +139,11 @@ export default {
 				self.is_open = false;
 			});
 		},
-		clickContainer() {
+		clickContainer(event) {
 			if (this.closeOnClick !== false) {
-				this.close();
+				if (!this.window.contains(event.target)) {
+					this.close();
+				}
 			}
 		},
 		escPressed(event) {
@@ -188,11 +190,6 @@ export default {
 		this.overlay = document.getElementById('modal-overlay');
 		this.modal   = this.$el;
 		this.window  = this.$el.querySelector('.modal-window');
-
-		// Prevent clicks on the window from propagating
-		this.window.addEventListener('click', (event) => {
-			event.stopPropagation();
-		});
 
 		function insertAfter(el, referenceNode) {
 			referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
