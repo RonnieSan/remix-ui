@@ -648,9 +648,22 @@ export default {
 			number_value : 0,
 			select_value : null,
 			select_options : [
-				{ label : 'Vanilla', value : 'vanilla' },
-				{ label : 'Chocolate', value : 'chocolate' },
-				{ label : 'Strawberry', value : 'strawberry' }
+				{
+					label : 'Basic Flavors',
+					value : [
+						{ label : 'Vanilla', value : 'vanilla' },
+						{ label : 'Chocolate', value : 'chocolate' },
+						{ label : 'Strawberry', value : 'strawberry' }
+					]
+				},
+				{
+					label : 'Upgraded Flavors',
+					value : [
+						{ label : 'Cookies and Cream', value : 'cookies_and_cream' },
+						{ label : 'Pistachio', value : 'pistachio' },
+						{ label : 'Rocky Road', value : 'rocky_road' }
+					]
+				}
 			],
 			textarea_value : '',
 			checkbox_value : false,
