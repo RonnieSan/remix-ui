@@ -120,7 +120,17 @@ export default {
 		optionList : {
 			handler(new_value) {
 				let matched_option = new_value.find((option) => {
-					return option.value === this.selected_option;
+					if (Array.isArray(option.value)) {
+						let matched_sub_option = option.value.find((sub_option) => {
+							return sub_option.value === this.selected_option;
+						});
+						if (matched_sub_option) {
+							return true;
+						}
+					}
+					else {
+						return option.value === this.selected_option;
+					}
 				});
 				if (!matched_option) {
 					this.selected_option = this.emptyValue;
